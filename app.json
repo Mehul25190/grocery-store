@@ -4,7 +4,6 @@
     "slug": "PushBase",
     "description": "A simple react native starter/boilerplate developed using React native + Expo + React Navigation + Nativebase + Redux + Redux Thunk + Redux Persist ",
     "privacy": "public",
-    "sdkVersion": "33.0.0",
     "platforms": [
       "ios",
       "android",

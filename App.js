@@ -4,8 +4,8 @@ import { View, Text, Image } from 'react-native';
 import { PersistGate } from 'redux-persist/es/integration/react'
 import { Provider } from 'react-redux';
 
-import { Font, AppLoading } from 'expo';
-// import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
 
 /*import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
@@ -56,6 +56,8 @@ export default class App extends React.Component {
       'Font-Regular': require('./app/assets/fonts/Montserrat-Regular.ttf'),
       'Font-Semibold': require('./app/assets/fonts/Montserrat-SemiBold.ttf'),
       'Font-Bold': require('./app/assets/fonts/Montserrat-Bold.ttf'),
+      'Roboto': require('native-base/Fonts/Roboto.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf')
     });
     this.setState({isReady: true});
   }
