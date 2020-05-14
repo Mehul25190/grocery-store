@@ -6,7 +6,7 @@ import * as Animatable from 'react-native-animatable';
 import {
   Button,
   Text,
-  Header, Left, Body, Title, Right
+  Header, Item, Input, Left, Body, Title, Right,Icon
 } from 'native-base';
 
 import appStyles from '../theme/appStyles';
@@ -14,6 +14,7 @@ import svgs from '../assets/svgs';
 import { Colors, Layout, ActionTypes } from '../constants';
 import Logo from './Logo';
 import Svgicon from './Svgicon';
+import Statusbar from './Statusbar';
 
 
 import ModalBox from './ModalBox';
@@ -29,29 +30,29 @@ class Headers extends React.Component {
   }
   render() {
     return (
-        <Header transparent>
-          <Left style={appStyles.row}>
+      <Header searchBar rounded style={appStyles.headerStyle}>
+          <Left style={appStyles.headerLeft}>
             <Button transparent style={appStyles.menuBtn} onPress={() => this.props.navigation.openDrawer()}>
-              <Svgicon color={Colors.white} name="menu" />
+              <Icon style={appStyles.menuBar} size={30} color={Colors.white} name="menu" />
             </Button>
           </Left>
-          <Body style={appStyles.rowXcenter}>
-            <TouchableWithoutFeedback onPress={() => this.props.showModal()}>
-              <Logo header={true} />
-            </TouchableWithoutFeedback>
-          </Body>
-          <Right style={appStyles.row}>
-            <Button transparent>
-              <Svgicon color={Colors.white} name="bell" />
+       
+          <Item style={[appStyles.searchBar,{width:60}]} >
+            <Icon name="ios-search" style={{color:Colors.primary}} />
+            <Input style={appStyles.searchInput} placeholder="Search Product" />
+           
+          </Item>
+         
+          <Right style={appStyles.headerRight}>
+             <Button transparent>
+               <Icon style={appStyles.cartIcon}  name="cart" />
+               <Icon style={appStyles.userIcon} name="person" />      
             </Button>
           </Right>
-          <ModalBox 
-                  visibleModal={this.state.visibleModal}
-                  content={<SetLanguage />} 
-                  style={appStyles.bottomModal}
-                  contentStyle={appStyles.setLanguage}
-                  />
-        </Header>
+       
+         
+          </Header>
+
     );
   }
 }

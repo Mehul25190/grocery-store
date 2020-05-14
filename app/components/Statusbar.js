@@ -1,12 +1,13 @@
 import React from "react";
-import { View } from 'react-native';
+import { View,StatusBar } from 'react-native';
 
 import appStyles from '../theme/appStyles';
 
-export default class Logo extends React.Component {
+export default class Statusbar extends React.Component {
   render() {
     return (
       <View style={appStyles.statusBar} />
+    
     );
   }
 }

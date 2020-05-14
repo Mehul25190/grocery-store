@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import { Form, Item, Input, Title, Button, Text } from 'native-base';
 import { required, email } from 'redux-form-validators'
 import { InputBox } from '../../components';
-import styles from './styles';
+import styles from '../SignIn/styles';
 
-class SignInForm extends React.Component {
+class SignInFormEmail extends React.Component {
   constructor(props){
     super(props);
   }
@@ -16,17 +16,8 @@ class SignInForm extends React.Component {
     const { handleSubmit, onSubmit, language } = this.props;
     return (
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
-      <View >
-        <Text style={styles.label}>Mobile Number</Text>
-      </View>
-         <Field 
-         
-          name="number" 
-          component={InputBox} 
-          // placeholder='Enter your Mobile'
-           keyboardType={'numeric'}
-             validate=''
-        />
+     
+        
          <View>
         <Text style={styles.label}>Email</Text>
       </View>
@@ -54,9 +45,9 @@ class SignInForm extends React.Component {
 }
 
 
-const signinform = reduxForm({
-  form: 'signinForm',
-})(SignInForm);
+const signinformemail = reduxForm({
+  form: 'signinFormemail',
+})(SignInFormEmail);
 
 const mapStateToProps = (state) => {
   return {
@@ -68,4 +59,4 @@ const mapDispatchToProps = (dispatch) => {
     return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(signinform);
+export default connect(mapStateToProps, mapDispatchToProps)(signinformemail);

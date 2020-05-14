@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, TouchableWithoutFeedback, TouchableOpacity} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableWithoutFeedback, TouchableOpacity} from 'react-native'
 import _ from 'lodash'; 
 import { NavigationActions } from 'react-navigation';
 import {
@@ -24,10 +24,12 @@ import imgs from '../../assets/images';
 import * as userActions from "../../actions/user";
 import { showToast } from '../../utils/common';
 import appStyles from '../../theme/appStyles';
-import styles from './styles';
-import SignInForm from './form';
+import styles from '../SignIn/styles';
+// import OtpInputs from 'react-native-otp-inputs';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
+//import SignInVerification from './form';
 
-class SignIn extends React.Component {
+class Verification extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -54,7 +56,7 @@ class SignIn extends React.Component {
     this.props.navigation.navigate(Screens.ForgotPassword.route)
   }
 
-  signin(values, dispatch, props){
+  signinverification(values, dispatch, props){
     dispatch(userActions.signin(values))
       .then(res => {
         if(res.status == 200){
@@ -78,77 +80,64 @@ class SignIn extends React.Component {
 
   render(){
     const { language } = this.props;
-    // if(this.props.showIntro){
-    //   // Show the app intro on first time launch
-    //   if(this.props.languageSet==0){
-    //     return (<SelectLanguage />);
-    //   }else{
-    //     return (<AppIntro />);
-    //   }
-    // }
+  
     if(this.props.user==null){
       // Login 
       return (
         <Container >
         <Content enableOnAndroid>
           <ImageBackground 
-              source={imgs.signupBg} 
-              style={ styles.backGroundstyle}>
+              source={imgs.greenBg} 
+              style={ styles.backGroundstyleEmail}>
            
-             <View style={styles.loginBox}>
+             <View style={styles.verificationBox} >
                   <Animatable.View 
                     animation="fadeInUp"
                     delay={500}                
                      > 
-                    <SignInForm onSubmit={this.signin} />
-                    <Row style={{marginBottom:20}}>
-                      <Col>
-                        <Button transparent full  
-                          onPress={() => this.onSignupButtonPressHandler()}
-                          style={[{justifyContent:'flex-start'}]}
-                        >
-                        {/*  <Text style={[styles.linkText,appStyles.textLeft]} > {language.createAcc} </Text>*/}
-                        </Button> 
-                      </Col>
-                      <Col>
-                        <Button transparent full  
-                          onPress={() => this.onForgotpasswordPressHandler()}
-                          style={[{justifyContent:'flex-end'}]} >
-                          <Text style={[styles.linkText,appStyles.textRight]} > {language.forgot} </Text>
-                        </Button>
-                      </Col>
-                    </Row>
+                  
+                  <View style={{width:Layout.width, textAlign:'center', alignItems:'center',paddingTop:30}}>
+		                  <View>
+		                  	<Text style={styles.verifyTitle}>
+		                  		Verify Your Number
+		                  	</Text>
+		                  		<Text style={styles.verifySubTitle}>
+		                  		Enter Your Code Here
+		                  	</Text>
+		                  </View>
+                  	<OTPInputView
+					    style={{width: '70%', height: 200, alignItems:'center',textAlign:'center'}}
+					    pinCount={4}
+					    // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
+					    // onCodeChanged = {code => { this.setState({code})}}
+					    autoFocusOnLoad
+					    codeInputFieldStyle={styles.underlineStyleBase}
+					    codeInputHighlightStyle={styles.underlineStyleHighLighted}
+					    onCodeFilled = {(code => {
+					        console.log(`Code is ${code}, you are good to go!`)
+					    })}
+					/>
+					</View>			  
+
                   </Animatable.View>
                   <Animatable.View 
                     animation="fadeIn"
                     delay={1000} 
-                    style={{marginTop:30}}> 
+                    style={{marginBottom:60}}> 
                   { this.props.isLoading ? 
                      <Spinner color={Colors.secondary} /> : 
-                      <Button
+                      <TouchableOpacity>
+                       <Button
                         full
                         primary
-                        style={appStyles.btnSecontary}
+                        style={[appStyles.btnSecontary,{marginBottom:20}]}
                          onPress={() =>  this.props.pressSignin()}  >
-                        <Text style={styles.SignInbtn}>Login </Text>
+                        <Text style={styles.SignInbtn}>Submit </Text>
                       </Button>
+                       </TouchableOpacity>
                   }
                 </Animatable.View>  
-                  <Animatable.View 
-                    animation="fadeIn"
-                    delay={1200} 
-                    style={{marginBottom:30}}> 
-                  { this.props.isLoading ? 
-                     <Spinner color={Colors.secondary} /> : 
-                      <Button
-                        full
-                        primary
-                        style={appStyles.btnSecontary}
-                        onPress={() => this.props.pressSigninVerify()}  >
-                        <Text style={styles.SignInbtn}>SignUp </Text>
-                      </Button>
-                  }
-                </Animatable.View>  
+               
               </View>          
         
           
@@ -179,8 +168,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   // Action
     return {
-      pressSignin: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInEmail.route })),
-      pressSigninVerify: () => dispatch(NavigationActions.navigate({ routeName: Screens.Varification.route })),
+      pressSignin: () => dispatch(NavigationActions.navigate({ routeName: Screens.Home.route })),
+       pressSigninEmail: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInEmail.route })),
       setLanguage: () => dispatch(userActions.setLanguage({id:1,set:1})),
       showModal: () => dispatch({ type: ActionTypes.SHOWMODAL, showModal: true }),
       resetState: () => dispatch({ type: ActionTypes.RESETSTATE })
@@ -188,4 +177,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(Verification);

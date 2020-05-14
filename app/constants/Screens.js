@@ -27,6 +27,15 @@ export default {
   SignIn : {
     route: 'SignIn'
   }, 
+   SignInEmail : {
+    route: 'SignInEmail'
+  }, 
+  SignInMobile : {
+    route: 'SignInMobile'
+  }, 
+  Varification : {
+    route: 'Varification'
+  },
   SignUp : {
     route: 'SignUp'
   }, 

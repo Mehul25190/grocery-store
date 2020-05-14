@@ -4,9 +4,11 @@ import { Colors, Layout } from '../constants/';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+  
     justifyContent: 'center',
-    backgroundColor: Colors.primary,
+   // backgroundColor: Colors.primary,
+     backgroundColor: 'transparent',
+       flexDirection: 'column',
   },
   statusBar:{
     flex: 1,
@@ -34,6 +36,13 @@ export default StyleSheet.create({
   btnSecontary:{
     backgroundColor: Colors.secondary,
     fontFamily: 'Font-Regular',
+    borderRadius:20,
+    marginLeft: Layout.indent,
+    marginRight: Layout.indent,
+    marginTop:20,
+    fontSize:30,
+    fontWeight:'bold'
+
   },
   content:{
     marginTop: Layout.indent
@@ -163,7 +172,7 @@ export default StyleSheet.create({
   },
   loginTitle:{
     fontSize: 30,
-    color:Colors.white,
+    color:Colors.black,
     marginLeft: Layout.indent,
     textAlign:'center',
     fontFamily: 'Font-Regular',
@@ -171,27 +180,63 @@ export default StyleSheet.create({
   loginBack:{
     marginTop:Layout.doubleIndent,
     justifyContent:'flex-start',
+    backgroundColor:'#333'
   },
   loginBackIcon:{
-    color: Colors.white
+    color: Colors.primary
   },
 
   // Input
   itemInput:{
-
+   height:45,
+    backgroundColor:'#f8f8f8',
+    borderRadius:15
   },
   textbox:{
-    marginTop:15,
-    color: Colors.white,
+    marginTop:3,
+    padding:5,
+    color: Colors.black,
     width:100,
     paddingLeft:Layout.indent,
     paddingRight:Layout.indent,
     fontFamily: 'Font-Regular',
-    fontSize:14
+    fontSize:16
   },
   inputError:{
     color: Colors.red,
     top:20,
     fontSize:12
+  },
+  searchBar:{
+    backgroundColor:'#fff',
+    borderRadius:7
+   
+  },
+  menuBar:{
+   fontSize:32
+  },
+  searchInput:{
+    color:'#AAAAAA',
+    fontSize:14
+  },
+  userIcon:{
+    paddingLeft:5
+  },
+  headerLeft: {
+    flex: 0,
+    paddingLeft:0,
+    width: 40
+  },
+  headerRight: {
+    flex: 0,
+    paddingLeft:5,
+    width: 45
+  },
+  headerStyle:{
+    backgroundColor:Colors.primary,
+    height:70,
+    borderBottomLeftRadius:8,
+    borderBottomRightRadius:8
   }
+ 
 });

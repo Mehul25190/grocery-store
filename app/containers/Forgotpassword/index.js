@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity} from 'react-native'
 import _ from 'lodash';
 import { NavigationActions } from 'react-navigation';
 import {
@@ -23,7 +23,7 @@ import { Logo, Statusbar, LoginBackIcon } from '../../components';
 import imgs from '../../assets/images';
 import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
-import styles from './styles';
+import styles from '../SignIn/styles';
 import ForgotForm from './form';
 
 class Forgotpassword extends React.Component {
@@ -56,47 +56,49 @@ class Forgotpassword extends React.Component {
   render(){
     const { language } = this.props;
     return (
-      <Container style={appStyles.container}>
-        <ImageBackground 
-            source={imgs.bg} 
-            style={ { width: Layout.window.width, height: Layout.window.height }}>
-          <Content enableOnAndroid>
-            <View style={{flexDirection: 'column', flex:1}}>
-              <View style={{flex: 0.8,height: Layout.window.height-80,}}>
-                <View style={appStyles.row}>
-                  <LoginBackIcon props={this.props} /> 
-                  <Animatable.Text 
-                    animation="fadeInDown"
-                    style={appStyles.loginTitle}>{language.forgot}</Animatable.Text>
-                </View> 
-
-                <Animatable.View 
-                  animation="fadeInUp"
-                  delay={500}
-                  style={styles.loginBox}>
-                  <ForgotForm onSubmit={this.reset} />
-                </Animatable.View>
-              </View>  
-              <Animatable.View 
-                animation="fadeIn"
-                delay={1000}
-                style={{flex: 0.2,height: 80,}}> 
-                { this.props.isLoading ? 
-                   <Spinner color={Colors.secondary} /> : 
-                    <Button
-                      full
-                      primary
-                      style={appStyles.btnSecontary}
-                      onPress={() => this.props.pressReset()}
-                    >
-                      <Text> {language.reset} </Text>
-                    </Button>
+     <Container >
+        <Content enableOnAndroid>
+          <ImageBackground 
+              source={imgs.greenBg} 
+              style={ styles.backGroundstyleEmail}>
+           
+             <View style={styles.loginBox}>
+                  <Animatable.View 
+                    animation="fadeInUp"
+                    delay={500}> 
+                       <View >
+                         {/* <LoginBackIcon props={this.props} /> */}
+                          <Animatable.Text 
+                            animation="fadeInDown"
+                            style={appStyles.loginTitle}>{language.forgot}
+                            </Animatable.Text>
+                      </View>   
+                     <ForgotForm onSubmit={this.reset} />
+                  
+                  </Animatable.View>
+                
+                   <Animatable.View 
+                      animation="fadeIn"
+                      delay={1000}>
+                      { this.props.isLoading ? 
+                         <Spinner color={Colors.secondary} /> : 
+                          <TouchableOpacity onPress={() =>  this.props.pressReset()} >
+                           <Button
+                            full
+                            primary
+                            style={appStyles.btnSecontary}
+                              >
+                            <Text style={styles.SignInbtn}>Reset </Text>
+                          </Button>
+                       </TouchableOpacity>
                 }
               </Animatable.View>  
-            </View>          
-          </Content>
-         </ImageBackground>
-      </Container>
+              </View>          
+        
+          
+           </ImageBackground>
+           </Content>
+        </Container>
      
     );
   }

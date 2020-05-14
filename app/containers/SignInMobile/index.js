@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, TouchableWithoutFeedback, TouchableOpacity} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableWithoutFeedback, TouchableOpacity} from 'react-native'
 import _ from 'lodash'; 
 import { NavigationActions } from 'react-navigation';
 import {
@@ -24,10 +24,10 @@ import imgs from '../../assets/images';
 import * as userActions from "../../actions/user";
 import { showToast } from '../../utils/common';
 import appStyles from '../../theme/appStyles';
-import styles from './styles';
-import SignInForm from './form';
+import styles from '../SignIn/styles';
+import SignInFormMobile from './form';
 
-class SignIn extends React.Component {
+class SignInMobile extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -54,7 +54,7 @@ class SignIn extends React.Component {
     this.props.navigation.navigate(Screens.ForgotPassword.route)
   }
 
-  signin(values, dispatch, props){
+  signinmobile(values, dispatch, props){
     dispatch(userActions.signin(values))
       .then(res => {
         if(res.status == 200){
@@ -78,14 +78,7 @@ class SignIn extends React.Component {
 
   render(){
     const { language } = this.props;
-    // if(this.props.showIntro){
-    //   // Show the app intro on first time launch
-    //   if(this.props.languageSet==0){
-    //     return (<SelectLanguage />);
-    //   }else{
-    //     return (<AppIntro />);
-    //   }
-    // }
+  
     if(this.props.user==null){
       // Login 
       return (
@@ -93,62 +86,47 @@ class SignIn extends React.Component {
         <Content enableOnAndroid>
           <ImageBackground 
               source={imgs.signupBg} 
-              style={ styles.backGroundstyle}>
+              style={ styles.backGroundstyleEmail}>
            
-             <View style={styles.loginBox}>
+             <View style={[styles.loginBox,styles.loginBoxEmail]} >
                   <Animatable.View 
                     animation="fadeInUp"
                     delay={500}                
                      > 
-                    <SignInForm onSubmit={this.signin} />
-                    <Row style={{marginBottom:20}}>
-                      <Col>
-                        <Button transparent full  
-                          onPress={() => this.onSignupButtonPressHandler()}
-                          style={[{justifyContent:'flex-start'}]}
-                        >
-                        {/*  <Text style={[styles.linkText,appStyles.textLeft]} > {language.createAcc} </Text>*/}
-                        </Button> 
-                      </Col>
-                      <Col>
-                        <Button transparent full  
-                          onPress={() => this.onForgotpasswordPressHandler()}
-                          style={[{justifyContent:'flex-end'}]} >
-                          <Text style={[styles.linkText,appStyles.textRight]} > {language.forgot} </Text>
-                        </Button>
-                      </Col>
-                    </Row>
+                    {<SignInFormMobile onSubmit={this.signinmobile} />}
+                   
                   </Animatable.View>
                   <Animatable.View 
                     animation="fadeIn"
                     delay={1000} 
-                    style={{marginTop:30}}> 
+                    style={{marginTop:20}}> 
                   { this.props.isLoading ? 
                      <Spinner color={Colors.secondary} /> : 
-                      <Button
+                      <TouchableOpacity>
+                       <Button
                         full
                         primary
                         style={appStyles.btnSecontary}
                          onPress={() =>  this.props.pressSignin()}  >
                         <Text style={styles.SignInbtn}>Login </Text>
                       </Button>
+                       </TouchableOpacity>
                   }
                 </Animatable.View>  
-                  <Animatable.View 
+                 <Animatable.View 
                     animation="fadeIn"
-                    delay={1200} 
-                    style={{marginBottom:30}}> 
-                  { this.props.isLoading ? 
-                     <Spinner color={Colors.secondary} /> : 
-                      <Button
-                        full
-                        primary
-                        style={appStyles.btnSecontary}
-                        onPress={() => this.props.pressSigninVerify()}  >
-                        <Text style={styles.SignInbtn}>SignUp </Text>
-                      </Button>
-                  }
-                </Animatable.View>  
+                     delay={1200} 
+                    style={[styles.loginWith,styles.loginWithMob]} >
+                  	<View style={styles.hairlineleft} />
+                    	   	<View style={styles.loginButtonBelowText1} >		
+                    		<Text style={styles.orText}>Or</Text>
+                   </View>
+                 
+                    <TouchableOpacity  onPress={() =>  this.props.pressSigninEmail()}>
+
+                    <Text style={styles.loginWithText}>Login with your email</Text>
+                    </TouchableOpacity>
+                 </Animatable.View>
               </View>          
         
           
@@ -179,8 +157,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   // Action
     return {
-      pressSignin: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInEmail.route })),
-      pressSigninVerify: () => dispatch(NavigationActions.navigate({ routeName: Screens.Varification.route })),
+      pressSignin: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignIn.route })),
+       pressSigninEmail: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInEmail.route })),
       setLanguage: () => dispatch(userActions.setLanguage({id:1,set:1})),
       showModal: () => dispatch({ type: ActionTypes.SHOWMODAL, showModal: true }),
       resetState: () => dispatch({ type: ActionTypes.RESETSTATE })
@@ -188,4 +166,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignInMobile);

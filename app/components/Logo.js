@@ -12,7 +12,7 @@ class Logo extends React.Component {
         <Image 
           {...this.props} 
           style={[appStyles.rowXYcenter,appStyles.headerLogo, this.props.style]}
-          source={imgs.logo}
+          source={imgs.logoRed}
           resizeMode="contain"
           />
     );

@@ -8,7 +8,7 @@ import { required, email } from 'redux-form-validators'
 import { InputBox } from '../../components';
 import styles from '../SignIn/styles';
 
-class ForgotForm extends React.Component {
+class SignInFormMobile extends React.Component {
   constructor(props){
     super(props);
   }
@@ -16,26 +16,29 @@ class ForgotForm extends React.Component {
     const { handleSubmit, onSubmit, language } = this.props;
     return (
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
-      <View>
-        <Text style={styles.label}>Email</Text>
+     
+        
+      <View >
+        <Text style={styles.label}>Mobile Number</Text>
       </View>
         <Field 
-          name="email" 
+          name="number" 
           component={InputBox} 
-        
-          keyboardType={'email-address'}
-          
-          validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
+          // placeholder='Enter your Mobile'
+          keyboardType={'numeric'}
+          validate=''
         />
+      
+       
       </Form>
     )
   }
 }
 
 
-const forgotform = reduxForm({
-  form: 'forgotForm',
-})(ForgotForm);
+const signinformmobile = reduxForm({
+  form: 'signinFormMobile',
+})(SignInFormMobile);
 
 const mapStateToProps = (state) => {
   return {
@@ -47,4 +50,4 @@ const mapDispatchToProps = (dispatch) => {
     return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(forgotform);
+export default connect(mapStateToProps, mapDispatchToProps)(signinformmobile);
