@@ -19,7 +19,7 @@ import { submit } from 'redux-form';
 import * as Animatable from 'react-native-animatable';
 
 import { Layout, Colors, Screens, ActionTypes } from '../../constants';
-import { Logo, Statusbar, ModalBox, SetLanguage, SelectLanguage, Loader, AppIntro } from '../../components';
+import { Logo, LoginBackIcon, Statusbar, ModalBox, SetLanguage, SelectLanguage, Loader, AppIntro } from '../../components';
 import imgs from '../../assets/images';
 import * as userActions from "../../actions/user";
 import { showToast } from '../../utils/common';
@@ -83,11 +83,13 @@ class SignInEmail extends React.Component {
       // Login 
       return (
         <Container >
-        <Content enableOnAndroid>
+        <Content bounces={false} enableOnAndroid>
           <ImageBackground 
               source={imgs.signupBg} 
               style={ styles.backGroundstyleEmail}>
-           
+            <View style={appStyles.BackIconTop}>
+                  <LoginBackIcon  props={this.props}  /> 
+              </View>
              <View style={[styles.loginBox,styles.loginBoxEmail]} >
                   <Animatable.View 
                     animation="fadeInUp"
@@ -95,7 +97,14 @@ class SignInEmail extends React.Component {
                      > 
                     <SignInFormEmail onSubmit={this.signinemail} />
                     <Row style={{marginBottom:20}}>
-                    
+                     <Col>
+                        <Button transparent full  
+                         style={[{justifyContent:'flex-start'}]} >
+                          <TouchableOpacity  onPress={() => this.onSignupButtonPressHandler()}>
+                          <Text style={[styles.linkTextSignup,appStyles.textRight]} >Signup</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>
                       <Col>
                         <Button transparent full  
                          style={[{justifyContent:'flex-end'}]} >
@@ -117,7 +126,7 @@ class SignInEmail extends React.Component {
                         full
                         primary
                         style={appStyles.btnSecontary}
-                         onPress={() =>  this.props.pressSignin()}  >
+                         onPress={() =>  this.props.pressSigninVerify()}  >
                         <Text style={styles.SignInbtn}>Login </Text>
                       </Button>
                        </TouchableOpacity>
@@ -163,7 +172,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   // Action
     return {
-      pressSignin: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignIn.route })),
+      pressSigninVerify: () => dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route })),
       pressSigninMob: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInMobile.route })),
       setLanguage: () => dispatch(userActions.setLanguage({id:1,set:1})),
       showModal: () => dispatch({ type: ActionTypes.SHOWMODAL, showModal: true }),

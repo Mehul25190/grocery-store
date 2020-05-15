@@ -90,31 +90,25 @@ class SignIn extends React.Component {
       // Login 
       return (
         <Container >
-        <Content enableOnAndroid>
+        <Content bounces={false} enableOnAndroid>
           <ImageBackground 
               source={imgs.signupBg} 
               style={ styles.backGroundstyle}>
            
-             <View style={styles.loginBox}>
+             <View style={[styles.loginBox,styles.signBox]}>
                   <Animatable.View 
                     animation="fadeInUp"
                     delay={500}                
                      > 
                     <SignInForm onSubmit={this.signin} />
                     <Row style={{marginBottom:20}}>
+                    
                       <Col>
                         <Button transparent full  
-                          onPress={() => this.onSignupButtonPressHandler()}
-                          style={[{justifyContent:'flex-start'}]}
-                        >
-                        {/*  <Text style={[styles.linkText,appStyles.textLeft]} > {language.createAcc} </Text>*/}
-                        </Button> 
-                      </Col>
-                      <Col>
-                        <Button transparent full  
-                          onPress={() => this.onForgotpasswordPressHandler()}
-                          style={[{justifyContent:'flex-end'}]} >
-                          <Text style={[styles.linkText,appStyles.textRight]} > {language.forgot} </Text>
+                         style={[{justifyContent:'flex-end'}]} >
+                          <TouchableOpacity  onPress={() => this.onForgotpasswordPressHandler()}>
+                          <Text style={[styles.linkText,appStyles.textRight]} > Forgot Password?</Text>
+                          </TouchableOpacity>
                         </Button>
                       </Col>
                     </Row>
@@ -137,14 +131,14 @@ class SignIn extends React.Component {
                   <Animatable.View 
                     animation="fadeIn"
                     delay={1200} 
-                    style={{marginBottom:30}}> 
+                    style={{marginBottom:0}}> 
                   { this.props.isLoading ? 
                      <Spinner color={Colors.secondary} /> : 
                       <Button
                         full
                         primary
                         style={appStyles.btnSecontary}
-                        onPress={() => this.props.pressSigninVerify()}  >
+                        onPress={() => this.props.pressSignUp()}  >
                         <Text style={styles.SignInbtn}>SignUp </Text>
                       </Button>
                   }
@@ -180,7 +174,7 @@ const mapDispatchToProps = (dispatch) => {
   // Action
     return {
       pressSignin: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInEmail.route })),
-      pressSigninVerify: () => dispatch(NavigationActions.navigate({ routeName: Screens.Varification.route })),
+      pressSignUp: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignUp.route })),
       setLanguage: () => dispatch(userActions.setLanguage({id:1,set:1})),
       showModal: () => dispatch({ type: ActionTypes.SHOWMODAL, showModal: true }),
       resetState: () => dispatch({ type: ActionTypes.RESETSTATE })

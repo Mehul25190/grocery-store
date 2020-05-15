@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Form, Item, Input, Title, Button, Text } from 'native-base';
 import { required, email, length, confirmation } from 'redux-form-validators'
 import { InputBox } from '../../components';
-import styles from './styles';
+import styles from '../SignIn/styles';
 
 class SignUpForm extends React.Component {
   constructor(props){
@@ -15,42 +15,38 @@ class SignUpForm extends React.Component {
   render(){
     const { handleSubmit, onSubmit, language } = this.props;
     return (
-      <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
-        <Field 
-          name="name" 
+      <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm,styles.signFormBox}>
+      <View >
+        <Text style={styles.label}>Mobile Number</Text>
+      </View>
+         <Field 
+          name="number" 
           component={InputBox} 
-          placeholder={language.name}
-          keyboardType={'default'}
-          icon='user'
-          iconStyle={{top:5,paddingLeft:15}}
-          validate={[required({msg: `${language.name} ${language.required}`})]}
+          // placeholder='Enter your Mobile'
+          keyboardType={'numeric'}
+          validate=''
         />
+        <View>
+         <Text style={styles.label}>Email</Text>
+        </View>
+
         <Field 
           name="email" 
           component={InputBox} 
-          placeholder={language.email}
+          // placeholder='Enter your email'
           keyboardType={'email-address'}
-          icon='mail'
-          iconStyle={{top:5,paddingLeft:15}}
           validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
         />
+      <View>
+        <Text style={styles.label}>Password</Text>
+      </View>
+
         <Field 
           name="password" 
           component={InputBox} 
-          placeholder={language.password}
+          // placeholder='Enter password'
           secureTextEntry={true}
-          icon='lock'
-          iconStyle={{top:5,paddingLeft:15}}
-          validate={[required({msg: `${language.password} ${language.required}`}),length({ minimum: 4,msg: `${language.tooShort}` })]}
-        />
-        <Field 
-          name="confirmpass" 
-          component={InputBox} 
-          placeholder={language.confirmPassword}
-          secureTextEntry={true}
-          icon='lock'
-          iconStyle={{top:5,paddingLeft:15}}
-          validate={[confirmation({ field: 'password', msg: `${language.password} ${language.doesntMatch}` })]}
+          validate={[required({msg: `${language.password} ${language.required}`})]}
         />
       </Form>
     )

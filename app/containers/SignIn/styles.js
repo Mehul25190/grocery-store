@@ -16,24 +16,46 @@ export default {
    justifyContent: 'center',
    backgroundColor: 'transparent',
    flexDirection: 'column',
+
   },
   itemStyle:{
     marginLeft:0
   },
+  forgotBox:{
+    flex:2,
+    justifyContent:'flex-start'
+  },
   loginBox: {
+
     marginTop: Layout.indent,
     marginLeft: 0,
     marginRight: 0,
     marginBottom: Layout.indent
    
   },
+  signupBox:{
+    marginBottom:50,
+    flex:2.5,
+    justifyContent:'flex-start',
+    
+  },
+  signBox:{
+   marginBottom:50
+  },
+  signFormBox:{
+    marginBottom:3,
+    paddingBottom:3
+  },
   loginBoxEmail:{
-    marginTop:50
+    
+    flex:3,
+    justifyContent:'flex-start'
   },
   verificationBox:{
-    marginTop: 50,
     marginLeft: 0,
-    marginRight: 0
+    marginRight: 0,
+    flex:4.5,
+    justifyContent:'flex-start'
   },
   linkTextBtn:{
     marginTop:Layout.indent
@@ -51,7 +73,24 @@ export default {
     fontSize:16,
     fontFamily: 'Font-Regular',
     paddingBottom:2,
+
     
+  },
+  linkTextLogin:{
+  textTransform:'capitalize',
+    color: Colors.primary,
+    fontSize:16,
+    fontFamily: 'Font-Regular',
+    paddingBottom:20,
+    paddingLeft:Layout.indent
+  },
+  linkTextSignup:{
+    textTransform:'capitalize',
+    color: Colors.primary,
+    fontSize:16,
+    fontFamily: 'Font-Regular',
+    paddingBottom:2,
+    paddingLeft:Layout.indent
   },
   loginForm:{
     marginTop: Layout.doubleIndent,

@@ -33,8 +33,8 @@ export default {
   SignInMobile : {
     route: 'SignInMobile'
   }, 
-  Varification : {
-    route: 'Varification'
+  Verification : {
+    route: 'Verification'
   },
   SignUp : {
     route: 'SignUp'

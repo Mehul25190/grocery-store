@@ -6,7 +6,7 @@ import {
 } from 'native-base';
 import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
-
+import {TouchableOpacity} from 'react-native';
 import appStyles from '../theme/appStyles';
 
 class LoginBackIcon extends React.Component {
@@ -15,12 +15,13 @@ class LoginBackIcon extends React.Component {
   }
   render() {
     return (
-      <Button transparent full
-        onPress={() => this.props.goBack()}
-        style={appStyles.loginBack}
-      >
-        <Icon name="arrow-back" style={appStyles.loginBackIcon} />
+      
+      <Button transparent full style={appStyles.loginBack}  >
+        <TouchableOpacity  onPress={() => this.props.goBack()}>
+          <Icon name="arrow-back" style={appStyles.loginBackIcon} />
+         </TouchableOpacity>
       </Button> 
+          
     );
   }
 }

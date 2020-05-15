@@ -19,7 +19,7 @@ import { submit } from 'redux-form';
 import * as Animatable from 'react-native-animatable';
 
 import { Layout, Colors, Screens, ActionTypes } from '../../constants';
-import { Logo, Statusbar, ModalBox, SetLanguage, SelectLanguage, Loader, AppIntro } from '../../components';
+import { Logo, Statusbar,LoginBackIcon, ModalBox, SetLanguage, SelectLanguage, Loader, AppIntro } from '../../components';
 import imgs from '../../assets/images';
 import * as userActions from "../../actions/user";
 import { showToast } from '../../utils/common';
@@ -85,11 +85,13 @@ class Verification extends React.Component {
       // Login 
       return (
         <Container >
-        <Content enableOnAndroid>
+        <Content bounces={false} enableOnAndroid>
           <ImageBackground 
               source={imgs.greenBg} 
               style={ styles.backGroundstyleEmail}>
-           
+            <View style={appStyles.BackIconTop}>
+                  <LoginBackIcon  props={this.props}  /> 
+              </View>
              <View style={styles.verificationBox} >
                   <Animatable.View 
                     animation="fadeInUp"

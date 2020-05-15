@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "PushBase",
-    "slug": "PushBase",
-    "description": "A simple react native starter/boilerplate developed using React native + Expo + React Navigation + Nativebase + Redux + Redux Thunk + Redux Persist ",
+    "name": "Grocery Store",
+    "slug": "GroceryStore",
+    "description": "Grocer Store is a grocery delivery service where personal shoppers select your items from the store and then deliver them to your door.",
     "privacy": "public",
     "platforms": [
       "ios",
@@ -15,7 +15,7 @@
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#7f70e7"
+      "backgroundColor": "#58B860"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

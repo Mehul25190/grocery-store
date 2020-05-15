@@ -57,17 +57,20 @@ class Forgotpassword extends React.Component {
     const { language } = this.props;
     return (
      <Container >
-        <Content enableOnAndroid>
+        <Content bounces={false} enableOnAndroid>
+
           <ImageBackground 
               source={imgs.greenBg} 
               style={ styles.backGroundstyleEmail}>
-           
-             <View style={styles.loginBox}>
+              <View style={appStyles.BackIconTop}>
+                  <LoginBackIcon  props={this.props}  /> 
+              </View>
+              <View style={[styles.loginBox, styles.forgotBox]}>
                   <Animatable.View 
                     animation="fadeInUp"
                     delay={500}> 
                        <View >
-                         {/* <LoginBackIcon props={this.props} /> */}
+                        
                           <Animatable.Text 
                             animation="fadeInDown"
                             style={appStyles.loginTitle}>{language.forgot}

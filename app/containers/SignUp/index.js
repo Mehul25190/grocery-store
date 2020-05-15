@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image,TouchableOpacity} from 'react-native'
 import _ from 'lodash';
 import { NavigationActions } from 'react-navigation';
 import {
@@ -24,7 +24,7 @@ import imgs from '../../assets/images';
 import * as userActions from "../../actions/user";
 import {showToast} from '../../utils/common';
 import appStyles from '../../theme/appStyles';
-import styles from './styles';
+import styles from '../SignIn/styles';
 import SignUpForm from './form';
 
 class SignUp extends React.Component {
@@ -37,7 +37,13 @@ class SignUp extends React.Component {
       error: '',
     };
   }
+   onSigninButtonPressHandler(){
+    this.props.navigation.navigate(Screens.SignInEmail.route)
+  }
 
+  onForgotpasswordPressHandler(){
+    this.props.navigation.navigate(Screens.ForgotPassword.route)
+  }
   signup(values, dispatch, props){
     dispatch(userActions.signup(values))
       .then(res => {
@@ -63,47 +69,58 @@ class SignUp extends React.Component {
   render(){
     const { language } = this.props;
     return (
-      <Container style={appStyles.container}>
-        <ImageBackground 
-            source={imgs.bg} 
-            style={ { width: Layout.window.width, height: Layout.window.height }}>
-          <Content enableOnAndroid>
-            <View style={{flexDirection: 'column', flex:1}}>
-              <View style={{flex: 0.8,height: Layout.window.height-80,}}>
-                <View style={appStyles.row}>
-                  <LoginBackIcon props={this.props} /> 
-                  <Animatable.Text 
-                    animation="fadeInDown"
-                    style={appStyles.loginTitle}>{language.signup}</Animatable.Text>
-                </View> 
-
+      <Container >
+        <Content bounces={false} enableOnAndroid>
+          <ImageBackground 
+              source={imgs.signupBg} 
+              style={ styles.backGroundstyle}>
+              <View style={appStyles.BackIconTop}>
+                  <LoginBackIcon  props={this.props}  /> 
+              </View>
+           <View style={[styles.loginBox,styles.signupBox]}>
+             <Animatable.View 
+                    animation="fadeInUp"
+                    delay={500}                
+                     > 
+                    <SignUpForm onSubmit={this.signup} />
+                    <Row style={{marginBottom:20}}>
+                     <Col>
+                        <Button transparent full  
+                         style={[{justifyContent:'flex-start'}]} >
+                          <TouchableOpacity  onPress={() => this.onSigninButtonPressHandler()}>
+                          <Text style={[styles.linkTextLogin]} >Login</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>
+                      <Col>
+                        <Button transparent full  
+                         style={[{justifyContent:'flex-end'}]} >
+                          <TouchableOpacity  onPress={() => this.onForgotpasswordPressHandler()}>
+                          <Text style={[styles.linkText,appStyles.textRight]} > Forgot Password?</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Animatable.View>
                 <Animatable.View 
-                  animation="fadeInUp"
-                  delay={500}
-                  style={styles.loginBox}>
-                  <SignUpForm onSubmit={this.signup} />
-                </Animatable.View>
-              </View>  
-              <Animatable.View 
-                animation="fadeIn"
-                delay={1000}
-                style={{flex: 0.2,height: 80,}}> 
-                { this.props.isLoading ? 
-                   <Spinner color={Colors.secondary} /> : 
-                    <Button
-                      full
-                      primary
-                      style={appStyles.btnSecontary}
-                      onPress={() => this.props.pressSignup()}
-                    >
-                      <Text>{language.signup}</Text>
-                    </Button>
-                }
-              </Animatable.View>  
-            </View>          
-          </Content>
-         </ImageBackground>
-      </Container>
+                    animation="fadeIn"
+                    delay={1200} 
+                    style={{marginTop:20}}> 
+                  { this.props.isLoading ? 
+                     <Spinner color={Colors.secondary} /> : 
+                      <Button
+                        full
+                        primary
+                        style={appStyles.btnSecontary}
+                        onPress={() => this.props.pressVerify()}  >
+                        <Text style={styles.SignInbtn}>SignUp </Text>
+                      </Button>
+                  }
+                </Animatable.View>  
+            </View>    
+        </ImageBackground>      
+      </Content>
+    </Container>
      
     );
   }
@@ -121,6 +138,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
       pressSignup: () => dispatch(submit('signupForm')),
       signup: (user) => dispatch(userActions.signup(user)),
+      pressVerify: () => dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route })),
+
    };
 };
 

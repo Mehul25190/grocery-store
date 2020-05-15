@@ -15,32 +15,23 @@ class SignInForm extends React.Component {
   render(){
     const { handleSubmit, onSubmit, language } = this.props;
     return (
-      <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
-      <View >
-        <Text style={styles.label}>Mobile Number</Text>
-      </View>
-         <Field 
-         
-          name="number" 
-          component={InputBox} 
-          // placeholder='Enter your Mobile'
-           keyboardType={'numeric'}
-             validate=''
-        />
-         <View>
-        <Text style={styles.label}>Email</Text>
-      </View>
+      <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm,styles.signFormBox}>
+     
+        <View>
+         <Text style={styles.label}>Email</Text>
+        </View>
+
         <Field 
-         
           name="email" 
           component={InputBox} 
           // placeholder='Enter your email'
           keyboardType={'email-address'}
           validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
         />
-      <View >
+      <View>
         <Text style={styles.label}>Password</Text>
       </View>
+
         <Field 
           name="password" 
           component={InputBox} 

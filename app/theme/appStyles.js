@@ -178,14 +178,20 @@ export default StyleSheet.create({
     fontFamily: 'Font-Regular',
   },
   loginBack:{
-    marginTop:Layout.doubleIndent,
+   
+
     justifyContent:'flex-start',
-    backgroundColor:'#333'
+   
   },
   loginBackIcon:{
-    color: Colors.primary
+    color: Colors.white,
+ 
   },
-
+  BackIconTop:{
+    flex:1,
+    justifyContent:'flex-start',
+    paddingTop:20
+  },
   // Input
   itemInput:{
    height:45,
