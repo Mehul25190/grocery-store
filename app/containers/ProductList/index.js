@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View,TouchableHighlight,Image,FlatList,ScrollView, ImageBackground, StatusBar,TouchableOpacity} from 'react-native'
 import _ from 'lodash'; 
 import { Layout, Colors, Screens } from '../../constants';
-import { Logo, Svgicon, Headers } from '../../components';
+import { Logo, Svgicon, Headers,LoginBackIcon } from '../../components';
 import imgs from '../../assets/images';
 import {
   Container,
@@ -20,7 +20,7 @@ import Category from 'react-native-category';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
-import styles from '../Home/styles';
+import styles from './styles';
 import NumericInput from 'react-native-numeric-input';
 
 let gm='gm';
@@ -36,11 +36,13 @@ constructor(props) {
 }
 
   componentDidMount() {
-    var that = this;
-    let items = Array.apply(null, Array(60)).map((v, i) => {
-      return { id: i, src: 'http://placehold.it/200x200?text=' + (i + 1) };
+    this.props.navigation.setParams({
+            appBar: {
+                title: 'Clientes'
+            }
     });
-    that.setState({
+
+    this.setState({
       dataSource: productList,
       value:1
     });
@@ -59,7 +61,12 @@ onPressRecipe(item){
     return (
       <Container style={appStyles.container}>
       
-          <Headers {...this.props} />
+                 <Header>
+                   <View style={appStyles.BackIconTop}>
+                      <LoginBackIcon  props={this.props}  /> 
+                   </View>
+                    <Title>Header</Title>
+                </Header>
           <Content enableOnAndroid style={appStyles.content}>
            
            <Card style={styles.addBox}>
@@ -179,29 +186,35 @@ onPressRecipe(item){
                                 leftButtonBackgroundColor='#fff'/>
                           </View> 
                           <View>
+                            
+                          {
+                            index == 0 || index == 2?
                           
-                            <Button style={[styles.buyButton, {justifyContent:'flex-start', width:110,backgroundColor:Colors.secondary,padding:0,fontSize:5}]}>
+                            <Button style={styles.subscribeBtn}>
                              <TouchableOpacity>
-                              <Text style={[styles.buyText,{color:'#fff'}]}>
+                              <Text style={styles.subText}>
                                Subscribe@{'\u20B9'}12
                               </Text>
-                              </TouchableOpacity>
-                            </Button>
 
-                            
-                          
-                          </View>
-                          <View>
-                          
+                              </TouchableOpacity>
+                            </Button>:
+                            <View style={{padding:0,margin:0}}>
+                            </View>
+                          }
                             <Button style={styles.buyButton}>
                              <TouchableOpacity>
+                              {
+                            index == 0 || index == 2?
                               <Text style={styles.buyText}>
                                 Buy Once
+                              </Text> :
+                              <Text style={styles.buyText}>
+                                Buy 
                               </Text>
+                            }
                               </TouchableOpacity>
                             </Button>
-
-
+                       
                           
                           </View>
                         </Right>

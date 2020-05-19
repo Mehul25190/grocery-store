@@ -62,9 +62,18 @@ const DrawerStack = createDrawerNavigator({
 });
 
 const DrawerNavigation = createStackNavigator({
-  [Screens.DrawerStack.route]: { screen: DrawerStack }
+  [Screens.DrawerStack.route]: { screen: DrawerStack },
+  [Screens.ProductList.route]: { screen: ProductList },
 }, {
   headerMode: 'none',
+   defaulfNavigationOptions: ({ navigation }) => ({
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        textAlign: 'center',
+        alignSelf: 'center',
+        flex: 1,
+      }
+    }),
   transitionConfig: transitionConfig
 });
 
