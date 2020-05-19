@@ -45,7 +45,7 @@ export default StyleSheet.create({
 
   },
   content:{
-    marginTop: Layout.indent
+    marginTop: Layout.indent-7
   },
   contentBg:{
     backgroundColor: Colors.white,

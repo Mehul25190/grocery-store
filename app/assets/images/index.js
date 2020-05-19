@@ -11,6 +11,12 @@ const images = {
 	orLine : require('./or-line.png'),
 	greenBg : require('./green-bg.png'),
 	megaSale : require('./megaSale.png'),
+	groceryImg:require('./grocery.png'),
+	ayurvedImg:require('./ayurved.png'),
+	babycareImg:require('./babycare.png'),
+	staplesImg:require('./staples.png'),
+	mangoSale: require('./mangoSale.png'),
+	filterIcon: require('./filterIcon.png')
 };
 
 export default images;

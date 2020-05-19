@@ -95,7 +95,25 @@ class SignInMobile extends React.Component {
                     animation="fadeInUp"
                     delay={500}                
                      > 
-                    {<SignInFormMobile onSubmit={this.signinmobile} />}
+                   <SignInFormMobile onSubmit={this.signinmobile} />
+                   <Row style={{marginBottom:20}}>
+                     <Col>
+                        <Button transparent full  
+                         style={[{justifyContent:'flex-start'}]} >
+                          <TouchableOpacity  onPress={() => this.onSignupButtonPressHandler()}>
+                          <Text style={[styles.linkTextSignup,appStyles.textRight]} >Signup</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>
+                      <Col>
+                        <Button transparent full  
+                         style={[{justifyContent:'flex-end'}]} >
+                          <TouchableOpacity  onPress={() => this.onForgotpasswordPressHandler()}>
+                          <Text style={[styles.linkTextEmail,appStyles.textRight]} > Forgot Password?</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>
+                    </Row>
                    
                   </Animatable.View>
                   <Animatable.View 

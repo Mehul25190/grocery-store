@@ -87,8 +87,8 @@ class SignInEmail extends React.Component {
           <ImageBackground 
               source={imgs.signupBg} 
               style={ styles.backGroundstyleEmail}>
-            <View style={appStyles.BackIconTop}>
-                  <LoginBackIcon  props={this.props}  /> 
+             <View style={appStyles.BackIconTop}>
+                   
               </View>
              <View style={[styles.loginBox,styles.loginBoxEmail]} >
                   <Animatable.View 

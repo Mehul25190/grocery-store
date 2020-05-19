@@ -15,6 +15,9 @@ export default {
     icon:'home',
     label: Strings.home,
   },
+  ProductList:{
+    route: 'ProductList',
+  },
   Settings : {
     route: 'Settings',
     icon:'settings',

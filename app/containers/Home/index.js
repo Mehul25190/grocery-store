@@ -1,8 +1,8 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image,StatusBar} from 'react-native'
+import { StyleSheet, View,TouchableHighlight,Image,FlatList,ScrollView, ImageBackground, StatusBar,TouchableOpacity} from 'react-native'
 import _ from 'lodash'; 
 import { Layout, Colors, Screens } from '../../constants';
-import { Logo, Svgicon, Headers } from '../../components';
+import { Logo, Svgicon, Headers, Catalog, List } from '../../components';
 import imgs from '../../assets/images';
 import {
   Container,
@@ -14,14 +14,31 @@ import {
   Header, Left, Body, Title, Right,Grid,Col,Card
 
 } from 'native-base';
+import {ItemList} from '../data/data';
+//import MasonryList from "react-native-masonry-list";
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  onPressRecipe = item => {
+    this.props.navigation.navigate('ProductList', { item });
+  };
+
+   renderItems = ({ item, index}) => (
+    <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressRecipe(item)}>
+       <View style={index == 0 ? styles.ItemContainer : styles.ItemContainer}>
+        <Image style={styles.photo} source={ item.photo_url } />
+        <Text style={styles.productTitle}>{item.title}</Text>
+      </View>
+    </TouchableHighlight>
+  );
+  
   render(){
     return (
       <Container style={appStyles.container}>
@@ -30,8 +47,8 @@ class Home extends React.Component {
           <Content enableOnAndroid style={appStyles.content}>
             <Card style={styles.addBox}>
             <Grid>
-              <Col style={{ marginLef:5,width: 150 }}>
-                 <Image source={imgs.megaSale} style={{flex: 1, height: null, width: null}} />
+              <Col style={{ marginLef:2,width: 120,}}>
+                 <Image source={imgs.megaSale} style={{flex: 1, height: null, width: null,resizeMode:'contain'}} />
               </Col>
               <Col style={{  }}>
                 <View style={styles.discountBlock}>
@@ -47,19 +64,56 @@ class Home extends React.Component {
                   </Text>
                   <View style={styles.btnBlock}>
                    <Button transparent tyle={{textAlign:'right'}}>
+                    <TouchableOpacity>
                      <Text style={styles.discountBtn}>Get Discount</Text>
+                     </TouchableOpacity>
                     </Button>
                   </View>
                 </View>
               </Col>
              </Grid>
-             
-            </Card>
-             
+             </Card>
+          
+
+          <View style={styles.ItemLayout}>
+            <View style={styles.shopSubTitle}>
+              <Text style={styles.shopSubTitleText}>Shop by Categories</Text>
+            </View>
+           { <FlatList 
+                     vertical
+                     showsVerticalScrollIndicator={false}
+                     numColumns={2}
+                     data={ItemList}
+                     renderItem={this.renderItems}
+                     keyExtractor={item => `${item.itemId}`}
+                   />}
+
+                   <View>
+                    {
+                    
+                     // ItemList.map((item, index) => {
+                     //    return (
+                     //     <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressRecipe(item)}>
+                     //       <View style={index == 0 ? styles.FirstItem : styles.ItemContainer}>
+                     //        <Image style={styles.photo} source={ item.photo_url } />
+                     //        <Text style={styles.productTitle}>{item.title}</Text>
+                     //      </View>
+                     //    </TouchableHighlight>
+                     //    );
+                     //  })
+                    }
+
+                   </View>
+                   
+          </View>
+            {/* <MasonryList sorted onPressImage={this.onPressImage} images={data}  />*/}
+
           </Content>
-      
+
+       
+         { /*<Catalog {...this.props} />*/}
       </Container>
-     
+    
     );
   }
 }

@@ -38,7 +38,7 @@ class SignUp extends React.Component {
     };
   }
    onSigninButtonPressHandler(){
-    this.props.navigation.navigate(Screens.SignInEmail.route)
+    this.props.navigation.navigate(Screens.SignInMobile.route)
   }
 
   onForgotpasswordPressHandler(){

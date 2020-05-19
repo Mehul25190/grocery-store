@@ -3,10 +3,13 @@ import Constants from 'expo-constants';
 
 const statusBarHeight = Constants.statusBarHeight;
 const { width, height } = Dimensions.get('window');
-
+const SCREEN_WIDTH = width < height ? width : height;
 const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
-
+const ItemNumColums = 2;
+// item size
+const ITEM_HEIGHT = 150;
+const ITEM_MARGIN = 10;
 const scale = size => Math.round(width / guidelineBaseWidth * size);
 const verticalScale = size => Math.round(height / guidelineBaseHeight * size);
 const moderateScale = (size, factor = 0.5) =>
@@ -33,6 +36,10 @@ export default {
 		width,
 		height,
 	},
+	SCREEN_WIDTH,
+	ItemNumColums,
+	ITEM_HEIGHT,
+	ITEM_MARGIN,
 	statusBarHeight,
 	scale,
 	verticalScale,
