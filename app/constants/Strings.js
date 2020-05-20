@@ -19,6 +19,7 @@ export default[
 		home: 'Home',
 		categories: 'Categories',
 		settings: 'Settings',
+		mywallet: 'My Wallet',
 		mypayments: 'My Payments',
 		myratings: 'MyRatings',
 		notification:'My Notification',

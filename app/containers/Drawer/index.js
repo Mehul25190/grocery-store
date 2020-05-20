@@ -43,11 +43,10 @@ class Drawer extends React.Component {
     const userEmail = this.props.user == null ? '' : this.props.user.email;
     return (
       <Container>
-        <Header style={styles.header}>
-          <View style={[appStyles.row, {paddingTop: Layout.halfIndent}]}>
-            <List>
-              <ListItem >
-                <Left style={{flex:0, JustinContent:'flex-start', width:60}}>
+        <Header style={[styles.header,appStyles.headerStyle]}>
+         
+           
+                <Left style={{flex:0,JustinContent:'flex-start', width:60}}>
                   <LoginBackIcon />
                 </Left>
                 <Body>
@@ -58,22 +57,21 @@ class Drawer extends React.Component {
                  <TouchableOpacity>
                   <Svgicon name="search1" type="AntDesign"
                    color={Colors.white} 
-                    width={Layout.bigIconSize} 
-                    height={Layout.bigIconSize} />
+                   width='16'
+                   />
                 </TouchableOpacity>
                 </Right>
-              </ListItem>
-            </List>
-          </View>
+             
         </Header>
-        <Card style={styles.addBox}>
-         <List>
-              <ListItem avatar>
-                <Left>
+        <Card style={[appStyles.addBox,{height:'auto'}]}>
+         <List >
+              <ListItem avatar noBorder style={{ marginLeft: 10,}}>
+                <Left style={{ flex: 0,  marginLeft: 0,   paddingLeft:0,  width: 40}}>
                   <Svgicon name="user-circle" 
                    type="FontAwesome"
                     color={Colors.primary} 
-                    width='250'
+
+                    IconStyle={appStyles.userIconStyle}
                     />
                 </Left>
                 <Body>
@@ -86,8 +84,36 @@ class Drawer extends React.Component {
                  <TouchableOpacity>
                   <Svgicon name="edit" type="MaterialIcons"
                    color={Colors.primary} 
-                    width={Layout.bigIconSize} 
-                    height={Layout.bigIconSize} />
+                    IconStyle={appStyles.IconStyle}
+                    />
+                </TouchableOpacity>
+                </Right>
+              </ListItem>
+              <View>
+                <Text style={{backgroundColor:Colors.primary,height:1,  borderBottom:1}}>
+                </Text>
+              </View>
+               <ListItem avatar noBorder style={{ marginLeft: 10,}}>
+                <Left style={{paddingLeft:5, width: 30,}}>
+                  <Svgicon name="location-on" 
+                   type="MaterialIcons"
+                    color={Colors.primary} 
+
+                    IconStyle={[appStyles.IconStyle,{textAlign:'center',JustinContent:'center'}]}
+                    />
+                </Left>
+                <Body>
+                  <Text style={appStyles.userArea} >South Bopal,</Text>
+                  <Text style={appStyles.userCity} >Ahmedabad - Gandhinagar,</Text>
+                 
+                </Body>
+
+                <Right>
+                 <TouchableOpacity>
+                  <Svgicon name="edit" type="MaterialIcons"
+                   color={Colors.primary} 
+                    IconStyle={appStyles.IconStyle}
+                    />
                 </TouchableOpacity>
                 </Right>
               </ListItem>
@@ -107,13 +133,18 @@ class Drawer extends React.Component {
                   onPress={() => this.props.navigation.navigate(data.route)}>
                       <Svgicon 
                         style={appStyles.drawerIcon} 
-                        color={(data.route==currentRoute) ? Colors.secondary:Colors.black} 
+                        color={(data.route==currentRoute) ? Colors.primary:Colors.lightIcon} 
                         name={data.icon} 
                         type={data.type}
                         />
                       <Text
-                      style={[appStyles.drawerText,{backgroundColor:'#ddd'}]}>
+                      style={[appStyles.drawerText]}>
+                      {(data.route)}</Text>
+                    {/*
+                    <Text
+                      style={[appStyles.drawerText]}>
                       {language[(data.route).toLowerCase()]}</Text>
+                    */}
                   </ListItem>
                 );
               }}
@@ -122,8 +153,8 @@ class Drawer extends React.Component {
         </Content>
         <Footer style={styles.logoutFooter}>
           <Button iconLeft transparent full style={styles.logoutBtn} onPress={() => this.logout()} >
-            <Icon fontSize='12' type='AntDesign' name='logout' style={styles.white} />
-            <Text style={styles.white}>{this.props.language.logout}</Text>
+            <Icon  type='AntDesign' name='logout' style={styles.logoutIcon} />
+            <Text style={styles.logoutText}>{this.props.language.logout}</Text>
           </Button>
         </Footer>
       </Container>

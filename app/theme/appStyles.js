@@ -44,6 +44,7 @@ export default StyleSheet.create({
     fontWeight:'bold'
 
   },
+ 
   content:{
     marginTop: Layout.indent-7
   },
@@ -52,7 +53,21 @@ export default StyleSheet.create({
     padding: Layout.indent,
     flex:1
   },
-
+ addBox:{
+    marginLeft:Layout.indent-6,
+    marginRight:Layout.indent-6,
+     height:120,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 2,
+    shadowColor: '#000000',
+    shadowOffset: {
+    width: 0,
+    height: 3
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1.0
+},
   setLanguage: {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
@@ -120,7 +135,8 @@ export default StyleSheet.create({
   },
   drawerList:{
     margin:0,
-    paddingLeft:0
+    paddingLeft:0,
+    
   },
   drawerItem:{
     margin:0,
@@ -132,16 +148,31 @@ export default StyleSheet.create({
   drawerText:{
     fontSize: 17, 
     fontWeight: '600', 
-    color: Colors.black,
+    color: Colors.lightIcon,
     paddingLeft: Layout.indent
+  },
+  userIconStyle:{
+    fontSize:40,
+    width:50
+  },
+  IconStyle:{
+    fontSize:18,
   },
   profileName:{
     color: Colors.black,
-    fontSize: 22
+    fontSize: 18,
+
+  },
+  userCity:{
+ fontSize: 12,
+  },
+  userArea:{
+     fontSize: 12,
   },
   profileEmail:{
     color: Colors.black,
-    fontSize: 14
+    fontSize: 14,
+        lineHeight:15
   },
   activeDrawerItem:{
     // backgroundColor: Colors.primaryLight
@@ -233,10 +264,17 @@ export default StyleSheet.create({
     paddingLeft:0,
     width: 40
   },
+   IconRight:{
+   textAlign:'center',
+   alignSelf:'center',
+   width:40
+  },
   headerRight: {
+    
     flex: 0,
     paddingLeft:5,
-    width: 45
+    width: 45,
+    textAlign:'center'
   },
   headerStyle:{
     backgroundColor:Colors.primary,

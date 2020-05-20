@@ -16,30 +16,30 @@ import {categoryList} from '../data/data';
 import {filterList} from '../data/data';
 import {productList} from '../data/data';
 //import MasonryList from "react-native-masonry-list";
-import Category from 'react-native-category';
+//import Category from 'react-native-category';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import NumericInput from 'react-native-numeric-input';
+import PropTypes from 'prop-types';
 
 let gm='gm';
 class ProductList extends React.Component {
-
 constructor(props) {
-
   super(props);
   this.state = {
     dataSource:productList,
-    value:1
+    value:1,
+    
   };
 }
 
   componentDidMount() {
-   
     this.setState({
       dataSource: productList,
       value:1
+
     });
   }
 //func call when click item category
@@ -52,27 +52,48 @@ _filterChoose(item){
 onPressRecipe(item){
   alert(this.item);
 }
+
  openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
-}
+};
+
+ handleItemCategoryClick(category, rowID) {
+   alert(this.category);
+  }
+
+ //render Item
+  renderItemCategory=({item, index})=> (
+      <TouchableOpacity 
+
+        onPress={this.handleItemCategoryClick.bind(this, item.title, index)}
+
+        style={[styles.itemStyles]}>
+          <Text style={[styles.textItemStyles]}>
+            {item.title}
+          </Text>
+      </TouchableOpacity>
+   );
+    
+    
+
   render(){
-     const { navigation } = this.props;
+
+    const { navigation } = this.props;
     const getTitle = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
       
-            <Headers
+         <Headers
             IconLeft='arrow-back'
             onPress={() => this.openControlPanel()}
             IconRightS=''
             IconRightF='search'
             bgColor='transparent'
-            middlePart= <Text style={{color:'#fff',fontSize:18}}>{getTitle.title}</Text>
-            
-           />
+            Title= {getTitle.title}  />
+
           <Content enableOnAndroid style={appStyles.content}>
            
-           <Card style={styles.addBox}>
+           <Card style={appStyles.addBox}>
                 <Grid>
                   <Col style={{ marginLef:10,width: 170,}}>
                      <Image source={imgs.mangoSale} style={styles.mangoSale} />
@@ -104,17 +125,30 @@ onPressRecipe(item){
                   </Col>
                  </Grid>
              </Card>
-             <Category
-                data={categoryList}    
-                itemSelected={(item) => this._itemChoose(item)}
-                itemText={'title'} 
-                colorTextDefault={'#000'} 
-                colorTextSelected={'#fff'} 
-                colorItemDefault={'#fff'}
-                itemStyles={styles.itemStyles}
-                style= {{ backgroundColor: '#fff'}}
-                textItemStyles={styles.textItemStyles}
+
+              <FlatList
+                style={[styles.categoryStyles]}
+                contentContainerStyle={styles.flatListStyles}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item, index) => index}
+                renderItem={this.renderItemCategory}
+                data={categoryList}
               />
+            {/*
+             <Category
+                            data={categoryList}    
+                            itemSelected={(item) => this._itemChoose(item)}
+                            itemText={'title'} 
+                            colorTextDefault={'#000'} 
+                            colorTextSelected={'#fff'} 
+                            colorItemDefault={'#fff'}
+                            itemStyles={styles.itemStyles}
+                            style= {{ backgroundColor: '#fff'}}
+                            textItemStyles={styles.textItemStyles}
+                          />*/
+                        }
               <View>
                   <Grid>
                     <Col style={{justifyContent:'flex-start',width:40}}>
@@ -122,7 +156,10 @@ onPressRecipe(item){
                       <Image source={imgs.filterIcon} style={styles.filterIconstyle} />
                   </Col>
                   <Col style={{JustifyContent:'flex-end'}}>
-                  <Category
+                
+                {/*
+                      
+                    <Category
                     data={filterList}    
                     itemSelected={(filterItem) => this._filterChoose(filterItem)}
                     itemText={'title'} 
@@ -134,6 +171,7 @@ onPressRecipe(item){
                     style= {{ backgroundColor: '#fff'}}
                     textItemStyles={styles.filterStyles}
                      />
+              */  } 
                   </Col>
                   </Grid>
               </View>

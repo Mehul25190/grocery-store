@@ -11,7 +11,7 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left,Input, Body, Title, Right,Grid,Col,Card
+  Header,Item, Left,Input, Body, Title, Right,Grid,Col,Card
 
 } from 'native-base';
 import {ItemList} from '../data/data';
@@ -31,7 +31,7 @@ class Home extends React.Component {
   };
 
    renderItems = ({ item, index}) => (
-    <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressRecipe(item)}>
+    <TouchableHighlight onPress={() => this.onPressRecipe(item)}>
        <View style={index == 0 ? styles.ItemContainer : styles.ItemContainer}>
         <Image style={styles.photo} source={ item.photo_url } />
         <Text style={styles.productTitle}>{item.title}</Text>
@@ -44,17 +44,32 @@ class Home extends React.Component {
   render(){
     return (
       <Container style={appStyles.container}>
+           <Header searchBar rounded style={appStyles.headerStyle}>
       
-          <Headers
-            IconLeft='menu'
-            onPress={() => this.openControlPanel()}
-            IconRightS='person'
-            IconRightF='cart'
-            middlePart= <Input style={appStyles.searchInput} placeholder='Search Product'/>
-            />
+          <Left style={appStyles.headerLeft}>
+            <Button transparent style={appStyles.menuBtn}  onPress={() => this.props.navigation.openDrawer()}>
+              <Icon style={appStyles.menuBar} size={30} color={Colors.white} name="menu" />
+            </Button>
+          </Left>
+       
+          <Item style={[appStyles.searchBar]} >
+            <Icon name="search" style={{color:Colors.primary}} />
+             <Input style={appStyles.searchInput} placeholder='Search Product'/>
+          </Item>
+         
+          <Right style={appStyles.headerRight}>
+             <Button transparent>
+               <Icon style={appStyles.cartIcon}  name="cart" />
+               <Icon style={appStyles.userIcon} name="person" />      
+            </Button>
+          </Right>
+       
+         
+       </Header>
+         
             
           <Content enableOnAndroid style={appStyles.content}>
-            <Card style={styles.addBox}>
+            <Card style={appStyles.addBox}>
             <Grid>
               <Col style={{ marginLef:2,width: 120,}}>
                  <Image source={imgs.megaSale} style={{flex: 1, height: null, width: null,resizeMode:'contain'}} />

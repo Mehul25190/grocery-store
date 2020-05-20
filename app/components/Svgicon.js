@@ -15,7 +15,7 @@ class Svgicon extends React.Component {
   
   render() {
     return (
-        <Icon style={{color:this.props.color || Colors.icon}}
+        <Icon style={[appStyles.IconStyle, this.props.IconStyle,{color: this.props.color}]}  
           width={this.props.width || Layout.iconSize}
           height={this.props.height || Layout.iconSize}
           type={this.props.type}

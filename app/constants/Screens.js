@@ -24,7 +24,7 @@ export default {
     label: Strings.myorder,
   },
   MyWallet:{
-    route: 'My Wallet',
+    route: 'MyWallet',
     icon: 'wallet', 
     type: 'AntDesign',
     label: Strings.mywallet,
@@ -43,8 +43,8 @@ export default {
   },
   MyNotification:{
     route:'MyNotification',
-    icon:'ios-notifications-outline',
-    type:'Ionicons',
+    icon:'notifications-none',
+    type:'MaterialIcons',
     label: Strings.notification,
   },
    MyAddress:{
@@ -55,8 +55,8 @@ export default {
   },
    Subscription:{
     route:'Subscription',
-    icon:'ios-heart-empty',
-    type: 'Ionicons',
+    icon:'heart',
+    type: 'Feather',
     label: Strings.subscription,
   },
   ProductList:{

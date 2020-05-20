@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, ImageBackground, Image} from 'react-native'
 import _ from 'lodash'; 
 import { Layout, Colors } from '../../constants';
-import { Logo, Statusbar } from '../../components';
+import { Logo, Statusbar,Headers } from '../../components';
 import imgs from '../../assets/images';
 import {
   Container,
@@ -11,12 +11,14 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left, Body, Title, Right
+  Header, Left, Body, Title, Right,Card
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+
 class MyAddress extends React.Component {
 
   constructor(props) {
@@ -26,23 +28,57 @@ class MyAddress extends React.Component {
   render(){
     return (
       <Container style={appStyles.container}>
-        <ImageBackground 
-            source={imgs.bg} 
-            style={ { width: Layout.window.width, height: Layout.window.height }}>
-          <Header transparent>
-            <Left>
-              <Button transparent>
-                <Icon name='menu' onPress={() => this.props.navigation.openDrawer()}/>
-              </Button>
-            </Left>
-            <Body>
-              <Title>MyAddress</Title>
-            </Body>
-          </Header>
+       
+           
+           <Headers
+            IconLeft='arrow-back'
+            onPress={() => this.openControlPanel()}
+            IconRightS=''
+            IconRightF='search'
+            bgColor='transparent'
+            Title='My MyAddress'
+            
+           />
           <Content enableOnAndroid>
-  
+             <Card style={[appStyles.addBox,{height:'auto'}]}>
+                  <GooglePlacesAutocomplete
+                   placeholder='Enter Location'
+                    minLength={2}
+                    autoFocus={false}
+                    returnKeyType={'default'}
+                    fetchDetails={true}
+                    styles={{
+                      textInputContainer: {
+                        backgroundColor: 'rgba(0,0,0,0)',
+                        borderTopWidth: 0,
+                        borderBottomWidth: 0,
+                      },
+                      textInput: {
+                        marginLeft: 0,
+                        marginRight: 0,
+                        height: 38,
+                        color: '#5d5d5d',
+                        fontSize: 16,
+                      },
+                      predefinedPlacesDescription: {
+                        color: '#1faadb',
+                      },
+                    }}
+                          placeholder='Search'
+                          onPress={(data, details = null) => {
+                            // 'details' is provided when fetchDetails = true
+                            console.log(data, details);
+                          }}
+                          query={{
+                            key: 'YOUR API KEY',
+                            language: 'en',
+                          }}
+                          currentLocation={true}
+                            currentLocationLabel='Current location'
+                        />
+             </Card>
           </Content>
-         </ImageBackground>
+      
       </Container>
      
     );

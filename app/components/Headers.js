@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableWithoutFeedback } from 'react-native';
+import { View, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { connect } from "react-redux";
 import * as Animatable from 'react-native-animatable';
 
@@ -42,15 +42,16 @@ class Headers extends React.Component {
             </Button>
           </Left>
        
-          <Item style={[appStyles.searchBar,{width:60,backgroundColor:this.props.bgColor}]} >
-            <Icon name={this.props.IconMiddle} style={{color:Colors.primary}} />
-           {this.props.middlePart}
+          <Item style={{width:60,backgroundColor:'transparent'}} >
+            
+          <Text style={{color:'#fff',fontSize:18}}>{this.props.Title}</Text>
           </Item>
          
           <Right style={appStyles.headerRight}>
              <Button transparent>
-               <Icon style={appStyles.cartIcon}  name={this.props.IconRightF} />
-               <Icon style={appStyles.userIcon} name={this.props.IconRightS} />      
+              <TouchableOpacity>
+               <Icon style={appStyles.IconRight}  name={this.props.IconRightF} />
+                  </TouchableOpacity>
             </Button>
           </Right>
        

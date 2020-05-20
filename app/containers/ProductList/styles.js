@@ -116,22 +116,7 @@ FirstItem:{
     color: 'blue',
     paddingTop: 10
   },
-  addBox:{
-    marginLeft:Layout.indent-6,
-    marginRight:Layout.indent-6,
-
-    height:120,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 2,
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowRadius: 5,
-    shadowOpacity: 1.0
-},
+  
 addsSubTitle:{
   color:'#F8BB1B',
   textAlign:'right',
@@ -353,5 +338,25 @@ categoryStyles: {
     textAlign:'center',
     fontSize:12,
     color:Colors.secondary
-   }
+   },
+
+
+   /* Custom Cat list*/
+     categoryStyles: {
+    backgroundColor: '#000',
+  },
+
+  flatListStyles: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+    paddingRight: 0
+  },
+
+
+  textItemStyles: {
+    textAlign: 'center',
+    color:Colors.white
+   
+  }
 };
