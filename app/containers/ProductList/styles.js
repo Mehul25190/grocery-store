@@ -230,23 +230,25 @@ categoryStyles: {
   textItemStyles: {
   textAlign: 'center',
   fontFamily:'Font-Medium',
-   fontSize:14,
+   fontSize:12,
   },
   filterItemStyles:{
-    paddingTop:6,
-    paddingBottom:5,
-     paddingLeft: 20,
+
+    paddingTop:2,
+    paddingBottom:1,
+     paddingLeft: 12,
     paddingRight: 20,
     borderRadius: 25,
-    marginRight:0,
+    marginLeft:0,
     borderWidth:1,
     borderColor:'#ddd',
-    marginRight:2
+    marginRight:2,
+    fontSize:8
   },
   filterStyles:{
     textAlign: 'center',
     fontFamily:'Font-Medium',
-   fontSize:11,
+   fontSize:8,
   },
   filterIconstyle:{
     backgroundColor:'#fff',
@@ -254,6 +256,7 @@ categoryStyles: {
     width:null,
     height:null,
     marginLeft:Layout.indent-7,
+    marginRight:3,
       flex: 1,
   resizeMode:'contain',
   },

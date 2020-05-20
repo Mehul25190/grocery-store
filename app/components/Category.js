@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
-import styles from './CategoryStyles';
+import appStyles from '../theme/appStyles';
 
 // Third party imports - icon
 import EntypoIcons from 'react-native-vector-icons/Entypo';
@@ -55,7 +55,7 @@ class Category extends Component {
     data: [],                                   //data category default
     itemText: '',
     imageData: [],                              //imageData category default
-		colorTextDefault: '#f5f3f4',
+    colorTextDefault: '#f5f3f4',
     colorTextSelected: '#000000',
     colorItemDefault: 'rgba(255,255,255,0.2)',
     colorItemSelected: '#FF4E50',
@@ -65,7 +65,7 @@ class Category extends Component {
     indexSelected: 0,                           //Item selected default 0
     iconSet: 'FontAwesome',                     //Type icon default
     iconSize: 30
-	};
+  };
 
   constructor(props) {
     super(props);
@@ -95,6 +95,7 @@ class Category extends Component {
         data: arrCategory,
         indexSelected: this.props.indexSelected
       };
+
     } catch(error) {
       console.error('Data not set - Please set data for Category component');
     }
@@ -144,6 +145,7 @@ class Category extends Component {
     }
   }
 
+  
   //render Item
   renderItemCategory({item, index}) {
     const colorTextSelected = item.isSelected ? this.props.colorTextSelected : this.props.colorTextDefault;
@@ -156,9 +158,8 @@ class Category extends Component {
 
     return (
       <TouchableOpacity
-        style={[styles.itemStyles, this.props.itemStyles, { backgroundColor: colorItemSelected }]}
-        onPress={this.handleItemCategoryClick.bind(this, item, index)}
-      >
+        style={[appStyles.itemStyles, this.props.itemStyles, { backgroundColor: colorItemSelected }]}
+        onPress={this.handleItemCategoryClick.bind(this, item, index)}  >
         {
           this.props.imageData.length != 0 &&
           <Icon
@@ -169,7 +170,7 @@ class Category extends Component {
         }
         {
           this.props.imageData.length == 0 &&
-          <Text style={[styles.textItemStyles, {color: colorTextSelected}]}>
+          <Text style={[appStyles.textItemStyles, {color: colorTextSelected}]}>
             {this.renderTextCategory(item[this.props.itemText])}
           </Text>
         }
@@ -180,8 +181,8 @@ class Category extends Component {
   render() {
     return (
       <FlatList
-        style={[styles.categoryStyles, this.props.style]}
-        contentContainerStyle={styles.flatListStyles}
+        style={[appStyles.categoryStyles, this.props.style]}
+        contentContainerStyle={appStyles.flatListStyles}
         horizontal
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}

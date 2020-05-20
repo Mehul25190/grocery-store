@@ -30,6 +30,11 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  IconGreen:{
+    color:Colors.primary,fontSize:20,
+    padding:5,
+    margin:5
+  },
   fontRegular:{
     fontFamily: 'Font-Regular',
   },
@@ -281,6 +286,35 @@ export default StyleSheet.create({
     height:70,
     borderBottomLeftRadius:8,
     borderBottomRightRadius:8
-  }
- 
+  },
+  categoryStyles: {
+   
+    backgroundColor: '#fff',
+},
+
+  flatListStyles: {
+    paddingTop:7,
+    paddingBottom:5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: Layout.indent,
+    paddingRight: 0
+  },
+  
+ itemStyles: {
+  paddingTop:6,
+    paddingBottom:5,
+
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 25,
+  marginRight:0
+  },
+
+  textItemStyles: {
+  textAlign: 'center',
+  fontFamily:'Font-Medium',
+   fontSize:14,
+  },
+
 });
