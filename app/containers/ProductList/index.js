@@ -36,12 +36,7 @@ constructor(props) {
 }
 
   componentDidMount() {
-    this.props.navigation.setParams({
-            appBar: {
-                title: 'Clientes'
-            }
-    });
-
+   
     this.setState({
       dataSource: productList,
       value:1
@@ -57,16 +52,24 @@ _filterChoose(item){
 onPressRecipe(item){
   alert(this.item);
 }
+ openControlPanel = () => {
+      this.props.navigation.goBack(); // open drawer
+}
   render(){
+     const { navigation } = this.props;
+    const getTitle = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
       
-                 <Header>
-                   <View style={appStyles.BackIconTop}>
-                      <LoginBackIcon  props={this.props}  /> 
-                   </View>
-                    <Title>Header</Title>
-                </Header>
+            <Headers
+            IconLeft='arrow-back'
+            onPress={() => this.openControlPanel()}
+            IconRightS=''
+            IconRightF='search'
+            bgColor='transparent'
+            middlePart= <Text style={{color:'#fff',fontSize:18}}>{getTitle.title}</Text>
+            
+           />
           <Content enableOnAndroid style={appStyles.content}>
            
            <Card style={styles.addBox}>

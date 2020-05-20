@@ -136,11 +136,11 @@ export default StyleSheet.create({
     paddingLeft: Layout.indent
   },
   profileName:{
-    color: Colors.white,
+    color: Colors.black,
     fontSize: 22
   },
   profileEmail:{
-    color: Colors.lightWhite,
+    color: Colors.black,
     fontSize: 14
   },
   activeDrawerItem:{

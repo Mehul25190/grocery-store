@@ -11,7 +11,7 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left, Body, Title, Right,Grid,Col,Card
+  Header, Left,Input, Body, Title, Right,Grid,Col,Card
 
 } from 'native-base';
 import {ItemList} from '../data/data';
@@ -38,12 +38,21 @@ class Home extends React.Component {
       </View>
     </TouchableHighlight>
   );
-  
+   openControlPanel = () => {
+      this.props.navigation.openDrawer(); // open drawer
+    };
   render(){
     return (
       <Container style={appStyles.container}>
       
-          <Headers {...this.props} />
+          <Headers
+            IconLeft='menu'
+            onPress={() => this.openControlPanel()}
+            IconRightS='person'
+            IconRightF='cart'
+            middlePart= <Input style={appStyles.searchInput} placeholder='Search Product'/>
+            />
+            
           <Content enableOnAndroid style={appStyles.content}>
             <Card style={styles.addBox}>
             <Grid>
@@ -72,7 +81,7 @@ class Home extends React.Component {
                 </View>
               </Col>
              </Grid>
-             </Card>
+           </Card>
           
 
           <View style={styles.ItemLayout}>

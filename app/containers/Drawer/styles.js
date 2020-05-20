@@ -1,8 +1,8 @@
 import {Colors,Layout} from '../../constants/';
 export default {
   header: {
-    height: 140,
-    paddingTop: Layout.doubleIndent,
+    height: 120,
+    paddingTop: Layout.indent,
     backgroundColor: Colors.primary
   },
   logoutFooter: {
@@ -19,5 +19,21 @@ export default {
   },
   white:{
     color: Colors.white
-  }
+  },
+  addBox:{
+    marginLeft:Layout.indent-6,
+    marginRight:Layout.indent-6,
+
+    height:120,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 2,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1.0
+},
 };

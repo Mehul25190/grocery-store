@@ -60,6 +60,7 @@ export default class App extends React.Component {
       'Raleway-Black': require('./app/assets/fonts/Raleway-Black.ttf'),
       'Raleway-Bold': require('./app/assets/fonts/Raleway-Bold.ttf'),
       'Raleway-Regular': require('./app/assets/fonts/Raleway-Regular.ttf'),
+      'Raleway-Medium': require('./app/assets/fonts/Raleway-Medium.ttf'),
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf')
     });

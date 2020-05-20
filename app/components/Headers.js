@@ -28,30 +28,34 @@ class Headers extends React.Component {
       visibleModal:false
     }
   }
+    onPress = () => {
+    this.setState({active: !this.state.active});
+    this.props.onPress();
+    };
   render() {
     return (
       <Header searchBar rounded style={appStyles.headerStyle}>
+      
           <Left style={appStyles.headerLeft}>
-            <Button transparent style={appStyles.menuBtn} onPress={() => this.props.navigation.openDrawer()}>
-              <Icon style={appStyles.menuBar} size={30} color={Colors.white} name="menu" />
+            <Button transparent style={appStyles.menuBtn}  onPress={() => this.onPress()}>
+              <Icon style={appStyles.menuBar} size={30} color={Colors.white} name={this.props.IconLeft} />
             </Button>
           </Left>
        
-          <Item style={[appStyles.searchBar,{width:60}]} >
-            <Icon name="ios-search" style={{color:Colors.primary}} />
-            <Input style={appStyles.searchInput} placeholder="Search Product" />
-           
+          <Item style={[appStyles.searchBar,{width:60,backgroundColor:this.props.bgColor}]} >
+            <Icon name={this.props.IconMiddle} style={{color:Colors.primary}} />
+           {this.props.middlePart}
           </Item>
          
           <Right style={appStyles.headerRight}>
              <Button transparent>
-               <Icon style={appStyles.cartIcon}  name="cart" />
-               <Icon style={appStyles.userIcon} name="person" />      
+               <Icon style={appStyles.cartIcon}  name={this.props.IconRightF} />
+               <Icon style={appStyles.userIcon} name={this.props.IconRightS} />      
             </Button>
           </Right>
        
          
-          </Header>
+       </Header>
 
     );
   }

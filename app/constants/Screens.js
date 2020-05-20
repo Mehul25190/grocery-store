@@ -1,9 +1,10 @@
 import React from 'react'
 import { Icon } from 'native-base';
+//import Icon from 'react-native-vector-icons/FontAwesome';
 import Strings from './Strings';
 
 export default {
-  Title: 'PushBase',
+  Title: 'Grocery',
   SignInStack : {
     route: 'SignInStack'
   }, 
@@ -13,7 +14,50 @@ export default {
   Home : {
     route: 'Home',
     icon:'home',
+
     label: Strings.home,
+  },
+  MyOrder : {
+    route: 'MyOrder',
+    icon: 'ios-timer',
+    type: 'Ionicons',
+    label: Strings.myorder,
+  },
+  MyWallet:{
+    route: 'My Wallet',
+    icon: 'wallet', 
+    type: 'AntDesign',
+    label: Strings.mywallet,
+  },
+  MyPayments:{
+    route:'MyPayments',
+    icon:'creditcard',
+    type: 'AntDesign',
+    label: Strings.mypayments,
+  },
+  MyRatings:{
+    route:'MyRatings',
+    icon:'playlist-star',
+     type: 'MaterialCommunityIcons',
+    label: Strings.myratings,
+  },
+  MyNotification:{
+    route:'MyNotification',
+    icon:'ios-notifications-outline',
+    type:'Ionicons',
+    label: Strings.notification,
+  },
+   MyAddress:{
+    route:'MyAddress',
+    icon:'location',
+    type:'EvilIcons',
+    label: Strings.address,
+  },
+   Subscription:{
+    route:'Subscription',
+    icon:'ios-heart-empty',
+    type: 'Ionicons',
+    label: Strings.subscription,
   },
   ProductList:{
     route: 'ProductList',

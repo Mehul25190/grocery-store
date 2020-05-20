@@ -2,7 +2,9 @@ import React from 'react'
 import { Text, Animated, Easing } from 'react-native'
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
 
-import { SignIn, SignInEmail, SignInMobile, ProductList, Verification, SignUp, Forgotpassword, Home, Drawer, Settings } from "../containers";
+import { SignIn, SignInEmail,MyOrder, MyWallet, SignInMobile, MyAddress, ProductList, MyNotification, Verification, SignUp, Forgotpassword,
+ MyPayments, MyRatings, Subscription, Home, Drawer, Settings }
+ from "../containers";
 import { Colors, Screens } from "../constants";
 
 const transitionConfig = () => ({
@@ -37,15 +39,16 @@ const transitionConfig = () => ({
 
 // drawer stack
 const DrawerStack = createDrawerNavigator({
-  [Screens.Home.route]: { 
-    screen: Home 
-  },
-  [Screens.ProductList.route]: { 
-    screen: ProductList 
-  },
-  [Screens.Settings.route]: { 
-    screen: Settings 
-  },
+  [Screens.Home.route]: {screen: Home },
+   [Screens.MyOrder.route]: {screen: MyOrder},
+  [Screens.MyPayments.route]: { screen: MyPayments},
+   [Screens.MyRatings.route]: { screen: MyRatings },
+   [Screens.MyWallet.route]: { screen: MyWallet },
+   [Screens.MyNotification.route]:{ screen: MyNotification },
+   [Screens.MyAddress.route]:{ screen: MyAddress },
+   [Screens.Subscription.route]:{ screen: Subscription },
+  [Screens.ProductList.route]: { screen: ProductList },
+  [Screens.Settings.route]: { screen: Settings },
 }, {
   gesturesEnabled: true,
   // drawerBackgroundColor: 'rgba(255,255,255,.9)',
@@ -66,14 +69,7 @@ const DrawerNavigation = createStackNavigator({
   [Screens.ProductList.route]: { screen: ProductList },
 }, {
   headerMode: 'none',
-   defaulfNavigationOptions: ({ navigation }) => ({
-      headerTitleStyle: {
-        fontWeight: 'bold',
-        textAlign: 'center',
-        alignSelf: 'center',
-        flex: 1,
-      }
-    }),
+   
   transitionConfig: transitionConfig
 });
 

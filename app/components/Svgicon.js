@@ -3,7 +3,7 @@ import { Text, Image } from 'react-native';
 import { connect } from "react-redux";
 import * as Animatable from 'react-native-animatable';
 import SvgIcon from 'react-native-svg-icon';
-
+import { Icon } from 'native-base';
 import appStyles from '../theme/appStyles';
 import svgs from '../assets/svgs';
 import { Colors, Layout } from '../constants';
@@ -12,14 +12,15 @@ class Svgicon extends React.Component {
   constructor(props) {
     super(props);
   }
+  
   render() {
     return (
-        <SvgIcon
+        <Icon style={{color:this.props.color || Colors.icon}}
           width={this.props.width || Layout.iconSize}
           height={this.props.height || Layout.iconSize}
-          fill={this.props.color || Colors.icon}
+          type={this.props.type}
           name={this.props.name}
-          svgs={svgs}
+          
         />
     );
   }

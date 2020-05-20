@@ -15,11 +15,15 @@ export default[
 		signup: 'Sign Up',
 		reset: 'Reset',
 		logout: 'Logout',
-
+		myorder: 'My Order',
 		home: 'Home',
 		categories: 'Categories',
 		settings: 'Settings',
-
+		mypayments: 'My Payments',
+		myratings: 'MyRatings',
+		notification:'My Notification',
+		address:'My Address',
+		subscription:'Subscription',
 		// App intro sliders
 		slide1Title: 'SAMPLE TITLE 1',
 		slide1Text: 'This is sample description 1',
@@ -50,7 +54,7 @@ export default[
 		signup: 'பதிவு செய்',
 		reset: 'மீட்டமை',
 		logout: 'வெளியேறு',
-
+		
 		home: 'முகப்பு',
 		categories: 'வகைகள்',
 		settings: 'அமைப்புகள்',
