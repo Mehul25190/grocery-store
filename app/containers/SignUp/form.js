@@ -20,9 +20,9 @@ class SignUpForm extends React.Component {
         <Text style={styles.label}>Mobile Number</Text>
       </View>
          <Field 
-          name="number" 
+          name="mobileNo" 
           component={InputBox} 
-          // placeholder='Enter your Mobile'
+          //placeholder='Enter your Mobile'
           keyboardType={'numeric'}
           validate=''
         />

@@ -54,14 +54,21 @@ class SignInEmail extends React.Component {
     this.props.navigation.navigate(Screens.ForgotPassword.route)
   }
 
-  signinemail(values, dispatch, props){
+  signin(values, dispatch, props){
+    //console.log("enter login start");
+    //console.log(values);
+    values.isEmail = 1; //sending extra parameter
     dispatch(userActions.signin(values))
       .then(res => {
-        if(res.status == 200){
-          showToast(res.msg,"success");
+        //if(res.status == 200){
+        if(res.status == "success"){  
+            //console.log("enter login");
+          //showToast(res.msg,"success");
+          showToast(res.message,"success");
           dispatch(NavigationActions.navigate({ routeName: Screens.SignInStack.route }));
           // this.props.navigation.navigate(Screens.SignInStack.route)
         }else{
+          console.log("something wrong in login");
           showToast(res.msg,"danger");
         }
       })
@@ -95,7 +102,7 @@ class SignInEmail extends React.Component {
                     animation="fadeInUp"
                     delay={500}                
                      > 
-                    <SignInFormEmail onSubmit={this.signinemail} />
+                    <SignInFormEmail onSubmit={this.signin} />
                     <Row style={{marginBottom:20}}>
                      <Col>
                         <Button transparent full  
@@ -126,7 +133,7 @@ class SignInEmail extends React.Component {
                         full
                         primary
                         style={appStyles.btnSecontary}
-                         onPress={() =>  this.props.pressSigninVerify()}  >
+                         onPress={() =>  this.props.pressSignin()}  >
                         <Text style={styles.SignInbtn}>Login </Text>
                       </Button>
                        </TouchableOpacity>
@@ -172,7 +179,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   // Action
     return {
-      pressSigninVerify: () => dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route })),
+      //pressSigninVerify: () => dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route })),
+      pressSignin: () => dispatch(submit('signinFormemail')),
       pressSigninMob: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInMobile.route })),
       setLanguage: () => dispatch(userActions.setLanguage({id:1,set:1})),
       showModal: () => dispatch({ type: ActionTypes.SHOWMODAL, showModal: true }),

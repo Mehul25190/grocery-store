@@ -13,6 +13,7 @@ import {
   Input,
   Spinner, Row, Col, Toast
 } from 'native-base';
+//import { ActionTypes, Strings } from '../constants/';
 import { connect } from "react-redux";
 import { submit } from 'redux-form';
 import { bindActionCreators } from "redux";
@@ -31,28 +32,37 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      username: '',
+      mobileNo: '',
+      email: '',
       password: '',
+      //otp:'',
       error: '',
     };
   }
-   onSigninButtonPressHandler(){
+  onSigninButtonPressHandler(){
     this.props.navigation.navigate(Screens.SignInMobile.route)
   }
 
   onForgotpasswordPressHandler(){
     this.props.navigation.navigate(Screens.ForgotPassword.route)
   }
+
   signup(values, dispatch, props){
     dispatch(userActions.signup(values))
       .then(res => {
-        if(res.status == 200){
+        console.log(res);
+        //if(res.status == 200){
+        if(res.status == "success"){  
+          //console.log("sucess return");
           showToast(res.msg,"success");
-          dispatch(NavigationActions.navigate({ routeName: Screens.SignIn.route }));
+          
+          //console.log("------any--------");
+          //dispatch(NavigationActions.navigate({ routeName: Screens.SignIn.route }));
           // this.props.navigation.navigate(Screens.SignIn.route)
+          dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route }));
         }else{
-          showToast(res.msg,"danger");
+          //console.log("something wrong with signup");
+          showToast(res.message,"danger");
         }
       })
       .catch(error => {
@@ -112,7 +122,8 @@ class SignUp extends React.Component {
                         full
                         primary
                         style={appStyles.btnSecontary}
-                        onPress={() => this.props.pressVerify()}  >
+                        //onPress={() => this.props.pressVerify()}  >
+                        onPress={() => this.props.pressSignup()}  >
                         <Text style={styles.SignInbtn}>SignUp </Text>
                       </Button>
                   }
@@ -130,6 +141,7 @@ const mapStateToProps = (state) => {
   return {
     isLoading: state.common.isLoading,
     language: state.auth.language,
+
   };
 };
 
@@ -137,8 +149,9 @@ const mapDispatchToProps = (dispatch) => {
   // Action
     return {
       pressSignup: () => dispatch(submit('signupForm')),
-      signup: (user) => dispatch(userActions.signup(user)),
-      pressVerify: () => dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route })),
+      //signup: (user) => dispatch(userActions.signup(user)),
+      //signup: (user) => dispatch(userActions.signup(user)),
+      //pressVerify: () => dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route })),
 
    };
 };

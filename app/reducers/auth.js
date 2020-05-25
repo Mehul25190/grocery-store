@@ -40,6 +40,13 @@ const auth = (state = initialState.auth, action) => {
         user: null
       }
     }
+    case ActionTypes.MOBILENO: {
+      console.log(action.data);
+      return {
+        ...state,
+        mobileno: action.data
+      }
+    }
     // Default
     default: {
       return state;

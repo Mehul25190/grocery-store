@@ -55,14 +55,16 @@ class SignInMobile extends React.Component {
   }
 
   signinmobile(values, dispatch, props){
-    dispatch(userActions.signin(values))
+    values.isEmail = 0; //sending extra parameter
+    dispatch(userActions.signinWithMobile(values))
       .then(res => {
         if(res.status == 200){
-          showToast(res.msg,"success");
-          dispatch(NavigationActions.navigate({ routeName: Screens.SignInStack.route }));
+          showToast(res.message,"success");
+          //dispatch(NavigationActions.navigate({ routeName: Screens.SignInStack.route }));
+          dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route }));
           // this.props.navigation.navigate(Screens.SignInStack.route)
         }else{
-          showToast(res.msg,"danger");
+          showToast(res.message,"danger");
         }
       })
       .catch(error => {
@@ -177,11 +179,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   // Action
     return {
-      pressSigninVerify: () => dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route })),
+      pressSigninVerify: () => dispatch(submit('signinFormMobile')),
       pressSigninEmail: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInEmail.route })),
       setLanguage: () => dispatch(userActions.setLanguage({id:1,set:1})),
       showModal: () => dispatch({ type: ActionTypes.SHOWMODAL, showModal: true }),
       resetState: () => dispatch({ type: ActionTypes.RESETSTATE })
+      //pressSigninEmail: () => dispatch(submit('signinFormMobile')),
    };
 };
 

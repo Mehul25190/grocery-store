@@ -24,7 +24,7 @@ class SignInFormEmail extends React.Component {
         <Field 
          
           name="email" 
-          component={InputBox} 
+          component={InputBox}
           // placeholder='Enter your email'
           keyboardType={'email-address'}
           validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
