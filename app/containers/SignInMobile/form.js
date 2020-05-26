@@ -16,25 +16,17 @@ class SignInFormMobile extends React.Component {
     const { handleSubmit, onSubmit, language } = this.props;
     return (
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
-     
-        
-      <View >
-        <Text style={styles.label}>Mobile Number</Text>
-      </View>
+        <View ><Text style={styles.label}>Mobile Number</Text></View>
         <Field 
           name="number" 
           component={InputBox} 
-          // placeholder='Enter your Mobile'
           keyboardType={'numeric'}
           validate=''
         />
-      
-       
       </Form>
     )
   }
 }
-
 
 const signinformmobile = reduxForm({
   form: 'signinFormMobile',

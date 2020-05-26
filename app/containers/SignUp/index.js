@@ -35,7 +35,6 @@ class SignUp extends React.Component {
       mobileNo: '',
       email: '',
       password: '',
-      //otp:'',
       error: '',
     };
   }
@@ -48,32 +47,21 @@ class SignUp extends React.Component {
   }
 
   signup(values, dispatch, props){
-    dispatch(userActions.signup(values))
-      .then(res => {
-        console.log(res);
-        //if(res.status == 200){
-        if(res.status == "success"){  
-          //console.log("sucess return");
-          showToast(res.msg,"success");
-          
-          //console.log("------any--------");
-          //dispatch(NavigationActions.navigate({ routeName: Screens.SignIn.route }));
-          // this.props.navigation.navigate(Screens.SignIn.route)
-          dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route }));
-        }else{
-          //console.log("something wrong with signup");
-          showToast(res.message,"danger");
-        }
-      })
-      .catch(error => {
-        const messages = _.get(error, 'response.data.error')
-        message = (_.values(messages) || []).join(',')
-        if (message){
-          showToast(message,"danger");
-       }
-       console.log(`
-          Error messages returned from server:`, messages )
-      });
+    dispatch(userActions.signup(values)).then(res => {
+      if(res.status == "success"){  
+        showToast(res.msg,"success");
+        dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route }));
+      }else{
+        showToast(res.message,"danger");
+      }
+    }).catch(error => {
+      const messages = _.get(error, 'res.data.error')
+      message = (_.values(messages) || []).join(',')
+      if (message){
+        showToast(message,"danger");
+      }
+      console.log(`Error messages returned from server:`, messages )
+    });
   }
 
   render(){
@@ -87,48 +75,48 @@ class SignUp extends React.Component {
               <View style={appStyles.BackIconTop}>
                   <LoginBackIcon  props={this.props}  /> 
               </View>
-           <View style={[styles.loginBox,styles.signupBox]}>
-             <Animatable.View 
-                    animation="fadeInUp"
-                    delay={500}                
-                     > 
-                    <SignUpForm onSubmit={this.signup} />
-                    <Row style={{marginBottom:20}}>
-                     <Col>
-                        <Button transparent full  
-                         style={[{justifyContent:'flex-start'}]} >
-                          <TouchableOpacity  onPress={() => this.onSigninButtonPressHandler()}>
-                          <Text style={[styles.linkTextLogin]} >Login</Text>
-                          </TouchableOpacity>
+             <View style={[styles.loginBox,styles.signupBox]}>
+               <Animatable.View 
+                      animation="fadeInUp"
+                      delay={500}                
+                       > 
+                      <SignUpForm onSubmit={this.signup} />
+                      <Row style={{marginBottom:20}}>
+                       <Col>
+                          <Button transparent full  
+                           style={[{justifyContent:'flex-start'}]} >
+                            <TouchableOpacity  onPress={() => this.onSigninButtonPressHandler()}>
+                            <Text style={[styles.linkTextLogin]} >Login</Text>
+                            </TouchableOpacity>
+                          </Button>
+                        </Col>
+                        <Col>
+                          <Button transparent full  
+                           style={[{justifyContent:'flex-end'}]} >
+                            <TouchableOpacity  onPress={() => this.onForgotpasswordPressHandler()}>
+                            <Text style={[styles.linkText,appStyles.textRight]} > Forgot Password?</Text>
+                            </TouchableOpacity>
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Animatable.View>
+                  <Animatable.View 
+                      animation="fadeIn"
+                      delay={1200} 
+                      style={{marginTop:20}}> 
+                    { this.props.isLoading ? 
+                       <Spinner color={Colors.secondary} /> : 
+                        <Button
+                          full
+                          primary
+                          style={appStyles.btnSecontary}
+                          //onPress={() => this.props.pressVerify()}  >
+                          onPress={() => this.props.pressSignup()}  >
+                          <Text style={styles.SignInbtn}>SignUp </Text>
                         </Button>
-                      </Col>
-                      <Col>
-                        <Button transparent full  
-                         style={[{justifyContent:'flex-end'}]} >
-                          <TouchableOpacity  onPress={() => this.onForgotpasswordPressHandler()}>
-                          <Text style={[styles.linkText,appStyles.textRight]} > Forgot Password?</Text>
-                          </TouchableOpacity>
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Animatable.View>
-                <Animatable.View 
-                    animation="fadeIn"
-                    delay={1200} 
-                    style={{marginTop:20}}> 
-                  { this.props.isLoading ? 
-                     <Spinner color={Colors.secondary} /> : 
-                      <Button
-                        full
-                        primary
-                        style={appStyles.btnSecontary}
-                        //onPress={() => this.props.pressVerify()}  >
-                        onPress={() => this.props.pressSignup()}  >
-                        <Text style={styles.SignInbtn}>SignUp </Text>
-                      </Button>
-                  }
-                </Animatable.View>  
-            </View>    
+                    }
+                  </Animatable.View>  
+              </View>    
         </ImageBackground>      
       </Content>
     </Container>
@@ -141,7 +129,6 @@ const mapStateToProps = (state) => {
   return {
     isLoading: state.common.isLoading,
     language: state.auth.language,
-
   };
 };
 
@@ -149,10 +136,6 @@ const mapDispatchToProps = (dispatch) => {
   // Action
     return {
       pressSignup: () => dispatch(submit('signupForm')),
-      //signup: (user) => dispatch(userActions.signup(user)),
-      //signup: (user) => dispatch(userActions.signup(user)),
-      //pressVerify: () => dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route })),
-
    };
 };
 

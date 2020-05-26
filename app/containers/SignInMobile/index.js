@@ -31,7 +31,6 @@ class SignInMobile extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      visibleModal: false,
     };
   }
 
@@ -39,11 +38,6 @@ class SignInMobile extends React.Component {
     if(this.props.user!=null){
       this.props.navigation.navigate(Screens.SignInStack.route);
     }
-    setTimeout(()=>{
-      if(this.props.languageSet==0 && !this.props.showIntro){
-        this.props.showModal();
-      }
-    },2000);
   }
 
   onSignupButtonPressHandler(){
@@ -56,26 +50,20 @@ class SignInMobile extends React.Component {
 
   signinmobile(values, dispatch, props){
     values.isEmail = 0; //sending extra parameter
-    dispatch(userActions.signinWithMobile(values))
-      .then(res => {
-        if(res.status == 200){
-          showToast(res.message,"success");
-          //dispatch(NavigationActions.navigate({ routeName: Screens.SignInStack.route }));
-          dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route }));
-          // this.props.navigation.navigate(Screens.SignInStack.route)
-        }else{
-          showToast(res.message,"danger");
-        }
-      })
-      .catch(error => {
-        const messages = _.get(error, 'response.data.error')
-        message = (_.values(messages) || []).join(',')
-        if (message){
-         showToast(message,"danger");
-       }
-       console.log(`
-          Error messages returned from server:`, messages )
-      });
+    dispatch(userActions.signinWithMobile(values)).then(res => {
+      if(res.status == 200){
+        showToast(res.message,"success");
+        dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route }));
+      }else{
+        showToast(res.message,"danger");
+      }
+    }).catch(error => {
+      const messages = _.get(error, 'response.data.error')
+      message = (_.values(messages) || []).join(',')
+      if (message){
+       showToast(message,"danger");
+      }
+      console.log(`Error messages returned from server:`, messages )});
   }
 
   render(){
@@ -167,7 +155,6 @@ class SignInMobile extends React.Component {
 const mapStateToProps = (state) => {
   // Redux Store --> Component
   return {
-    showIntro: state.auth.showIntro,
     isLoading: state.common.isLoading,
     user: state.auth.user,
     language: state.auth.language,
@@ -182,9 +169,6 @@ const mapDispatchToProps = (dispatch) => {
       pressSigninVerify: () => dispatch(submit('signinFormMobile')),
       pressSigninEmail: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInEmail.route })),
       setLanguage: () => dispatch(userActions.setLanguage({id:1,set:1})),
-      showModal: () => dispatch({ type: ActionTypes.SHOWMODAL, showModal: true }),
-      resetState: () => dispatch({ type: ActionTypes.RESETSTATE })
-      //pressSigninEmail: () => dispatch(submit('signinFormMobile')),
    };
 };
 

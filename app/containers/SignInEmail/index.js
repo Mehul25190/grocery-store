@@ -39,11 +39,6 @@ class SignInEmail extends React.Component {
     if(this.props.user!=null){
       this.props.navigation.navigate(Screens.SignInStack.route);
     }
-    setTimeout(()=>{
-      if(this.props.languageSet==0 && !this.props.showIntro){
-        this.props.showModal();
-      }
-    },2000);
   }
 
   onSignupButtonPressHandler(){
@@ -55,32 +50,23 @@ class SignInEmail extends React.Component {
   }
 
   signin(values, dispatch, props){
-    //console.log("enter login start");
-    //console.log(values);
     values.isEmail = 1; //sending extra parameter
-    dispatch(userActions.signin(values))
-      .then(res => {
-        //if(res.status == 200){
-        if(res.status == "success"){  
-            //console.log("enter login");
-          //showToast(res.msg,"success");
-          showToast(res.message,"success");
-          dispatch(NavigationActions.navigate({ routeName: Screens.SignInStack.route }));
-          // this.props.navigation.navigate(Screens.SignInStack.route)
-        }else{
-          console.log("something wrong in login");
-          showToast(res.msg,"danger");
-        }
-      })
-      .catch(error => {
-        const messages = _.get(error, 'response.data.error')
-        message = (_.values(messages) || []).join(',')
-        if (message){
-         showToast(message,"danger");
-       }
-       console.log(`
-          Error messages returned from server:`, messages )
-      });
+    dispatch(userActions.signin(values)).then(res => {
+      if(res.status == "success"){  
+        showToast(res.message,"success");
+        dispatch(NavigationActions.navigate({ routeName: Screens.SignInStack.route }));
+      }else{
+        console.log("something wrong in login");
+        showToast(res.msg,"danger");
+      }
+    }).catch(error => {
+      const messages = _.get(error, 'response.data.error')
+      message = (_.values(messages) || []).join(',')
+      if (message){
+       showToast(message,"danger");
+      }
+      console.log(`Error messages returned from server:`, messages )
+    });
   }
 
   render(){
@@ -150,8 +136,6 @@ class SignInEmail extends React.Component {
                     </TouchableOpacity>
                  </Animatable.View>
               </View>          
-        
-          
            </ImageBackground>
            </Content>
         </Container>
@@ -167,11 +151,8 @@ class SignInEmail extends React.Component {
 const mapStateToProps = (state) => {
   // Redux Store --> Component
   return {
-    showIntro: state.auth.showIntro,
     isLoading: state.common.isLoading,
     user: state.auth.user,
-    language: state.auth.language,
-    languageSet: state.auth.languageSet || 0,
   };
 };
 
@@ -179,12 +160,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   // Action
     return {
-      //pressSigninVerify: () => dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route })),
       pressSignin: () => dispatch(submit('signinFormemail')),
       pressSigninMob: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInMobile.route })),
       setLanguage: () => dispatch(userActions.setLanguage({id:1,set:1})),
-      showModal: () => dispatch({ type: ActionTypes.SHOWMODAL, showModal: true }),
-      resetState: () => dispatch({ type: ActionTypes.RESETSTATE })
    };
 };
 
