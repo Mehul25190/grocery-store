@@ -32,9 +32,9 @@ class MyAddress extends React.Component {
       <Container style={appStyles.container}>
        
            <Headers
-              IconLeft='arrow-back'
+              IconLeft='arrowleft'
               onPress={() => this.openControlPanel()}
-              IconRightS=''
+              setCart={true}
               IconRightF='search'
               bgColor='transparent'
               Title='My MyAddress'

@@ -97,7 +97,7 @@ class SignInEmail extends React.Component {
                      > 
                     <SignInFormEmail onSubmit={this.signinemail} />
                     <Row style={{marginBottom:20}}>
-                     <Col>
+                     <Col style={{width:100,marginLeft:Layout.indent}}>
                         <Button transparent full  
                          style={[{justifyContent:'flex-start'}]} >
                           <TouchableOpacity  onPress={() => this.onSignupButtonPressHandler()}>
@@ -105,7 +105,7 @@ class SignInEmail extends React.Component {
                           </TouchableOpacity>
                         </Button>
                       </Col>
-                      <Col>
+                        <Col style={{marginRight:Layout.indent}}>
                         <Button transparent full  
                          style={[{justifyContent:'flex-end'}]} >
                           <TouchableOpacity  onPress={() => this.onForgotpasswordPressHandler()}>

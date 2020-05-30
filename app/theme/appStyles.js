@@ -12,7 +12,8 @@ export default StyleSheet.create({
   },
   statusBar:{
     flex: 1,
-    height:Layout.statusBarHeight
+    height:Layout.statusBarHeight,
+    backgroundColor:'transparent'
   },
   row: {
     flex: 1,
@@ -49,7 +50,14 @@ export default StyleSheet.create({
     fontWeight:'bold'
 
   },
- 
+  redButton:{
+   fontSize:22,
+    
+  fontFamily:'Font-Bold',
+  textTransform:'capitalize'
+    
+
+  },
   content:{
     marginTop: Layout.indent-7
   },
@@ -136,32 +144,42 @@ export default StyleSheet.create({
   },
 
   menuBtn:{
-    padding: Layout.indent
+    paddingLeft: 0,
+    
+
   },
   drawerList:{
     margin:0,
     paddingLeft:0,
-    
+  
+
   },
-  drawerItem:{
-    margin:0,
-    padding:0
-  },
+ 
   drawerIcon:{
     paddingRight: Layout.indent,
   },
   drawerText:{
     fontSize: 17, 
+    fontFamily:'Font-Medium',
     fontWeight: '600', 
     color: Colors.lightIcon,
     paddingLeft: Layout.indent
   },
+  drawerItem:{
+     margin:0,
+    padding:0,
+ borderBottomWidth:1,
+     borderColor:Colors.primary,
+     // backgroundColor:'#ddd'
+  },
   userIconStyle:{
     fontSize:40,
-    width:50
+    width:50,
+   
   },
   IconStyle:{
-    fontSize:18,
+    fontSize:20,
+     color:Colors.primary
   },
   profileName:{
     color: Colors.black,
@@ -170,9 +188,13 @@ export default StyleSheet.create({
   },
   userCity:{
  fontSize: 12,
+   fontFamily:'Font-Medium',
+   lineHeight:17
   },
   userArea:{
      fontSize: 12,
+     lineHeight:17,
+     fontFamily:'Font-Medium'
   },
   profileEmail:{
     color: Colors.black,
@@ -214,11 +236,8 @@ export default StyleSheet.create({
     fontFamily: 'Font-Regular',
   },
   loginBack:{
-   
-
     justifyContent:'flex-start',
-   
-  },
+   },
   loginBackIcon:{
     color: Colors.white,
  
@@ -264,21 +283,89 @@ export default StyleSheet.create({
   userIcon:{
     paddingLeft:5
   },
+  headerTitle:{
+fontSize:18,
+color:Colors.white,
+fontFamily:'Font-Medium'
+  },
   headerLeft: {
     flex: 0,
     paddingLeft:0,
-    width: 40
+    width: 38,
+  marginLeft:0,
+    justifyContent:'flex-start',
+
+  },
+  StyleIconRightS:{
+    paddingLeft:10,
+    paddingRight:Layout.indent
   },
    IconRight:{
    textAlign:'center',
    alignSelf:'center',
-   width:40
+   width:40,
+
+  },
+  IconsRightT:{
+   textAlign:'center',
+   alignSelf:'center',
+   width:40,
+ },
+  IconsRight:{
+    color:Colors.white,
+    
+  },
+  cartIconArea:{
+  //  backgroundColor:'#ddd',
+    position:'relative',
+    width:30,
+    height:35,
+   justifyContent:'center',
+   alignItems:'flex-end',
+   paddingRight:3,
+
+  },
+  userIcon:{
+    fontSize:20,
+    paddingLeft:5,
+    paddingTop:3
+  },
+  cartIcon:{
+   paddingTop:8,
+   fontSize:24,
+   color:Colors.white
+  },
+  cartCount:{
+   backgroundColor:Colors.secondary,
+   borderRadius:50,
+   paddingLeft:3,
+   paddingRight:3,
+   minWidth:15,
+   top:-3,
+   right:-5,
+   position:'absolute',
+   fontSize:10,
+   padding:1,
+   margin:1,
+   textAlign:'center',
+   margin:'auto'
   },
   headerRight: {
     
-    flex: 0,
-    paddingLeft:5,
-    width: 45,
+   flex: 0,
+    paddingLeft:15,
+    paddingRight:3,
+    width:58,
+    textAlign:'center'
+  },
+   headersRight: {
+    // backgroundColor:'#ddd',
+    justifyContent:'center',
+    paddingBottom:10,
+   flex: 0,
+    paddingLeft:15,
+    paddingRight:3,
+    width:95,
     textAlign:'center'
   },
   headerStyle:{
@@ -317,4 +404,52 @@ export default StyleSheet.create({
    fontSize:14,
   },
 
+
+  /* CheckBox */
+     CheckboxContainer: {
+      flex: 1,
+      padding: 22,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingTop: (Platform.OS === 'ios') ? 25 : 0
+    },
+
+    showSelectedButton: {
+      padding: 20,
+      marginTop: 25,
+      alignSelf: 'stretch',
+      backgroundColor: '#5D52FF'
+    },
+
+    buttonText: {
+      fontSize: 20,
+      color: '#ffffff',
+      textAlign: 'center',
+      alignSelf: 'stretch'
+    },
+
+    selectedUI: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+
+    checkboxTickImg: {
+      width: '85%',
+      height: '85%',
+      tintColor: '#ffffff',
+      resizeMode: 'contain'
+    },
+
+    uncheckedCheckbox: {
+      flex: 1,
+      backgroundColor: '#ffffff'
+    },
+
+    checkboxLabel: {
+      fontSize: 18,
+      paddingLeft: 15
+    },
+    /* Slideshow*/
+    
 });

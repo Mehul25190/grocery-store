@@ -70,10 +70,14 @@ export default {
   linkTextEmail:{
     textTransform:'capitalize',
     color: 'grey',
-    fontSize:16,
+    fontSize:14,
+    lineHeight:20,
+    paddingVertacal:10,
+    textAlign:'right',
+    paddingRight:0,
     fontFamily: 'Font-Regular',
-    paddingBottom:2,
-
+    
+  marginRight:Layout.indent
     
   },
   linkTextLogin:{
@@ -87,10 +91,12 @@ export default {
   linkTextSignup:{
     textTransform:'capitalize',
     color: Colors.primary,
-    fontSize:16,
+    fontSize:14,
+    lineHeight:20,
+    
     fontFamily: 'Font-Regular',
-    paddingBottom:2,
-    paddingLeft:Layout.indent
+    paddingVertical:5,
+    paddingLeft:5
   },
   loginForm:{
     marginTop: Layout.doubleIndent,
@@ -107,7 +113,7 @@ export default {
     color:'#24292e'
   },
   formStyle:{
-    backgroundColor:'#333'
+    // backgroundColor:'#333'
   },
   SignInbtn:{
     fontSize:22,

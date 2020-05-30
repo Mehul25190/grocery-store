@@ -55,7 +55,7 @@ export default class App extends React.Component {
       'Font-Light': require('./app/assets/fonts/Montserrat-Light.ttf'),
       'Font-Regular': require('./app/assets/fonts/Poppins-Regular.ttf'),
       'Font-Medium': require('./app/assets/fonts/Poppins-Medium.ttf'),
-      'Font-Semibold': require('./app/assets/fonts/Poppins-SemiBold.ttf'),
+      
       'Font-Bold': require('./app/assets/fonts/Poppins-Bold.ttf'),
       'Raleway-Black': require('./app/assets/fonts/Raleway-Black.ttf'),
       'Raleway-Bold': require('./app/assets/fonts/Raleway-Bold.ttf'),

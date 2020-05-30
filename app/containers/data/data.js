@@ -1,4 +1,187 @@
 import imgs from '../../assets/images';
+
+export const BankOptions = [
+    {
+        key: 1,
+        image:require("../../assets/images/AxicIcon.png"), 
+        bank: 'AXIS',
+    },
+    {
+        key: 2,
+        image:require("../../assets/images/Hdfcicon.png"),
+        bank: 'HDFC',
+    },
+    {
+        key: 3,
+        image:require("../../assets/images/SbiIcon.png"),
+        bank: 'SBI',
+    },
+    {
+        key: 4,
+        image:require("../../assets/images/IciciIcon.png"),
+        bank: 'ICICI',
+    },
+];
+
+export const BankList = [
+  {
+    key:1,
+    bank:'Dena Bank'
+  },
+  {
+    key:2,
+    bank:'Panjab National Bank'
+  },
+  {
+    key:3,
+    bank:'Bank of Indai'
+  },
+  {
+    key:4,
+    bank:'Bank of Baroda'
+  },
+  {
+    key:5,
+    bank:'Kotak bank'
+  },
+
+];
+
+export const CancelReason = [
+  {
+    key:1,
+    reason:'Quality Issue'
+  },
+  {
+      key:2,
+    reason:'Delivery is always late'
+  },
+  {
+      key:3,
+    reason:'Bill issue'
+  },
+  {
+      key:4,
+    reason:'Changing product'
+  },
+  {
+    key:5,
+    reason:'Moving out of society'
+  },
+  {
+      key:6,
+    reason:'Irregular deliveries'
+  },
+  {
+      key:7,
+    reason:'Bag not received'
+  },
+  {
+      key:8,
+    reason:'Issue with customer care'
+  },
+   {
+      key:9,
+    reason:'Other'
+  }
+];
+
+export const ReturnReason = [
+  {
+    key:1,
+    reason:'Product is not fresh.'
+  },
+  {
+      key:2,
+    reason:'Product is old one.'
+  },
+  {
+      key:3,
+    reason:'Product is getting smell.'
+  },
+  {
+      key:4,
+    reason:'Product is out of dated.'
+  }
+];
+export const orderList = [
+  {
+    proId:1,
+    image:require("../../assets/images/pomog.png"),
+    proName:'Pomegranate (Anaar)',
+    quantity:2,
+    price:165,
+    weight:'700-800',
+    status:'Pending',
+    date: '02/12/2020',
+    time:'10:05 AM',
+    orderId:'YYM123456789'
+  },
+  {
+    proId:2,
+    image:require("../../assets/images/kiwi.png"),
+    proName:'Kiwi (Imported)',
+    quantity:3,
+    price:75,
+    weight:'',
+    status:'Delivered',
+    date: '03/15/2020',
+    time:'11:05 PM',
+    orderId:'YYM9876543210',
+  },
+ 
+  {
+    proId:5,
+    image:require("../../assets/images/pomog.png"),
+    proName:'Pomegranate (Anaar)',
+    quantity:4,
+    price:165,
+    weight:'700-800',
+    status:'Delivered',
+    date: '04/20/2020',
+    time:'02:15 PM',
+    orderId:'YYM654987321'
+  },
+  {
+    proId:6,
+    image:require("../../assets/images/kiwi.png"),
+    proName:'Kiwi (Imported)',
+    quantity:3,
+    price:75,
+    weight:'',
+    status:'Pending',
+    date: '04/25/2020',
+    time:'10:55 AM',
+    orderId:'YZN951753456'
+  },
+    {
+    proId:7,
+    image:require("../../assets/images/pomog.png"),
+    proName:'Pomegranate (Anaar)',
+    quantity:4,
+    price:165,
+    weight:'700-800',
+    status:'Delivered',
+    date: '04/20/2020',
+    time:'02:15 PM',
+    orderId:'YXM123456789'
+  },
+  {
+    proId:8,
+    image:require("../../assets/images/kiwi.png"),
+    proName:'Kiwi (Imported)',
+    quantity:3,
+    price:75,
+    weight:'',
+    status:'Pending',
+    date: '04/25/2020',
+    time:'10:55 AM',
+    orderId:'YYM987654357'
+  },
+
+
+
+];
 export const productList = [
   {
     proId:1,

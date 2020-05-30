@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, Animated, Easing } from 'react-native'
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
 
-import { SignIn, SignInEmail,MyOrder, MyWallet, SignInMobile, MyAddress, ProductList, MyNotification, Verification, SignUp, Forgotpassword,
+import { SignIn, SignInEmail, OrderSuccess, ProductDetail, SubscribeSuccess, CancelOrder, Checkout, DeleteSubscribe, Confirmation, OrderReturnDetail, OrderReturn, MyCart, SubscribeDetail, SubscribeOrder, OrderDetail, TopupWallet, MyOrder,Profile, MyWallet, SignInMobile, MyAddress, ProductList, MyNotification, Verification, SignUp, Forgotpassword,
  MyPayments, MyRatings, Subscription, Home, Drawer, Settings }
  from "../containers";
 import { Colors, Screens } from "../constants";
@@ -49,6 +49,8 @@ const DrawerStack = createDrawerNavigator({
    [Screens.Subscription.route]:{ screen: Subscription },
   [Screens.ProductList.route]: { screen: ProductList },
   [Screens.Settings.route]: { screen: Settings },
+  [Screens.Profile.route]: { screen: Profile },
+  [Screens.TopupWallet.route]: { screen: TopupWallet },
 }, {
   gesturesEnabled: true,
   // drawerBackgroundColor: 'rgba(255,255,255,.9)',
@@ -65,8 +67,27 @@ const DrawerStack = createDrawerNavigator({
 });
 
 const DrawerNavigation = createStackNavigator({
+  
   [Screens.DrawerStack.route]: { screen: DrawerStack },
   [Screens.ProductList.route]: { screen: ProductList },
+  [Screens.Profile.route]: { screen: Profile },
+  [Screens.TopupWallet.route]: { screen: TopupWallet },
+  [Screens.OrderDetail.route]: { screen: OrderDetail },
+  [Screens.SubscribeOrder.route]: { screen: SubscribeOrder },
+  [Screens.CancelOrder.route]: { screen: CancelOrder },
+  [Screens.SubscribeDetail.route]: { screen: SubscribeDetail },
+  [Screens.MyCart.route]: { screen: MyCart },
+  [Screens.OrderReturn.route]: { screen: OrderReturn },
+  [Screens.OrderReturnDetail.route]: { screen: OrderReturnDetail },
+  [Screens.Confirmation.route]: { screen: Confirmation },
+  [Screens.DeleteSubscribe.route]: { screen: DeleteSubscribe },
+  [Screens.Checkout.route]: { screen: Checkout },
+  [Screens.MyPayments.route]: { screen: MyPayments},
+  [Screens.OrderSuccess.route]: { screen: OrderSuccess},
+  [Screens.SubscribeSuccess.route]: { screen: SubscribeSuccess},
+  [Screens.ProductDetail.route]: { screen: ProductDetail},
+  
+  
 }, {
   headerMode: 'none',
    

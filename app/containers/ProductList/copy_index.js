@@ -84,7 +84,7 @@ onPressRecipe(item){
       <Container style={appStyles.container}>
       
          <Headers
-            IconLeft='arrow-back'
+            IconLeft='arrowleft'
             onPress={() => this.openControlPanel()}
             IconRightS=''
             IconRightF='search'

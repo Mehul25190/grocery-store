@@ -15,8 +15,21 @@ import MyAddress from "./MyAddress";
 import MyNotification from "./MyNotification";
 import MyRatings from "./MyRatings";
 import Subscription from "./Subscription";
+import Profile from "./Profile";
+import TopupWallet from "./TopupWallet";
+import OrderDetail from "./OrderDetail";
+import SubscribeOrder from "./SubscribeOrder";
+import CancelOrder from "./CancelOrder";
+import SubscribeDetail from "./SubscribeDetail";
+import MyCart from "./MyCart";
+import OrderReturn from "./OrderReturn";
+import OrderReturnDetail from "./OrderReturnDetail";
+import Confirmation from "./Confirmation";
+import DeleteSubscribe from "./DeleteSubscribe";
+import Checkout from "./Checkout";
+import OrderSuccess from "./OrderSuccess";
+import SubscribeSuccess from "./SubscribeSuccess";
+import ProductDetail from "./ProductDetail";
 
-
-
-export { SignIn, MyAddress,MyNotification, MyRatings,  MyWallet, Subscription, ProductList, SignInEmail, Verification, SignInMobile,
+export { SignIn, CancelOrder, MyCart, ProductDetail, OrderSuccess, SubscribeSuccess, Checkout, Confirmation, DeleteSubscribe, OrderReturn, OrderReturnDetail, SubscribeOrder, SubscribeDetail, TopupWallet, OrderDetail, Profile, MyAddress, MyNotification, MyRatings,  MyWallet, Subscription, ProductList, SignInEmail, Verification, SignInMobile,
  SignUp, Forgotpassword, Drawer, Home, MyOrder, Settings, MyPayments};

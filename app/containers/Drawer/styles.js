@@ -10,11 +10,7 @@ export default {
    
   },
   logoutBtn: {
-    flex: 1,
-    marginTop:-10,
-    paddingTop:-5,
-    backgroundColor: Colors.white,
-    
+       
     justifyContent: 'flex-start',
     fontFamily: 'Font-Regular',
   },
@@ -25,8 +21,10 @@ export default {
   },
   logoutText:{
   color: Colors.lightIcon,
-  fontSize:16,
-  textTransform: 'capitalize'
+  fontSize:17,
+  paddingLeft:Layout.indent+3,
+  textTransform: 'capitalize',
+  fontFamily:'Font-Medium'
   },
  
 };

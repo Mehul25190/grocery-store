@@ -93,12 +93,7 @@ class SignUp extends React.Component {
                         </Button>
                       </Col>
                       <Col>
-                        <Button transparent full  
-                         style={[{justifyContent:'flex-end'}]} >
-                          <TouchableOpacity  onPress={() => this.onForgotpasswordPressHandler()}>
-                          <Text style={[styles.linkText,appStyles.textRight]} > Forgot Password?</Text>
-                          </TouchableOpacity>
-                        </Button>
+                       
                       </Col>
                     </Row>
                   </Animatable.View>

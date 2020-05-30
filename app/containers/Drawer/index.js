@@ -29,7 +29,12 @@ import IconFont from 'react-native-vector-icons/FontAwesome';
 class Drawer extends React.Component {
   constructor(props) {
     super(props);
-    this.listItems = [Screens.Home, Screens.MyOrder, Screens.MyWallet, Screens.MyPayments, Screens.MyRatings, Screens.MyNotification, Screens.MyAddress, Screens.Subscription];
+    this.listItems = [Screens.Home,
+                      Screens.MyOrder,
+                      Screens.MyWallet,
+                      Screens.MyAddress,
+                      Screens.Subscription];
+    
   }
 
   logout(){
@@ -50,20 +55,15 @@ class Drawer extends React.Component {
                   <LoginBackIcon />
                 </Left>
                 <Body>
-                 <Title>My Account</Title>
+                 <Title style={{fontSize:16, fontFamily:'Font-Medium'}}>My Account</Title>
                 </Body>
 
                 <Right>
-                 <TouchableOpacity>
-                  <Svgicon name="search1" type="AntDesign"
-                   color={Colors.white} 
-                   width='16'
-                   />
-                </TouchableOpacity>
+               
                 </Right>
              
         </Header>
-        <Card style={[appStyles.addBox,{height:'auto'}]}>
+        <Card style={[appStyles.addBox,{height:'auto',}]}>
          <List >
               <ListItem avatar noBorder style={{ marginLeft: 10,}}>
                 <Left style={{ flex: 0,  marginLeft: 0,   paddingLeft:0,  width: 40}}>
@@ -75,13 +75,15 @@ class Drawer extends React.Component {
                     />
                 </Left>
                 <Body>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
                   <Text style={appStyles.profileName} >Kirit k</Text>
                   <Text style={appStyles.profileEmail}>kirit.jbs@gmail.com</Text>
                   <Text style={appStyles.profileEmail}>987654210</Text>
+                  </TouchableOpacity>
                 </Body>
 
                 <Right>
-                 <TouchableOpacity>
+                 <TouchableOpacity onPress= {()=> this.props.navigation.navigate(Screens.Profile.route)}>
                   <Svgicon name="edit" type="MaterialIcons"
                    color={Colors.primary} 
                     IconStyle={appStyles.IconStyle}
@@ -103,15 +105,16 @@ class Drawer extends React.Component {
                     />
                 </Left>
                 <Body>
+                 <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
                   <Text style={appStyles.userArea} >South Bopal,</Text>
                   <Text style={appStyles.userCity} >Ahmedabad - Gandhinagar,</Text>
-                 
+                 </TouchableOpacity>  
                 </Body>
 
                 <Right>
-                 <TouchableOpacity>
+                  <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
                   <Svgicon name="edit" type="MaterialIcons"
-                   color={Colors.primary} 
+                    color={Colors.primary} 
                     IconStyle={appStyles.IconStyle}
                     />
                 </TouchableOpacity>
@@ -119,44 +122,46 @@ class Drawer extends React.Component {
               </ListItem>
             </List>
         </Card>
-        <Content>
+        <Content style={{borderTopWidth:1,borderColor:Colors.primary,marginTop:5}}>
           <List
               dataArray={this.listItems}
               keyExtractor={(item, index) => index.toString()} 
               style={appStyles.drawerList}
               renderRow={(data) => {
-                return (
-                  <ListItem 
-                  button full
-                  noIndent
-                  style={[appStyles.drawerItem, data.route==currentRoute ? appStyles.activeDrawerItem : {}]}
-                  onPress={() => this.props.navigation.navigate(data.route)}>
-                      <Svgicon 
-                        style={appStyles.drawerIcon} 
-                        color={(data.route==currentRoute) ? Colors.primary:Colors.lightIcon} 
-                        name={data.icon} 
-                        type={data.type}
-                        />
-                      <Text
-                      style={[appStyles.drawerText]}>
-                      {(data.route)}</Text>
-                    {/*
+              return (
+                <ListItem 
+                noBorder
+                button full
+                // noIndent
+                style={[appStyles.drawerItem, data.route==currentRoute ? appStyles.activeDrawerItem : {}]}
+                onPress={() => this.props.navigation.navigate(data.route)}>
+                  <Svgicon 
+                    style={appStyles.drawerIcon} 
+                    color={(data.route==currentRoute) ? Colors.primary:Colors.lightIcon} 
+                    name={data.icon} 
+                    type={data.type}
+                    />
                     <Text
-                      style={[appStyles.drawerText]}>
-                      {language[(data.route).toLowerCase()]}</Text>
-                    */}
-                  </ListItem>
-                );
+                    style={[appStyles.drawerText]}>
+                    {(data.label)}</Text>
+                  {/*
+                  <Text
+                    style={[appStyles.drawerText]}>
+                    {language[(data.route).toLowerCase()]}</Text>
+                  */}
+                </ListItem>
+              );
               }}
             />
           {/*<DrawerItems {...this.props} />*/}
-        </Content>
-        <Footer style={styles.logoutFooter}>
+           <View style={styles.logoutFooter}>
           <Button iconLeft transparent full style={styles.logoutBtn} onPress={() => this.logout()} >
             <Icon  type='AntDesign' name='logout' style={styles.logoutIcon} />
             <Text style={styles.logoutText}>{this.props.language.logout}</Text>
           </Button>
-        </Footer>
+        </View>
+        </Content>
+       
       </Container>
     )
   }
