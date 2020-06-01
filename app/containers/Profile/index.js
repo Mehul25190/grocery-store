@@ -26,6 +26,7 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       selected: "key0",
+       selectedG: "0",
       chosenDate: new Date(),
       checked: true,
         switch1Value: false,
@@ -37,16 +38,22 @@ class Profile extends React.Component {
   }
  checkBoxtTest = () => {
     this.setState((prevState) => ({check: !prevState.check}));
-}
-toggleSwitch1= (value) =>{
-    this.setState({
-         switch1Value: value
-    });
-}
+  }
+  toggleSwitch1= (value) =>{
+      this.setState({
+           switch1Value: value
+      });
+  }
   onValueChange(value: string) {
     this.setState({
       selected: value,
       switch1Value: value
+    });
+  }
+   onValueChangeGender(value: string) {
+    this.setState({
+      selectedG: value,
+     
     });
   }
    openControlPanel = () => {
@@ -97,7 +104,10 @@ toggleSwitch1= (value) =>{
                 <Input style={styles.inputStyle}  />
               </Item>  
 
-              <View style={{flex:1,width:Layout.width,marginRight:Layout.indent,marginTop:20}}>
+
+             <Grid>
+              <Col>
+               <View style={{flex:1,width:Layout.width,marginRight:Layout.indent,marginTop:20}}>
                 <Item  style={styles.datePickerItem}>
              
                 <Label style={styles.labeldateText}>Date of Birth</Label>
@@ -111,9 +121,9 @@ toggleSwitch1= (value) =>{
                       modalTransparent={false}
                       animationType={"fade"}
                       androidMode={"default"}
-                      placeHolderText="Date of Birth (MM/DD/YYY)"
+                      placeHolderText="(MM/DD/YYY)"
                       textStyle={{fontSize:18, color: Colors.gray,textAlign:'left',}}
-                      placeHolderTextStyle={{fontSize:18, textAlign:'left', paddingLeft:0, paddingRight:50,color: "#ddd",zIndex:5,justifyContent:'flex-start' }}
+                      placeHolderTextStyle={{fontSize:16, textAlign:'left', paddingLeft:0, paddingRight:10,color: "#ddd",zIndex:5,justifyContent:'flex-start' }}
                       onDateChange={this.setDate}
                       disabled={false}
 
@@ -121,15 +131,43 @@ toggleSwitch1= (value) =>{
            
              <Image source={imgs.calImg} style={{marginLeft:20}} style={styles.calImage} />
               </Item> 
-               
-             
-                
-           
-            
+                      
               </View> 
+              </Col>
+         
+              <Col>
+             <View style={{paddingTop:7,position:'relative',marginRight:Layout.indent}}>
+              <Label style={[styles.labelText,{paddingLeft:Layout.indent, width: Layout.width}]}  >Gender</Label>
+               <Item style={{height:45, borderBottomWidth:1, borderColor:Colors.primary}} >
+                <Picker
+                  note
+                  mode="dropdown"
+                  style={{ flex:1 }}
+                  selectedValue={this.state.selectedG}
+                  onValueChange={this.onValueChangeGender.bind(this)}
+                   textStyle={{fontFamily:'Font-Medium'}}
+                  style={styles.dorpDownReason}
+                 
+                  onValueChangeGender={this.onValueChange.bind(this)}
+                  placeholderStyle={{borderWidth:10, fontFamily:'Font-Medium' }}
+                  placeholderIconColor={{borderWidth:2}}
+                  >
+                  <Picker.Item label="Select Gender" value="0" />
+                  <Picker.Item label="Male" value="key1" />
+                  <Picker.Item label="Female" value="key2" />
+              
+
+                </Picker>
+                   <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
+               </Item>
+           
+              </View>
+              </Col>
+            </Grid>
              
              
-               
+             
+          
                
              <View style={{paddingTop:10,position:'relative',marginRight:Layout.indent}}>
               <Label style={[styles.labelText,{paddingLeft:Layout.indent, width: Layout.width}]}  >Ethencity</Label>
@@ -164,8 +202,7 @@ toggleSwitch1= (value) =>{
                 }}
               checkedImage={<Icon name='check' type='AntDesign' style={{color:Colors.primary}} />}
               unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons' style={{color:'transparent'}} /> }
-              isChecked={this.state.isChecked}
-            />
+              isChecked={this.state.isChecked}  />
 
                   <Text style={styles.checkBoxStyle}>
                    Send me emails on promotions,

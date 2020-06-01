@@ -32,6 +32,7 @@ class Drawer extends React.Component {
     this.listItems = [Screens.Home,
                       Screens.MyOrder,
                       Screens.MyWallet,
+                      Screens.MyOffers,
                       Screens.MyAddress,
                       Screens.Subscription];
     

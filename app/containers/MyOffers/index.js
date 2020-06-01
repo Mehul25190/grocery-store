@@ -19,7 +19,7 @@ import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import {orderList} from '../data/data';
 
-class MyOrder extends React.Component {
+class MyOffers extends React.Component {
 
   constructor(props) {
     super(props);
@@ -84,31 +84,31 @@ class MyOrder extends React.Component {
               IconLeft='arrowleft'
               onPress={() => this.openControlPanel()}
                IconRightF='search'
-              setCart={true}
-              setFilter={true}
+             
+              
                IconRightT='sound-mix'
                StyleIconRightT={{marginRight:10}}
               bgColor='transparent'
-              Title='My Order'
+              Title='My Offers'
               IconsRightT={styles.IconsRightT}
              />
       
           <Content enableOnAndroid>
         
    
-    <View style={{flex:0,zIndex:-1, width:200, }}>
+    
          <View>
           <Text style={styles.BalanceTitle}>
-           Recent Order
+           Special Offers
           </Text>
         </View>
 
          <View style={styles.dateRow}>
           <Text style={styles.walletDate}>
-            {this.state.date}
+          Valid till  {this.state.date}
           </Text>
         </View>
-</View>
+
          {
 
              orderList.map((item, index) => {
@@ -116,15 +116,15 @@ class MyOrder extends React.Component {
                   
                         <ListItem style={styles.ListItems} noBorder>
                           <Left style={styles.ListLeft}>
-                            <TouchableOpacity style={styles.prodInfo}  onPress={() => this.onDetailPage(item,index)}>
-                            <Image style={styles.proImage} source={item.image} />
+                            <TouchableOpacity style={styles.prodInfo}  >
+                            <Icon style={styles.proImage} name='gift' type='AntDesign' />
                             </TouchableOpacity>
                           </Left>
 
                         <Body style={styles.bodyText}>
-                            <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage(item,index)}>
-                            {/* <Text style={styles.proTitle}>{item.proName}</Text>*/}
-                            <Text numberOfLines={1} style={styles.proTitle}>{item.orderId}</Text>
+                            <TouchableOpacity style={styles.prodInfo} >
+                     
+                            <Text numberOfLines={1} style={styles.proTitle}>Get offers in Grocery</Text>
                             <Text style={styles.paidTime}>{this.dateFormate(item.date)} {item.time}</Text>
 
                             </TouchableOpacity>
@@ -133,15 +133,7 @@ class MyOrder extends React.Component {
                         <Right style={styles.ListRight}>
                             <View>
                               <Text style={styles.proPrice}>{'\u20B9'}  {item.price}</Text>
-                              <Button style={styles.statusBtn}>
-                              <TouchableOpacity >
-
-                              <Text style={styles.statusText}>
-                              {item.status}
-                              </Text>
-
-                              </TouchableOpacity>
-                              </Button>                      
+                                                 
                             </View>
                         </Right>
                         </ListItem> 
@@ -170,4 +162,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(MyOrder);
+export default connect(mapStateToProps, mapDispatchToProps)(MyOffers);

@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, Animated, Easing } from 'react-native'
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
 
-import { SignIn, SignInEmail, OrderSuccess, ProductDetail, SubscribeSuccess, CancelOrder, Checkout, DeleteSubscribe, Confirmation, OrderReturnDetail, OrderReturn, MyCart, SubscribeDetail, SubscribeOrder, OrderDetail, TopupWallet, MyOrder,Profile, MyWallet, SignInMobile, MyAddress, ProductList, MyNotification, Verification, SignUp, Forgotpassword,
+import { SignIn, SignInEmail, OrderSuccess, ProductDetail, MyOffers, SubscribeSuccess, CancelOrder, Checkout, DeleteSubscribe, Confirmation, OrderReturnDetail, OrderReturn, MyCart, SubscribeDetail, SubscribeOrder, OrderDetail, TopupWallet, MyOrder,Profile, MyWallet, SignInMobile, MyAddress, ProductList, MyNotification, Verification, SignUp, Forgotpassword,
  MyPayments, MyRatings, Subscription, Home, Drawer, Settings }
  from "../containers";
 import { Colors, Screens } from "../constants";
@@ -45,12 +45,15 @@ const DrawerStack = createDrawerNavigator({
    [Screens.MyRatings.route]: { screen: MyRatings },
    [Screens.MyWallet.route]: { screen: MyWallet },
    [Screens.MyNotification.route]:{ screen: MyNotification },
+   [Screens.MyOffers.route]: { screen: MyOffers },
    [Screens.MyAddress.route]:{ screen: MyAddress },
    [Screens.Subscription.route]:{ screen: Subscription },
   [Screens.ProductList.route]: { screen: ProductList },
   [Screens.Settings.route]: { screen: Settings },
   [Screens.Profile.route]: { screen: Profile },
   [Screens.TopupWallet.route]: { screen: TopupWallet },
+  [Screens.MyOffers.route]: { screen: MyOffers },
+  
 }, {
   gesturesEnabled: true,
   // drawerBackgroundColor: 'rgba(255,255,255,.9)',

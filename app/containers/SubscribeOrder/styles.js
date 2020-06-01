@@ -14,7 +14,7 @@ HoriLine:{
    marginTop:5,
    marginBottom:5,
 },
-   reasonView:{
+ reasonView:{
 
  width: Layout.width,
   marginTop: 10,

@@ -1,12 +1,12 @@
 import {Colors,Layout} from '../../constants/';
 export default {
   IconsRightT:{
-    fontSize:16,
+    fontSize:20,
     color:'#fff',
     borderColor:'#fff',
-    width:25,
+    width:28,
     alignItems:'center',
-    height:25,
+    height:28,
     justifyContent:'center',
    textAlign:'center',
     borderWidth:1,
@@ -76,8 +76,7 @@ export default {
  dateRow:{
  	backgroundColor:'#fff',
  	paddingTop:10,
- 	paddingBottom:10,
-  zIndex:0
+ 	paddingBottom:10
  },
   ListItems:{
    borderColor:Colors.primary,
@@ -89,10 +88,11 @@ export default {
     paddingRight:Layout.indent-7
    },
      ListLeft:{
-   
+   justifyContent:'center',
+    alignItems:'center',
     flex: 0,
     paddingLeft:0,
-    width: 90,
+    width: 75,
     
    },
 proTitle:{
@@ -106,11 +106,13 @@ color:Colors.gray,
 marginLeft:1
 },
      proImage:{
+      fontSize:35,
     textAlign:'left',
     marginLeft:5,
-    width:75,
-    height:75,
-    resizeMode:'contain',
+    width:65,
+    height:65,
+
+   
    },
      ListRight:{
       flex:0,

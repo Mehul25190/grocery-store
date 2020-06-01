@@ -29,6 +29,12 @@ export default {
     type: 'AntDesign',
     label: 'My Wallet',
   },
+  MyOffers: {
+    route:'MyOffers',
+    icon: 'gift',
+    type:'AntDesign',
+    label: 'My Offers',
+  },
   MyPayments:{
     route:'MyPayments',
     icon:'creditcard',

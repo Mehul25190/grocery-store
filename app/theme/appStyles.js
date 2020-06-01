@@ -372,7 +372,8 @@ fontFamily:'Font-Medium'
     backgroundColor:Colors.primary,
     height:70,
     borderBottomLeftRadius:8,
-    borderBottomRightRadius:8
+    borderBottomRightRadius:8,
+    zIndex:99
   },
   categoryStyles: {
    
@@ -450,6 +451,33 @@ fontFamily:'Font-Medium'
       fontSize: 18,
       paddingLeft: 15
     },
+    sortText:{
+      fontFamily:'Font-Medium',
+      color:Colors.gray,
+      fontSize:14,
+      lineHeight:20,
+      paddingTop:5,
+      textAlign:'left',
+    
+    },
+    sortBlock:{
+    paddingLeft:Layout.indent,
+      paddingRight:Layout.indent,
+      zIndex:99,
+     position:'absolute',
+       right:15,
+     paddingRight:1,
+     marginRight:1,
+      
+      borderRadius:5, 
+      elevation: (Platform.OS === 'android') ? 10 : 0, 
+      
+       top:45,
+      backgroundColor:'#D2EAD2',
+      width:100,
+      height:80
+    }
+
     /* Slideshow*/
     
 });

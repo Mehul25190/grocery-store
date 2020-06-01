@@ -6,7 +6,7 @@ import { NavigationActions } from "react-navigation";
 import {
   Button,
   Text,
-  Header, Item, Input, Left, Body, Title, Right,Icon
+  Header, Item, Input, Left, Body, Title, Right,Icon, List, ListItem
 } from 'native-base';
 
 import appStyles from '../theme/appStyles';
@@ -26,36 +26,79 @@ class Headers extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      visibleModal:false
+      visibleModal:false,
+      searcBar:false,
+      filter:false
     }
   }
     onPress = () => {
     this.setState({active: !this.state.active});
     this.props.onPress();
     };
+
+    onPressSearch = () => {
+    this.setState({searcBar: !this.state.searcBar});
+      
+    };
+    onPressFilter = () => {
+      this.setState({filter: !this.state.filter});
+    };
   render() {
+      const { searcBar } = this.state;
     return (
-      <Header searchBar rounded style={appStyles.headerStyle} >
+      <Header searchBar rounded style={[appStyles.headerStyle]} >
       
           <Left style={appStyles.headerLeft} icon>
             <Button transparent style={appStyles.menuBtn}  onPress={() => this.onPress()}>
               <Icon style={appStyles.menuBar} size={30} color={Colors.white} type="AntDesign" name={this.props.IconLeft} />
             </Button>
           </Left>
-       
-          <Item style={{width:60,backgroundColor:'transparent'}} >
+       {this.state.searcBar==true ? 
+        (<Item style={[appStyles.searchBar]} >
+            <Icon name="search" style={{color:Colors.primary}} />
+            <Input style={appStyles.searchInput} placeholder='Search...'/>
+          </Item>):
+        ( <Item style={{width:60,backgroundColor:'transparent'}} >
             
           <Text style={appStyles.headerTitle}>{this.props.Title}</Text>
-          </Item>
+
+          </Item>)}
+         
+           
          
           <Right style={[appStyles.headersRight,this.props.headersRight]}>
            {
              this.props.setFilter == true &&
 
-            <TouchableOpacity style={[appStyles.StyleIconRightT]}>
-             <Icon style={[appStyles.IconsRightT,this.props.IconsRightT]} type="Entypo" name={this.props.IconRightT} />
-             </TouchableOpacity>
-            }
+             (<TouchableOpacity style={[appStyles.StyleIconRightT]} onPress={()=>this.onPressFilter()}>
+                 <Icon style={[appStyles.IconsRightT,this.props.IconsRightT]} type="Entypo" name={this.props.IconRightT} />
+             </TouchableOpacity>)}
+
+            { this.state.filter==true &&
+             (<View style={appStyles.sortBlock}>
+           <Icon name='triangle-up' type='Entypo' style={{position:'absolute', color:'#D2EAD2', top:-20, right:50}} />
+         
+            <List style={{}}>
+               
+                 <TouchableOpacity>
+                    <Text style={appStyles.sortText}>Pending</Text>
+                  </TouchableOpacity>  
+                   <TouchableOpacity>
+                      <Text style={appStyles.sortText}>Delivered</Text>
+                  </TouchableOpacity>  
+                  <TouchableOpacity>
+                     <Text style={appStyles.sortText}>Cancel</Text>
+                  </TouchableOpacity>  
+              </List>
+     
+       </View>)} 
+          
+     
+             
+           
+
+      
+
           {
             this.props.setCart == true &&
               <TouchableOpacity style={appStyles.cartIconArea} onPress={()=>this.props.cartPage()}>
@@ -65,17 +108,17 @@ class Headers extends React.Component {
           }
          
 
-             <TouchableOpacity style={appStyles.StyleIconRightS}>
+             <TouchableOpacity style={appStyles.StyleIconRightS} onPress={()=>this.onPressSearch()}>
              <Icon style={[appStyles.IconsRight,this.props.IconsRight]}  name={this.props.IconRightF} />
              </TouchableOpacity>
-
-           
+        
           
+      
           </Right>
-       
+          
          
        </Header>
-
+       
     );
   }
 }

@@ -1,5 +1,76 @@
 import imgs from '../../assets/images';
 
+export const CityList =[
+  {
+    key:1,
+    city:'Ahmedabad'
+  },
+  {
+    key:2,
+    city:'Surat'
+  },
+  {
+    key:3,
+    city:'Rajkot'
+  },
+   {
+    key:4,
+    city:'Navsari'
+  },
+];
+export const DeliveryAreaList =[
+  {
+    key:1,
+    area:'Nikol'
+  },
+  {
+    key:2,
+    area:'Naroda'
+  },
+  {
+    key:3,
+    area:'Bapunagar'
+  },
+   {
+    key:4,
+    area:'Odhav'
+  },
+];
+export const ChooseAreaList =[
+  {
+    key:1,
+    area:'Paldi'
+  },
+  {
+    key:2,
+    area:'Vasna'
+  },
+  {
+    key:3,
+    area:'Ambawadi'
+  },
+   {
+    key:4,
+    area:'Stadium'
+  },
+    {
+    key:5,
+    area:'Dariapur'
+  },
+    {
+    key:6,
+    area:'Madhupura'
+  },
+    {
+    key:7,
+    area:'Wadaj'
+  },
+    {
+    key:8,
+    area:'Sabarmati '
+  },
+
+];
 export const BankOptions = [
     {
         key: 1,
