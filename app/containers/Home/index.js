@@ -23,6 +23,8 @@ import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import { array } from 'prop-types';
 
+const cartCount = 1;
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -62,14 +64,14 @@ class Home extends React.Component {
   };
 
    renderItems = ({ item, index}) => (
-     //imagePath = url.apiBaseUrl + item.imagePath;
-    <TouchableHighlight onPress={() => this.onPressRecipe(item)}>
+    
+    <TouchableOpacity onPress={() => this.onPressRecipe(item)}>
        <View style={index == 0 ? styles.ItemContainer : styles.ItemContainer}>
         <Image style={styles.photo} source={{uri: url.imageURL+item.imagePath} } />
         <Text style={styles.productTitle}>{item.id}{item.categoryName}</Text>
        
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
    openControlPanel = () => {
       this.props.navigation.openDrawer(); // open drawer
@@ -79,7 +81,7 @@ class Home extends React.Component {
     //console.log(this.state.categoryData);
     //console.log("after render");
     return (
-      <Container style={appStyles.container}>
+      <Container style={[appStyles.container,{ width: Layout.window.width, height: Layout.window.height}]}>
            <Header searchBar rounded style={appStyles.headerStyle}>
       
           <Left style={appStyles.headerLeft}>
@@ -95,8 +97,15 @@ class Home extends React.Component {
          
           <Right style={appStyles.headerRight}>
              <Button transparent>
-               <Icon style={appStyles.cartIcon}  name="cart" />
-               <Icon style={appStyles.userIcon} name="person" />      
+             <TouchableOpacity style={appStyles.cartIconArea} onPress={()=>this.props.navigation.navigate(Screens.MyCart.route)}>
+               <Icon style={appStyles.cartIcon} name="cart" />
+               { cartCount >0 && (<Text style={appStyles.cartCount}>{cartCount}</Text>) }
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
+               <Icon style={appStyles.userIcon} name="user-circle"  type="FontAwesome" />      
+              </TouchableOpacity> 
+              
             </Button>
           </Right>
        

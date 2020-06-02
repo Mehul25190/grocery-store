@@ -11,5 +11,6 @@ export default {
   lightBlack:'#333333',
   red:'#ee0701',
   icon: '#000000',
-  lightIcon: '#BABABA'
+  lightIcon: '#BABABA',
+  gray: '#787878'
 };

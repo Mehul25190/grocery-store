@@ -40,11 +40,9 @@ constructor(props) {
   
 }
 
-componentDidMount() {
-   //alert(this.state.categoryId);
-    this.setState({
+  componentDidMount() {
+   this.setState({
       dataSource: productList,
-
       value:1,
       //categoryId:this.props.navigation.getParam('para_categoryId'),
     });
@@ -94,17 +92,17 @@ onPressRecipe(item){
       <Container style={appStyles.container}>
       
             <Headers
-            IconLeft='arrow-back'
+            IconLeft='arrowleft'
             onPress={() => this.openControlPanel()}
-            IconRightS=''
             IconRightF='search'
+            setCart={true}
             bgColor='transparent'
             Title= {categoryName}
             
            />
           <Content enableOnAndroid style={appStyles.content}>
            
-           <Card style={appStyles.addBox}>
+          {/* <Card style={appStyles.addBox}>
                 <Grid>
                   <Col style={{ marginLef:10,width: 170,}}>
                      <Image source={imgs.mangoSale} style={styles.mangoSale} />
@@ -136,6 +134,7 @@ onPressRecipe(item){
                   </Col>
                  </Grid>
              </Card>
+           */}
              <Category
                 data={categoryList}    
                 itemSelected={(item) => this._itemChoose(item)}
@@ -147,59 +146,35 @@ onPressRecipe(item){
                 style= {{ backgroundColor: '#fff'}}
                 textItemStyles={styles.textItemStyles}
               />
-              <View>
-                  <Grid>
-                    <Col style={{justifyContent:'flex-start', marginRight:0,width:35}}>
-                      
-                      <Image source={imgs.filterIcon} style={styles.filterIconstyle} />
-                  </Col>
-                  <Col style={{JustifyContent:'flex-end'}}>
-                  <Category
-                    data={filterList}    
-                    itemSelected={(filterItem) => this._filterChoose(filterItem)}
-                    itemText={'title'} 
-                    colorTextDefault={'gray'} 
-                    colorTextSelected={'#333'} 
-                    colorItemDefault={'#fff'}
-                    colorItemSelected={'#ddd'}
-                    itemStyles={styles.filterItemStyles}
-                    style= {{ backgroundColor: '#fff'}}
-                    textItemStyles={styles.filterStyles}
-                     />
-                  </Col>
-                  </Grid>
-              </View>
              
-              
-               {/* <FlatList */ 
-               //    style={{marginTop:40}}
-               //    data={this.state.dataSource}
-               //    renderItem={({item})=>(
-                   
-               //    )}
-               //    numColumns={3}
-               //    keyExtractor={(item, index) => index.toString()}
-               //  /> */
-             }
-                
            {
               this.state.productData.map((item, index) => {
             // productList.map((item, index) => {
                   return (
                   
                        <ListItem style={styles.ListItems} noBorder>
+
                         <Left style={styles.ListLeft}>
                           <Image style={styles.proImage} source={{uri: url.imageURL+item.imagePath} }  />
                         </Left>
                         <Body style={{textAlign:'left'}}>
-                          <View style={styles.prodInfo}>
+                          <View style={styles.prodInfo}  onPress={()=> this.props.navigation.navigate(Screens.ProductDetail.route)}>
                   <Text style={styles.proTitle}>{item.itemName}</Text>
+
                             <Text style={styles.proQuanitty} note>{item.quantity} pc &nbsp;  
                             {
                               item.weight!=='' ? '('+ item.weight +' '+gm+ ')' :''
                             } </Text>
-                            <Text style={styles.proPrice}>{'\u20B9'}{item.price}</Text>
-                          </View>
+                        
+                        <View style={{flex:1,flexDirection:'row',justifyContent:'flex-start', alignItems:'flex-start'}}>                                       
+                         {
+                           (index == 0 || index == 2) &&
+                              <Text style={styles.proPriceStrike}><Text style={appStyles.currency,{fontSize:18}}>{'\u20B9'}</Text> {item.price}</Text> }
+                              <Text style={styles.proPrice}><Text style={appStyles.currency,{fontSize:18}}>{'\u20B9'}</Text> {item.price}</Text>
+                        </View>    
+                           
+                             
+                          </TouchableOpacity>
                         </Body>
                         <Right style={styles.ListRight}>
                           <View>
@@ -211,12 +186,12 @@ onPressRecipe(item){
                                 totalHeight={20} 
                                 iconSize={30}
                                 borderColor='#F8BB1B'
-
+                                 inputStyle={{fontSize:13}}
                                 step={1}
                                 valueType='real'
                                 rounded 
                                 textColor='#F8BB1B' 
-                                iconStyle={{ color: '#F8BB1B' }} 
+                                iconStyle={{ color: '#F8BB1B',fontSize:14 }} 
                                 rightButtonBackgroundColor='#fff' 
                                 leftButtonBackgroundColor='#fff'/>
                           </View> 
@@ -226,7 +201,7 @@ onPressRecipe(item){
                             index == 0 || index == 2?
                           
                             <Button style={styles.subscribeBtn}>
-                             <TouchableOpacity>
+                             <TouchableOpacity onPress={()=> this.props.navigation.navigate(Screens.SubscribeOrder.route)}>
                               <Text style={styles.subText}>
                                Subscribe@{'\u20B9'}12
                               </Text>
@@ -237,7 +212,7 @@ onPressRecipe(item){
                             </View>
                           }
                             <Button style={styles.buyButton}>
-                             <TouchableOpacity>
+                             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyCart.route)}>
                               {
                             index == 0 || index == 2?
                               <Text style={styles.buyText}>

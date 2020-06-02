@@ -54,8 +54,8 @@ addAddressStyle: {
   },
   EditIconStyle:{
   		position:'absolute',
-		top:5,
-		right:30
+		top:2,
+		right:5
 		
   },
 	savedAddress:{
@@ -76,10 +76,10 @@ addAddressStyle: {
     fontSize:13
   },
     addressTextStyle: {
-   color: '#fff',
+   color: Colors.primary,
     padding:1,
     fontFamily:'Font-Medium',
-    fontSize:13,
+    fontSize:16,
     paddingLeft:10
    
   },   
@@ -92,6 +92,59 @@ addAddressStyle: {
     color:'#fff'
   },
   
+ reasonView:{
+  width: Layout.width,
+  marginTop: 5,
+  marginRight:Layout.indent-5,
+  marginLeft:Layout.indent-5,
+  flex:1,
+  borderRadius: 10,
+  paddingLeft:10,
+   backgroundColor:Colors.white,
+   color:Colors.white,
+ fontFamily:'Font-Medium',
+ marginBottom:10,
+ shadowColor: "#000",
+ shadowOffset: {
+  width: 0,
+  height: 2,
+    },
+    shadowOpacity:2.2,
+    shadowRadius: 4,
+
+    elevation: 2,
+  },
+   DownArrow:{
+    position:'absolute',
+    right:10,
+    width:18,
+    height:15,
+    top:15,zIndex:99
+  },
+   dorpDownReason: {
+   borderRadius:50,zIndex:50,
+   flex:1,
+   height:45,
+   color:Colors.gray,
+   fontFamily:'Font-Medium',
+
+   },
+   saveBtn:{
+   	borderRadius:25,
+   	marginLeft:Layout.indent-5,
+   	marginRight:Layout.indent-5,
+   	backgroundColor:Colors.secondary,
+   	height:40
+   },
+   saveBtnText:{
+   	fontFamily:'Font-Medium',
+   	textTransform:'capitalize',
+   	fontSize:18
+   },
+   inputText:{
+   	fontFamily:'Font-Medium',
+   	color:'#B9B9B9'
+   }
 
              
 }  

@@ -1,0 +1,44 @@
+import {Colors,Layout} from '../../constants/';
+export default {
+  thanksTitle:{
+    fontFamily:'Font-Medium',
+    fontSize:18,
+    marginBottom:10
+  },
+  thanksText:{
+    fontFamily:'Font-Medium',
+    fontSize:14,
+    marginRight:Layout.indent,
+    paddingRight:Layout.indent,
+    color:Colors.primary,
+    lineHeight:18
+  },
+  thanksAre:{
+    marginLeft:Layout.indent,
+    marginTop:Layout.indent
+  },
+  okayBtnArea:{
+  marginTop:80,
+  paddingTop:70
+  },
+  doneBtn:{
+   
+    marginLeft:Layout.indent,
+    marginRight:Layout.indent,
+    backgroundColor:Colors.secondary,
+    borderRadius:25
+  },
+  btnTextDone:{
+  fontFamily:'Font-Bold',
+  fontSize:20
+  },
+  msgTitleTxt:{
+  fontFamily:'Font-Medium',
+  fontSize:18
+},
+msgText:{
+  fontFamily:'Font-Regular',
+  fontSize:14,
+  lineHeight:16
+},
+};

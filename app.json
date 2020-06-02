@@ -2,7 +2,7 @@
   "expo": {
     "name": "Grocery Store",
     "slug": "GroceryStore",
-    "description": "Grocer Store is a grocery delivery service where personal shoppers select your items from the store and then deliver them to your door.",
+    "description": "Grocery Store is a grocery delivery service where personal shoppers select your items from the store and then deliver them to your door.",
     "privacy": "public",
     "platforms": [
       "ios",

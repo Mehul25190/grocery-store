@@ -20,14 +20,16 @@ export default {
   },
 productTitle:{
     position : 'absolute',
-    fontSize:18,
+    fontSize:16,
     left:5,
     top:5,
     padding:5,
     paddingRight:Layout.indent,
     paddingLeft:Layout.indent-7,
     color:'#000',
-    textAlign:'left'
+    textAlign:'left',
+    fontFamily: 'Font-Medium',
+    lineHeight:18
   
 },
 AlignLeft:{
@@ -124,18 +126,20 @@ addsSubTitle:{
   padding:0
 },
 addsBigTitle:{
-  fontFamily:'Raleway-Bold',
+  fontFamily:'Font-Bold',
    color:'#F8BB1B',
   textAlign:'right',
   fontSize:32,
   letterSpacing:2,
   top:-8,
-  fontWeight:'bold',
+  lineHeight:42
+  
 },
 addsText:{
   color:'#F8BB1B',
   textAlign:'right',
   fontSize:12,
+  lineHeight:13,
  top:-10,
 },
 discountBlock:{

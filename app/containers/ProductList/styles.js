@@ -268,28 +268,27 @@ categoryStyles: {
   proImage:{
     textAlign:'left',
     marginLeft:5,
-    width:80,
-    height:80,
+    width:75,
+    height:75,
     resizeMode:'contain',
    },
    ListLeft:{
-   
-    flex: 0,
+     flex: 0,
     paddingLeft:0,
     width: 90,
-    
    },
+
    ListRight:{
     // backgroundColor:'#ddd',
     flex: 0,
     paddingLeft:0,
-    width: 80,
+    width: 90,
     marginRight:0,
-     justifyContent: 'flex-end',
-     textAlign:'right'
+    justifyContent: 'flex-end',
+    textAlign:'right'
    },
+
    ListItems:{
-   
     paddingTop:5,
     paddingBottom:5,
     marginLeft:Layout.indent-7,
@@ -297,16 +296,32 @@ categoryStyles: {
     paddingRight:Layout.indent-7
    },
    prodInfo:{
-    textAlign:'left'
+    textAlign:'left',
+
    },
    proTitle:{
-    textAlign:'left'
+    textAlign:'left',
+    marginLeft:1
    },
    proPrice:{
-    fontSize:25
+    marginLeft:1,
+    fontSize:18,
+    textDecoration:'none',
+    // backgroundColor:'#ddd',
+    flex:0,
+    fontFamily:'Font-Medium'
+   },
+   proPriceStrike:{
+    marginLeft:1,
+    fontFamily:'Font-Medium',
+    flex:0,
+    // backgroundColor:'#333',
+    fontSize:18,
+    textDecorationLine:'line-through'
    },
    proQuanitty:{
-    fontSize:12
+    fontSize:12,
+    marginLeft:1
    },
    buyButton:{
       backgroundColor:'#F8BB1B',

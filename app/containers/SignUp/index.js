@@ -75,22 +75,22 @@ class SignUp extends React.Component {
               <View style={appStyles.BackIconTop}>
                   <LoginBackIcon  props={this.props}  /> 
               </View>
-             <View style={[styles.loginBox,styles.signupBox]}>
-               <Animatable.View 
-                      animation="fadeInUp"
-                      delay={500}                
-                       > 
-                      <SignUpForm onSubmit={this.signup} />
-                      <Row style={{marginBottom:20}}>
-                       <Col>
-                          <Button transparent full  
-                           style={[{justifyContent:'flex-start'}]} >
-                            <TouchableOpacity  onPress={() => this.onSigninButtonPressHandler()}>
-                            <Text style={[styles.linkTextLogin]} >Login</Text>
-                            </TouchableOpacity>
-                          </Button>
-                        </Col>
-                        <Col>
+           <View style={[styles.loginBox,styles.signupBox]}>
+             <Animatable.View 
+                    animation="fadeInUp"
+                    delay={500}                
+                     > 
+                    <SignUpForm onSubmit={this.signup} />
+                    <Row style={{marginBottom:20}}>
+                     <Col>
+                        <Button transparent full  
+                         style={[{justifyContent:'flex-start'}]} >
+                          <TouchableOpacity  onPress={() => this.onSigninButtonPressHandler()}>
+                          <Text style={[styles.linkTextLogin]} >Login</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>
+                      <Col>
                           <Button transparent full  
                            style={[{justifyContent:'flex-end'}]} >
                             <TouchableOpacity  onPress={() => this.onForgotpasswordPressHandler()}>
@@ -98,25 +98,24 @@ class SignUp extends React.Component {
                             </TouchableOpacity>
                           </Button>
                         </Col>
-                      </Row>
-                    </Animatable.View>
-                  <Animatable.View 
-                      animation="fadeIn"
-                      delay={1200} 
-                      style={{marginTop:20}}> 
-                    { this.props.isLoading ? 
-                       <Spinner color={Colors.secondary} /> : 
-                        <Button
-                          full
-                          primary
-                          style={appStyles.btnSecontary}
-                          //onPress={() => this.props.pressVerify()}  >
-                          onPress={() => this.props.pressSignup()}  >
-                          <Text style={styles.SignInbtn}>SignUp </Text>
-                        </Button>
-                    }
-                  </Animatable.View>  
-              </View>    
+                    </Row>
+                  </Animatable.View>
+                <Animatable.View 
+                    animation="fadeIn"
+                    delay={1200} 
+                    style={{marginTop:20}}> 
+                  { this.props.isLoading ? 
+                     <Spinner color={Colors.secondary} /> : 
+                      <Button
+                        full
+                        primary
+                        style={appStyles.btnSecontary}
+                        onPress={() => this.props.pressVerify()}  >
+                        <Text style={styles.SignInbtn}>SignUp </Text>
+                      </Button>
+                  }
+                </Animatable.View>  
+            </View>    
         </ImageBackground>      
       </Content>
     </Container>

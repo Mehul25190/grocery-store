@@ -89,15 +89,15 @@ class SignInMobile extends React.Component {
                      > 
                    <SignInFormMobile onSubmit={this.signinmobile} />
                    <Row style={{marginBottom:20}}>
-                     <Col>
-                        <Button transparent full  
+                     <Col style={{width:100,marginLeft:Layout.indent}}>
+                        <Button transparent full     
                          style={[{justifyContent:'flex-start'}]} >
                           <TouchableOpacity  onPress={() => this.onSignupButtonPressHandler()}>
                           <Text style={[styles.linkTextSignup,appStyles.textRight]} >Signup</Text>
                           </TouchableOpacity>
                         </Button>
                       </Col>
-                      <Col>
+                      <Col style={{marginRight:Layout.indent}}>
                         <Button transparent full  
                          style={[{justifyContent:'flex-end'}]} >
                           <TouchableOpacity  onPress={() => this.onForgotpasswordPressHandler()}>

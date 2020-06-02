@@ -15,31 +15,37 @@ export default {
     route: 'Home',
     icon:'home',
 
-    label: Strings.home,
+    label: 'Home',
   },
   MyOrder : {
     route: 'MyOrder',
     icon: 'ios-timer',
     type: 'Ionicons',
-    label: Strings.myorder,
+    label: 'My Orders',
   },
   MyWallet:{
     route: 'MyWallet',
     icon: 'wallet', 
     type: 'AntDesign',
-    label: Strings.mywallet,
+    label: 'My Wallet',
+  },
+  MyOffers: {
+    route:'MyOffers',
+    icon: 'gift',
+    type:'AntDesign',
+    label: 'My Offers',
   },
   MyPayments:{
     route:'MyPayments',
     icon:'creditcard',
     type: 'AntDesign',
-    label: Strings.mypayments,
+    label: 'My Payment',
   },
   MyRatings:{
     route:'MyRatings',
     icon:'playlist-star',
      type: 'MaterialCommunityIcons',
-    label: Strings.myratings,
+    label: 'My Ratings & Reviews',
   },
   MyNotification:{
     route:'MyNotification',
@@ -51,13 +57,58 @@ export default {
     route:'MyAddress',
     icon:'location',
     type:'EvilIcons',
-    label: Strings.address,
+    label: 'My Delivery Address',
   },
    Subscription:{
     route:'Subscription',
     icon:'heart',
     type: 'Feather',
-    label: Strings.subscription,
+    label: 'My Subscription',
+  },
+  ProductDetail:{
+    route: 'ProductDetail',
+  },
+  SubscribeSuccess: {
+    route: 'SubscribeSuccess',
+  },
+  OrderSuccess: {
+    route: 'OrderSuccess',
+  },
+  Checkout: {
+    route: 'Checkout',
+  },
+  DeleteSubscribe: {
+    route: 'DeleteSubscribe',
+  },
+  Confirmation:{
+    route: 'Confirmation',
+  },
+  OrderReturnDetail:{
+    route: 'OrderReturnDetail',
+  },
+  OrderReturn:{
+    route: 'OrderReturn',
+  },
+  SubscribeDetail:{
+    route: 'SubscribeDetail',
+  },
+  MyCart:{
+    route: 'MyCart',
+  },
+  Profile:{
+    route: 'Profile',
+  },
+  CancelOrder:{
+    route: 'CancelOrder',
+  },
+  SubscribeOrder:{
+    route: 'SubscribeOrder',
+  },
+  OrderDetail:{
+    route: 'OrderDetail'
+  },
+   TopupWallet:{
+    route: 'TopupWallet',
   },
   ProductList:{
     route: 'ProductList',

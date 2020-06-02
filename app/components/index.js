@@ -10,6 +10,7 @@ import SelectLanguage from "./SelectLanguage";
 import Svgicon from "./Svgicon";
 import Headers from "./Headers";
 import Category from "./Category";
+import Slideshow from "./Slideshow";
 
 export { 
 	Loader, 
@@ -23,5 +24,7 @@ export {
 	SelectLanguage, 
 	Svgicon, 
 	Headers, 
-	Category
+	Category,
+	Slideshow
+	
 };

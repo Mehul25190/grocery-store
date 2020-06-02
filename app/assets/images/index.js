@@ -4,7 +4,7 @@ import { Icon } from 'native-base';
 const images = {
 	logo : require('./logo.png'),
 	logoRed : require('./logo-red.png'),
-	bg : require('./bg.jpg'),
+	bg : require('./green-bg.png'),
 	signupBg : require('./signup-bg.png'),
 	languageBg : require('./language-bg.jpg'),
 	placeholder : require('./placeholder.png'),
@@ -16,7 +16,18 @@ const images = {
 	babycareImg:require('./babycare.png'),
 	staplesImg:require('./staples.png'),
 	mangoSale: require('./mangoSale.png'),
-	filterIcon: require('./filterIcon.png')
+	filterIcon: require('./filterIcon.png'),
+	wallet: require('./wallet-1.png'),
+	amulMoti: require('./amulMoti.png'),
+	DownArrow: require('./DownIconWhite.png'),
+	DownArrowColor: require('./DownIcon.png'),
+	emptyStar: require('./unFilledStar.png'),
+	successIcon: require('./successIcon1.png'),
+	SubscribeSuccess: require('./SubscribeSuccess.png'),
+	refreshIcon: require('./refreshIcon.png'),
+	bag: require('./bag.png'),
+	walletIcon: require('./walletIcon.png'),
+	calImg: require('./CalenderIcon.png')
 };
 
 export default images;
