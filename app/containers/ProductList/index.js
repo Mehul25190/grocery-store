@@ -158,7 +158,7 @@ onPressRecipe(item){
                           <Image style={styles.proImage} source={{uri: url.imageURL+item.imagePath} }  />
                         </Left>
                         <Body style={{textAlign:'left'}}>
-                          <View style={styles.prodInfo}  onPress={()=> this.props.navigation.navigate(Screens.ProductDetail.route)}>
+                          <TouchableOpacity style={styles.prodInfo}  onPress={()=> this.props.navigation.navigate(Screens.ProductDetail.route)}>
                   <Text style={styles.proTitle}>{item.itemName}</Text>
 
                             <Text style={styles.proQuanitty} note>{item.quantity} pc &nbsp;  
