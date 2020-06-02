@@ -35,6 +35,8 @@ class SignInMobile extends React.Component {
   }
 
   componentDidMount() {
+    //console.log("check user>>>>>")
+    //console.log(this.props.user);
     if(this.props.user!=null){
       this.props.navigation.navigate(Screens.SignInStack.route);
     }

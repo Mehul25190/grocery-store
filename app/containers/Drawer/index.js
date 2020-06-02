@@ -46,7 +46,7 @@ class Drawer extends React.Component {
         <Header style={[styles.header,appStyles.headerStyle]}>
          
            
-                <Left style={{flex:0,JustinContent:'flex-start', width:60}}>
+                <Left style={{flex:0,justifyContent:'flex-start', width:60}}>
                   <LoginBackIcon />
                 </Left>
                 <Body>
@@ -99,7 +99,7 @@ class Drawer extends React.Component {
                    type="MaterialIcons"
                     color={Colors.primary} 
 
-                    IconStyle={[appStyles.IconStyle,{textAlign:'center',JustinContent:'center'}]}
+                    IconStyle={[appStyles.IconStyle,{textAlign:'center',justifyContent:'center'}]}
                     />
                 </Left>
                 <Body>

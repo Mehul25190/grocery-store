@@ -57,7 +57,7 @@ class SignInEmail extends React.Component {
         dispatch(NavigationActions.navigate({ routeName: Screens.SignInStack.route }));
       }else{
         console.log("something wrong in login");
-        showToast(res.msg,"danger");
+        showToast(res.message,"danger");
       }
     }).catch(error => {
       const messages = _.get(error, 'response.data.error')

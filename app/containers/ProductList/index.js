@@ -11,6 +11,7 @@ import {
   Text,
   Header,  Title, Grid,Col,Card,List, ListItem, Left, Body, Right, Thumbnail,
 } from 'native-base';
+import url from '../../config/api';
 import {ItemList} from '../data/data';
 import {categoryList} from '../data/data';
 import {filterList} from '../data/data';
@@ -31,17 +32,47 @@ constructor(props) {
   super(props);
   this.state = {
     dataSource:productList,
-    value:1
+    value:1,
+    categoryId:this.props.navigation.getParam('para_categoryId'),
+    productData:[],
   };
+  
+  
 }
 
-  componentDidMount() {
-   
+componentDidMount() {
+   //alert(this.state.categoryId);
     this.setState({
       dataSource: productList,
-      value:1
+
+      value:1,
+      //categoryId:this.props.navigation.getParam('para_categoryId'),
     });
-  }
+    //alert(this.state.categoryId);
+    //get product list default base on category selected
+    this.productItemList();
+}
+
+productItemList(){
+  //alert(this.state.categoryId);
+  this.props.productItemList(this.state.categoryId).then (res =>{
+    console.log('sucess return');  
+    if(res.status == "success"){
+          this.setState({ productData:res.data.itemList });
+          //console.log('set return');
+          //console.log(res.data.itemList);
+    } else {
+          console.log("something wrong with varification call");
+          showToast("Something wrong with Server response","danger");
+    }
+     
+  })
+  .catch(error => {
+      console.log('Error messages returned from server', error);
+      showToast("Error messages returned from server","danger");
+  });
+
+}
 //func call when click item category
 _itemChoose(item) {
  //  alert(item.title);
@@ -58,6 +89,7 @@ onPressRecipe(item){
   render(){
      const { navigation } = this.props;
     const getTitle = navigation.getParam('item');
+    const categoryName = this.props.navigation.getParam('categoryName');
     return (
       <Container style={appStyles.container}>
       
@@ -67,7 +99,7 @@ onPressRecipe(item){
             IconRightS=''
             IconRightF='search'
             bgColor='transparent'
-            Title= {getTitle.title}
+            Title= {categoryName}
             
            />
           <Content enableOnAndroid style={appStyles.content}>
@@ -151,17 +183,17 @@ onPressRecipe(item){
              }
                 
            {
-
-             productList.map((item, index) => {
+              this.state.productData.map((item, index) => {
+            // productList.map((item, index) => {
                   return (
                   
                        <ListItem style={styles.ListItems} noBorder>
                         <Left style={styles.ListLeft}>
-                          <Image style={styles.proImage} source={item.image} />
+                          <Image style={styles.proImage} source={{uri: url.imageURL+item.imagePath} }  />
                         </Left>
                         <Body style={{textAlign:'left'}}>
                           <View style={styles.prodInfo}>
-                            <Text style={styles.proTitle}>{item.proName}</Text>
+                  <Text style={styles.proTitle}>{item.itemName}</Text>
                             <Text style={styles.proQuanitty} note>{item.quantity} pc &nbsp;  
                             {
                               item.weight!=='' ? '('+ item.weight +' '+gm+ ')' :''
@@ -244,6 +276,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+      productItemList : (categoryId) => dispatch(userActions.showProductList({categoryId:categoryId}))
    };
 };
 

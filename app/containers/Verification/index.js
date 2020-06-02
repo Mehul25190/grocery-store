@@ -60,40 +60,6 @@ class Verification extends React.Component {
     this.props.navigation.navigate(Screens.ForgotPassword.route)
   }
 
-/*  signinverification(values, dispatch, props) {
-
-    console.log("--------------");
-    //console.log(props.values.mobileNo);
-    console.log("--------------");
-    //dispatch({ type: ActionTypes.MOBILENO, data: props.values.mobileNo });
-
-    dispatch(userActions.signupMobileVerification(values))
-      .then(res => {
-        //if(res.status == 200){
-        if(res.status == "success"){  
-          console.log("sucess return");
-          showToast(res.msg,"success");
-          
-          console.log("------any--------");
-          //dispatch(NavigationActions.navigate({ routeName: Screens.SignIn.route }));
-          // this.props.navigation.navigate(Screens.SignIn.route)
-          dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route }));
-        }else{
-          console.log("something wrong with signup");
-          showToast(res.message,"danger");
-        }
-      })
-      .catch(error => {
-        const messages = _.get(error, 'response.data.error')
-        message = (_.values(messages) || []).join(',')
-        if (message){
-          showToast(message,"danger");
-       }
-       console.log(`
-          Error messages returned from server:`, messages )
-      });
-  }
-  */
 
  signinverification(code) {
   var mobileno = this.props.mobileno; 
@@ -102,7 +68,7 @@ class Verification extends React.Component {
     
       if(res.status == "success"){
 
-            console.log("Entereed after api >>>>");
+            //console.log("Entereed after api >>>>");
             showToast(res.message,"success");
             this.props.navigation.navigate(Screens.SignIn.route)
             //Screens.SignInStack.route

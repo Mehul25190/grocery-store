@@ -11,30 +11,63 @@ import {
   Spinner,
   Button,
   Text,
-  Header,Item, Left,Input, Body, Title, Right,Grid,Col,Card
+  Header,Item, Left,Input, Body, Title, Right,Grid,Col,Card, Thumbnail
 
 } from 'native-base';
+import url from '../../config/api';
 import {ItemList} from '../data/data';
 //import MasonryList from "react-native-masonry-list";
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
+import { array } from 'prop-types';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      categoryData: [],      
+    };
+  }
+
+
+  componentDidMount(){
+    //set array from category list from api to get category list
+    this.getCategoryList();    
+  }
+
+  getCategoryList() {
+    
+    this.props.showCategoryList().then (res =>{
+      
+        if(res.status == "success"){
+              this.setState({ categoryData:res.data.category });
+        } else {
+              console.log("something wrong with varification call");
+              showToast("Something wrong with Server response","danger");
+        }
+         
+      })
+      .catch(error => {
+          console.log('Error messages returned from server', error);
+          showToast("Error messages returned from server","danger");
+      });
   }
 
   onPressRecipe = item => {
-    this.props.navigation.navigate('ProductList', { item });
+    //alert(item.id);
+    //alert(item.categoryName);
+    this.props.navigation.navigate('ProductList', { para_categoryId:item.id, categoryName: item.categoryName});
   };
 
    renderItems = ({ item, index}) => (
+     //imagePath = url.apiBaseUrl + item.imagePath;
     <TouchableHighlight onPress={() => this.onPressRecipe(item)}>
        <View style={index == 0 ? styles.ItemContainer : styles.ItemContainer}>
-        <Image style={styles.photo} source={ item.photo_url } />
-        <Text style={styles.productTitle}>{item.title}</Text>
+        <Image style={styles.photo} source={{uri: url.imageURL+item.imagePath} } />
+        <Text style={styles.productTitle}>{item.id}{item.categoryName}</Text>
+       
       </View>
     </TouchableHighlight>
   );
@@ -42,6 +75,9 @@ class Home extends React.Component {
       this.props.navigation.openDrawer(); // open drawer
     };
   render(){
+    //console.log("first render");
+    //console.log(this.state.categoryData);
+    //console.log("after render");
     return (
       <Container style={appStyles.container}>
            <Header searchBar rounded style={appStyles.headerStyle}>
@@ -107,7 +143,7 @@ class Home extends React.Component {
                      vertical
                      showsVerticalScrollIndicator={false}
                      numColumns={2}
-                     data={ItemList}
+                     data={this.state.categoryData}
                      renderItem={this.renderItems}
                      keyExtractor={item => `${item.itemId}`}
                    />}
@@ -150,6 +186,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+      showCategoryList: () => dispatch(userActions.showCategoryList())
+ 
    };
 };
 

@@ -10,8 +10,8 @@ export const signin = payloads => dispatch => {
   return axios.post(url.signin,  {payloads: payloads}).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
-        if(res.data.status==200){
-          dispatch({ type: ActionTypes.SIGNIN, data: res.data.data.user });
+        if(res.data.status=="success"){
+          dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
         }
         return res.data
       } else {
@@ -59,7 +59,43 @@ export const signupMobileVerification = payloads => dispatch => {
     }
   })
 }
+/**
+ * Show Category List on landing screen after sign in
+ */
+export const showCategoryList = payloads => dispatch => {
+  //console.log("showCategoryList>>> action ")
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.categoryList).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res.data);
+    if(res.status == 200){
+      //console.log(res.data);
+      return res.data;
+    } else {
+      return res;
+    }
+  })
+}
 
+/**
+ * Show Product List on landing screen - para - categoryID
+ */
+export const showProductList = payloads => dispatch => {
+  //console.log("showCategoryList>>> action ")
+  //console.log('payload>>'+payloads);
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.productList,{queries: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res.data);
+    if(res.status == 200){
+      console.log('product list return');  
+      console.log(res);
+      return res.data;
+    } else {
+      return res;
+    }
+  })
+}
 
 export const logoutUser = () => dispatch => {
   return dispatch({ type: ActionTypes.LOGOUT });
