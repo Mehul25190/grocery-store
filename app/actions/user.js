@@ -88,8 +88,8 @@ export const showProductList = payloads => dispatch => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     //console.log(res.data);
     if(res.status == 200){
-      console.log('product list return');  
-      console.log(res);
+      //console.log('product list return');  
+      //console.log(res);
       return res.data;
     } else {
       return res;

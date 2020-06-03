@@ -132,7 +132,8 @@ const mapDispatchToProps = (dispatch) => {
       showModal: () => {
         dispatch({ type: ActionTypes.SHOWMODAL, showModal: true })
       },
-      cartPage: () => dispatch(NavigationActions.navigate({ routeName: Screens.MyCart.route }))
+      cartPage: () => dispatch(NavigationActions.navigate({ routeName: Screens.MyCart.route })),
+      onPress: () => dispatch(NavigationActions.back()),
     };
 };
 

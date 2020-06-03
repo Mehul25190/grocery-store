@@ -37,7 +37,7 @@ constructor(props) {
     productData:[],
   };
   
-  
+  console.log('here----->', this.props.navigation.getParam('para_categoryId'));
 }
 
   componentDidMount() {
@@ -93,7 +93,7 @@ onPressRecipe(item){
       
             <Headers
             IconLeft='arrowleft'
-            onPress={() => this.openControlPanel()}
+            //onPress={() => this.openControlPanel()}
             IconRightF='search'
             setCart={true}
             bgColor='transparent'
@@ -152,12 +152,12 @@ onPressRecipe(item){
             // productList.map((item, index) => {
                   return (
                   
-                       <ListItem style={styles.ListItems} noBorder>
+                       <ListItem style={styles.ListItems} noBorder key={index}>
 
                         <Left style={styles.ListLeft}>
                           <Image style={styles.proImage} source={{uri: url.imageURL+item.imagePath} }  />
                         </Left>
-                        <Body style={{textAlign:'left'}}>
+                        <Body>
                           <TouchableOpacity style={styles.prodInfo}  onPress={()=> this.props.navigation.navigate(Screens.ProductDetail.route)}>
                   <Text style={styles.proTitle}>{item.itemName}</Text>
 

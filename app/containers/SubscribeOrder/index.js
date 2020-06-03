@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date,Picker} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers } from '../../components';
@@ -11,7 +11,7 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem,Item,Input,DatePicker,Label
+  Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem,Item,Input,DatePicker,Label, Picker
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
@@ -152,7 +152,7 @@ class SubscribeOrder extends React.Component {
             maximumDate={new Date(2018, 12, 31)}
             locale={"en"}
             timeZoneOffsetInMinutes={undefined}
-            modalTransparent={false}
+            modalTransparent={true}
             animationType={"fade"}
             androidMode={"default"}
             placeHolderText="Select date"
@@ -172,9 +172,11 @@ class SubscribeOrder extends React.Component {
                 <Picker
                   note
                   mode="dropdown"
+                  iosHeader="Select Duration"
+                  headerStyle={{ backgroundColor: Colors.primary }}
                   itemStyle={{fontFamily:'Font-Medium'}}
                   itemTextStyle={{fontFamily:'Font-Medium'}}
-                   textStyle={{fontFamily:'Font-Medium'}}
+                  textStyle={{fontFamily:'Font-Medium'}}
                   style={styles.dorpDownReason}
                   selectedValue={this.state.selected}
                   onValueChange={this.onValueChange.bind(this)}
@@ -334,16 +336,13 @@ class SubscribeOrder extends React.Component {
             </Col>
             <Col style={{justifyContent:'flex-end',width:140}}>
              <Button style={styles.paynowBtn} primary full>
-             
               <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.SubscribeSuccess.route)} >
                 <Text style={styles.payTextNow}> Subscribe</Text>
                 </TouchableOpacity>
               </Button>
-            
             </Col>
           </Row>
           </Grid>
-        
           </Content>
         
       </Container>

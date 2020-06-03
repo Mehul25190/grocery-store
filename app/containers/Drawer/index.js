@@ -50,8 +50,6 @@ class Drawer extends React.Component {
     return (
       <Container>
         <Header style={[styles.header,appStyles.headerStyle]}>
-         
-           
                 <Left style={{flex:0,justifyContent:'flex-start', width:60}}>
                   <LoginBackIcon />
                 </Left>
@@ -65,63 +63,61 @@ class Drawer extends React.Component {
              
         </Header>
         <Card style={[appStyles.addBox,{height:'auto',}]}>
-         <List >
-              <ListItem avatar noBorder style={{ marginLeft: 10,}}>
-                <Left style={{ flex: 0,  marginLeft: 0,   paddingLeft:0,  width: 40}}>
-                  <Svgicon name="user-circle" 
-                   type="FontAwesome"
-                    color={Colors.primary} 
+          <ListItem avatar noBorder style={{ marginLeft: 10,}}>
+            <Left style={{ flex: 0,  marginLeft: 0,   paddingLeft:0,  width: 40}}>
+              <Svgicon name="user-circle" 
+               type="FontAwesome"
+                color={Colors.primary} 
 
-                    IconStyle={appStyles.userIconStyle}
-                    />
-                </Left>
-                <Body>
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
-                  <Text style={appStyles.profileName} >Kirit k</Text>
-                  <Text style={appStyles.profileEmail}>kirit.jbs@gmail.com</Text>
-                  <Text style={appStyles.profileEmail}>987654210</Text>
-                  </TouchableOpacity>
-                </Body>
+                IconStyle={appStyles.userIconStyle}
+                />
+            </Left>
+            <Body>
+            <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
+              <Text style={appStyles.profileName} >Kirit k</Text>
+              <Text style={appStyles.profileEmail}>kirit.jbs@gmail.com</Text>
+              <Text style={appStyles.profileEmail}>987654210</Text>
+              </TouchableOpacity>
+            </Body>
 
-                <Right>
-                 <TouchableOpacity onPress= {()=> this.props.navigation.navigate(Screens.Profile.route)}>
-                  <Svgicon name="edit" type="MaterialIcons"
-                   color={Colors.primary} 
-                    IconStyle={appStyles.IconStyle}
-                    />
-                </TouchableOpacity>
-                </Right>
-              </ListItem>
-              <View>
-                <Text style={{backgroundColor:Colors.primary,height:1,  borderBottom:1}}>
-                </Text>
-              </View>
-               <ListItem avatar noBorder style={{ marginLeft: 10,}}>
-                <Left style={{paddingLeft:5, width: 30,}}>
-                  <Svgicon name="location-on" 
-                   type="MaterialIcons"
-                    color={Colors.primary} 
+            <Right>
+             <TouchableOpacity onPress= {()=> this.props.navigation.navigate(Screens.Profile.route)}>
+              <Svgicon name="edit" type="MaterialIcons"
+               color={Colors.primary} 
+                IconStyle={appStyles.IconStyle}
+                />
+            </TouchableOpacity>
+            </Right>
+          </ListItem>
+          <View>
+            <Text style={{backgroundColor:Colors.primary,height:1}}>
+            </Text>
+          </View>
+           <ListItem avatar noBorder style={{ marginLeft: 10,}}>
+            <Left style={{paddingLeft:5, width: 30,}}>
+              <Svgicon name="location-on" 
+               type="MaterialIcons"
+                color={Colors.primary} 
 
-                    IconStyle={[appStyles.IconStyle,{textAlign:'center',justifyContent:'center'}]}
-                    />
-                </Left>
-                <Body>
-                 <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
-                  <Text style={appStyles.userArea} >South Bopal,</Text>
-                  <Text style={appStyles.userCity} >Ahmedabad - Gandhinagar,</Text>
-                 </TouchableOpacity>  
-                </Body>
+                IconStyle={[appStyles.IconStyle,{textAlign:'center',justifyContent:'center'}]}
+                />
+            </Left>
+            <Body>
+             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
+              <Text style={appStyles.userArea} >South Bopal,</Text>
+              <Text style={appStyles.userCity} >Ahmedabad - Gandhinagar,</Text>
+             </TouchableOpacity>  
+            </Body>
 
-                <Right>
-                  <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
-                  <Svgicon name="edit" type="MaterialIcons"
-                    color={Colors.primary} 
-                    IconStyle={appStyles.IconStyle}
-                    />
-                </TouchableOpacity>
-                </Right>
-              </ListItem>
-            </List>
+            <Right>
+              <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
+              <Svgicon name="edit" type="MaterialIcons"
+                color={Colors.primary} 
+                IconStyle={appStyles.IconStyle}
+                />
+            </TouchableOpacity>
+            </Right>
+          </ListItem>
         </Card>
         <Content style={{borderTopWidth:1,borderColor:Colors.primary,marginTop:5}}>
           <List

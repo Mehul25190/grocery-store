@@ -154,8 +154,9 @@ class Home extends React.Component {
                      numColumns={2}
                      data={this.state.categoryData}
                      renderItem={this.renderItems}
-                     keyExtractor={item => `${item.itemId}`}
-                   />}
+                     keyExtractor={item => `${item.id}`}
+                   />
+                 }
 
                    <View>
                     {
