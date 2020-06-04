@@ -27,6 +27,7 @@
     "react-native-masonry-list": "^2.16.1",
     "react-native-modal": "^11.3.1",
     "react-native-numeric-input": "^1.8.3",
+    "react-native-popup-menu": "^0.15.7",
     "react-native-ratings": "^7.2.0",
     "react-native-screens": "^2.7.0",
     "react-native-search-bar": "^3.5.1",

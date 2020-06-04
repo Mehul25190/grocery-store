@@ -18,7 +18,7 @@ import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import {orderList} from '../data/data';
-
+import { MenuProvider } from 'react-native-popup-menu';
 class MyOrder extends React.Component {
 
   constructor(props) {
@@ -75,6 +75,7 @@ class MyOrder extends React.Component {
 
   render(){
     return (
+    <MenuProvider customStyles={appStyles.containerProvider} >
       <Container style={appStyles.container}>
 
            <Headers
@@ -150,7 +151,7 @@ class MyOrder extends React.Component {
           </Content>
         
       </Container>
-     
+      </MenuProvider>
     );
   }
 }

@@ -15,7 +15,12 @@ import {Screens, Colors, Layout, ActionTypes } from '../constants';
 import Logo from './Logo';
 import Svgicon from './Svgicon';
 import Statusbar from './Statusbar';
-
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,CheckedOption
+} from 'react-native-popup-menu';
 
 import ModalBox from './ModalBox';
 import SetLanguage from './SetLanguage';
@@ -44,6 +49,9 @@ class Headers extends React.Component {
       this.setState({filter: !this.state.filter});
     };
   render() {
+     const CheckedOption = (props) => (
+  <MenuOption  onSelect={() => alert(props.text)} value={props.value} text={(props.checked ? '\u2713 ' : '    ') + ' ' +props.text} />
+)
       const { searcBar } = this.state;
     return (
       <Header searchBar rounded style={[appStyles.headerStyle]} >
@@ -70,9 +78,20 @@ class Headers extends React.Component {
            {
              this.props.setFilter == true &&
 
-             (<TouchableOpacity style={[appStyles.StyleIconRightT]} onPress={()=>this.onPressFilter()}>
-                 <Icon style={[appStyles.IconsRightT,this.props.IconsRightT]} type="Entypo" name={this.props.IconRightT} />
-             </TouchableOpacity>)}
+             (<Menu style={{}}>
+              <MenuTrigger text=''>
+                <Icon style={[appStyles.IconsRightT,this.props.IconsRightT]} type="Entypo" name={this.props.IconRightT} />
+              </MenuTrigger>
+              <MenuOptions style={{backgroundColor:'#D2EAD2',}}>
+                
+               
+                  <CheckedOption  value={1} text='Pending' />
+                  <CheckedOption checked value={2} text='In Process' />
+                  <CheckedOption value={3} text='Delivered' />
+                  <CheckedOption value={4} text='Canceled' />
+
+              </MenuOptions>
+            </Menu>)}
 
             { this.state.filter==true &&
              (<View style={appStyles.sortBlock}>
