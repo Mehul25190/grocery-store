@@ -154,23 +154,28 @@ class ProductDetail extends React.Component {
          <Row>
             <Col>
                <View  style={styles.reasonView}>
+                <Item style={{borderBottomWidth:0}} >
                  <Picker
-
                   note
                   textStyle={{fontFamily:'Font-Medium'}}
                   mode="dropdown"
                   style={{fontFamily:'Font-Medium' ,}}
                   selectedValue={this.state.selected}
-                  onValueChange={this.onValueChange.bind(this)} >
-
+                  
+                  onValueChange={this.onValueChange.bind(this)}
+                
+                  placeholderStyle={{borderWidth:10, fontFamily:'Font-Medium' }}
+                  placeholderIconColor={{borderWidth:2}}
+                   >
                   <Picker.Item label="Qty" color={Colors.gray} style={{fontFamily:'Font-Medium'}}  value="0" />
                   <Picker.Item label="2" value="1" />
                   <Picker.Item label="3" value="2" />
                   <Picker.Item label="4" value="3" />
                   <Picker.Item label="5" value="4" />
+
                 </Picker>
-                
-                <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
+                    <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
+                </Item>
               </View>
             </Col>
           <Col style={styles.cartPart}>

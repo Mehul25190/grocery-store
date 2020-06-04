@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, Picker,TextInput, ScrollView} from 'react-native';
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, TextInput, ScrollView} from 'react-native';
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers } from '../../components';
@@ -11,7 +11,7 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem,Item,Input,label
+  Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem,Item,Input,label,Picker
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
@@ -102,6 +102,7 @@ class OrderReturnDetail extends React.Component {
           <View style={{merginRight:Layout.indent, justifyContent:'center'}}>
             <Text style={styles.title}>Select Reason to Return Order</Text>
               <View style={styles.reasonView} >
+                 <Item style={{borderBottomWidth:0}} >
                 <Picker
                   note
                   mode="dropdown"
@@ -124,6 +125,7 @@ class OrderReturnDetail extends React.Component {
                  
                 </Picker>
                 <Image source={imgs.DownArrow} style={styles.DownArrow} />
+              </Item>
                </View>
           </View>
         

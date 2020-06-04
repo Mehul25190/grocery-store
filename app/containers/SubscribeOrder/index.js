@@ -169,6 +169,7 @@ class SubscribeOrder extends React.Component {
           </Row>
         </Grid>
            <View style={styles.reasonView} >
+            <Item style={{borderBottomWidth:0}} >
                 <Picker
                   note
                   mode="dropdown"
@@ -196,6 +197,7 @@ class SubscribeOrder extends React.Component {
                  
                 </Picker>
                 <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
+                </Item>
                </View>
        
         <Grid >
