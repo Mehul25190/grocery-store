@@ -45,7 +45,7 @@ dorpDownReason: {
    },
 	 DownArrow:{
     position:'absolute',
-    right:15,
+    right:10,
     width:18,
     height:15,
     top:15,zIndex:99

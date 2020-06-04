@@ -11,7 +11,7 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left, Body, Title, Right,Card,Grid,Row,Col,Form, Picker, Input
+  Header, Left, Body, Title, Right,Card,Grid,Row,Col,Form, Picker, Input,Item
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
@@ -112,6 +112,7 @@ class MyAddress extends React.Component {
               </View>
              <Form>
                <View style={styles.reasonView} >
+                  <Item style={{borderBottomWidth:0}} >
                 <Picker
                   note
                   mode="dropdown"
@@ -137,9 +138,11 @@ class MyAddress extends React.Component {
                  
                 </Picker>
                 <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
+                </Item>
                </View>
 
                <View style={styles.reasonView} >
+               <Item style={{borderBottomWidth:0}} >
                 <Picker
                   note
                   mode="dropdown"
@@ -165,9 +168,11 @@ class MyAddress extends React.Component {
                  
                 </Picker>
                 <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
+                </Item>
                </View>
 
                 <View style={styles.reasonView} >
+                   <Item style={{borderBottomWidth:0}} >
                 <Picker
                   note
                   mode="dropdown"
@@ -193,17 +198,18 @@ class MyAddress extends React.Component {
                  
                 </Picker>
                 <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
+                </Item>
                </View>
-                <View style={styles.reasonView} >
+                <View style={styles.InputView} >
                 <Input placeholderTextColor="#B9B9B9" placeholder="Enter Building Name" style={styles.inputText}  />
                 </View>
-                 <View style={styles.reasonView} >
+                 <View style={styles.InputView} >
                 <Input placeholderTextColor="#B9B9B9"  placeholder="Apt.No." style={styles.inputText} />
                 </View>
-                 <View style={styles.reasonView} >
+                 <View style={styles.InputView} >
                 <Input placeholderTextColor="#B9B9B9"  placeholder="Special Instruction" style={styles.inputText} />
                 </View>
-                 <View style={styles.reasonView} >
+                 <View style={styles.InputView} >
                 <Input placeholderTextColor="#B9B9B9"  placeholder="PostBox No." style={styles.inputText} />
                 </View>
                 {  <Grid style={{marginTop:20,marginBottom:20}}>  

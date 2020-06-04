@@ -31,17 +31,17 @@ class MyOrder extends React.Component {
     };
 
   }
-   componentDidMount() {
- 
 
-    var that = this;
+ componentDidMount() {
+
+  var that = this;
   var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    var date = new Date().getDate(); //Current Date
-      var month = monthNames[new Date().getMonth()]; //Current Month
-    var year = new Date().getFullYear(); //Current Year
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+   var date = new Date().getDate(); //Current Date
+   var month = monthNames[new Date().getMonth()]; //Current Month
+   var year = new Date().getFullYear(); //Current Year
    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
+   var min = new Date().getMinutes(); //Current Minutes
 
     that.setState({
       //Setting the value of the date time
@@ -49,9 +49,6 @@ class MyOrder extends React.Component {
       time:   hours + ':' + min ,
       status:'Pending'
     });
-      
-
-
   }
     openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
@@ -71,9 +68,9 @@ class MyOrder extends React.Component {
   dateFormate(date){
     var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  let orderDate = new Date(date);
-  let getDate=orderDate.getDate() + " "+ monthNames[orderDate.getMonth()] +" "+orderDate.getFullYear();
-  return getDate;
+    let orderDate = new Date(date);
+    let getDate=orderDate.getDate() + " "+ monthNames[orderDate.getMonth()] +" "+orderDate.getFullYear();
+    return getDate;
   }
 
   render(){
@@ -86,8 +83,8 @@ class MyOrder extends React.Component {
                IconRightF='search'
               setCart={true}
               setFilter={true}
-               IconRightT='sound-mix'
-               StyleIconRightT={{marginRight:10}}
+              IconRightT='sound-mix'
+              StyleIconRightT={{marginRight:10}}
               bgColor='transparent'
               Title='My Order'
               IconsRightT={styles.IconsRightT}

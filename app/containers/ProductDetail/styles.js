@@ -72,10 +72,10 @@ export default {
   },
    DownArrow:{
     position:'absolute',
-    right:15,
+    right:10,
     width:18,
     height:15,
-    top:20,zIndex:99
+    top:18,zIndex:99
   },
 reasonView:{
   width:100,

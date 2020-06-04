@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, ScrollView,Picker } from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, ScrollView, } from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers } from '../../components';
@@ -11,7 +11,7 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left, Body, Title, Right,Card,Grid,Row,Col,Tabs,Tab,ScrollableTab,Input,Item,ListItem,
+  Header, Left, Body, Title, Right,Card,Grid,Row,Col,Tabs,Tab,ScrollableTab,Input,Item,ListItem,Picker
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
@@ -232,31 +232,33 @@ class MyPayments extends React.Component {
                 <Text style={[styles.titleText,{marginTop:5,fontSize:18}]}>Select Other Bank</Text>
                </View>
                <View style={[styles.reasonView,{}]} >
-                <Picker
-                  note
-                  mode="dropdown"
-                  itemStyle={{fontFamily:'Font-Medium'}}
-                  itemTextStyle={{fontFamily:'Font-Medium'}}
-                  textStyle={{fontFamily:'Font-Medium'}}
-                  style={styles.dorpDownReason}
-                  selectedValue={this.state.selected}
-                  onValueChange={this.onValueChange.bind(this)}
-                  placeholderStyle={{borderWidth:10, fontFamily:'Font-Medium' }}
-                  placeholderIconColor={{borderWidth:2}}
-                  >
-                  <Picker.Item label="Select Bank" style={{fontFamily:'Font-Medium'}} value="0" />
-                  {
+                  <Item style={{borderBottomWidth:0}} >
+                        <Picker
+                          note
+                          mode="dropdown"
+                          itemStyle={{fontFamily:'Font-Medium'}}
+                          itemTextStyle={{fontFamily:'Font-Medium'}}
+                          textStyle={{fontFamily:'Font-Medium'}}
+                          style={styles.dorpDownReason}
+                          selectedValue={this.state.selected}
+                          onValueChange={this.onValueChange.bind(this)}
+                          placeholderStyle={{borderWidth:10, fontFamily:'Font-Medium' }}
+                          placeholderIconColor={{borderWidth:2}}
+                          >
+                          <Picker.Item label="Select Bank" style={{fontFamily:'Font-Medium'}} value="0" />
+                          {
 
-                    BankList.map(data=>(
-                         <Picker.Item key={data.key} label={data.bank} value={data.key} />
-                  
-                    ))
-                  
-                  }
-               
-                 
-                </Picker>
+                            BankList.map(data=>(
+                                 <Picker.Item key={data.key} label={data.bank} value={data.key} />
+                          
+                            ))
+                          
+                          }
+                       
+                         
+                        </Picker>
                 <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
+                </Item>
                </View>
                </View>
             </Tab>

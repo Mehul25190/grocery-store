@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, Picker, ScrollView} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date,  ScrollView} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers, } from '../../components';
@@ -11,7 +11,7 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem,Item,Input,DatePicker,Label
+  Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem,Item,Input,DatePicker,Label,Picker
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
@@ -154,23 +154,28 @@ class ProductDetail extends React.Component {
          <Row>
             <Col>
                <View  style={styles.reasonView}>
+                <Item style={{borderBottomWidth:0}} >
                  <Picker
-
                   note
                   textStyle={{fontFamily:'Font-Medium'}}
                   mode="dropdown"
                   style={{fontFamily:'Font-Medium' ,}}
                   selectedValue={this.state.selected}
-                  onValueChange={this.onValueChange.bind(this)} >
-
+                  
+                  onValueChange={this.onValueChange.bind(this)}
+                
+                  placeholderStyle={{borderWidth:10, fontFamily:'Font-Medium' }}
+                  placeholderIconColor={{borderWidth:2}}
+                   >
                   <Picker.Item label="Qty" color={Colors.gray} style={{fontFamily:'Font-Medium'}}  value="0" />
                   <Picker.Item label="2" value="1" />
                   <Picker.Item label="3" value="2" />
                   <Picker.Item label="4" value="3" />
                   <Picker.Item label="5" value="4" />
+
                 </Picker>
-                
-                <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
+                    <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
+                </Item>
               </View>
             </Col>
           <Col style={styles.cartPart}>

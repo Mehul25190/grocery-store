@@ -153,7 +153,7 @@ onPressRecipe(item){
                                 totalHeight={20} 
                                 iconSize={30}
                                 borderColor='#F8BB1B'
-                                 inputStyle={{fontSize:13}}
+                                inputStyle={{fontSize:13}}
                                 step={1}
                                 valueType='real'
                                 rounded 
