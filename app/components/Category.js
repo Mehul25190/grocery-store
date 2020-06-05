@@ -188,7 +188,6 @@ class Category extends Component {
         showsVerticalScrollIndicator={false}
         bounces={this.props.bounces}
         keyExtractor={(item, index) => index}
-
         renderItem={this.renderItemCategory.bind(this)}
         data={this.state.data}
       />

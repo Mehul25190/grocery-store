@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View,TouchableHighlight,Image,FlatList,ScrollView, ImageBackground, StatusBar,TouchableOpacity} from 'react-native'
 import _ from 'lodash'; 
 import { Layout, Colors, Screens } from '../../constants';
-import { Logo, Svgicon, Headers,LoginBackIcon,Category } from '../../components';
+import { Logo, Svgicon, Headers,LoginBackIcon } from '../../components';
 import imgs from '../../assets/images';
 import {
   Container,
@@ -31,15 +31,23 @@ constructor(props) {
   super(props);
   this.state = {
     dataSource:productList,
-    value:1
+    categoryList:categoryList,
+    value:1,
+    colorItemSelected:Colors.secondary,
+    colorItemDefault:'transparent',
+    itemSelected:true
   };
 }
 
   componentDidMount() {
+
    this.setState({
       dataSource: productList,
-      value:1
+      value:1,
+     
+      
     });
+
   }
 //func call when click item category
 _itemChoose(item) {
@@ -49,13 +57,30 @@ _filterChoose(item){
 
 }
 onPressRecipe(item){
-  alert(this.item);
+  // alert(this.item);
+   this.setState({
+     
+     
+      itemSelected:!this.state.itemSelected,
+     
+     
+    });
 }
  openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
-}
+};
+   renderItems = ({ item, index}) => (
+    <TouchableOpacity onPress={() => this.onPressRecipe(item)}>
+       <View style={styles.cateContainer}>
+       
+        <Text style={index==0 ? styles.titleBackground:styles.whiteBackground}>{item.title}</Text>
+
+      </View>
+    </TouchableOpacity>
+  );
   render(){
-     const { navigation } = this.props;
+   
+    const { navigation } = this.props;
     const getTitle = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
@@ -104,7 +129,19 @@ onPressRecipe(item){
                  </Grid>
              </Card>
            */}
-             <Category
+       <ScrollView>
+          <FlatList 
+                
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                     data={categoryList}
+                     renderItem={this.renderItems}
+                     keyExtractor={item => `${item.id}`}
+                   />
+            </ScrollView>
+           {
+            /*
+            <Category
                 data={categoryList}    
                 itemSelected={(item) => this._itemChoose(item)}
                 itemText={'title'} 
@@ -115,7 +152,7 @@ onPressRecipe(item){
                 style= {{ backgroundColor: '#fff'}}
                 textItemStyles={styles.textItemStyles}
               />
-             
+           */}  
            {
 
              productList.map((item, index) => {

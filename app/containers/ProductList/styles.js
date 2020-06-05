@@ -1,5 +1,18 @@
 import {Colors,Layout} from '../../constants/';
 export default {
+  cateContainer:{
+    flex: 1,
+  
+    height:50,
+    width:Layout.width,
+ 
+     paddingTop:7,
+    paddingBottom:5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: Layout.indent,
+    paddingRight: 0
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -18,36 +31,53 @@ export default {
       marginLeft:Layout.indent
      
   },
-productTitle:{
-    position : 'absolute',
-    fontSize:18,
-    left:5,
-    top:5,
-    padding:5,
-    paddingRight:Layout.indent,
-    paddingLeft:Layout.indent-7,
-    color:'#000',
-    textAlign:'left'
-  
-},
-AlignLeft:{
-  justifyContent:'flex-start'
-},
-AlignRight:{
-  justifyContent:'flex-end'
-},
-FirstItem:{
-    flex: 1,
-    position : 'relative',
-    backgroundColor:Colors.primaryLight,
-    marginLeft: Layout.ITEM_MARGIN,
-    marginTop: 10,
-    width: (Layout.SCREEN_WIDTH - (Layout.ItemNumColums + 1) * Layout.ITEM_MARGIN) / Layout.ItemNumColums,
-    height: 300,
-    borderColor: '#cccccc',
-    borderWidth: 0.5,
-    borderRadius: 8
-},
+  productTitle:{
+     paddingTop:6,
+    paddingBottom:5,
+
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 25,
+  marginRight:0
+  },
+  titleBackground:{
+backgroundColor:Colors.secondary,
+  paddingTop:3,
+    paddingBottom:5,
+    color:Colors.white,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 25,
+  marginRight:0
+  },
+  whiteBackground:{
+backgroundColor:'transparent',
+  paddingTop:6,
+    paddingBottom:5,
+
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 25,
+  marginRight:0
+  },
+  AlignLeft:{
+    justifyContent:'flex-start'
+  },
+  AlignRight:{
+    justifyContent:'flex-end'
+  },
+  FirstItem:{
+      flex: 1,
+      position : 'relative',
+      backgroundColor:Colors.primaryLight,
+      marginLeft: Layout.ITEM_MARGIN,
+      marginTop: 10,
+      width: (Layout.SCREEN_WIDTH - (Layout.ItemNumColums + 1) * Layout.ITEM_MARGIN) / Layout.ItemNumColums,
+      height: 300,
+      borderColor: '#cccccc',
+      borderWidth: 0.5,
+      borderRadius: 8
+  },
    ItemContainer: {
      flex: 1,
      position : 'relative',
