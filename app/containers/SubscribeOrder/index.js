@@ -15,22 +15,35 @@ import {
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
+import * as subscriptionAction from "../../actions/subscription";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import {productList} from '../data/data';
 import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
+import { showToast } from '../../utils/common';
+import moment from "moment"
+
+
 const DurationList =[
- {
+  {
     key:1,
-    duration:'30 Days'
+    value:15,
+    duration:'15 Days'
   },
   {
     key:2,
-    duration:'60 Days'
+    value:30,
+    duration:'30 Days'
   },
   {
     key:3,
+    value:60,
+    duration:'60 Days'
+  },
+  {
+    key:4,
+    value:180,
     duration:'180 Days'
   },
  
@@ -40,45 +53,88 @@ class SubscribeOrder extends React.Component {
 
   constructor(props) {
     super(props);
+    let itemID = this.props.navigation.getParam('id')
      this.state = {
       //default value of the date time
       date: '',
-       time: '',
-       value:1,
-           selected: '0',
-           isChecked:true
+      time: '',
+      qty:1,
+      duration: 15,
+      isChecked:true,
+      itemId: itemID,
+      subscriptionDtls: {}, 
+      subscriptionDtlsImg: {},
+      startDate: '',
+      endDate: '', 
+      displaystartDate: '',
     };
+    this.setStartDate = this.setStartDate.bind(this);
+    this.setEndDate = this.setEndDate.bind(this);
 
   }
    componentDidMount() {
-    var that = this;
-    var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    var date = new Date().getDate(); //Current Date
-    var month = monthNames[new Date().getMonth()]; //Current Month
-    var year = new Date().getFullYear(); //Current Year
-    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
-
-    that.setState({
-      //Setting the value of the date time
-      date:   date + ' ' + month + ' ' + year ,
-      time:   hours + ':' + min 
+    this.props.getItemDetail(this.state.itemId).then(res=>{
+        if(res.status == "success"){
+          if(res.data.item.length > 0){
+            this.setState({subscriptionDtls: res.data.item[0], subscriptionDtlsImg: res.data.itemImages[0]});
+          }else{
+            showToast("Not found subscription detail","danger");
+            this.props.navigation.navigate(Screens.ProductList.route);
+            
+          }
+        }
     });
   }
     openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
     };
 
-   onValueChange(value: string) {
+   onDurationValueChange(value) {
     this.setState({
-      selected: value,
-      switch1Value: value
+      duration: value
+    });
+  }
+
+  setStartDate(value){
+    this.setState({startDate: moment(value).format('MM/DD/YYYY'), displaystartDate: moment(value).format('DD MMM YYYY')})
+  }
+
+  setEndDate(value){
+    this.setState({endDate: moment(value).format('MM/DD/YYYY')})
+  }
+
+
+  subscribeSubmitHandler(){
+    if(this.state.startDate == ''){
+      showToast("Please select start date","danger");
+      return;
+    }
+    if(this.state.endDate == ''){
+      showToast("Please select end date","danger");
+      return;
+    }
+    const data = {
+      userAddressDtlsId: 1,
+      itemId: this.state.itemId,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
+      duration: this.state.duration,
+      frequency: 'daily',
+      excludeWeekend: 1,
+      isActive: 1,
+      quantity: this.state.qty
+    };
+    this.props.saveSubscribeOrderDetails(data).then(res=> {
+        if(res.status == 'success'){
+          this.props.navigation.navigate(Screens.SubscribeSuccess.route)
+        }else{
+          showToast("Please enter proper value","danger");
+        }
     });
   }
 
   render(){
-    const { navigation } = this.props;
+    const { navigation, deliveryAddress } = this.props;
     const getItem = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
@@ -93,7 +149,9 @@ class SubscribeOrder extends React.Component {
              />
       
           <Content enableOnAndroid>
-       
+        { this.props.isLoading ?
+            <Spinner color={Colors.secondary} style={appStyles.spinner} /> :
+            (<View>
         <Card style={[appStyles.addBox,{height:'auto'},styles.paddingBox]}>
           <Grid >
             <Row style={styles.firstRow}>
@@ -104,8 +162,8 @@ class SubscribeOrder extends React.Component {
                 <View>
                   <NumericInput 
                    inputStyle={{fontSize:13}}
-                      value={this.state.value} 
-                      onChange={value => this.setState({value})} 
+                      value={this.state.qty} 
+                      onChange={value => this.setState({qty: value})} 
                       onLimitReached={(isMax,msg) => console.log(isMax,msg)}
                       totalWidth={90} 
                       totalHeight={20} 
@@ -128,11 +186,11 @@ class SubscribeOrder extends React.Component {
               </Col>
               <Col style={styles.amulInfo}>
                 <View>
-                 <Text style={styles.AmuText}>Amul</Text>
-                 <Text style={[styles.AmuText,styles.AmuTextTitle]}>Amul Moti</Text>
-                 <Text style={styles.AmuText}>500 ml</Text>
-                 <Text style={styles.AmuText}>Qty: 1</Text>
-                 <Text style={styles.AmuText}>MRP: <Text style={{}}>{'\u20B9'}</Text> 28</Text>
+                 <Text style={styles.AmuText}>{this.state.subscriptionDtls.itemTag}</Text>
+                 <Text style={[styles.AmuText,styles.AmuTextTitle]}>{this.state.subscriptionDtls.itemName}</Text>
+                 <Text style={styles.AmuText}>{this.state.subscriptionDtls.weight} {this.state.subscriptionDtls.uom}</Text>
+                 <Text style={styles.AmuText}>Qty: {this.state.subscriptionDtls.quantity}</Text>
+                 <Text style={styles.AmuText}>MRP: <Text style={{}}>{'\u20B9'}</Text> {this.state.subscriptionDtls.price}</Text>
                 </View>
               </Col>
             </Row>
@@ -147,18 +205,17 @@ class SubscribeOrder extends React.Component {
            <Item  success style={{ marginLeft:Layout.indent, marginRight:Layout.indent}}>
             <Label style={styles.datelabel}>Start Date</Label>
             <DatePicker
-            defaultDate={new Date(2018, 4, 4)}
-            minimumDate={new Date(2018, 1, 1)}
-            maximumDate={new Date(2018, 12, 31)}
+            defaultDate={new Date()}
+            minimumDate={new Date()}
             locale={"en"}
             timeZoneOffsetInMinutes={undefined}
-            modalTransparent={true}
+            modalTransparent={false}
             animationType={"fade"}
             androidMode={"default"}
             placeHolderText="Select date"
             textStyle={{ color: Colors.primary,paddingLeft:0,paddingBottom:3 }}
             placeHolderTextStyle={{ color: "transparent" }}
-            onDateChange={this.setDate}
+            onDateChange={this.setStartDate}
             disabled={false}
             />
             <Image source={imgs.calImg} style={{marginLeft:20}} style={styles.calImage} />
@@ -171,7 +228,7 @@ class SubscribeOrder extends React.Component {
            <View style={styles.reasonView} >
             <Item style={{borderBottomWidth:0}} >
                 <Picker
-                  note
+
                   mode="dropdown"
                   iosHeader="Select Duration"
                   headerStyle={{ backgroundColor: Colors.primary }}
@@ -179,16 +236,16 @@ class SubscribeOrder extends React.Component {
                   itemTextStyle={{fontFamily:'Font-Medium'}}
                   textStyle={{fontFamily:'Font-Medium'}}
                   style={styles.dorpDownReason}
-                  selectedValue={this.state.selected}
-                  onValueChange={this.onValueChange.bind(this)}
+                  selectedValue={this.state.duration}
+                  onValueChange={(value, index) => this.onDurationValueChange(value)}
+
                   placeholderStyle={{borderWidth:10, fontFamily:'Font-Medium' }}
                   placeholderIconColor={{borderWidth:2}}
                   >
-                  <Picker.Item label="Select Duration" style={{fontFamily:'Font-Medium'}} value="0" />
                   {
 
                     DurationList.map(data=>(
-                         <Picker.Item key={data.key} label={data.duration} value={data.key} />
+                         <Picker.Item key={data.key} label={data.duration} value={data.value} />
                   
                     ))
                   
@@ -207,9 +264,8 @@ class SubscribeOrder extends React.Component {
            <Item  success style={{ marginLeft:Layout.indent, marginRight:Layout.indent}}>
            <Label style={styles.datelabel}>End Date</Label>
             <DatePicker
-            defaultDate={new Date(2018, 4, 4)}
-            minimumDate={new Date(2018, 1, 1)}
-            maximumDate={new Date(2018, 12, 31)}
+            defaultDate={new Date()}
+            minimumDate={new Date()}
             locale={"en"}
             timeZoneOffsetInMinutes={undefined}
             modalTransparent={false}
@@ -218,7 +274,7 @@ class SubscribeOrder extends React.Component {
             placeHolderText="Select date"
            textStyle={{ color: Colors.primary,paddingLeft:0,paddingBottom:3 }}
             placeHolderTextStyle={{ color: "transparent" }}
-            onDateChange={this.setDate}
+            onDateChange={this.setEndDate}
             disabled={false}
             />
             <Image source={imgs.calImg}  style={styles.calImage} />
@@ -310,8 +366,8 @@ class SubscribeOrder extends React.Component {
                     />
                 </Left>
                 <Body>
-                  <Text style={[appStyles.userArea,styles.addressText]} >South Bopal,</Text>
-                  <Text style={[appStyles.userCity,styles.addressText]} >Ahmedabad - Gandhinagar,</Text>
+                  <Text style={[appStyles.userArea,styles.addressText]} >{deliveryAddress ? deliveryAddress.buildingName + ',' : ''}</Text>
+                  <Text style={[appStyles.userCity,styles.addressText]} >{deliveryAddress ? deliveryAddress.cityName + ' - ' + deliveryAddress.state : ''} </Text>
                  
                 </Body>
 
@@ -333,18 +389,19 @@ class SubscribeOrder extends React.Component {
             <Col style={{justifyContent:'center'}}>
             <View style={{}}>
             <Text style={styles.payText}>Subscribe Start Date </Text>
-            <Text style={styles.payText}> {this.state.date}</Text>
+            <Text style={styles.payText}> {this.state.displaystartDate}</Text>
             </View> 
             </Col>
             <Col style={{justifyContent:'flex-end',width:140}}>
              <Button style={styles.paynowBtn} primary full>
-              <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.SubscribeSuccess.route)} >
+              <TouchableOpacity onPress={()=> this.subscribeSubmitHandler()} >
                 <Text style={styles.payTextNow}> Subscribe</Text>
                 </TouchableOpacity>
               </Button>
             </Col>
           </Row>
           </Grid>
+          </View>)}
           </Content>
         
       </Container>
@@ -355,12 +412,16 @@ class SubscribeOrder extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    isLoading: state.common.isLoading,
+    deliveryAddress: state.subscription.deviveryAddress
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+      getItemDetail: (id) => dispatch(subscriptionAction.getItemDetail({itemId: id})),
+      saveSubscribeOrderDetails: (data) => dispatch(subscriptionAction.saveSubscribeOrderDetails(data)),
    };
 };
 

@@ -47,6 +47,12 @@ const auth = (state = initialState.auth, action) => {
         mobileno: action.data
       }
     }
+    case ActionTypes.DELIVERYADDRESS: {
+      return {
+        ...state,
+        deviveryAddress: action.data,
+      }
+    }
     // Default
     default: {
       return state;

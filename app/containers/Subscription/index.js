@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, FlatList} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers } from '../../components';
@@ -20,6 +20,8 @@ import styles from './styles';
 import {productList} from '../data/data';
 import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
+import * as subscriptionAction from "../../actions/subscription";
+import url from '../../config/api';
 
 class SubscribeDetail extends React.Component {
 
@@ -29,7 +31,8 @@ class SubscribeDetail extends React.Component {
       //default value of the date time
       date: '',
        time: '',
-       value:1
+       value:1,
+       mySubscription: {},
     };
 
   }
@@ -48,56 +51,45 @@ class SubscribeDetail extends React.Component {
       date:   date + ' ' + month + ' ' + year ,
       time:   hours + ':' + min 
     });
+
+    this.mySubscriptionList();
+
   }
-    openControlPanel = () => {
-      this.props.navigation.goBack(); // open drawer
-    };
+
+  mySubscriptionList(){
+    this.props.mySubscriptionList(this.props.user.userId).then(res => {
+      this.setState({mySubscription: res.data.subscriptionDtls})
+    });
+  }
+
+  openControlPanel = () => {
+    this.props.navigation.goBack(); // open drawer
+  };
 
     
-
-  render(){
-    const { navigation } = this.props;
-    const getItem = navigation.getParam('item');
-    return (
-      <Container style={appStyles.container}>
-
-           <Headers
-              IconLeft='arrowleft'
-              onPress={() => this.openControlPanel()}
-              IconRightF='search'
-              setCart={true}
-              bgColor='transparent'
-              Title='My Subscription'
-             />
-      
-       <Content enableOnAndroid>
-       <View style={styles.topInstruction}>
-        <Text style={styles.instruction}>
-          Daily Delivery Before 7:00 AM
-        </Text>
-       </View>
-
-        <Card style={[appStyles.addBox,{height:'auto'},styles.paddingBox]}>
+  renderItems = ({ item, index}) => (
+    <View>
+      <Card style={[appStyles.addBox,{height:'auto'},styles.paddingBox]}>
           <Grid >
             <Row style={styles.firstRow}>
               <Col style={styles.orderTitle}>
                 <Text style={styles.orderTitleText}>Subscribe:</Text>
               </Col>
               <Col style={styles.dailyTitle}>
-                 <Text style={styles.dayText}>Daily</Text>
+                 <Text style={styles.dayText}>{item.frequency}</Text>
               </Col>
             </Row>
              <Row style={styles.secondRow}>
               <Col style={styles.amulCol}>
-                <Image source={imgs.amulMoti} style={styles.amulMoti} />
+                <Image source={{uri: url.imageURL+item.imagePath} } style={styles.amulMoti} />
               </Col>
               <Col style={styles.amulInfo}>
                 <View>
-                 <Text style={styles.AmuText}>Amul</Text>
-                 <Text style={[styles.AmuText,styles.AmuTextTitle]}>Amul Moti</Text>
-                 <Text style={styles.AmuText}>500 ml</Text>
-                 <Text style={styles.AmuText}>Qty: 1</Text>
-                 <Text style={styles.AmuText}>MRP: <Text style={{}}>{'\u20B9'}</Text> 28</Text>
+                 <Text style={styles.AmuText}>{item.brandName}</Text>
+                 <Text style={[styles.AmuText,styles.AmuTextTitle]}>{item.itemName}</Text>
+                 <Text style={styles.AmuText}>{item.weight} {item.uom}</Text>
+                 <Text style={styles.AmuText}>Qty: {item.quantity}</Text>
+                 <Text style={styles.AmuText}>MRP: <Text style={{}}>{'\u20B9'}</Text> {item.price}</Text>
                 </View>
               </Col>
             </Row>
@@ -142,16 +134,51 @@ class SubscribeDetail extends React.Component {
           </Col>
         </Row>
        </Grid>
-        
-          </Content>
+    </View>
+  );
+
+  render(){
+    const { navigation } = this.props;
+    const getItem = navigation.getParam('item');
+    return (
+      <Container style={appStyles.container}>
+         <Headers
+            IconLeft='arrowleft'
+            onPress={() => this.openControlPanel()}
+            IconRightF='search'
+            setCart={true}
+            bgColor='transparent'
+            Title='My Subscription'
+           />
+       <Content enableOnAndroid>
+       { this.props.isLoading ?
+          <Spinner color={Colors.secondary} style={appStyles.spinner} /> :
+          (<View>
+            <View style={styles.topInstruction}>
+              <Text style={styles.instruction}>
+                Daily Delivery Before 7:00 AM
+              </Text>
+            </View>
+            <FlatList 
+               vertical
+               showsVerticalScrollIndicator={false}
+               numColumns={1}
+               data={this.state.mySubscription}
+               renderItem={this.renderItems}
+               keyExtractor={item => `${item.id}`}
+             />
+            <View style={{height:20}}></View>
+          </View>
+        )}
+        </Content>
         
       </Container>
-     
     );
   }
 }
 const mapStateToProps = (state) => {
   return {
+    isLoading: state.common.isLoading,
     user: state.auth.user,
   };
 };
@@ -159,6 +186,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+      mySubscriptionList : (categoryId) => dispatch(subscriptionAction.mySubscriptionList({categoryId:categoryId}))
    };
 };
 

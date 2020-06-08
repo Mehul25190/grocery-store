@@ -19,6 +19,7 @@ import {ItemList} from '../data/data';
 //import MasonryList from "react-native-masonry-list";
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
+import * as subscriptionAction from "../../actions/subscription";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import { array } from 'prop-types';
@@ -36,6 +37,7 @@ class Home extends React.Component {
 
   componentDidMount(){
     //set array from category list from api to get category list
+    this.props.getDeviveryAddress(this.props.user.userId);
     this.getCategoryList();    
   }
 
@@ -68,7 +70,7 @@ class Home extends React.Component {
     <TouchableOpacity onPress={() => this.onPressRecipe(item)}>
        <View style={index == 0 ? styles.ItemContainer : styles.ItemContainer}>
         <Image style={styles.photo} source={{uri: url.imageURL+item.imagePath} } />
-        <Text style={styles.productTitle}>{item.id}{item.categoryName}</Text>
+        <Text style={styles.productTitle}>{item.categoryName}</Text>
        
       </View>
     </TouchableOpacity>
@@ -196,8 +198,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
-      showCategoryList: () => dispatch(userActions.showCategoryList())
- 
+      showCategoryList: () => dispatch(userActions.showCategoryList()),
+      getDeviveryAddress: (useId) => dispatch(userActions.getDeviveryAddress({userId: useId})),
    };
 };
 

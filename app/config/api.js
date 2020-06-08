@@ -7,5 +7,9 @@ export default {
   signupVerifyMobile: 'user/verifyMobile',
   signinMobile:'user/login',
   categoryList:'item/fetchCategory',
-  productList:'item/fetchItemList'
+  productList:'item/fetchItemList',
+  mySubscriptionList: 'order/fetchSubscriptionDtlsById',
+  getItemDetail: 'item/getItemById',
+  getDeviveryAddress: 'user/fetchUserAddress',
+  saveSubscribeOrderDetails: 'order/saveSubscribeOrderDetails',
 }

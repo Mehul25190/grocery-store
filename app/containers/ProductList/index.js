@@ -9,7 +9,7 @@ import {
   Content,
   Button,
   Text,
-  Header,  Title, Grid,Col,Card,List, ListItem, Left, Body, Right, Thumbnail,
+  Header,  Title, Grid,Col,Card,List, ListItem, Left, Body, Right, Thumbnail,Spinner
 } from 'native-base';
 import url from '../../config/api';
 import {ItemList} from '../data/data';
@@ -37,7 +37,7 @@ constructor(props) {
     productData:[],
   };
   
-  console.log('here----->', this.props.navigation.getParam('para_categoryId'));
+  //console.log('here----->', this.props.navigation.getParam('para_categoryId'));
 }
 
   componentDidMount() {
@@ -47,14 +47,19 @@ constructor(props) {
       //categoryId:this.props.navigation.getParam('para_categoryId'),
     });
     //alert(this.state.categoryId);
-    //get product list default base on category selected
-    this.productItemList();
+    //get product list default base on category selected    
+    this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      this.productItemList();
+    })
+}
+
+componentWillUnmount () {
+  this.focusListener.remove()
 }
 
 productItemList(){
-  //alert(this.state.categoryId);
-  this.props.productItemList(this.state.categoryId).then (res =>{
-    console.log('sucess return');  
+  this.props.productItemList(this.props.navigation.getParam('para_categoryId')).then (res =>{
+    //console.log('sucess return');  
     if(res.status == "success"){
           this.setState({ productData:res.data.itemList });
           //console.log('set return');
@@ -82,7 +87,7 @@ onPressRecipe(item){
   alert(this.item);
 }
  openControlPanel = () => {
-      this.props.navigation.goBack(); // open drawer
+  this.props.navigation.goBack(); // open drawer
 }
   render(){
      const { navigation } = this.props;
@@ -101,40 +106,9 @@ onPressRecipe(item){
             
            />
           <Content enableOnAndroid style={appStyles.content}>
-           
-          {/* <Card style={appStyles.addBox}>
-                <Grid>
-                  <Col style={{ marginLef:10,width: 170,}}>
-                     <Image source={imgs.mangoSale} style={styles.mangoSale} />
-                  </Col>
-                  <Col style={{  }}>
-                    <View style={styles.discountBlock}>
-                      <Text style={styles.addsSubTitle}>
-                         Mango 1 kg
-                      </Text>
-                      <Text style={styles.MRPtext}>
-                         MRP &nbsp; <Text style={styles.currencyOffer}>{'\u20B9'}</Text>150
-                      </Text>
-                      
-                      <Text style={styles.officePrice}>
-                         Offer Price
-                      </Text>
-                        <Text style={styles.PriceRate}>
-                          <Text style={styles.currencyPrice}>{'\u20B9'}</Text>95
-                      </Text>
-                      
-                      <View style={styles.btnBlock}>
-                       <Button transparent style={{textAlign:'right'}}>
-                        <TouchableOpacity>
-                         <Text style={styles.discountOrder}>Orde Now</Text>
-                         </TouchableOpacity>
-                        </Button>
-                      </View>
-                    </View>
-                  </Col>
-                 </Grid>
-             </Card>
-           */}
+          { this.props.isLoading ?
+            <Spinner color={Colors.secondary} style={appStyles.spinner} /> :
+            (<View>
              <Category
                 data={categoryList}    
                 itemSelected={(item) => this._itemChoose(item)}
@@ -201,7 +175,7 @@ onPressRecipe(item){
                             index == 0 || index == 2?
                           
                             <Button style={styles.subscribeBtn}>
-                             <TouchableOpacity onPress={()=> this.props.navigation.navigate(Screens.SubscribeOrder.route)}>
+                             <TouchableOpacity onPress={()=> this.props.navigation.navigate(Screens.SubscribeOrder.route, {id: item.id})}>
                               <Text style={styles.subText}>
                                Subscribe@{'\u20B9'}12
                               </Text>
@@ -233,6 +207,7 @@ onPressRecipe(item){
                   );
                 })
            }
+           </View>)}
               </Content>
 
         
@@ -245,6 +220,7 @@ onPressRecipe(item){
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    isLoading: state.common.isLoading,
   };
 };
 

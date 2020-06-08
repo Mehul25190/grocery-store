@@ -476,8 +476,10 @@ fontFamily:'Font-Medium'
       backgroundColor:'#D2EAD2',
       width:100,
       height:80
+    },
+    spinner: {
+      height: Layout.window.height * 0.9
     }
-
     /* Slideshow*/
     
 });
