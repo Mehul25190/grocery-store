@@ -11,7 +11,7 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left, Body, Footer, Title, Right,Card,Grid,Col,Row,ListItem,List
+  Header, Left, Body, Footer, Title, Right,Card,Grid,Col,Row,ListItem,List,Switch,Radio
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
@@ -28,6 +28,8 @@ class Checkout extends React.Component {
       //default value of the date time
       date: '',
        time: '',
+        selected: false,
+         switch1Value: false,
     };
 
   }
@@ -53,9 +55,14 @@ class Checkout extends React.Component {
 
     onPressSubmit = item => {
   console.log(item);
-    this.props.navigation.navigate('MyPayments', { item });
+    this.props.navigation.navigate('OrderSuccess', { item });
   };
 
+  toggleSwitch1= (value) =>{
+      this.setState({
+           switch1Value: value
+      });
+  }
 
   render(){
     const { navigation } = this.props;
@@ -69,11 +76,56 @@ class Checkout extends React.Component {
               IconRightF='search'
               setCart={true}
               bgColor='transparent'
-              Title='Check Out'
+              Title='Order Summary'
              />
     
        <ScrollView>   
+               <View style={{marginTop:10}}>
+                <Text style={styles.title}>Payment Method </Text>
+               </View>
+                 <ListItem style={styles.PayMethod} icon>
+                    <Left style={{flex:0}}>
+                        <Switch
+                       style={{color:Colors.primary,}}
+                       onValueChange = {this.toggleSwitch1}
+                       value = {this.state.switch1Value}/>
+                    </Left>
+                    <Body style={{borderBottomWidth:0}}>
+                      <Text style={styles.payOptions}>Use My Wallet Balance</Text>
+                      <Text style={styles.payOptions}>Current Balance: <Text style={[appStyles.currency,{fontSize:12}]}>{'\u20B9'}</Text>1000</Text>
+                    </Body>
 
+                    <TouchableOpacity style={styles.walletBtn} onPress={()=>this.props.navigation.navigate(Screens.TopupWallet.route)}>
+                      <Text style={styles.walletBtnText}>Topup Wallet</Text>
+                    </TouchableOpacity>
+                </ListItem>   
+                 <ListItem style={styles.PayMethodOther} icon>
+                   <Left style={styles.payRadio} onPress={() => this.setState({ selected: !this.state.selected })}>
+                       <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />
+                  </Left>
+                  <Body style={{borderBottomWidth:0}}>
+                    <Text style={styles.payOptionscard}>Pay with Card</Text>
+                    <Text style={[styles.payOptionscard,{color:Colors.gray}]}>xxx-xxxx-xxxx-0011</Text>
+                  </Body>
+
+                  <TouchableOpacity style={styles.walletBtn} onPress={()=>this.props.navigation.navigate(Screens.MyPayments.route)}>
+                    <Text style={styles.walletBtnText}>+ Add Card</Text>
+                  </TouchableOpacity>
+                </ListItem>  
+                 <ListItem style={styles.PayMethodOther} icon>
+                    <Left style={styles.payRadio} onPress={() => this.setState({ selected: !this.state.selected })}>
+                       <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />
+                  </Left>
+
+                  <Body style={{borderBottomWidth:0}}>
+                    <Text style={styles.payOptionscard}>Pay with Cash</Text>
+                    <Text style={[styles.payOptionscard,{color:Colors.gray}]}>(Eligible with amount above {'\u20B9'}5000)</Text>
+                  </Body>
+
+                  <View style={[styles.walletBtn,{backgroundColor:Colors.primary}]}>
+                    <Text style={[styles.walletBtnText,{textTransform:'uppercase'}]}>Cash</Text>
+                  </View>
+                </ListItem>  
                <View style={styles.OrderTitle}>
                 <Text style={styles.OrderTitleText}>Order Item List </Text>
                </View>
@@ -186,7 +238,7 @@ class Checkout extends React.Component {
          
             <TouchableOpacity style={styles.checkOutBtnArea} >
               <Button primary full style={styles.checkOutBtn} onPress={()=>this.onPressSubmit('Checkout')}>
-                           <Text style={styles.checkOutText}> Place an Order Now</Text>
+                           <Text style={styles.checkOutText}> Pay Now</Text>
                          </Button>
             </TouchableOpacity>
        

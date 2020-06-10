@@ -1,9 +1,111 @@
 import {Colors,Layout} from '../../constants/';
 export default {
-
+clickBtn:{
+  marginLeft:Layout.indent,
+  marginRight:Layout.indent,
+  backgroundColor:Colors.primary,
+  marginTop:Layout.indent,
  
+  height:35,
+  paddingBottom:3,
+  textAlign:'center',
+  justifyContent:'center',
+  alignItems:'center',
+  borderRadius:25,
+  marginBottom:5
+},
+  textPayMode:{
+    fontFamily:'Font-Medium',
+    fontSize:14,
+    lineHeight:22,
+  
+    color:Colors.white
+  },
+  pointer:{
+
+   fontSize:20,
+   
+   color:'#fff',
+   margin:0,
+   padding:0,
+   fontFamily:'Font-Bold'
+  },
+  totalAmount:{
+    backgroundColor:Colors.primary,
+    borderRadius:25,
+    paddingLeft:Layout.indent,
+    paddingRight:Layout.indent
+  },
+  totalText:{
+    color:Colors.white,
+    fontFamily:'Font-Medium',
+    fontSize:14
+  },
+Amount:{
+  fontSize:18,
+  color:'#fff',
+  fontFamily:'Font-Medium'
+},
+subscibed:{
+backgroundColor:Colors.secondary,
+borderRadius:5,
+paddingHorizontal:10,
+height:30,
+justifyContent:'center',
+textAlign:'center',
+marginBottom:10
+},
+textSubscribe:{
+fontSize:14,
+fontFamily:'Font-Medium',
+color:Colors.white
+},
+footerCol:{
+  justifyContent:'center',
+  borderRightWidth:1,
+  alignItems:'center',
+  paddingLeft:7,
+  paddingRight:7,
+  borderColor:Colors.gray
+  
+},
+footerTitle:{
+  color:Colors.primary,
+  fontFamily:'Font-Medium'
+ },
+
+  BottomView:{
+    
+    backgroundColor:Colors.white,
+    paddingLeft:Layout.indent,
+    paddingRight:Layout.indent,
+    height:70,
+    borderTopWidth:1,
+    borderColor:'#DCDCDC',
+   paddingTop:10,
+   paddingBottom:10,
+   justifyContent:'center'
+   
+},
+footerAmount:{
+  color:Colors.primary,
+  textAlign:'center',
+  fontFamily:'Font-Medium',
+},
+textSummary:{
+  textAlign:'center',
+    fontFamily:'Font-Medium',
+    color:Colors.white,
+    fontSize:14,
+    lineHeight:18,
+    paddingVertical:7
+},
+orderSummary:{
+  backgroundColor:Colors.secondary,
+  borderRadius:5
+},
  title:{
-  marginTop:10,
+  
   marginLeft:Layout.indent,
   marginRight:Layout.indent,
   fontFamily:'Font-Medium',
@@ -43,25 +145,25 @@ export default {
     height:80,
     resizeMode:'contain',
    },
-     ListRight:{
+   ListRight:{
      	 	justifyContent: 'flex-start',
         textAlign:'right'
    },
    txtDate:{
     marginLeft:Layout.indent,
     marginRight:Layout.indent,
-    fontFamily:'Font-Regular',
+    fontFamily:'Font-Medium',
     fontSize:14,
-    lineHeight:18
+    lineHeight:20
    },
    paddingBox:{
-  marginLeft:Layout.indent,
-  marginRight:Layout.indent,
-  marginTop:10,
-  paddingLeft:Layout.indent-5,
-  paddingTop:2,
-  zIndex:2,
- },
+    marginLeft:Layout.indent,
+    marginRight:Layout.indent,
+    marginTop:10,
+    paddingLeft:Layout.indent-5,
+    paddingTop:2,
+    zIndex:2,
+   },
   firstRow:{
   padding:0,
   margin:0,
@@ -83,7 +185,7 @@ QtyBox:{
   justifyContent:'flex-end'
  },
  amulMoti:{
-  width:100,
+  width:80,
   height:'auto',
   flex:1,
   resizeMode:'contain'
@@ -98,7 +200,7 @@ QtyBox:{
   
  },
   amulCol:{
-  width:120
+  width:100
  },
  AmuText:{
   color:Colors.gray,
@@ -132,12 +234,5 @@ QtyBox:{
   fontFamily:'Font-Medium'
  },
  
-
-  BottomView:{
-   backgroundColor:Colors.primary,
-  paddingLeft:Layout.indent,
-  paddingRight:Layout.indent
-  
- }
 
 };

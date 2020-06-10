@@ -20,7 +20,7 @@ export default {
    marginBottom:5,
    fontSize:14,
    fontFamily:'Font-Medium',
-   padingRight:Layout.indent
+   paddingRight:Layout.indent
   },
   ringBellBlock:{
   	flex: 1,

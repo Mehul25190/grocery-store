@@ -60,7 +60,7 @@ class OrderSuccess extends React.Component {
              </View>
           <TouchableOpacity style={styles.checkOutBtnArea} >
             <Button primary full style={styles.checkOutBtn} onPress={()=>this.props.navigation.navigate(Screens.Home.route)}>
-                <Text style={styles.checkOutText}>Done</Text>
+                <Text style={styles.checkOutText}>Continue shopping</Text>
              </Button>
           </TouchableOpacity>
 

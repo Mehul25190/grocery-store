@@ -77,11 +77,11 @@ dorpDownReason: {
 	checkboxStyle:{borderColor:Colors.primary, width:32, borderRadius:5, borderWidth:2},
 	ExpiresTitleCol:	{marginLeft:Layout.indent, width:80, justifyContent:'center'},
 	ExpiresCol:{borderRightWidth:2, alignItems:'center',borderColor:'#B9B9B9',marginRight:0},
-	CardRow:{borderBottomWidth:2,borderColor:'#B9B9B9', height:60, paddingBottom:4, paddingTop:4,},
+	CardRow:{borderBottomWidth:2,borderColor:'#B9B9B9', height:53.33, paddingBottom:4, paddingTop:4,},
 
 inputStyleCard:{
 	marginLeft:Layout.indent,
-	fontSize:20,
+	fontSize:16,
 	color:'#B9B9B9',
 	fontFamily:'Font-Medium',
 	height:40
@@ -89,31 +89,61 @@ inputStyleCard:{
 CardIcon:{
 marginRight:Layout.indent,
 color:'#B9B9B9',
-fontSize:40
+fontSize:35
 },
 ExpiresStyle:{
 fontFamily:'Font-Medium',color:'#B9B9B9',
-height:40
+height:35,
+fontSize:16
 },
 lockStyle:{
-	fontSize:35,
+	fontSize:30,
 	color:'#B9B9B9',
 },
 
 CardNameStyle:{
 marginLeft:Layout.indent,
 fontFamily:'Font-Medium',color:'#B9B9B9',
+fontSize:16
+},
+saveCardBox:{
+	borderWidth:1,
+	borderRadius:10,
+	backgroundColor:'#fff',
+	marginTop:10,
+	borderColor:'#B9B9B9',
+	flex:0,
+	paddingLeft:15,
+	paddingRight:15,
+	justifyContent:'center',
+	height:'auto',
+	paddingVertical:5
+},
+autoDebitText:{
+	fontFamily:'Font-Medium',
+	color:Colors.primary,
+	fontSize:14
+},
+savedCardText:{
+	fontFamily:'Font-Medium',
+	fontSize:14,
+	color:'#B9B9B9',
+	lineHeight:20
+},
+trashIcon:{
+	fontSize:20,
+	color:Colors.secondary
 },
 cardBox:{
 	borderWidth:2,
-	borderRadius:20,
+	borderRadius:15,
 	backgroundColor:'#fff',
 	marginTop:10,
 	borderColor:'#B9B9B9',
 	flex:0,
 	height:'auto',
 	justifyContent:'center',
-	height:180
+	height:160
 },
 addmoney:{
 	paddingTop:10,
@@ -193,15 +223,16 @@ activeStyle:{
 backgroundColor:Colors.white,
 borderWidth:0,
 alignItems:'center',
-justifyContent:'flex-start',
+justifyContent:'center',
 },
 tabStyle:{
 	
 	paddingLeft:0,
 	alignItems:'center',
 	borderBottomWidth:0,
-	justifyContent:'flex-start',
-	backgroundColor:Colors.white
+	justifyContent:'center',
+	backgroundColor:Colors.white,
+	flexDirection:'row'
 },
 titleText:{
 fontFamily:'Font-Medium',
@@ -314,7 +345,7 @@ addAddressStyle: {
   marginRight:Layout.indent,
     paddingLeft:Layout.indent,
   paddingRight:Layout.indent,
-  marginTop:30
+  marginTop:20
 
 },
 addmoneyArea:{

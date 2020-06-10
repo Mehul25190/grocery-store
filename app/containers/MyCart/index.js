@@ -66,12 +66,13 @@ class MyCart extends React.Component {
               setCart={true}
               bgColor='transparent'
               Title='My Cart'
-             />
+            />
     
        <ScrollView>   
-               <View >
-                <Text style={styles.title}>Delivery Address </Text>
-               </View>
+                <TouchableOpacity style={styles.clickBtn} onPress={()=>this.props.navigation.navigate(Screens.MyPayments.route)}>
+                  <Text style={styles.textPayMode}>Kindly add payment mode <Icon style={styles.pointer} name='hand-pointer-o' type='FontAwesome' /> CLICK HERE</Text>
+                </TouchableOpacity>
+             
                <Card style={[appStyles.addBox,styles.deliveryAddress]}>
              
                 <ListItem  noBorder icon style={{ marginLeft: Layout.indent,}}>
@@ -100,22 +101,34 @@ class MyCart extends React.Component {
                 
             
                 </Card>
-           
-                <View >
-                <Text style={styles.title}>Delivery Date </Text>
-               </View>
-                <View >
-                <Text style={styles.txtDate}>Friday </Text>
-                <Text style={styles.txtDate}>{this.state.date} </Text>
-               </View>
-                  <View >
-                <Text style={styles.title}>2 Cart Items </Text>
-               </View>
+               <Grid style={{marginRight:Layout.indent}}>
+                <Row style={{marginVertical:10}}>
+                  <Col style={{justifyContent:'center',alignItems:'flex-start',}}>
+                   <Text style={styles.title}>Delivery Date </Text>
+                  </Col>
+                  <Col style={{justifyContent:'center',alignItems:'flex-end'}}>
+                   <Text style={styles.txtDate}>{this.state.date}, Friday </Text>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                  <Text style={styles.title}>2 Cart Items </Text>
+                  </Col>
+                  <Col style={{justifyContent:'center',alignItems:'flex-end'}}>
+                    <View style={styles.totalAmount}>
+                      <Text style={styles.totalText}>Total Amount <Text style={{fontFamily:'Roboto',color:Colors.white}}>{'\u20B9'}</Text><Text style={styles.Amount}>56</Text></Text>
+                     </View> 
+                  </Col>
+                </Row>
+               </Grid>
+               
+              
+                
                
                 <Card style={[appStyles.addBox,{height:'auto'},styles.paddingBox]}>
                 <Grid >
                  
-                   <Row style={styles.secondRow}>
+                  <Row style={styles.secondRow}>
                     <Col style={styles.amulCol}>
                       <Image source={imgs.amulMoti} style={styles.amulMoti} />
                     </Col>
@@ -129,6 +142,9 @@ class MyCart extends React.Component {
                       </View>
                     </Col>
                    <Col style={styles.QtyBox}>
+                      <View style={styles.subscibed}>
+                        <Text style={styles.textSubscribe}>Subscibed</Text>
+                      </View>
                       <View>
                         <NumericInput 
                          inputStyle={{fontSize:13}}
@@ -191,25 +207,25 @@ class MyCart extends React.Component {
                 </Grid>
               </Card>
         </ScrollView>   
-        <Footer  style={styles.BottomView}>
-         
-          <Left style={{width:40,flex:0,justifyContent:'flex-start'}}>
-              <Icon name='shopping-cart' type='MaterialIcons' style={styles.bottomCart} />
-          </Left>
-            
-           <View style={{flex:4,  justifyContent:'center',FlexDirection:'column'}}>
-               <Text style={styles.bodyText}><Text style={{fontFamily:'Roboto',color:Colors.white}}>{'\u20B9'}</Text> 28   </Text>
-               
-           </View>
-           <Right style={{flex:3,justifyContent:'flex-end'}}>
-              <Button style={styles.checkOutBtn} primary full >
-              <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Checkout.route)}>
-                <Text style={styles.checkOutText}> Check Out</Text>
+        <Footer style={styles.BottomView}>
+           <Grid>
+              <Col style={styles.footerCol}>
+                 <View><Text style={styles.footerTitle}>Wallet</Text></View>
+                 <View style={{textAlign:'center'}}><Text style={styles.footerAmount}>
+                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> 100</Text></View>
+              </Col>
+            <Col style={styles.footerCol}>
+                <View><Text style={styles.footerTitle}>Savings</Text></View>
+                 <View><Text style={styles.footerAmount}>
+                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> 10</Text></View>
+              </Col>
+            <Col style={[styles.footerCol,{borderRightWidth:0}]}>
+                <TouchableOpacity style={styles.orderSummary} onPress={()=>this.props.navigation.navigate(Screens.Checkout.route)}>
+                     <Text style={styles.textSummary}>Order Summary</Text>
                 </TouchableOpacity>
-              </Button>
-           </Right>
-        
-        </Footer>
+              </Col>
+           </Grid>
+       </Footer>
 
     
         

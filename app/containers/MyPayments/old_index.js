@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, ScrollView,FlatList, } from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, ScrollView,FlatList } from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers } from '../../components';
@@ -90,112 +90,12 @@ class MyPayments extends React.Component {
     <Tabs  initialPage={0} locked={true} 
        style={styles.StyleTabs}>
 
-
- 
-
-{/* ---------------------------------Credit / Debit Card----------------------------------*/}
-
-
-            <Tab heading="Credit / Debit Card" tabStyle={styles.tabStyle}
-              activeTextStyle={styles.activeTextStyle}
-              textStyle={styles.textStyle}
-              activeTabStyle={styles.activeStyle}
-              style={styles.creditStyles} >
-              
-                <View>
-                <Text style={[styles.titleText,{marginTop:10,fontSize:16}]}>Saved Cards </Text>
-               </View>
-
-                
-                <FlatList
-                data={CardDetails}
-                renderItem={({ item }) => 
-                <Grid style={styles.saveCardBox}>
-                 <Row>
-                      <Col style={{flex:0,justifyContent:'center'}}>
-                        <Text style={styles.savedCardText}>xxxx-{item.cardNo} ({item.ExpiredM}/{item.ExpiredY})</Text> 
-                      </Col>
-                      <Col style={{justifyContent:'center',alignItems:'center'}}>
-                        <Text style={styles.autoDebitText}>{item.autoDebit=='yes'? 'Auto Debit':''}</Text>
-                      </Col>
-                      <Col style={{width:40,justifyContent:'center',alignItems:'center'}}>
-                        <TouchableOpacity style={{padding:10}}>
-                          <Icon style={styles.trashIcon} name='trashcan' type='Octicons' />
-                        </TouchableOpacity>
-                      </Col>
-                    </Row>
-                 </Grid>
-                }
-               keyExtractor={(item, index) => item.cardNo}
-                />
-                 
-              
-
-               <View>
-                <Text style={[styles.titleText,{marginTop:10,fontSize:16}]}>Enter Card Detail</Text>
-               </View>
-
-               <Grid style={styles.cardBox}>
-                  <Row style={styles.CardRow}>
-                    <Col >
-                      <Input placeholderTextColor="#B9B9B9"  style={styles.inputStyleCard} placeholder="xxxx-xxxx-xxxx-xxxx" />
-                    </Col>
-                    <Col style={{width:100, justifyContent:'center',alignItems:'flex-end'}}>
-                     <Icon style={styles.CardIcon} name='credit-card' type='EvilIcons' />
-                    </Col>
-                  </Row>
-                 <Row style={styles.CardRow}>
-                    <Col style={styles.ExpiresTitleCol}>
-                     <Text style={{fontSize:16,fontFamily:'Font-Medium', alignItems:'center'}}>Expires:</Text>
-                    </Col>
-                    <Col style={styles.ExpiresCol}>
-                       <Input placeholderTextColor="#B9B9B9" style={styles.ExpiresStyle} placeholder="MM YYYY " />
-                    </Col>
-                    <Col>
-                    <Item style={{borderBottomWidth:0,paddingLeft:10,alignItems:'center'}}>
-                      <Input  placeholderTextColor="#B9B9B9" style={{fontFamily:'Font-Medium',color:'#B9B9B9',fontSize:16}} placeholder="CVV" />
-                      <Icon style={styles.lockStyle} name='lock' type='EvilIcons' />
-                    </Item>
-                      
-                    </Col>
-                  </Row>
-                   <Row style={{ paddingBottom:5, paddingTop:1,height:53.33,justifyContent:'center'}}>
-                  
-                     <Input placeholderTextColor="#B9B9B9" style={styles.CardNameStyle} placeholder="Name On Card" />
-                   
-                   
-                  </Row>
-               </Grid>
-
-           <ListItem noBorder icon style={{marginTop:5}}>
-            <Left>  
-               <CheckBox
-               style={styles.checkboxStyle}
-               onClick={()=>{
-                  this.setState({
-                      isChecked:!this.state.isChecked
-                  })
-                }}
-              checkedImage={<Icon name='check' type='AntDesign' style={{color:Colors.primary}} />}
-              unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons' style={{color:'transparent'}} /> }
-              isChecked={this.state.isChecked}
-              />
-
-             </Left>
-             <Body>
-                <Text style={{color:Colors.gray,fontFamily:'Font-Medium',fontSize:14}}>Save card for Faster Checkouts.</Text>
-             </Body>
-           </ListItem>
-                
-            
-            </Tab>
-
-            {/* ---------------------------------Wallet----------------------------------*/}
+{/* ---------------------------------Wallet----------------------------------*/}
   
- {
+ {getTab=='Checkout' &&
 
  
-       (<Tab heading="My Wallet"  style={styles.tabHeading}
+       (<Tab heading="Wallet"  style={styles.tabHeading}
            tabStyle={[styles.tabStyle]}
             activeTextStyle={styles.activeTextStyle}
             textStyle={styles.textStyle}
@@ -258,8 +158,106 @@ class MyPayments extends React.Component {
               </Card>
           </View>
         </Tab>)}
+ 
 
-{/* ---------------------------------Net Banking Tab----------------------------------
+{/* ---------------------------------Credit / Debit Card----------------------------------*/}
+
+
+            <Tab heading="Credit / Debit Card" tabStyle={styles.tabStyle}
+              activeTextStyle={styles.activeTextStyle}
+              textStyle={styles.textStyle}
+              activeTabStyle={styles.activeStyle}
+              style={styles.creditStyles} >
+              
+                <View>
+                <Text style={[styles.titleText,{marginTop:10,fontSize:16}]}>Saved Cards </Text>
+               </View>
+
+                
+                <FlatList
+                data={CardDetails}
+                renderItem={({ item }) => 
+                <Grid style={styles.saveCardBox}>
+                 <Row>
+                      <Col style={{flex:0,justifyContent:'center'}}>
+                        <Text style={styles.savedCardText}>xxxx-{item.cardNo} ({item.ExpiredM}/{item.ExpiredY})</Text> 
+                      </Col>
+                      <Col style={{justifyContent:'center',alignItems:'center'}}>
+                        <Text style={styles.autoDebitText}>{item.autoDebit=='yes'? 'Auto Debit':''}</Text>
+                      </Col>
+                      <Col style={{width:40,justifyContent:'center',alignItems:'center'}}>
+                        <TouchableOpacity style={{padding:10}}>
+                          <Icon style={styles.trashIcon} name='trashcan' type='Octicons' />
+                        </TouchableOpacity>
+                      </Col>
+                    </Row>
+                 </Grid>
+                }
+               keyExtractor={(item, index) => item.cardNo}
+                />
+                 
+              
+
+               <View>
+                <Text style={[styles.titleText,{marginTop:10,fontSize:16}]}>Current Balance</Text>
+               </View>
+
+               <Grid style={styles.cardBox}>
+                  <Row style={styles.CardRow}>
+                    <Col >
+                      <Input placeholderTextColor="#B9B9B9"  style={styles.inputStyleCard} placeholder="xxxx-xxxx-xxxx-xxxx" />
+                    </Col>
+                    <Col style={{width:100, justifyContent:'center',alignItems:'flex-end'}}>
+                     <Icon style={styles.CardIcon} name='credit-card' type='EvilIcons' />
+                    </Col>
+                  </Row>
+                 <Row style={styles.CardRow}>
+                    <Col style={styles.ExpiresTitleCol}>
+                     <Text style={{fontSize:16,fontFamily:'Font-Medium', alignItems:'center'}}>Expires:</Text>
+                    </Col>
+                    <Col style={styles.ExpiresCol}>
+                       <Input placeholderTextColor="#B9B9B9" style={styles.ExpiresStyle} placeholder="MM YYYY " />
+                    </Col>
+                    <Col>
+                    <Item style={{borderBottomWidth:0,paddingLeft:10,alignItems:'center'}}>
+                      <Input  placeholderTextColor="#B9B9B9" style={{fontFamily:'Font-Medium',color:'#B9B9B9',fontSize:16}} placeholder="CVV" />
+                      <Icon style={styles.lockStyle} name='lock' type='EvilIcons' />
+                    </Item>
+                      
+                    </Col>
+                  </Row>
+                   <Row style={{ paddingBottom:5, paddingTop:1,height:53.33,justifyContent:'center'}}>
+                  
+                     <Input placeholderTextColor="#B9B9B9" style={styles.CardNameStyle} placeholder="Name On Card" />
+                   
+                   
+                  </Row>
+               </Grid>
+
+           <ListItem noBorder icon>
+            <Left>  
+               <CheckBox
+               style={styles.checkboxStyle}
+               onClick={()=>{
+                  this.setState({
+                      isChecked:!this.state.isChecked
+                  })
+                }}
+              checkedImage={<Icon name='check' type='AntDesign' style={{color:Colors.primary}} />}
+              unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons' style={{color:'transparent'}} /> }
+              isChecked={this.state.isChecked}
+              />
+
+             </Left>
+             <Body>
+                <Text style={{color:Colors.gray,fontFamily:'Font-Medium',fontSize:14}}>Save card for Faster Checkouts.</Text>
+             </Body>
+           </ListItem>
+                
+            
+            </Tab>
+
+{/* ---------------------------------Net Banking Tab----------------------------------*/}
 
             <Tab heading="Net Banking"  style={styles.tabHeading,{height:'auto'}}
               tabStyle={styles.tabStyle}
@@ -325,7 +323,7 @@ class MyPayments extends React.Component {
                 </Item>
                </View>
                </View>
-            </Tab>*/}
+            </Tab>
         </Tabs>
  
           <TouchableOpacity style={styles.checkOutBtnArea} >
