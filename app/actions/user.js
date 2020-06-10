@@ -243,3 +243,20 @@ export const setLanguage = payloads => dispatch => {
   dispatch({ type: ActionTypes.SHOWMODAL, showModal: false });
   return dispatch({ type: ActionTypes.LANGUAGECODE, language: getLanguage(payloads.id), languageId: payloads.id ,languageSet: payloads.set });
 }
+
+export const getDeviveryAddress = payloads => dispatch => {
+  console.log('payloads', payloads);
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.getDeviveryAddress,  {queries: payloads}).then(res => {
+    
+
+      dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        dispatch({ type: ActionTypes.DELIVERYADDRESS, data: res.data.data.userAddress[0] });
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+

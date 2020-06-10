@@ -14,4 +14,8 @@ export default {
   saveUserAddress:'user/saveUserAddress',
   showUserDeliveryAddress:'user/fetchUserAddress',
   showUserProfile:'user/fetchUserProfileDetails',
+  mySubscriptionList: 'order/fetchSubscriptionDtlsById',
+  getItemDetail: 'item/getItemById',
+  getDeviveryAddress: 'user/fetchUserAddress',
+  saveSubscribeOrderDetails: 'order/saveSubscribeOrderDetails',
 }
