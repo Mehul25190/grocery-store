@@ -12,4 +12,6 @@ export default {
   getItemDetail: 'item/getItemById',
   getDeviveryAddress: 'user/fetchUserAddress',
   saveSubscribeOrderDetails: 'order/saveSubscribeOrderDetails',
+  pauseResumeSubscription: 'order/pauseResumeSubscription',
+  deleteSubscription: 'order/deleteSubscription',
 }

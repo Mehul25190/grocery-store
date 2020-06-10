@@ -11,7 +11,7 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem,Item,Input,DatePicker,Label, Picker
+  Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem,Item,Input,Label, Picker
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
@@ -22,7 +22,9 @@ import {productList} from '../data/data';
 import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
 import { showToast } from '../../utils/common';
-import moment from "moment"
+import moment from "moment";
+import DatePicker from 'react-native-datepicker'
+
 
 
 const DurationList =[
@@ -53,26 +55,29 @@ class SubscribeOrder extends React.Component {
 
   constructor(props) {
     super(props);
-    let itemID = this.props.navigation.getParam('id')
+    let item = this.props.navigation.getParam('item')
+    let mode = this.props.navigation.getParam('mode')
      this.state = {
       //default value of the date time
       date: '',
       time: '',
-      qty:1,
-      duration: 15,
+      qty: item.quantity ? item.quantity : 1,
+      duration: item.duration ? item.duration : 15,
       isChecked:true,
-      itemId: itemID,
-      subscriptionDtls: {}, 
+      itemId: item.id,
+      subscriptionDtls: item, 
       subscriptionDtlsImg: {},
-      startDate: '',
-      endDate: '', 
-      displaystartDate: '',
+      startDate: item.startDate ? moment(item.startDate).format('MM/DD/YYYY') : '',
+      endDate: item.endDate ? moment(item.endDate).format('MM/DD/YYYY') : '', 
+      displaystartDate: item.startDate ?moment(item.startDate).format('DD MMM YYYY') : moment(new Date()).format('DD MMM YYYY'),
+      mode: mode ? mode : 'save',
     };
     this.setStartDate = this.setStartDate.bind(this);
     this.setEndDate = this.setEndDate.bind(this);
 
   }
    componentDidMount() {
+    /*
     this.props.getItemDetail(this.state.itemId).then(res=>{
         if(res.status == "success"){
           if(res.data.item.length > 0){
@@ -84,6 +89,8 @@ class SubscribeOrder extends React.Component {
           }
         }
     });
+
+    */
   }
     openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
@@ -96,7 +103,7 @@ class SubscribeOrder extends React.Component {
   }
 
   setStartDate(value){
-    this.setState({startDate: moment(value).format('MM/DD/YYYY'), displaystartDate: moment(value).format('DD MMM YYYY')})
+    this.setState({startDate: value, displaystartDate: moment(value).format('DD MMM YYYY')})
   }
 
   setEndDate(value){
@@ -124,13 +131,17 @@ class SubscribeOrder extends React.Component {
       isActive: 1,
       quantity: this.state.qty
     };
-    this.props.saveSubscribeOrderDetails(data).then(res=> {
-        if(res.status == 'success'){
-          this.props.navigation.navigate(Screens.SubscribeSuccess.route)
-        }else{
-          showToast("Please enter proper value","danger");
-        }
-    });
+    if(this.state.mode == 'update'){
+      alert('Need Update API')
+    }else{
+      this.props.saveSubscribeOrderDetails(data).then(res=> {
+          if(res.status == 'success'){
+            this.props.navigation.navigate(Screens.SubscribeSuccess.route)
+          }else{
+            showToast("Please enter proper value","danger");
+          }
+      });
+    }
   }
 
   render(){
@@ -186,7 +197,7 @@ class SubscribeOrder extends React.Component {
               </Col>
               <Col style={styles.amulInfo}>
                 <View>
-                 <Text style={styles.AmuText}>{this.state.subscriptionDtls.itemTag}</Text>
+                 <Text style={styles.AmuText}>{this.state.subscriptionDtls.brandName}</Text>
                  <Text style={[styles.AmuText,styles.AmuTextTitle]}>{this.state.subscriptionDtls.itemName}</Text>
                  <Text style={styles.AmuText}>{this.state.subscriptionDtls.weight} {this.state.subscriptionDtls.uom}</Text>
                  <Text style={styles.AmuText}>Qty: {this.state.subscriptionDtls.quantity}</Text>
@@ -205,20 +216,17 @@ class SubscribeOrder extends React.Component {
            <Item  success style={{ marginLeft:Layout.indent, marginRight:Layout.indent}}>
             <Label style={styles.datelabel}>Start Date</Label>
             <DatePicker
-            defaultDate={new Date()}
+            defaultDate={this.state.startDate ? this.state.startDate : new Date()}
             minimumDate={new Date()}
             locale={"en"}
-            timeZoneOffsetInMinutes={undefined}
-            modalTransparent={false}
-            animationType={"fade"}
-            androidMode={"default"}
-            placeHolderText="Select date"
-            textStyle={{ color: Colors.primary,paddingLeft:0,paddingBottom:3 }}
-            placeHolderTextStyle={{ color: "transparent" }}
+            format="MM/DD/YYYY"
             onDateChange={this.setStartDate}
-            disabled={false}
+            date={this.state.startDate}
+            confirmBtnText="Done"
+            cancelBtnText="Cancel"
+            iconSource={imgs.calImg}
+            customStyles={{dateInput: { borderWidth:0, marginTop: 10 }}}
             />
-            <Image source={imgs.calImg} style={{marginLeft:20}} style={styles.calImage} />
           </Item>
        
           
@@ -264,20 +272,18 @@ class SubscribeOrder extends React.Component {
            <Item  success style={{ marginLeft:Layout.indent, marginRight:Layout.indent}}>
            <Label style={styles.datelabel}>End Date</Label>
             <DatePicker
-            defaultDate={new Date()}
+            defaultDate={this.state.endDate ? this.state.endDate : new Date()}
             minimumDate={new Date()}
             locale={"en"}
-            timeZoneOffsetInMinutes={undefined}
-            modalTransparent={false}
-            animationType={"fade"}
-            androidMode={"default"}
-            placeHolderText="Select date"
-           textStyle={{ color: Colors.primary,paddingLeft:0,paddingBottom:3 }}
-            placeHolderTextStyle={{ color: "transparent" }}
+            format="MM/DD/YYYY"
             onDateChange={this.setEndDate}
-            disabled={false}
+            date={this.state.endDate}
+            confirmBtnText="Done"
+            cancelBtnText="Cancel"
+            iconSource={imgs.calImg}
+            customStyles={{dateInput: { borderWidth:0, marginTop: 10 }}}
             />
-            <Image source={imgs.calImg}  style={styles.calImage} />
+  
           </Item>
          
           </Row>

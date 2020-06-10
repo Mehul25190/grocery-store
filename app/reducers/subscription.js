@@ -14,6 +14,13 @@ const subscription = (state = initialState.subscription, action) => {
         deviveryAddress: action.data,
       }
     }
+    case ActionTypes.MYSUBSCRIPTION: {
+      return {
+        ...state,
+        mySubscription: action.data,
+      }
+    }
+    
     // Default
     default: {
       return state;

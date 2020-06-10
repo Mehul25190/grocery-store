@@ -15,30 +15,52 @@ import {
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
+import * as subscriptionAction from "../../actions/subscription";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
+import { showToast } from '../../utils/common';
 import { CancelReason } from '../data/data';
+import url from '../../config/api';
 
 class DeleteSubscribe extends React.Component {
 
   constructor(props) {
     super(props);
+    const item = this.props.navigation.getParam('item');
      this.state = {
-    selected: false,
-    
+        selected: false,
+        item: item
     }
+
+    console.log(this.state.item)
+  }
+
+  componentDidMount() {
+    //const item = this.props.navigation.getParam('item');
+
   }
   openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
-    };
+  };
 
-    ratingCompleted(rating) {
-    console.log("Rating is: " + rating)
-    };
+  ratingCompleted(rating) {
+  console.log("Rating is: " + rating)
+  };
 
-    onPressSubmit = item => {
-    this.props.navigation.navigate('Confirmation', { item });
-    };
+  onPressSubmit = item => {
+  this.props.navigation.navigate('Confirmation', { item });
+  };
+
+  deleteSubscription(id){
+    console.log(id);
+    this.props.deleteSubscription(id).then(res => {
+      if(res.status == 'success'){
+        showToast('Subscription deleted successfully', "success");
+        this.props.navigation.navigate('Subscription');
+      }
+    });
+  }
+
   render(){
     return (
       <Container style={appStyles.container}>
@@ -53,20 +75,23 @@ class DeleteSubscribe extends React.Component {
          />
       
          <ScrollView>
+         { this.props.isLoading ?
+          <Spinner color={Colors.secondary} style={appStyles.spinner} /> :
+          (<View>
             <Card style={[appStyles.addBox,{height:'auto'},styles.paddingBox]}>
               <Grid>
               
                  <Row style={styles.secondRow}>
                   <Col style={styles.amulCol}>
-                    <Image source={imgs.amulMoti} style={styles.amulMoti} />
+                    <Image source={{uri: url.imageURL+this.state.item.imagePath} }  style={styles.amulMoti} />
                   </Col>
                   <Col style={styles.amulInfo}>
                     <View>
-                     <Text style={styles.AmuText}>Amul</Text>
-                     <Text style={[styles.AmuText,styles.AmuTextTitle]}>Amul Moti</Text>
-                     <Text style={styles.AmuText}>500 ml</Text>
-                     <Text style={styles.AmuText}>Qty: 1</Text>
-                     <Text style={styles.AmuText}>MRP: <Text style={{}}>{'\u20B9'}</Text> 28</Text>
+                     <Text style={styles.AmuText}>{this.state.item.brandName}</Text>
+                     <Text style={[styles.AmuText,styles.AmuTextTitle]}>{this.state.item.itemName}</Text>
+                     <Text style={styles.AmuText}>{this.state.item.weight} {this.state.item.uom}</Text>
+                     <Text style={styles.AmuText}>Qty: {this.state.item.quantity}</Text>
+                     <Text style={styles.AmuText}>MRP: <Text style={{}}>{'\u20B9'}</Text> {this.state.item.price}</Text>
                     </View>
                   </Col>
                 </Row>
@@ -101,11 +126,12 @@ class DeleteSubscribe extends React.Component {
                </Card>
             </View>
       <TouchableOpacity style={styles.submitBtnArea} >
-        <Button primary full style={styles.submitBtn} onPress={()=>this.onPressSubmit('DeleteSubscribe')}>
+        <Button primary full style={styles.submitBtn} onPress={()=>this.deleteSubscription(this.state.item.id)}>
         <Text style={styles.submitText}>Delete Subscription
         </Text>
         </Button>
       </TouchableOpacity>
+      </View>)}
     </ScrollView>
     
       </Container>
@@ -116,6 +142,7 @@ class DeleteSubscribe extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    isLoading: state.common.isLoading,
     user: state.auth.user,
   };
 };
@@ -123,6 +150,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+      deleteSubscription: (id) => dispatch(subscriptionAction.deleteSubscription({id: id}))
    };
 };
 

@@ -37,28 +37,17 @@ class SubscribeDetail extends React.Component {
 
   }
    componentDidMount() {
-    var that = this;
-    var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    var date = new Date().getDate(); //Current Date
-    var month = monthNames[new Date().getMonth()]; //Current Month
-    var year = new Date().getFullYear(); //Current Year
-    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
-
-    that.setState({
-      //Setting the value of the date time
-      date:   date + ' ' + month + ' ' + year ,
-      time:   hours + ':' + min 
+    this._unsubscribe = this.props.navigation.addListener('willFocus', () => {
+      this.mySubscriptionList();
     });
-
+    console.log('dsadadads');
     this.mySubscriptionList();
 
   }
 
   mySubscriptionList(){
     this.props.mySubscriptionList(this.props.user.userId).then(res => {
-      this.setState({mySubscription: res.data.subscriptionDtls})
+      //this.setState({mySubscription: res.data.subscriptionDtls})
     });
   }
 
@@ -66,8 +55,19 @@ class SubscribeDetail extends React.Component {
     this.props.navigation.goBack(); // open drawer
   };
 
-    
-  renderItems = ({ item, index}) => (
+  playPauseSub = (item) => {
+    let status = 'PAU';
+    if(item.status == 'PAU'){
+      status = 'RES';
+    }
+    this.props.playPauseSub(item.id, status).then(res => {
+        this.mySubscriptionList();
+    });
+  }
+
+  renderItems = ({ item, index}) => {
+    if(item.status != 'CAN'){
+    return (
     <View>
       <Card style={[appStyles.addBox,{height:'auto'},styles.paddingBox]}>
           <Grid >
@@ -102,7 +102,7 @@ class SubscribeDetail extends React.Component {
           <Col style={styles.BtnCol}>
          
             <Button primary full style={styles.modifyBtn}>
-             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.SubscribeOrder.route)}>
+             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.SubscribeOrder.route, {item: item, mode: 'update'})}>
                <Icon name='edit' type='MaterialIcons' style={styles.modifyIcon} />
               <Text style={styles.btnText}> Modify </Text>
                </TouchableOpacity>
@@ -112,7 +112,7 @@ class SubscribeDetail extends React.Component {
           <Col style={styles.BtnCol}>
           
             <Button   style={styles.deleteBtn}>
-            <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.DeleteSubscribe.route)}>
+            <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.DeleteSubscribe.route, {item: item})}>
              <Icon name="trashcan" type="Octicons" style={styles.deleteIcon} />
               <Text style={[styles.btnText,{color:Colors.primary}]}>  Delete </Text>
              </TouchableOpacity>
@@ -124,9 +124,9 @@ class SubscribeDetail extends React.Component {
          <Col style={styles.BtnCol}>
          
             <Button   style={styles.pauseBtn}>
-             <TouchableOpacity>
-             <Icon name="pause-circle" type="FontAwesome5" style={styles.pauseIcon} />
-             <Text style={[styles.btnText,{color:Colors.primary}]}>  Pause </Text>
+             <TouchableOpacity onPress={()=> this.playPauseSub(item)}>
+             <Icon name={item.status == null || item.status != 'PAU' ? "pause-circle" : "play-circle"} type="FontAwesome5" style={styles.pauseIcon} />
+             <Text style={[styles.btnText,{color:Colors.primary}]}>  {item.status == null || item.status != 'PAU' ?  'Pause' : 'Play' } </Text>
             </TouchableOpacity>
             </Button>
             
@@ -135,10 +135,12 @@ class SubscribeDetail extends React.Component {
         </Row>
        </Grid>
     </View>
-  );
+    );
+  }
+  }
 
   render(){
-    const { navigation } = this.props;
+    const { navigation, mySubscription } = this.props;
     const getItem = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
@@ -163,7 +165,7 @@ class SubscribeDetail extends React.Component {
                vertical
                showsVerticalScrollIndicator={false}
                numColumns={1}
-               data={this.state.mySubscription}
+               data={mySubscription}
                renderItem={this.renderItems}
                keyExtractor={item => `${item.id}`}
              />
@@ -180,13 +182,15 @@ const mapStateToProps = (state) => {
   return {
     isLoading: state.common.isLoading,
     user: state.auth.user,
+    mySubscription: state.subscription.mySubscription,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
-      mySubscriptionList : (categoryId) => dispatch(subscriptionAction.mySubscriptionList({categoryId:categoryId}))
+      mySubscriptionList : (userId) => dispatch(subscriptionAction.mySubscriptionList()),
+      playPauseSub: (id, status) => dispatch(subscriptionAction.playPauseSub({id: id, status, status})),
    };
 };
 

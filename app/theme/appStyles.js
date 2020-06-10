@@ -478,7 +478,7 @@ fontFamily:'Font-Medium'
       height:80
     },
     spinner: {
-      height: Layout.window.height * 0.9
+      height: Layout.window.height * 0.9,
     }
     /* Slideshow*/
     

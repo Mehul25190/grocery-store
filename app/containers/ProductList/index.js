@@ -175,7 +175,7 @@ onPressRecipe(item){
                             index == 0 || index == 2?
                           
                             <Button style={styles.subscribeBtn}>
-                             <TouchableOpacity onPress={()=> this.props.navigation.navigate(Screens.SubscribeOrder.route, {id: item.id})}>
+                             <TouchableOpacity onPress={()=> this.props.navigation.navigate(Screens.SubscribeOrder.route, {item: item})}>
                               <Text style={styles.subText}>
                                Subscribe@{'\u20B9'}12
                               </Text>

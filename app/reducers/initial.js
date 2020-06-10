@@ -15,6 +15,7 @@ export const initialState = {
 		deviveryAddress: {}
 	},
 	subscription: {
-		deviveryAddress: {}
+		deviveryAddress: {},
+		mySubscription: {},
 	}
 };
