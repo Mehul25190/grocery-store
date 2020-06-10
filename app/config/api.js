@@ -20,4 +20,5 @@ export default {
   saveSubscribeOrderDetails: 'order/saveSubscribeOrderDetails',
   pauseResumeSubscription: 'order/pauseResumeSubscription',
   deleteSubscription: 'order/deleteSubscription',
+  fetchSubCategory: 'item/fetchSubCategory',
 }

@@ -30,11 +30,13 @@ class ProductList extends React.Component {
 constructor(props) {
 
   super(props);
+  const categoryId = this.props.navigation.getParam('para_categoryId');
   this.state = {
     dataSource:productList,
     value:1,
     categoryId:this.props.navigation.getParam('para_categoryId'),
     productData:[],
+    subCategory: [],
   };
   
   //console.log('here----->', this.props.navigation.getParam('para_categoryId'));
@@ -50,11 +52,28 @@ constructor(props) {
     //get product list default base on category selected    
     this.focusListener = this.props.navigation.addListener('didFocus', () => {
       this.productItemList();
+      this.subCategoryList();
     })
 }
 
 componentWillUnmount () {
   this.focusListener.remove()
+}
+
+subCategoryList(){
+  console.log(this.categoryId);
+   this.props.fetchSubCategory(this.props.navigation.getParam('para_categoryId')).then (res =>{
+    console.log('sucess return', res.data.subCategory);  
+    if(res.status == "success"){
+          this.setState({ subCategory: res.data.subCategory });
+          //console.log('set return');
+          //console.log(res.data.itemList);
+    } else {
+          console.log("something wrong with varification call");
+          showToast("Something wrong with Server response","danger");
+    }
+     
+  });
 }
 
 productItemList(){
@@ -89,6 +108,17 @@ onPressRecipe(item){
  openControlPanel = () => {
   this.props.navigation.goBack(); // open drawer
 }
+
+renderItems = ({ item, index}) => (
+    <TouchableOpacity onPress={() => this.onPressRecipe(item)}>
+       <View style={styles.cateContainer}>
+       
+        <Text style={index==0 ? styles.titleBackground:styles.whiteBackground}>{item.subCategoryName}</Text>
+
+      </View>
+    </TouchableOpacity>
+  );
+
   render(){
      const { navigation } = this.props;
     const getTitle = navigation.getParam('item');
@@ -109,17 +139,16 @@ onPressRecipe(item){
           { this.props.isLoading ?
             <Spinner color={Colors.secondary} style={appStyles.spinner} /> :
             (<View>
-             <Category
-                data={categoryList}    
-                itemSelected={(item) => this._itemChoose(item)}
-                itemText={'title'} 
-                colorTextDefault={'#000'} 
-                colorTextSelected={'#fff'} 
-                colorItemDefault={'#fff'}
-                itemStyles={styles.itemStyles}
-                style= {{ backgroundColor: '#fff'}}
-                textItemStyles={styles.textItemStyles}
-              />
+             <ScrollView>
+          <FlatList 
+                
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                     data={this.state.subCategory}
+                     renderItem={this.renderItems}
+                     keyExtractor={item => `${item.id}`}
+                   />
+            </ScrollView>
              
            {
               this.state.productData.map((item, index) => {
@@ -227,7 +256,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
-      productItemList : (categoryId) => dispatch(userActions.showProductList({categoryId:categoryId}))
+      productItemList : (categoryId) => dispatch(userActions.showProductList({categoryId:categoryId})),
+      fetchSubCategory: (categoryId) => dispatch(userActions.fetchSubCategory({categoryId:categoryId}))
    };
 };
 

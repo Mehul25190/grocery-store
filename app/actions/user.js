@@ -260,3 +260,18 @@ export const getDeviveryAddress = payloads => dispatch => {
     });
 }
 
+/****  Get Sub Category Lisy ****/
+export const fetchSubCategory = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchSubCategory,{queries: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    if(res.status == 200){
+      return res.data;
+    } else {
+      return res;
+    }
+  })
+}
+/****  Get Sub Category Lisy ****/
+
+
