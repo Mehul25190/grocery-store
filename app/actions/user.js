@@ -78,6 +78,48 @@ export const showCategoryList = payloads => dispatch => {
 }
 
 /**
+ * Show City List on address save screen
+ */
+export const showCityList = payloads => dispatch => {
+  //console.log("showCategoryList>>> action ")
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.cityList).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res.data);
+    if(res.status == 200){
+      //console.log('under');
+      //console.log(res.data);
+      return res.data;
+    } else {
+      return res;
+    }
+  })
+}
+
+/**
+ * Show Area List on address save screen
+ */
+export const showAreaList = payloads => dispatch => {
+  //console.log("showCategoryList>>> action ")
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.areaList,{payloads: payloads}).then(res => {
+    //console.log(payloads);
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res.data);
+    if(res.status == 200){
+      ///console.log('under');
+      //console.log(res.data);
+      return res.data;
+    } else {
+      return res;
+    }
+  })
+}
+
+
+
+
+/**
  * Show Product List on landing screen - para - categoryID
  */
 export const showProductList = payloads => dispatch => {
@@ -96,6 +138,89 @@ export const showProductList = payloads => dispatch => {
     }
   })
 }
+
+/**
+ * Save User Profile
+ */
+
+export const saveUserProfile = payloads => dispatch => {
+  
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.saveUserProfile,  {payloads: payloads}).then(res => {
+    
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res);
+      if(res.status == 200){
+        //console.log(res.data.userProfile);
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+/**
+ * get User profile 
+ */
+export const showUserProfile = payloads => dispatch => {
+  
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.showUserProfile,  {queries: payloads}).then(res => {
+    
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res);
+      if(res.status == 200){
+        //console.log('return');
+        console.log(res.data);
+        return res.data
+      } else {
+        return res
+      }
+    });
+
+}
+
+/**
+ * Save User Address
+ */
+
+export const saveUserAddress = payloads => dispatch => {
+  
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.saveUserAddress,  {payloads: payloads}).then(res => {
+    
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res);
+      if(res.status == 200){
+        //console.log('return');
+        //console.log(res.data);
+        return res
+      } else {
+        return res
+      }
+    });
+}
+
+/**
+ * Get User delivery address
+ */
+export const showUserDeliveryAddress = payloads => dispatch => {
+  
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.showUserDeliveryAddress,  {queries: payloads}).then(res => {
+    
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res);
+      if(res.status == 200){
+        //console.log('return');
+        //console.log(res.data);
+        return res.data
+      } else {
+        return res
+      }
+    });
+
+}
+
 
 export const logoutUser = () => dispatch => {
   return dispatch({ type: ActionTypes.LOGOUT });

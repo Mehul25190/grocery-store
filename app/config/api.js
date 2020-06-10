@@ -7,5 +7,11 @@ export default {
   signupVerifyMobile: 'user/verifyMobile',
   signinMobile:'user/login',
   categoryList:'item/fetchCategory',
-  productList:'item/fetchItemList'
+  productList:'item/fetchItemList',
+  saveUserProfile:'user/saveUserProfileDetails',
+  cityList:'user/fetchCityList',
+  areaList:'user/fetchAreaList',
+  saveUserAddress:'user/saveUserAddress',
+  showUserDeliveryAddress:'user/fetchUserAddress',
+  showUserProfile:'user/fetchUserProfileDetails',
 }
