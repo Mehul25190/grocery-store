@@ -12,7 +12,7 @@ export default {
   cityList:'user/fetchCityList',
   areaList:'user/fetchAreaList',
   saveUserAddress:'user/saveUserAddress',
-  showUserDeliveryAddress:'user/fetchUserAddress',
+  //showUserDeliveryAddress:'user/fetchUserAddress',
   showUserProfile:'user/fetchUserProfileDetails',
   mySubscriptionList: 'order/fetchSubscriptionDtlsById',
   getItemDetail: 'item/getItemById',

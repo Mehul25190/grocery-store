@@ -23,7 +23,11 @@ export const signin = payloads => dispatch => {
 export const signinWithMobile = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.signinMobile,  {payloads: payloads}).then(res => {
+    
+    console.log("payload>>"+payloads);
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    console.log("sign in mobile");
+    console.log(res);
     if(res.status == 200){
       if(res.data.status==200){
         dispatch({ type: ActionTypes.SIGNIN, data: res.data.data.user });

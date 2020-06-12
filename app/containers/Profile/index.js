@@ -11,7 +11,7 @@ import {
   Spinner,
   Button,
   Text,
-  Body, Title, Card, Grid, Row, Col, Form, Item, Label, Input, DatePicker, Picker
+  Body, Title, Card, Grid, Row, Col, Form, Item, Label, Input, Picker
 } from 'native-base';
 
 import { showToast } from '../../utils/common';
@@ -21,6 +21,8 @@ import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import CheckBox from 'react-native-check-box';
+import moment from "moment";
+import DatePicker from 'react-native-datepicker';
 
 class Profile extends React.Component {
 
@@ -42,7 +44,7 @@ class Profile extends React.Component {
       mobileNo:"",
       email:"",
       isLoading: false,
-      USERID:1,
+      //USERID:1,
       setUserData:[],
 
     };
@@ -57,6 +59,8 @@ class Profile extends React.Component {
     });
     
     this.getUserProfile();  
+
+   //alert(this.props.user.user.mobile);
   
     
   }
@@ -64,23 +68,31 @@ class Profile extends React.Component {
   getUserProfile(){
 
     //alert(this.state.USERID);  
-    this.props.showUserProfile(this.state.USERID).then (res => {
+    this.props.showUserProfile(this.props.user.user.id).then (res => {
       //console.log('im in profile');
       ///console.log(res);
       //console.log(res.status); 
       
       //console.log(res.data.userProfile);
       if(res.status == "success"){
+        //alert(this.props.user.user.mobile);
         //this.setState({ setUserData:res.data.userProfile});
         this.setState({firstName:res.data.userProfile[0].firstName});
         this.setState({lastName:res.data.userProfile[0].lastName});
-        this.setState({dob:res.data.userProfile[0].dob.date});
+
+        this.setState({mobileNo:this.props.user.user.mobile});
+        this.setState({email:this.props.user.user.email});
+
+        //startDate: item.startDate ? moment(item.startDate).format('MM/DD/YYYY') : '',
+
+        this.setState({dob:moment(res.data.userProfile[0].dob.date).format('MM/DD/YYYY')});
         this.setState({gender:res.data.userProfile[0].gender});
         this.setState({ethnicity:res.data.userProfile[0].ethnicity});
         this.setState({promotionalEmail:res.data.userProfile[0].promotionalEmail});
         this.setState({ringBell:res.data.userProfile[0].ringBell});
         //console.log(res.data.userProfile[0].dob.date);
         //console.log(firstName:this.state.setUserData[0].firstName);
+        //alert(this.state.mobileNo);
 
       } else {
               console.log("something wrong with varification call");
@@ -105,7 +117,7 @@ class Profile extends React.Component {
       ringBell: value,
       
     });
-    alert(value);
+    //alert(value);
   }
 
   //selected ethencity
@@ -114,7 +126,7 @@ class Profile extends React.Component {
       ethnicity: value,
       //switch1Value: value
     });
-    alert(value);
+    //alert(value);
   }
 
   //selected Gender
@@ -122,7 +134,7 @@ class Profile extends React.Component {
     this.setState({
       gender: value,
     });
-    alert(value);
+    //alert(value);
   }
   openControlPanel = () => {
     this.props.navigation.goBack(); // open drawer
@@ -130,10 +142,12 @@ class Profile extends React.Component {
 
   //set birthdate
   setDate(newDate) {
-    this.setState({ chosenDate: newDate });
-    alert(this.state.chosenDate.toString().substr(4, 12));
+    this.setState({ dob: moment(newDate).format('MM/DD/YYYY') });
+    //alert(this.state.chosenDate);
 
   }
+
+  
   //save profile
   saveProfile() {
 
@@ -144,12 +158,12 @@ class Profile extends React.Component {
     }else {
       //alert("ADFD");
       //call api
-      const formdata = { userId:1,
+      const formdata = { userId:this.props.user.user.id,
                         firstName:this.state.firstName,
                         lastName:this.state.lastName,
                         //mobileNo:this.state.mobileNo,
                         //email:this.state.email,
-                        dob:this.state.chosenDate,
+                        dob:this.state.dob,
                         gender:this.state.gender,
                         ethnicity:this.state.ethnicity,
                         promotionalEmail:this.state.promotionalEmail,
@@ -162,7 +176,7 @@ class Profile extends React.Component {
         if(res.status == "success"){
               //this.setState({ categoryData:res.data.category });
               showToast("Save Successfully","success");
-              this.props.navigation.navigate(Screens.SignIn.route)
+              this.props.navigation.navigate(Screens.Home.route)
         } else {
               console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
@@ -218,16 +232,16 @@ class Profile extends React.Component {
 
             <Item style={[styles.itemStyle]} stackedLabel>
               <Label style={styles.labelText}>Mobile Number</Label>
-              <Input style={styles.inputStyle}
-              value={this.state.mobileNo} 
-              onChangeText={(value) => {this.setState({mobileNo:value});} } 
-              />
+              <Input style={styles.inputStyle} disabled value={this.state.mobileNo.toString()} 
+              onChangeText={(value) => {this.setState({mobileNo:value});} }
+             />
+              
             </Item>
 
             <Item style={[styles.itemStyle]} stackedLabel>
               <Label style={styles.labelText}>Email Address</Label>
               <Input style={styles.inputStyle}
-              value={this.state.email} 
+              value={this.state.email}  disabled
               onChangeText={(value) => {this.setState({email:value});} } 
                />
             </Item>
@@ -239,27 +253,21 @@ class Profile extends React.Component {
                   <Item style={styles.datePickerItem}>
 
                     <Label style={styles.labeldateText}>Date of Birth</Label>
-
                     <DatePicker
-                      defaultDate={new Date(1981, 4, 4)}
-                      minimumDate={new Date(1920, 1, 1)}
+                      defaultDate={this.state.dob ? this.state.dob : new Date()}
+                      minimumDate={Date(1920, 1, 1)}
                       maximumDate={new Date(2010, 12, 31)}
                       locale={"en"}
-                      timeZoneOffsetInMinutes={undefined}
-                      modalTransparent={false}
-                      animationType={"fade"}
-                      androidMode={"default"}
-                      placeHolderText="(MM/DD/YYY)"
-                      textStyle={{ fontSize: 18, color: Colors.gray, textAlign: 'left', }}
-                      placeHolderTextStyle={{ fontSize: 16, textAlign: 'left', paddingLeft: 0, paddingRight: 10, color: "#ddd", zIndex: 5, justifyContent: 'flex-start' }}
+                      format="MM/DD/YYYY"
                       onDateChange={this.setDate}
-                      disabled={false}
-                      
+                      date={this.state.dob}
+                      confirmBtnText="Done"
+                      cancelBtnText="Cancel"
+                      iconSource={imgs.calImg}
+                      customStyles={{dateInput: { borderWidth:0, marginTop: 10 }}}
+                   />
 
-                    />
-
-                    <Image source={imgs.calImg} style={{ marginLeft: 20 }} style={styles.calImage} />
-                  </Item>
+                    </Item>
 
                 </View>
               </Col>
@@ -350,7 +358,7 @@ class Profile extends React.Component {
 
                 style={{ color: Colors.primary, }}
                 onValueChange={this.toggleSwitch1}
-                value={this.state.ringBell} />
+                value={this.state.ringBell? true:false} />
               <View style={{ flex: 0, width: 50, }}>
                 {
                   this.state.ringBell == false ?
