@@ -46,9 +46,12 @@ backgroundColor:Colors.secondary,
     paddingBottom:5,
     color:Colors.white,
     paddingLeft: 20,
+   
     paddingRight: 20,
     borderRadius: 25,
-  marginRight:0
+     overflow: 'hidden',
+  marginRight:0,
+
   },
   whiteBackground:{
 backgroundColor:'transparent',
@@ -58,6 +61,7 @@ backgroundColor:'transparent',
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 25,
+     overflow: 'hidden',
   marginRight:0
   },
   AlignLeft:{

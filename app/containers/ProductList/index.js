@@ -141,12 +141,11 @@ renderItems = ({ item, index}) => (
             (<View>
              <ScrollView>
           <FlatList 
-                
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                     data={this.state.subCategory}
-                     renderItem={this.renderItems}
-                     keyExtractor={item => `${item.id}`}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+             data={this.state.subCategory}
+             renderItem={this.renderItems}
+             keyExtractor={item => `${item.id}`}
                    />
             </ScrollView>
              
