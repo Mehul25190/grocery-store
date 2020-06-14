@@ -21,4 +21,5 @@ export default {
   pauseResumeSubscription: 'order/pauseResumeSubscription',
   deleteSubscription: 'order/deleteSubscription',
   fetchSubCategory: 'item/fetchSubCategory',
+  searchItem: 'item/searchItem',
 }

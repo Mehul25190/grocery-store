@@ -30,8 +30,11 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryData: [],      
+      categoryData: [],  
+      text: '',    
     };
+    this.courseFilterArr = [];
+    console.log('Math', Math.floor(100000 + Math.random() * 900000));
   }
 
 
@@ -47,6 +50,7 @@ class Home extends React.Component {
       
         if(res.status == "success"){
               this.setState({ categoryData:res.data.category });
+              this.courseFilterArr = res.data.category;
         } else {
               console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
@@ -68,7 +72,7 @@ class Home extends React.Component {
    renderItems = ({ item, index}) => (
     
     <TouchableOpacity onPress={() => this.onPressRecipe(item)}>
-       <View style={index == 0 ? styles.ItemContainer : styles.ItemContainer}>
+       <View style={[index == 0 ? styles.ItemContainer : styles.ItemContainer, {backgroundColor:'#'+ Math.floor(100000 + Math.random() * 900000)+'70'}]}>
         <Image style={styles.photo} source={{uri: url.imageURL+item.imagePath} } />
         <Text style={styles.productTitle}>{item.categoryName}</Text>
        
@@ -78,6 +82,20 @@ class Home extends React.Component {
    openControlPanel = () => {
       this.props.navigation.openDrawer(); // open drawer
     };
+
+  SearchFilterFunction(text) {
+        //passing the inserted text in textinput
+      const newData = this.courseFilterArr.filter(function (item) {
+        const itemData = item.categoryName ? item.categoryName.toUpperCase() : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      this.setState({
+        categoryData: newData,
+        text: text,
+      });
+  }
+    
   render(){
     //console.log("first render");
     //console.log(this.state.categoryData);
@@ -94,7 +112,7 @@ class Home extends React.Component {
        
           <Item style={[appStyles.searchBar]} >
             <Icon name="search" style={{color:Colors.primary}} />
-             <Input style={appStyles.searchInput} placeholder='Search Product'/>
+             <Input style={appStyles.searchInput} onChangeText={text => this.SearchFilterFunction(text)} placeholder='Search Product'/>
           </Item>
          
           <Right style={appStyles.headerRight}>

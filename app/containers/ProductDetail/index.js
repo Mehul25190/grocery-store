@@ -21,6 +21,7 @@ import {productList} from '../data/data';
 import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
 import { AirbnbRating } from 'react-native-ratings';
+import url from '../../config/api';
 
 const Qty =[
   {
@@ -88,7 +89,8 @@ class ProductDetail extends React.Component {
   };   
 
   render(){
-    const { navigation } = this.props;
+    const { navigation, ProductDetail } = this.props;
+    console.log(ProductDetail);
     const getItem = navigation.getParam('item');
     const { selectedIndex } = this.state;
     return (
@@ -111,9 +113,9 @@ class ProductDetail extends React.Component {
             <Row style={styles.firstRow}>
               <Col >
                 <View>
-                 <Text style={styles.AmuText}>Amul</Text>
-                 <Text style={[styles.AmuText,styles.AmuTextTitle]}>Amul Moti</Text>
-                 <Text style={styles.AmuText}>500 ml</Text>
+                 <Text style={styles.AmuText}>{ProductDetail.item[0].brandName}</Text>
+                 <Text style={[styles.AmuText,styles.AmuTextTitle]}>{ProductDetail.item[0].itemName}</Text>
+                 <Text style={styles.AmuText}>{ProductDetail.item[0].weight} {ProductDetail.item[0].uom}</Text>
                 
                 </View>
               </Col>
@@ -136,8 +138,7 @@ class ProductDetail extends React.Component {
              </Row>
 
             <Row style={styles.secondRow}>
-                <Image source={imgs.amulMoti} style={styles.amulMoti} />
-              
+                <Image source={{uri: url.imageURL+ProductDetail.itemImages[0].imagePath}} style={styles.amulMoti} />
             </Row>
 
             
@@ -147,7 +148,7 @@ class ProductDetail extends React.Component {
         
     
         <View style={styles.pricePart}>
-          <Text style={styles.priceText}><Text style={appStyles.currency,{fontSize:23,color:Colors.gray}}> {'\u20B9'}</Text> 28.00</Text>
+          <Text style={styles.priceText}><Text style={appStyles.currency,{fontSize:23,color:Colors.gray}}> {'\u20B9'}</Text> {ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}</Text>
         </View>
 
         <Grid>
@@ -192,8 +193,7 @@ class ProductDetail extends React.Component {
         <Card style={[appStyles.addBox,styles.deliveryAddress,{elevation:1}]}>
           <View>
             <Text style={{fontFamily:'Font-Regular',color:Colors.gray,fontSize:14}}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+              {ProductDetail.item[0].description1}
              </Text>
            </View>
         </Card>
@@ -224,6 +224,7 @@ class ProductDetail extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    ProductDetail: state.product.productDetail
   };
 };
 

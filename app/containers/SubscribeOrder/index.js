@@ -24,7 +24,7 @@ import CheckBox from 'react-native-check-box';
 import { showToast } from '../../utils/common';
 import moment from "moment";
 import DatePicker from 'react-native-datepicker'
-
+import url from '../../config/api';
 
 
 const DurationList =[
@@ -57,11 +57,13 @@ class SubscribeOrder extends React.Component {
     super(props);
     let item = this.props.navigation.getParam('item')
     let mode = this.props.navigation.getParam('mode')
+
      this.state = {
       //default value of the date time
       date: '',
       time: '',
-      qty: item.quantity ? item.quantity : 1,
+      //qty: item.quantity && mode != 'save' ? item.quantity : 1,
+      qty: 1,
       duration: item.duration ? item.duration : 15,
       isChecked:true,
       itemId: item.id,
@@ -193,7 +195,7 @@ class SubscribeOrder extends React.Component {
             </Row>
              <Row style={styles.secondRow}>
               <Col style={styles.amulCol}>
-                <Image source={imgs.amulMoti} style={styles.amulMoti} />
+                <Image source={{uri: url.imageURL+this.state.subscriptionDtls.imagePath} } style={styles.amulMoti} />
               </Col>
               <Col style={styles.amulInfo}>
                 <View>

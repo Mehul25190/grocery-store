@@ -53,7 +53,6 @@ FirstItem:{
    ItemContainer: {
      flex: 1,
      position : 'relative',
-    backgroundColor:Colors.primaryLight,
     marginLeft: Layout.ITEM_MARGIN,
     marginTop: 10,
     width: (Layout.SCREEN_WIDTH - (Layout.ItemNumColums + 1) * Layout.ITEM_MARGIN) / Layout.ItemNumColums,

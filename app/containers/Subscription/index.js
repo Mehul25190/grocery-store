@@ -46,7 +46,8 @@ class SubscribeDetail extends React.Component {
   }
 
   mySubscriptionList(){
-    this.props.mySubscriptionList(this.props.user.userId).then(res => {
+    //console.log('this.props.user.userId', this.props.user.user.id)
+    this.props.mySubscriptionList(this.props.user.user.id).then(res => {
       //this.setState({mySubscription: res.data.subscriptionDtls})
     });
   }
@@ -169,6 +170,9 @@ class SubscribeDetail extends React.Component {
                renderItem={this.renderItems}
                keyExtractor={item => `${item.id}`}
              />
+             
+             {mySubscription.length == 0 ? <View style={[appStyles.spinner, appStyles.norecordfound]}><Text>No Subscription Found</Text></View> : null }
+           
             <View style={{height:20}}></View>
           </View>
         )}
@@ -189,7 +193,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
-      mySubscriptionList : (userId) => dispatch(subscriptionAction.mySubscriptionList()),
+      mySubscriptionList : (userId) => dispatch(subscriptionAction.mySubscriptionList({userId: userId})),
       playPauseSub: (id, status) => dispatch(subscriptionAction.playPauseSub({id: id, status, status})),
    };
 };
