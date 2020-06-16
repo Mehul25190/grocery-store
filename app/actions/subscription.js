@@ -8,6 +8,7 @@ import { ActionTypes, Strings } from '../constants/';
 export const mySubscriptionList = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.mySubscriptionList,  {queries: payloads}).then(res => {
+    console.log(payloads);
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         dispatch({ type: ActionTypes.MYSUBSCRIPTION, data: res.data.data.subscriptionDtls });

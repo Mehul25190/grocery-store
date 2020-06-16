@@ -12,7 +12,7 @@ class DeliveryAddress extends React.Component {
         super(props);
         this.state = {
             setDeliveryAddress:[],
-            USERID:1,
+           // USERID:1,
         }
     }
 
@@ -25,8 +25,8 @@ class DeliveryAddress extends React.Component {
     //get Delivery address
     getDeliveryAddress(){
 
-        //alert(this.state.USERID);  
-        this.props.showDeliveryAddress(this.state.USERID).then (res => {
+        //alert(this.props.user.userId);  
+        this.props.showDeliveryAddress(this.props.user.userId).then (res => {
 
         console.log(res.status); 
         if(res.status == "success"){
@@ -94,7 +94,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        showDeliveryAddress: (userid) => dispatch(userActions.showUserDeliveryAddress({userId:userid})),
+        showDeliveryAddress: (userid) => dispatch(userActions.getDeviveryAddress({userId:userid})),
     };
 };
 

@@ -17,5 +17,8 @@ export const initialState = {
 	subscription: {
 		deviveryAddress: {},
 		mySubscription: {},
+	},
+	product: {
+		productDetail: {},
 	}
 };

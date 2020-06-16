@@ -48,11 +48,12 @@ class SignUp extends React.Component {
 
   signup(values, dispatch, props){
     dispatch(userActions.signup(values)).then(res => {
+      
       if(res.status == "success"){  
         showToast(res.msg,"success");
         dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route }));
       }else{
-        showToast(res.message,"danger");
+        showToast(res.warnings[0].message,"danger");
       }
     }).catch(error => {
       const messages = _.get(error, 'res.data.error')
@@ -110,7 +111,7 @@ class SignUp extends React.Component {
                         full
                         primary
                         style={appStyles.btnSecontary}
-                        onPress={() => this.props.pressVerify()}  >
+                        onPress={() => this.props.pressSignup()}  >
                         <Text style={styles.SignInbtn}>SignUp </Text>
                       </Button>
                   }

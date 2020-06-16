@@ -40,7 +40,7 @@ class MyAddress extends React.Component {
       areaData:[],
       selectedArea:1,
       setDeliveryAddress:[],
-      USERID:1,
+      //USERID:1,
 
     }
     //console.log(this.state.edit);
@@ -57,21 +57,33 @@ class MyAddress extends React.Component {
   }
   //get Delivery address
   getDeliveryAddress(){
+    //console.log(this.props.user);
+    //alert(this.props.user.user.id);  
+    this.props.showDeliveryAddress(this.props.user.user.id).then (res => {
 
-    //alert(this.state.USERID);  
-    this.props.showDeliveryAddress(this.state.USERID).then (res => {
-
-      console.log(res.status); 
+      //console.log(res.status); 
       if(res.status == "success"){
-        this.setState({ setDeliveryAddress:res.data.userAddress[0]});
-        this.setState({buildingName:res.data.userAddress[0].buildingName});
-        this.setState({aptNo:res.data.userAddress[0].aptNo});
-        this.setState({specialIns:res.data.userAddress[0].specialIns});
-        this.setState({zipcode:res.data.userAddress[0].zipcode});
+        //console.log('check return');
+        //console.log(res.data.userAddress[0]);
+       // console.log(res.data.userAddress);
+            if(res.data.userAddress.length > 0) {
+              console.log('inside');
+              this.setState({ setDeliveryAddress:res.data.userAddress[0]});
+              console.log(res.data.userAddress[0].zipcode);
+              this.setState({buildingName:res.data.userAddress[0].buildingName});
+              this.setState({aptNo:res.data.userAddress[0].aptNo});
+              this.setState({specialIns:res.data.userAddress[0].specialIns});
+              this.setState({zipcode:res.data.userAddress[0].zipcode});
+              this.setState({selectedCity:res.data.userAddress[0].cityName});
+              this.setState({selectedArea:res.data.userAddress[0].areaName});
+              
+              
+              console.log(this.state.zipcode);
+            }
               //console.log("donw");
               //console.log(res.data.userAddress[0].buildingName);
         } else {
-              console.log("something wrong with varification call");
+              //console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
         }
 
@@ -90,7 +102,8 @@ class MyAddress extends React.Component {
        //console.log(res.status); 
         if(res.status == "success"){
               this.setState({ cityData:res.cityList, selectedCity: res.cityList[0].id });
-              //console.log("donw");
+              //this.setState({ cityData:res.cityList});
+              console.log("donw");
               //console.log(res.cityList[0].id);
         } else {
               console.log("something wrong with varification call");
@@ -162,7 +175,7 @@ class MyAddress extends React.Component {
     }else {
       //alert("ADFD");
       //call api
-      const formdata = { userId:1,
+      const formdata = { userId:this.props.user.user.id,
                         cityId:this.state.selectedCity,
                         areaId:this.state.selectedArea,
                         state:'Gujarat',
@@ -411,17 +424,19 @@ class MyAddress extends React.Component {
                     </Col>)}
 
                 </Row>
-                <Row>
+                {this.state.setDeliveryAddress != null ?
+                  (<Row>
 
                   <View>
                     <Text style={{ marginBottom: 10, paddingLeft: 10, paddingRight: 10, fontFamily: 'Font-Medium', fontSize: 14 }}>
-                      {this.state.setDeliveryAddress.aptNo}{this.state.setDeliveryAddress.buildingName}
+                      {this.state.setDeliveryAddress.aptNo}, {this.state.setDeliveryAddress.buildingName}
                     </Text>
-                    <Text>  
+                    <Text style={{ marginBottom: 10, paddingLeft: 10, paddingRight: 10, fontFamily: 'Font-Medium', fontSize: 14 }}>  
                       {this.state.setDeliveryAddress.areaName}, {this.state.setDeliveryAddress.zipcode}, {this.state.setDeliveryAddress.cityName}
                     </Text> 
                   </View>
-                </Row>
+                </Row>): null}
+
 
               </Grid>
             </Card>)}
@@ -446,7 +461,7 @@ const mapDispatchToProps = (dispatch) => {
     showAreaList:(cityID) => dispatch(userActions.showAreaList({city:cityID})),
     saveAddress: (formdata) => dispatch(userActions.saveUserAddress(formdata)),
     
-    showDeliveryAddress: (userid) => dispatch(userActions.showUserDeliveryAddress({userId:userid})),
+    showDeliveryAddress: (userid) => dispatch(userActions.getDeviveryAddress({userId:userid})),
   };
 };
 
