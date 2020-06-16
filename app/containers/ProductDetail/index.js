@@ -127,7 +127,7 @@ class ProductDetail extends React.Component {
   render(){
 
     const { entries, activeSlide } = this.state;
-    const { navigation } = this.props;
+   // const { navigation } = this.props;
 
     const { navigation, ProductDetail } = this.props;
     console.log(ProductDetail);
