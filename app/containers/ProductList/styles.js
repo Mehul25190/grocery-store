@@ -2,11 +2,9 @@ import {Colors,Layout} from '../../constants/';
 export default {
   cateContainer:{
     flex: 1,
-  
-    height:50,
+      height:50,
     width:Layout.width,
- 
-     paddingTop:7,
+      paddingTop:7,
     paddingBottom:5,
     justifyContent: 'center',
     alignItems: 'center',

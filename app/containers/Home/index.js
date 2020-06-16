@@ -15,7 +15,7 @@ import {
 
 } from 'native-base';
 import url from '../../config/api';
-import {ItemList} from '../data/data';
+import {ItemList,entries} from '../data/data';
 //import MasonryList from "react-native-masonry-list";
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
@@ -23,6 +23,7 @@ import * as subscriptionAction from "../../actions/subscription";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import { array } from 'prop-types';
+import Carousel from 'react-native-snap-carousel';
 
 const cartCount = 1;
 
@@ -39,6 +40,10 @@ class Home extends React.Component {
 
 
   componentDidMount(){
+    this.setState({
+      entries:entries,  
+    });
+    console.log("WIDTH="+Layout.window.width);
     //set array from category list from api to get category list
     this.props.getDeviveryAddress(this.props.user.user.id);
     this.getCategoryList();    
@@ -83,6 +88,39 @@ class Home extends React.Component {
       this.props.navigation.openDrawer(); // open drawer
     };
 
+    _renderItem = ({item, index}) => {
+        return (
+          
+           <Grid style={styles.slide}>
+           <Col style={{}}>
+               <View style={styles.discountBlock}>
+                 <Text style={styles.addsSubTitle}>
+                     {item.small_title}
+                 </Text>
+                 <Text style={styles.addsBigTitle}>
+                   {item.big_title}
+                 </Text>
+                 <Text style={styles.addsText}>
+                {item.add_text}               
+                 </Text>
+                 <View style={styles.btnBlock}>
+                  <Button transparent tyle={{textAlign:'Left'}}>
+                   <TouchableOpacity>
+                    <Text style={styles.discountBtn}>{item.button_text}</Text>
+                    </TouchableOpacity>
+                   </Button>
+                 </View>
+               </View>
+             </Col>
+             <Col style={{ marginLef:2,width: 120,}}>
+                <Image source={item.image} style={{flex: 1, height: null, width: null,resizeMode:'contain'}} />
+             </Col>
+             
+            </Grid>
+        );
+    }
+
+
   SearchFilterFunction(text) {
         //passing the inserted text in textinput
       const newData = this.courseFilterArr.filter(function (item) {
@@ -96,6 +134,7 @@ class Home extends React.Component {
       });
   }
     
+
   render(){
     //console.log("first render");
     //console.log(this.state.categoryData);
@@ -134,34 +173,20 @@ class Home extends React.Component {
          
             
           <Content enableOnAndroid style={appStyles.content}>
-            <Card style={appStyles.addBox}>
-            <Grid>
-              <Col style={{ marginLef:2,width: 120,}}>
-                 <Image source={imgs.megaSale} style={{flex: 1, height: null, width: null,resizeMode:'contain'}} />
-              </Col>
-              <Col style={{  }}>
-                <View style={styles.discountBlock}>
-                  <Text style={styles.addsSubTitle}>
-                      SAVE UP TO
-                  </Text>
-                  <Text style={styles.addsBigTitle}>
-                     50% OFF
-                  </Text>
-                  <Text style={styles.addsText}>
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                
-                  </Text>
-                  <View style={styles.btnBlock}>
-                   <Button transparent tyle={{textAlign:'right'}}>
-                    <TouchableOpacity>
-                     <Text style={styles.discountBtn}>Get Discount</Text>
-                     </TouchableOpacity>
-                    </Button>
-                  </View>
-                </View>
-              </Col>
-             </Grid>
-           </Card>
+        <Card style={[appStyles.addBox,{height:'auto'}]}>
+           <Carousel
+              ref={(c) => { this._carousel = c; }}
+              loop={true}
+              autoplay={true}
+
+              data={entries}
+              renderItem={this._renderItem}
+              sliderWidth={Layout.window.width}
+              itemWidth={Layout.window.width}
+              autoplayInterval={3000}
+              autoplayDelay={3000}
+            />
+          </Card>
           
 
           <View style={styles.ItemLayout}>
