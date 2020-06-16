@@ -269,7 +269,7 @@ export const getDeviveryAddress = payloads => dispatch => {
 export const fetchSubCategory = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.fetchSubCategory,{queries: payloads}).then(res => {
-    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //dispatch({ type: ActionTypes.LOADING, isLoading: false });
     if(res.status == 200){
       return res.data;
     } else {

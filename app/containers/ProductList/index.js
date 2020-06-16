@@ -59,7 +59,7 @@ class ProductList extends React.Component {
     const categoryId = this.props.navigation.getParam("para_categoryId");
     this.state = {
       dataSource: productList,
-      value: 1,
+      value: 0,
       categoryId: this.props.navigation.getParam("para_categoryId"),
       productData: [],
       subCategory: [],
@@ -75,14 +75,12 @@ class ProductList extends React.Component {
   componentDidMount() {
     this.setState({
       dataSource: productList,
-      value: 1,
       //categoryId:this.props.navigation.getParam('para_categoryId'),
     });
     //alert(this.state.categoryId);
     //get product list default base on category selected
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
       this.setState({ selectSubCat: null, text: '' });
-      this.productItemList();
       this.subCategoryList();
     });
   }
@@ -97,7 +95,9 @@ class ProductList extends React.Component {
     const newData = this.courseFilterArr.filter(function (item) {
       const itemData = item.itemName ? item.itemName.toUpperCase() : "".toUpperCase();
       const textData = text.toUpperCase();
-      return itemData.indexOf(textData) > -1;
+      const itemData1 = item.itemTag ? item.itemTag.toUpperCase() : "".toUpperCase();
+      const textData1 = text.toUpperCase();
+      return itemData.indexOf(textData) > -1 || itemData1.indexOf(textData1) > -1;
     });
     this.setState({
       productData: newData,
@@ -112,7 +112,8 @@ class ProductList extends React.Component {
       .then((res) => {
         console.log("sucess return", res.data.subCategory);
         if (res.status == "success") {
-          this.setState({ subCategory: res.data.subCategory });
+          this.setState({ subCategory: res.data.subCategory, selectSubCat: res.data.subCategory[0].id });
+          this.productItemList(res.data.subCategory[0].id, 0);
           //console.log('set return');
           //console.log(res.data.itemList);
         } else {
@@ -148,14 +149,22 @@ class ProductList extends React.Component {
       });
   }
 
-  productItemList() {
+  productItemList(catId, index) {
+    //this.currentIndex = index-3;
+    console.log(catId);
+    //catId = this.props.navigation.getParam("para_categoryId") ? this.props.navigation.getParam("para_categoryId") : this.state.selectSubCat;
     this.props
-      .productItemList(this.props.navigation.getParam("para_categoryId"))
+      .productItemList(catId)
       .then((res) => {
-        //console.log('sucess return');
+        console.log('sucess return', res.data.itemList);
         if (res.status == "success") {
-          this.setState({ productData: res.data.itemList });
-          this.courseFilterArr= res.data.itemList;
+          if(res.data.itemList.length > 0){
+            this.setState({ productData: res.data.itemList, selectSubCat: catId });
+            this.courseFilterArr = res.data.itemList;         
+          }else{
+            this.courseFilterArr = [];
+            this.setState({ productData: [], selectSubCat: catId });
+          }
         } else {
           showToast("Something wrong with Server response", "danger");
         }
@@ -177,7 +186,7 @@ class ProductList extends React.Component {
   };
 
   renderItems = ({ item, index }) => (
-    <TouchableOpacity onPress={() => this.subBySubCategoryList(item.id,item.subCategoryName, index)}>
+    <TouchableOpacity onPress={() => this.productItemList(item.id, index)}>
       <View style={styles.cateContainer}>
         <Text
           style={
@@ -254,10 +263,9 @@ class ProductList extends React.Component {
                           this.productDetail(item.id)
                         }
                       >
-                        <Text style={styles.proTitle}>{item.itemName}</Text>
+                        <Text style={styles.proTitle}>{item.brandName} - {item.itemName}</Text>
 
                         <Text style={styles.proQuanitty} note>
-                          {item.quantity} pc &nbsp;
                           {item.weight !== ""
                             ? "(" + item.weight + " " + item.uom + ")"
                             : ""}{" "}
@@ -271,7 +279,7 @@ class ProductList extends React.Component {
                             alignItems: "flex-start",
                           }}
                         >
-                          {item.discountedPrice > 0 ? (
+                          {item.discountedPrice > 0 && item.discountedPrice < item.price  ? (
                             <View style={{ flexDirection: "row" }}>
                               <Text style={styles.proPriceStrike}>
                                 <Text
@@ -286,7 +294,7 @@ class ProductList extends React.Component {
                                   style={(appStyles.currency, { fontSize: 18 })}
                                 >
                                   {"\u20B9"}
-                                </Text>{" "}
+                                 </Text>{" "}
                                 {item.discountedPrice}
                               </Text>
                             </View>
@@ -307,25 +315,27 @@ class ProductList extends React.Component {
                     </Body>
                     <Right style={styles.ListRight}>
                       <View>
-                        <NumericInput
-                          value={this.state.value}
-                          onChange={(value) => this.setState({ value })}
-                          onLimitReached={(isMax, msg) =>
-                            console.log(isMax, msg)
-                          }
-                          totalWidth={90}
-                          totalHeight={20}
-                          iconSize={30}
-                          borderColor="#F8BB1B"
-                          inputStyle={{ fontSize: 13 }}
-                          step={1}
-                          valueType="real"
-                          rounded
-                          textColor="#F8BB1B"
-                          iconStyle={{ color: "#F8BB1B", fontSize: 14 }}
-                          rightButtonBackgroundColor="#fff"
-                          leftButtonBackgroundColor="#fff"
-                        />
+                        
+                          <NumericInput
+                            value={this.state.value}
+                            onChange={(value) => this.setState({ value })}
+                            onLimitReached={(isMax, msg) =>
+                              console.log(isMax, msg)
+                            }
+                            minValue={1}
+                            totalWidth={90}
+                            totalHeight={20}
+                            iconSize={30}
+                            borderColor="#F8BB1B"
+                            inputStyle={{ fontSize: 13 }}
+                            step={1}
+                            valueType="real"
+                            rounded
+                            textColor="#F8BB1B"
+                            iconStyle={{ color: "#F8BB1B", fontSize: 14 }}
+                            rightButtonBackgroundColor="#fff"
+                            leftButtonBackgroundColor="#fff"
+                          />
                       </View>
                       <View>
                         {item.isSubscribable ? (
@@ -339,7 +349,7 @@ class ProductList extends React.Component {
                               }
                             >
                               <Text style={styles.subText}>
-                                Subscribe@{"\u20B9"}{item.price}
+                                Subscribe@{"\u20B9"}{item.discountedPrice > 0 && item.discountedPrice < item.price ? item.discountedPrice : item.price}
                               </Text>
                             </TouchableOpacity>
                           </Button>
@@ -349,9 +359,7 @@ class ProductList extends React.Component {
                         <Button style={styles.buyButton}>
                           <TouchableOpacity
                             onPress={() =>
-                              this.props.navigation.navigate(
-                                Screens.MyCart.route
-                              )
+                              this.setState({value: 1})
                             }
                           >
                             {index == 0 || index == 2 ? (
