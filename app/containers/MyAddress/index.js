@@ -29,6 +29,7 @@ class MyAddress extends React.Component {
       delAddress: '',
       selected: '0',
       edit: true,
+      id:null,
       cityId:1,
       areaId:1,
       buildingName:'',
@@ -38,9 +39,9 @@ class MyAddress extends React.Component {
       cityData: [], 
       selectedCity: '',
       areaData:[],
-      selectedArea:1,
+      selectedArea:'',
       setDeliveryAddress:[],
-      //USERID:1,
+      
 
     }
     //console.log(this.state.edit);
@@ -50,9 +51,10 @@ class MyAddress extends React.Component {
       delAddress: '123, Block-B, Divyajiavn Aprtment, Bapunagar Aproach, Ahmedabad - 352350.'
     });
     //set array from city list from api to get city list
-    this.getDeliveryAddress();  
+    
     this.getCityList();
-    this.getAreaList();
+    //this.getAreaList();
+    this.getDeliveryAddress();  
      
   }
   //get Delivery address
@@ -60,28 +62,22 @@ class MyAddress extends React.Component {
     //console.log(this.props.user);
     //alert(this.props.user.user.id);  
     this.props.showDeliveryAddress(this.props.user.user.id).then (res => {
-
-      //console.log(res.status); 
+      
       if(res.status == "success"){
-        //console.log('check return');
-        //console.log(res.data.userAddress[0]);
        // console.log(res.data.userAddress);
-            if(res.data.userAddress.length > 0) {
-              console.log('inside');
-              this.setState({ setDeliveryAddress:res.data.userAddress[0]});
-              console.log(res.data.userAddress[0].zipcode);
-              this.setState({buildingName:res.data.userAddress[0].buildingName});
-              this.setState({aptNo:res.data.userAddress[0].aptNo});
-              this.setState({specialIns:res.data.userAddress[0].specialIns});
-              this.setState({zipcode:res.data.userAddress[0].zipcode});
-              this.setState({selectedCity:res.data.userAddress[0].cityName});
-              this.setState({selectedArea:res.data.userAddress[0].areaName});
-              
-              
-              console.log(this.state.zipcode);
+            if(res.data.userAddressDtls !="") {
+              //console.log('inside');
+              this.setState({ setDeliveryAddress:res.data.userAddressDtls});
+              this.setState({id:res.data.userAddressDtls.id});
+              this.setState({buildingName:res.data.userAddressDtls.buildingName});
+              this.setState({aptNo:res.data.userAddressDtls.aptNo});
+              this.setState({specialIns:res.data.userAddressDtls.specialIns});
+              this.setState({zipcode:res.data.userAddressDtls.zipcode});
+              this.setState({selectedCity:res.data.userAddressDtls.cityId});
+              this.setState({selectedArea:res.data.userAddressDtls.areaId});
+              this.getAreaList(res.data.userAddressDtls.cityId);
             }
-              //console.log("donw");
-              //console.log(res.data.userAddress[0].buildingName);
+
         } else {
               //console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
@@ -101,10 +97,9 @@ class MyAddress extends React.Component {
     this.props.showCityList().then (res =>{
        //console.log(res.status); 
         if(res.status == "success"){
-              this.setState({ cityData:res.cityList, selectedCity: res.cityList[0].id });
-              //this.setState({ cityData:res.cityList});
-              console.log("donw");
-              //console.log(res.cityList[0].id);
+              this.setState({ cityData:res.cityList, 
+                selectedCity: this.state.selectedCity=="" ? res.cityList[0].id: this.state.selectedCity });
+             
         } else {
               console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
@@ -118,14 +113,16 @@ class MyAddress extends React.Component {
   }
 
   //get area List  
-  getAreaList() {
+  getAreaList(city_id) {
     
-    this.props.showAreaList(this.state.selectedCity).then (res =>{
+    this.props.showAreaList(city_id).then (res =>{
        //console.log(res.status); 
         if(res.status == "success"){
               this.setState({ areaData:res.data.areaList });
-              //console.log("donw");
-              //console.log(res.cityList[0].id);
+              if(this.state.selectedArea==null) {
+                this.setState({selectedArea:res.data.areaList[0].id});
+              }
+             
         } else {
               console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
@@ -142,7 +139,7 @@ class MyAddress extends React.Component {
     this.setState({
       edit: !this.state.edit
     });
-    console.log(this.state.edit);
+    //console.log(this.state.edit);
   }
   openControlPanel = () => {
     this.props.navigation.goBack(); // open drawer
@@ -156,8 +153,12 @@ class MyAddress extends React.Component {
 
   onValueChangeCity(value: string) {
     this.setState({
-      selectedCity: value
+      selectedCity: value,
+      selectedArea: null
+
     });
+    this.getAreaList(value);
+    
   }
   onValueChangeArea(value: string){
     this.setState({
@@ -173,7 +174,6 @@ class MyAddress extends React.Component {
         showToast('Please enter Building Name.','danger');
       });
     }else {
-      //alert("ADFD");
       //call api
       const formdata = { userId:this.props.user.user.id,
                         cityId:this.state.selectedCity,
@@ -184,17 +184,15 @@ class MyAddress extends React.Component {
                         aptNo:this.state.aptNo,
                         specialIns:this.state.specialIns,
                         zipcode:this.state.zipcode,
+                        id:this.state.id,
 
                       };
-      //alert(formdata);
       this.props.saveAddress(formdata).then (res =>{
-        //console.log('back');
-      //console.log(res.status);
-      //console.log(res.data.status);
+        
         if(res.data.status == "success"){
               //this.setState({ categoryData:res.data.category });
               showToast("Save Successfully","success");
-              this.props.navigation.navigate(Screens.SignIn.route)
+              //this.props.navigation.navigate(Screens.SignIn.route)
         } else {
               console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
@@ -377,7 +375,7 @@ class MyAddress extends React.Component {
                 </View>
                 <View style={styles.InputView} >
                   <Input placeholderTextColor="#B9B9B9" placeholder="PostBox No." style={styles.inputText}
-                  value={this.state.zipcode} 
+                  value={this.state.zipcode.toString()} 
                   onChangeText={(value) => {this.setState({zipcode:value});} }
                   />
                 </View>
@@ -394,7 +392,7 @@ class MyAddress extends React.Component {
                     </Col>
                     <Col style={{ justifyContent: 'flex-end' }}>
                       <TouchableOpacity  >
-                        <Button full primary style={styles.saveBtn}>
+                        <Button full primary style={styles.saveBtn} onPress={() => this.editAddress()}>
                           <Text style={[styles.saveBtnText, { textAlign: "center" }]}>Cancel </Text>
                         </Button>
                       </TouchableOpacity>

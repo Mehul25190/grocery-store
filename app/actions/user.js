@@ -106,7 +106,7 @@ export const showCityList = payloads => dispatch => {
 export const showAreaList = payloads => dispatch => {
   //console.log("showCategoryList>>> action ")
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
-  return axios.get(url.areaList,{payloads: payloads}).then(res => {
+  return axios.get(url.areaList,{queries: payloads}).then(res => {
     //console.log(payloads);
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     //console.log(res.data);
@@ -174,7 +174,7 @@ export const showUserProfile = payloads => dispatch => {
     //console.log(res);
       if(res.status == 200){
         //console.log('return');
-        console.log(res.data);
+        //console.log(res.data);
         return res.data
       } else {
         return res
@@ -191,7 +191,8 @@ export const saveUserAddress = payloads => dispatch => {
   
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.saveUserAddress,  {payloads: payloads}).then(res => {
-    
+    //console.log("under address");
+    //console.log(payloads);
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     //console.log(res);
       if(res.status == 200){
@@ -249,14 +250,14 @@ export const setLanguage = payloads => dispatch => {
 }
 
 export const getDeviveryAddress = payloads => dispatch => {
-  console.log('payloads', payloads);
+  //console.log('payloads', payloads);
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.getDeviveryAddress,  {queries: payloads}).then(res => {
-    
-
-      dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log("get del add"+res.data);
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
-        dispatch({ type: ActionTypes.DELIVERYADDRESS, data: res.data.data.userAddress[0] });
+        dispatch({ type: ActionTypes.DELIVERYADDRESS, data: res.data.data.userAddressDtls});
+        //console.log("get del add"+res.data);
         return res.data
       } else {
         return res

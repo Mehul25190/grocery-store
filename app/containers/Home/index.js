@@ -40,7 +40,7 @@ class Home extends React.Component {
 
   componentDidMount(){
     //set array from category list from api to get category list
-    this.props.getDeviveryAddress(this.props.user.userId);
+    this.props.getDeviveryAddress(this.props.user.user.id);
     this.getCategoryList();    
   }
 
