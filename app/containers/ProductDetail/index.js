@@ -17,10 +17,11 @@ import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
-import {productList} from '../data/data';
+import {productList,productImages} from '../data/data';
 import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
 import { AirbnbRating } from 'react-native-ratings';
+import Carousel,{Pagination } from 'react-native-snap-carousel';
 
 const Qty =[
   {
@@ -45,7 +46,8 @@ class ProductDetail extends React.Component {
       date: '',
       time: '',
       selected: "0",
-       selectedIndex: 0
+       selectedIndex: 0,
+       productImages:''
     };
     
   }
@@ -66,6 +68,7 @@ class ProductDetail extends React.Component {
     var min = new Date().getMinutes(); //Current Minutes
 
     that.setState({
+      productImages:productImages,
       //Setting the value of the date time
       date:   date + ' ' + month + ' ' + year ,
       time:   hours + ':' + min 
@@ -86,8 +89,39 @@ class ProductDetail extends React.Component {
     const selectedIndex = Math.floor(contentOffset.x / viewSize.width);
     this.setState({ selectedIndex });
   };   
+  _renderItem = ({item, index}) => {
+        return (
+           <View>
+            <Image source={imgs.amulMoti} style={styles.amulMoti} />
+          </View>
+          
+        );
+    }
+     get pagination () {
+        const { productImages, activeSlide } = this.state;
+        return (
+            <Pagination
+              dotsLength={productImages.length}
+              activeDotIndex={activeSlide}
+              containerStyle={{paddingTop:10,paddingBottom:0}}
+              dotStyle={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: 5,
+                  marginHorizontal: 8,
+                  backgroundColor: Colors.primary
+              }}
+              inactiveDotStyle={{
+                  // Define styles for inactive dots here
+              }}
+              inactiveDotOpacity={0.4}
+              inactiveDotScale={0.6}
+            />
+        );
+    }
 
   render(){
+    const { entries, activeSlide } = this.state;
     const { navigation } = this.props;
     const getItem = navigation.getParam('item');
     const { selectedIndex } = this.state;
@@ -136,7 +170,22 @@ class ProductDetail extends React.Component {
              </Row>
 
             <Row style={styles.secondRow}>
-                <Image source={imgs.amulMoti} style={styles.amulMoti} />
+            <Col style={{justyfyContent:'center',alignItems:'center',marginLeft:Layout.indent,marginRight:Layout.indent}}>
+            <Carousel
+              ref={(c) => { this._carousel = c; }}
+              loop={true}
+              autoplay={true}
+
+              data={productImages}
+              renderItem={this._renderItem}
+              sliderWidth={Layout.window.width}
+              itemWidth={Layout.window.width}
+              autoplayInterval={3000}
+              autoplayDelay={3000}
+                 onSnapToItem={(index) => this.setState({ activeSlide: index }) }
+            />
+            { this.pagination }
+             </Col>   
               
             </Row>
 

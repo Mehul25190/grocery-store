@@ -1,5 +1,6 @@
 import {Colors,Layout} from '../../constants/';
 export default {
+  
    okayBtnArea:{
   marginTop:5,
   paddingTop:20
@@ -107,13 +108,7 @@ reasonView:{
   zIndex:2,
 
  },
-amulMoti:{
-  width:100,
-  alignSelf:'center',
-  height:100,
-  resizeMode:'contain',
-  justifyContent:'center'
- },
+
  amulCol:{
   backgroundColor:'#ddd',
  justifyContent:'flex-start',
@@ -171,11 +166,23 @@ paynowBtn:{
   marginRight:Layout.indent,
  
  },
+ amulMoti:{
+  width:100,
+  alignSelf:'center',
+  height:100,
+  alignItems:'center',
+  resizeMode:'contain',
+  justifyContent:'center',
+  flex:1
+ },
  secondRow:{
-  // backgroundColor:'#ddd',
+  flex:1,
   padding:10,
+   alignItems:'center',
+
   justifyContent:'center'
  },
+
  QtyBox:{
   alignItems:'flex-end',
   justifyContent:'flex-start',

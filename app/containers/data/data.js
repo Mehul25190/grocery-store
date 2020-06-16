@@ -1,4 +1,34 @@
 import imgs from '../../assets/images';
+export const productImages=[
+  {
+    image:require("../../assets/images/amulMoti.png"), 
+  },
+  {
+    image:require("../../assets/images/amulMoti.png"), 
+  },
+   {
+    image:require("../../assets/images/amulMoti.png"), 
+  }
+];
+
+export const entries=[
+  {
+    image:require("../../assets/images/megaSale.png"), 
+    small_title:'Save up to',
+    big_title:'50 % OFF',
+    add_text:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    button_text:'Get Discount',
+    btn_link:''
+  },
+  {
+    image:require("../../assets/images/mangoSale.png"), 
+    small_title:'Save up to',
+    big_title:'50 % OFF',
+    add_text:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    button_text:'Get Discount',
+    btn_link:''
+  }
+];
 
 export const CityList =[
   {

@@ -1,4 +1,10 @@
 import {Colors,Layout} from '../../constants/';
+const horizontalMargin = 20;
+const slideWidth = Layout.window.width;
+
+const sliderWidth =Layout.window.width;
+const itemWidth = slideWidth + horizontalMargin * 2;
+const itemHeight = 200;
 export default {
   container: {
     flex: 1,
@@ -18,6 +24,21 @@ export default {
       marginLeft:Layout.indent
      
   },
+
+    slide: {
+        marginRight:Layout.indent,
+        width: Layout.window.width-10,
+        height: 125,
+        marginLeft:0,
+        paddingLeft:5,
+        paddingHorizontal: horizontalMargin
+        // other styles for the item container
+    },
+    slideInnerContainer: {
+        width: slideWidth,
+        flex: 1
+        // other styles for the inner container
+    },
 productTitle:{
     position : 'absolute',
     fontSize:16,
@@ -123,7 +144,8 @@ addsSubTitle:{
   color:'#F8BB1B',
   textAlign:'right',
   fontSize:16,
-  padding:0
+  padding:0,
+  textTransform:'uppercase'
 },
 addsBigTitle:{
   fontFamily:'Font-Bold',
@@ -136,6 +158,7 @@ addsBigTitle:{
   
 },
 addsText:{
+  // backgroundColor:'#ddd',
   color:'#F8BB1B',
   textAlign:'right',
   fontSize:12,
