@@ -143,7 +143,7 @@ addsSubTitle:{
   color:'#F8BB1B',
   textAlign:'right',
   fontSize:16,
-  padding:0,
+  paddingTop:5,
   textTransform:'uppercase'
 },
 addsBigTitle:{
@@ -152,7 +152,7 @@ addsBigTitle:{
   textAlign:'right',
   fontSize:32,
   letterSpacing:2,
-  top:-8,
+  // top:-8,
   lineHeight:42
   
 },
@@ -162,14 +162,18 @@ addsText:{
   textAlign:'right',
   fontSize:12,
   lineHeight:13,
- top:-10,
+  paddingBottom:0
+ // top:-10,
 },
 discountBlock:{
   paddingRight:10
 },
 discountBtn:{
-  fontSize:8,
-  paddingTop:2,
+  fontSize:11,
+  paddingTop:1,
+  lineHeight:15,
+ paddingRight:15,
+ paddingLeft:15,
   borderRadius:25,
   borderWidth:1,
   borderColor:'#333',
@@ -179,9 +183,9 @@ textTransform:'uppercase',
 },
 
 btnBlock:{
-   top:-15,
-
-  width: '100%',
+   // top:-15,
+   // backgroundColor:'#ddd',
+  marginTop:10,
   justifyContent: 'flex-end',
   alignItems: 'flex-end'
 },
@@ -192,13 +196,13 @@ currencyOffer:{
 
 },
 MRPtext:{
-  top:-3,
+  // top:-3,
   textAlign:'right',
     color:'#F8BB1B',
   textDecorationLine:'line-through'
 },
 officePrice:{
-   top:-3,
+   // top:-3,
    color:'#F8BB1B',
    textAlign:'right',
    fontSize:18,
@@ -206,7 +210,7 @@ officePrice:{
    textTransform:'uppercase'
 },
 PriceRate:{
-  top:-7,
+  // top:-7,
   fontSize:25,
   color:'#F8BB1B',
  textAlign:'right'

@@ -11,7 +11,7 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem,Item,Input,Label, Picker
+  Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem,Item,Input,Label, Picker, Radio
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
@@ -59,7 +59,7 @@ class SubscribeOrder extends React.Component {
     let mode = this.props.navigation.getParam('mode')
 
      this.state = {
-      //default value of the date time
+       selected: false,
       date: '',
       time: '',
       //qty: item.quantity && mode != 'save' ? item.quantity : 1,
@@ -294,19 +294,9 @@ class SubscribeOrder extends React.Component {
           <Text></Text>
         </View>
        
-       <ListItem noBorder icon>
+         <ListItem noBorder icon>
           <Left>
-          <CheckBox
-               style={styles.checkboxStyle}
-               onClick={()=>{
-                  this.setState({
-                      isChecked:!this.state.isChecked
-                  })
-                }}
-              checkedImage={<Icon name='check' type='AntDesign' style={{color:Colors.primary}} />}
-              unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons' style={{color:'transparent'}} /> }
-              isChecked={this.state.isChecked}
-            />
+           <Radio type="radio" selected={this.state.selected } color={Colors.primary} selectedColor={Colors.primary}  onPress={() => this.setState({ selected: !this.state.selected })} />
           </Left>
            <Body style={{justifyContent:'center',alignItems:'flex-start'}}>
               <View>
@@ -315,17 +305,7 @@ class SubscribeOrder extends React.Component {
                        
           </Body>
           <Right>
-            <CheckBox
-               style={[styles.checkboxStyle,{height:30,width:30}]}
-               onClick={()=>{
-                  this.setState({
-                      isChecke:!this.state.isChecke
-                  })
-                }}
-              checkedImage={<Icon name='check' type='AntDesign' style={{color:Colors.primary,paddingLeft:2, paddingTop:0,fontSize:26}} />}
-              unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons' style={{color:'transparent'}} /> }
-              isChecked={this.state.isChecke}
-            />
+           <Radio type="radio" selected={this.state.selected } color={Colors.primary} selectedColor={Colors.primary}  onPress={() => this.setState({ selected: !this.state.selected })}  />
              <View>
               <Text style={[styles.bodyText,styles.bodyGreen]}>Alternate Days   </Text>
               </View> 
