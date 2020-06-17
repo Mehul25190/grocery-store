@@ -44,7 +44,7 @@ class Home extends React.Component {
     this.setState({
       entries:{},  
     });
-    console.log("WIDTH="+Layout.window.width);
+  
     //set array from category list from api to get category list
     this.props.getDeviveryAddress(this.props.user.user.id);
     this.getCategoryList();
@@ -53,11 +53,11 @@ class Home extends React.Component {
 
   getOfferList(){
     this.props.fetchOffersOnLandingPage().then (res =>{
-      console.log(res);
+      // console.log(res);
       if(res.status == "success"){
         this.setState({entries: res.data.offerList})
 
-        console.log(res.data.offerList.length)
+        // console.log(res.data.offerList.length)
       }
     });
   }
@@ -105,26 +105,25 @@ class Home extends React.Component {
         return (
           
            <Grid style={styles.slide}>
-           <Col style={{}}>
-               <View style={styles.discountBlock}>
-                 <Text style={styles.addsSubTitle}>
-                     {item.offerName}
-                 </Text>
-                 <Text style={styles.addsBigTitle}>
-                   {item.value} {item.valueType} OFF
-                 </Text>
-                 <Text style={styles.addsText}>
-                {item.description}               
-                 </Text>
-                 <View style={styles.btnBlock}>
-                  <Button transparent tyle={{textAlign:'Left'}}>
-                   <TouchableOpacity>
-                    <Text style={styles.discountBtn}>Get Discount</Text>
-                    </TouchableOpacity>
-                   </Button>
+             <Col style={{}}>
+                 <View style={styles.discountBlock}>
+                   <Text style={styles.addsSubTitle}>
+                       {item.offerName}
+                   </Text>
+                   <Text style={styles.addsBigTitle}>
+                     {item.value}{item.valueType=='rs' ? <Text style={[appStyles.currency,{  color:'#F8BB1B',fontSize:32,}]}>{'\u20B9'}</Text> : item.valueType} OFF
+                   </Text>
+                   <Text numberOfLines={2} style={styles.addsText}>
+                    {item.description}               
+                   </Text>
+                    <TouchableOpacity style={styles.btnBlock}>
+                    
+                      <Text style={styles.discountBtn}>Get Discount</Text>
+                  
+                  
+                   </TouchableOpacity>
                  </View>
-               </View>
-             </Col>
+               </Col>
              <Col style={{ marginLef:2,width: 120,}}>
                 <Image source={{uri: url.imageURL+item.offerImage}} style={{flex: 1, height: null, width: null,resizeMode:'contain'}} />
              </Col>
@@ -187,19 +186,19 @@ class Home extends React.Component {
             
           <Content enableOnAndroid style={appStyles.content}>
             {this.state.entries ?
-        <Card style={[appStyles.addBox,{height:'auto'}]}>
-           <Carousel
-              ref={(c) => { this._carousel = c; }}
-              loop={true}
-              autoplay={true}
-              data={this.state.entries}
-              renderItem={this._renderItem}
-              sliderWidth={Layout.window.width}
-              itemWidth={Layout.window.width}
-              autoplayInterval={3000}
-              autoplayDelay={3000}
-            />
-          </Card>
+              <Card style={[appStyles.addBox,{height:'auto'}]}>
+                 <Carousel
+                    ref={(c) => { this._carousel = c; }}
+                    loop={true}
+                    autoplay={false}
+                    data={this.state.entries}
+                    renderItem={this._renderItem}
+                    sliderWidth={Layout.window.width}
+                    itemWidth={Layout.window.width}
+                    autoplayInterval={3000}
+                    autoplayDelay={3000}
+                  />
+                </Card>
           : null }
 
           <View style={styles.ItemLayout}>
