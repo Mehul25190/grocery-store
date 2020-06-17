@@ -427,10 +427,13 @@ class MyAddress extends React.Component {
 
                   <View>
                     <Text style={{ marginBottom: 10, paddingLeft: 10, paddingRight: 10, fontFamily: 'Font-Medium', fontSize: 14 }}>
-                      {this.state.setDeliveryAddress.aptNo}, {this.state.setDeliveryAddress.buildingName}
+                      {(this.state.setDeliveryAddress.aptNo!="" ? this.state.setDeliveryAddress.aptNo + "," : "" )}, 
+                      {(this.state.setDeliveryAddress.buildingName!="" ? this.state.setDeliveryAddress.buildingName + "," : "")}
                     </Text>
                     <Text style={{ marginBottom: 10, paddingLeft: 10, paddingRight: 10, fontFamily: 'Font-Medium', fontSize: 14 }}>  
-                      {this.state.setDeliveryAddress.areaName}, {this.state.setDeliveryAddress.zipcode}, {this.state.setDeliveryAddress.cityName}
+                      {(this.state.setDeliveryAddress.areaName!="" ? this.state.setDeliveryAddress.areaName + ",": "")}, 
+                      {(this.state.setDeliveryAddress.zipcode!="" ?  this.state.setDeliveryAddress.zipcode+",":"")}, 
+                      {(this.state.setDeliveryAddress.cityName!=""? this.state.setDeliveryAddress.cityName : "")}
                     </Text> 
                   </View>
                 </Row>): null}

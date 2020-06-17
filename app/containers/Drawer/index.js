@@ -18,6 +18,7 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as userActions from "../../actions/user";
+import * as subscriptionAction from "../../actions/subscription";
 import imgs from '../../assets/images';
 import appStyles from '../../theme/appStyles';
 import { Screens, Colors, Layout } from '../../constants';
@@ -43,7 +44,7 @@ class Drawer extends React.Component {
     this.props.navigation.navigate(Screens.SignOutStack.route);
   }
   render() {
-    const { navigation, user, language, state } = this.props;
+    const { navigation, user, language, state, deliveryAddress } = this.props;
     const currentRoute = getCurrentRoute(state);
     const userName = this.props.user == null ? '' : this.props.user.name;
     const userEmail = this.props.user == null ? '' : this.props.user.email;
@@ -74,9 +75,9 @@ class Drawer extends React.Component {
             </Left>
             <Body>
             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
-              <Text style={appStyles.profileName} >Kirit k</Text>
-              <Text style={appStyles.profileEmail}>kirit.jbs@gmail.com</Text>
-              <Text style={appStyles.profileEmail}>987654210</Text>
+              <Text style={appStyles.profileName} >{this.props.user.user.email}</Text>
+              <Text style={appStyles.profileEmail}>{this.props.user.user.email}</Text>
+              <Text style={appStyles.profileEmail}>{this.props.user.user.mobile}</Text>
               </TouchableOpacity>
             </Body>
 
@@ -104,8 +105,8 @@ class Drawer extends React.Component {
             </Left>
             <Body>
              <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
-              <Text style={appStyles.userArea} >South Bopal,</Text>
-              <Text style={appStyles.userCity} >Ahmedabad - Gandhinagar,</Text>
+              <Text style={appStyles.userArea} >{deliveryAddress ? deliveryAddress.buildingName + ',' : ''}</Text>
+              <Text style={appStyles.userCity} >{deliveryAddress ? deliveryAddress.cityName + ' - ' + deliveryAddress.state : ''} </Text>
              </TouchableOpacity>  
             </Body>
 
@@ -165,10 +166,12 @@ class Drawer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.subscription.deviveryAddress);
   return {
     state: state,
     user: state.auth.user,
     language: state.auth.language,
+    deliveryAddress: state.subscription.deviveryAddress
   };
 };
 
