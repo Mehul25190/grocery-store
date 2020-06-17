@@ -19,6 +19,7 @@ import {ItemList,entries} from '../data/data';
 //import MasonryList from "react-native-masonry-list";
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
+import * as productActions from "../../actions/product";
 import * as subscriptionAction from "../../actions/subscription";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
@@ -41,12 +42,24 @@ class Home extends React.Component {
 
   componentDidMount(){
     this.setState({
-      entries:entries,  
+      entries:{},  
     });
     console.log("WIDTH="+Layout.window.width);
     //set array from category list from api to get category list
     this.props.getDeviveryAddress(this.props.user.user.id);
-    this.getCategoryList();    
+    this.getCategoryList();
+    this.getOfferList();    
+  }
+
+  getOfferList(){
+    this.props.fetchOffersOnLandingPage().then (res =>{
+      console.log(res);
+      if(res.status == "success"){
+        this.setState({entries: res.data.offerList})
+
+        console.log(res.data.offerList.length)
+      }
+    });
   }
 
   getCategoryList() {
@@ -77,7 +90,7 @@ class Home extends React.Component {
    renderItems = ({ item, index}) => (
     
     <TouchableOpacity onPress={() => this.onPressRecipe(item)}>
-       <View style={[index == 0 ? styles.ItemContainer : styles.ItemContainer, {backgroundColor:'#'+ Math.floor(100000 + Math.random() * 900000)+'70'}]}>
+       <View style={[index == 0 ? styles.ItemContainer : styles.ItemContainer, {backgroundColor:'#'+ Math.floor(100000 + Math.random() * 400000)+'30'}]}>
         <Image style={styles.photo} source={{uri: url.imageURL+item.imagePath} } />
         <Text style={styles.productTitle}>{item.categoryName}</Text>
        
@@ -95,25 +108,25 @@ class Home extends React.Component {
            <Col style={{}}>
                <View style={styles.discountBlock}>
                  <Text style={styles.addsSubTitle}>
-                     {item.small_title}
+                     {item.offerName}
                  </Text>
                  <Text style={styles.addsBigTitle}>
-                   {item.big_title}
+                   {item.value} {item.valueType} OFF
                  </Text>
                  <Text style={styles.addsText}>
-                {item.add_text}               
+                {item.description}               
                  </Text>
                  <View style={styles.btnBlock}>
                   <Button transparent tyle={{textAlign:'Left'}}>
                    <TouchableOpacity>
-                    <Text style={styles.discountBtn}>{item.button_text}</Text>
+                    <Text style={styles.discountBtn}>Get Discount</Text>
                     </TouchableOpacity>
                    </Button>
                  </View>
                </View>
              </Col>
              <Col style={{ marginLef:2,width: 120,}}>
-                <Image source={item.image} style={{flex: 1, height: null, width: null,resizeMode:'contain'}} />
+                <Image source={{uri: url.imageURL+item.offerImage}} style={{flex: 1, height: null, width: null,resizeMode:'contain'}} />
              </Col>
              
             </Grid>
@@ -173,13 +186,13 @@ class Home extends React.Component {
          
             
           <Content enableOnAndroid style={appStyles.content}>
+            {this.state.entries ?
         <Card style={[appStyles.addBox,{height:'auto'}]}>
            <Carousel
               ref={(c) => { this._carousel = c; }}
               loop={true}
               autoplay={true}
-
-              data={entries}
+              data={this.state.entries}
               renderItem={this._renderItem}
               sliderWidth={Layout.window.width}
               itemWidth={Layout.window.width}
@@ -187,11 +200,11 @@ class Home extends React.Component {
               autoplayDelay={3000}
             />
           </Card>
-          
+          : null }
 
           <View style={styles.ItemLayout}>
             <View style={styles.shopSubTitle}>
-              <Text style={styles.shopSubTitleText}>Shop by Categories</Text>
+              <Text style={styles.shopSubTitleText}>Upcoming Orders</Text>
             </View>
            { <FlatList 
                      vertical
@@ -243,6 +256,7 @@ const mapDispatchToProps = (dispatch) => {
       logout: () => dispatch(userActions.logoutUser()),
       showCategoryList: () => dispatch(userActions.showCategoryList()),
       getDeviveryAddress: (useId) => dispatch(userActions.getDeviveryAddress({userId: useId})),
+      fetchOffersOnLandingPage: () => dispatch(productActions.fetchOffers()),
    };
 };
 

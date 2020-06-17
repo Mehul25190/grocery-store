@@ -22,4 +22,5 @@ export default {
   deleteSubscription: 'order/deleteSubscription',
   fetchSubCategory: 'item/fetchSubCategory',
   searchItem: 'item/searchItem',
+  fetchOffersOnLandingPage: 'offer/fetchOffersOnLandingPage',
 }
