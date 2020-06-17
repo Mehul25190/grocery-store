@@ -320,10 +320,14 @@ class Profile extends React.Component {
 
                 >
                   <Picker.Item label="Select Ethencity" value="key0" />
-                  <Picker.Item label="Ahmedabad" value="Ahmedabad" />
-                  <Picker.Item label="Ranip" value="Ranip" />
-                  <Picker.Item label="Ghodasar" value="Ghodasar" />
-                  <Picker.Item label="Nikol" value="Nikol" />
+                  <Picker.Item label="Asians" value="Asians" />
+                  <Picker.Item label="Bengalis" value="Bengalis" />
+                  <Picker.Item label="Parsis" value="Parsis" />
+                  <Picker.Item label="Panjabis" value="Panjabis" />
+                  <Picker.Item label="Aryan" value="Aryan" />
+                  <Picker.Item label="Brahmin" value="Brahmin" />
+                  <Picker.Item label="Rajput" value="Rajput" />
+                  <Picker.Item label="Tamils" value="Tamils" />
 
                 </Picker>
                 <Image source={imgs.DownArrowColor} style={styles.DownArrow} />

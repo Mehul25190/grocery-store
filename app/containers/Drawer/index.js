@@ -166,7 +166,7 @@ class Drawer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.subscription.deviveryAddress);
+  //console.log(state.subscription.deviveryAddress);
   return {
     state: state,
     user: state.auth.user,
