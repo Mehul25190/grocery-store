@@ -24,13 +24,13 @@ export const signinWithMobile = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.signinMobile,  {payloads: payloads}).then(res => {
     
-    console.log("payload>>"+payloads);
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    console.log("sign in mobile");
+    //console.log("sign in mobile");
     console.log(res);
     if(res.status == 200){
-      if(res.data.status==200){
-        dispatch({ type: ActionTypes.SIGNIN, data: res.data.data.user });
+      if(res.data.status=="success"){
+        dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
+        //dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
       }
       return res.data
     } else {
@@ -156,6 +156,7 @@ export const saveUserProfile = payloads => dispatch => {
     //console.log(res);
       if(res.status == 200){
         //console.log(res.data.userProfile);
+        //dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
         return res.data
       } else {
         return res

@@ -51,11 +51,14 @@ class SignInMobile extends React.Component {
   }
 
   signinmobile(values, dispatch, props){
-    values.isEmail = 0; //sending extra parameter
+    
+    values.isEmail = "0";
+    //values.mobileNo = values.mobileNo.toString();
+    //sending extra parameter
     dispatch(userActions.signinWithMobile(values)).then(res => {
       console.log('back to sign in mobile');
       console.log(res);
-      if(res.status == 200){
+      if(res.status == "success"){
         showToast(res.message,"success");
         dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route }));
       }else{

@@ -18,10 +18,10 @@ class SignInFormMobile extends React.Component {
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
         <View ><Text style={styles.label}>Mobile Number</Text></View>
         <Field 
-          name="number" 
+          name="mobileNo" 
           component={InputBox} 
           keyboardType={'numeric'}
-          validate=''
+          validate=''   
         />
       </Form>
     )
