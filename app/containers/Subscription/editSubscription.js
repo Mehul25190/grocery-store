@@ -51,7 +51,7 @@ const DurationList =[
  
 ];
 
-class SubscribeOrder extends React.Component {
+class editSubscribe extends React.Component {
 
   constructor(props) {
     super(props);
@@ -64,16 +64,15 @@ class SubscribeOrder extends React.Component {
       time: '',
       //qty: item.quantity && mode != 'save' ? item.quantity : 1,
       qty: 1,
-      duration: 15,
+      duration: item.duration ? item.duration : 15,
       isChecked:true,
       itemId: item.id,
       subscriptionDtls: item, 
       subscriptionDtlsImg: {},
-      startDate: moment(new Date(), "MM/DD/YYYY"),
-      endDate: moment(new Date(), "MM/DD/YYYY").add(15, 'days'), 
-      displaystartDate: moment(new Date()).format('DD MMM YYYY'),
+      startDate: item.startDate ? moment(item.startDate).format('MM/DD/YYYY') : '',
+      endDate: item.endDate ? moment(item.endDate).format('MM/DD/YYYY') : '', 
+      displaystartDate: item.startDate ?moment(item.startDate).format('DD MMM YYYY') : moment(new Date()).format('DD MMM YYYY'),
       mode: mode ? mode : 'save',
-      excludeWeekend: 0,
     };
     this.setStartDate = this.setStartDate.bind(this);
     this.setEndDate = this.setEndDate.bind(this);
@@ -101,14 +100,12 @@ class SubscribeOrder extends React.Component {
 
    onDurationValueChange(value) {
     this.setState({
-      duration: value,
-      endDate: moment(this.startDate).add(value, 'days')
+      duration: value
     });
   }
 
   setStartDate(value){
-    
-    this.setState({startDate: value, displaystartDate: moment(value).format('DD MMM YYYY'), endDate: moment(value).add(this.state.duration, 'days')})
+    this.setState({startDate: value, displaystartDate: moment(value).format('DD MMM YYYY')})
   }
 
   setEndDate(value){
@@ -132,18 +129,21 @@ class SubscribeOrder extends React.Component {
       endDate: this.state.endDate,
       duration: this.state.duration,
       frequency: 'daily',
-      excludeWeekend: this.state.excludeWeekend,
+      excludeWeekend: 1,
       isActive: 1,
       quantity: this.state.qty
     };
-   
-    this.props.saveSubscribeOrderDetails(data).then(res=> {
-        if(res.status == 'success'){
-          this.props.navigation.navigate(Screens.SubscribeSuccess.route, {subscriptionDate: this.state.displaystartDate})
-        }else{
-          showToast("Please enter proper value","danger");
-        }
-    });
+    if(this.state.mode == 'update'){
+      alert('Need Update API')
+    }else{
+      this.props.saveSubscribeOrderDetails(data).then(res=> {
+          if(res.status == 'success'){
+            this.props.navigation.navigate(Screens.SubscribeSuccess.route)
+          }else{
+            showToast("Please enter proper value","danger");
+          }
+      });
+    }
   }
 
   render(){
@@ -219,7 +219,8 @@ class SubscribeOrder extends React.Component {
            <Item  success style={{ marginLeft:Layout.indent, marginRight:Layout.indent}}>
             <Label style={styles.datelabel}>Start Date</Label>
             <DatePicker
-            minDate={new Date()}
+            defaultDate={this.state.startDate ? this.state.startDate : new Date()}
+            minimumDate={new Date()}
             locale={"en"}
             format="MM/DD/YYYY"
             onDateChange={this.setStartDate}
@@ -274,7 +275,8 @@ class SubscribeOrder extends React.Component {
            <Item  success style={{ marginLeft:Layout.indent, marginRight:Layout.indent}}>
            <Label style={styles.datelabel}>End Date</Label>
             <DatePicker
-            minDate={new Date()}
+            defaultDate={this.state.endDate ? this.state.endDate : new Date()}
+            minimumDate={new Date()}
             locale={"en"}
             format="MM/DD/YYYY"
             onDateChange={this.setEndDate}
@@ -319,8 +321,7 @@ class SubscribeOrder extends React.Component {
                style={styles.checkboxStyle}
                onClick={()=>{
                   this.setState({
-                      Checked:!this.state.Checked,
-                      excludeWeekend: this.state.Checked
+                      Checked:!this.state.Checked
                   })
                 }}
               checkedImage={<Icon name='check' type='AntDesign' style={{color:Colors.primary}} />}
@@ -415,4 +416,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(SubscribeOrder);
+export default connect(mapStateToProps, mapDispatchToProps)(editSubscribe);

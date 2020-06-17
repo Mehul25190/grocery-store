@@ -59,7 +59,7 @@ class ProductList extends React.Component {
     const categoryId = this.props.navigation.getParam("para_categoryId");
     this.state = {
       dataSource: productList,
-      value: 0,
+      value: 1,
       categoryId: this.props.navigation.getParam("para_categoryId"),
       productData: [],
       subCategory: [],
@@ -106,14 +106,19 @@ class ProductList extends React.Component {
   }
 
   subCategoryList() {
-    console.log(this.categoryId);
+    //console.log(this.categoryId);
     this.props
       .fetchSubCategory(this.props.navigation.getParam("para_categoryId"))
       .then((res) => {
-        console.log("sucess return", res.data.subCategory);
+        //console.log("sucess return", res.data.subCategory);
         if (res.status == "success") {
-          this.setState({ subCategory: res.data.subCategory, selectSubCat: res.data.subCategory[0].id });
-          this.productItemList(res.data.subCategory[0].id, 0);
+          if(res.data.subCategory.length > 0){
+            this.setState({ subCategory: res.data.subCategory, selectSubCat: res.data.subCategory[0].id });
+            this.productItemList(res.data.subCategory[0].id, 0);
+          }else{
+            showToast("No product found", "danger");
+             this.props.navigation.navigate(Screens.Home.route)
+          }
           //console.log('set return');
           //console.log(res.data.itemList);
         } else {

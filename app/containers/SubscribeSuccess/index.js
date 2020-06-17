@@ -26,21 +26,37 @@ class SubscribeSuccess extends React.Component {
   }
   
   openControlPanel = () => {
-      this.props.navigation.goBack(); // open drawer
+      this.props.navigation.navigate(Screens.Subscription.route) // open drawer
   }
 
   render(){
     return (
       <Container style={appStyles.container}>
        
-           <Headers
-              IconLeft='arrowleft'
-              onPress={() => this.openControlPanel()}
-              IconRightS=''
-              IconRightF='search'
-              bgColor='transparent'
-              Title='Thank You!'
+           <Header style={[appStyles.headerStyle]}>
+        <Left style={appStyles.headerLeft} icon>
+          <Button
+            transparent
+            style={appStyles.menuBtn}
+            onPress={() => this.openControlPanel()}
+          >
+            <Icon
+              style={appStyles.menuBar}
+              size={30}
+              color={Colors.white}
+              type="AntDesign"
+              name="arrowleft"
             />
+          </Button>
+        </Left>
+        <Body>
+         <Text style={{ width: 100, backgroundColor: "transparent" }}>
+            <Text style={appStyles.headerTitle}>Thank you</Text>
+          </Text>
+        </Body>
+        <Right></Right>
+
+        </Header>
 
           <Content enableOnAndroid>
              <Card style={[appStyles.addBox,{height:'auto',marginTop:15, position:'relative', }]}>
@@ -53,7 +69,7 @@ class SubscribeSuccess extends React.Component {
                   </View>
                    <View style={{marginBottom:5}}>
                    <Text style={styles.SuccessText}>Your subscription will start from</Text>
-                    <Text style={{fontWeight:'bold',textAlign:'center'}}> May 25 2020</Text>
+                    <Text style={{fontWeight:'bold',textAlign:'center'}}> {this.props.navigation.getParam('subscriptionDate')}</Text>
                   </View>
                    <View style={{marginBottom:5}}>
                     <Text style={styles.SuccessText}>Please recharge your foodapp wallet for uninterprited serivices.</Text>
