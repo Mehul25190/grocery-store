@@ -54,11 +54,14 @@ const DurationList =[
 class SubscribeOrder extends React.Component {
 
   constructor(props) {
+
     super(props);
     let item = this.props.navigation.getParam('item')
     let mode = this.props.navigation.getParam('mode')
 
      this.state = {
+       radioBtnsData: ['Daily', 'Alternate Days'],
+        checked: 0,
        selected: false,
       date: '',
       time: '',
@@ -292,24 +295,33 @@ class SubscribeOrder extends React.Component {
         <View style={[styles.HoriLine,{marginTop:10}]}>
           <Text></Text>
         </View>
-       
-         <ListItem noBorder icon>
-          <Left>
-           <Radio type="radio" selected={this.state.selected } color={Colors.primary} selectedColor={Colors.primary}  onPress={() => this.setState({ selected: !this.state.selected })} />
-          </Left>
-           <Body style={{justifyContent:'center',alignItems:'flex-start'}}>
-              <View>
-              <Text style={[styles.bodyText, styles.bodyGreen]}>Daily   </Text>
-              </View> 
-                       
-          </Body>
-          <Right>
-           <Radio type="radio" selected={this.state.selected } color={Colors.primary} selectedColor={Colors.primary}  onPress={() => this.setState({ selected: !this.state.selected })}  />
-             <View>
-              <Text style={[styles.bodyText,styles.bodyGreen]}>Alternate Days   </Text>
-              </View> 
-          </Right>
-        </ListItem>
+        <Grid>
+          <Row style={{ flex: 1, marginLeft:Layout.indent, marginTop:5, marginBottom:5, flexDirection: 'row'}}>
+        
+        {this.state.radioBtnsData.map((data, key) => {
+
+    return (  <View key={key}>       
+            {this.state.checked == key ?
+            
+                <Col style={[styles.btn,{}]}>
+                    <Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />
+                    <Text style={[styles.bodyText, styles.bodyGreen]}>{data}</Text>
+                </Col>
+             
+                :
+              
+                <Col onPress={()=>{this.setState({checked: key})}} style={[styles.btn,{}]}>
+                    <Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />
+                    <Text style={[styles.bodyText, styles.bodyGreen]}>{data}</Text>
+                </Col>
+              
+
+            }
+          </View>  
+    )
+})}
+       </Row>
+        </Grid>  
          <View style={styles.HoriLine}>
               <Text></Text>
             </View>
