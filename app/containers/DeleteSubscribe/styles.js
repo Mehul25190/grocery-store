@@ -51,7 +51,7 @@ export default {
     color:Colors.primary,
     lineHeight:20,
     fontSize:16,
-    
+    paddingLeft: 15,
 
   },
 rateItems:{
@@ -119,7 +119,14 @@ borderColor:Colors.primary
   flex:1,
   resizeMode:'contain'
  },
-
+ btn:{
+      flexDirection: 'row',
+      flex:0,
+      paddingBottom:5,
+  },
+  img:{
+       color:Colors.primary
+  },
 
  
 

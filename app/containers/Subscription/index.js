@@ -40,7 +40,6 @@ class SubscribeDetail extends React.Component {
     this._unsubscribe = this.props.navigation.addListener('willFocus', () => {
       this.mySubscriptionList();
     });
-    console.log('dsadadads');
     this.mySubscriptionList();
 
   }
@@ -66,8 +65,13 @@ class SubscribeDetail extends React.Component {
     });
   }
 
+  componentWillUnmount(){
+    this._unsubscribe.remove();
+  }
+
   renderItems = ({ item, index}) => {
-    if(item.status != 'CAN'){
+    //console.log(index, item)
+    if(item.status.trim() != 'CAN')  {
     return (
     <View>
       <Card style={[appStyles.addBox,{height:'auto'},styles.paddingBox]}>
@@ -89,7 +93,7 @@ class SubscribeDetail extends React.Component {
                  <Text style={styles.AmuText}>{item.brandName}</Text>
                  <Text style={[styles.AmuText,styles.AmuTextTitle]}>{item.itemName}</Text>
                  <Text style={styles.AmuText}>{item.weight} {item.uom}</Text>
-                 <Text style={styles.AmuText}>Qty: {item.quantity}</Text>
+                 {/*<Text style={styles.AmuText}>Qty: {item.quantity}</Text>*/}
                  <Text style={styles.AmuText}>MRP: <Text style={{}}>{'\u20B9'}</Text> {item.price}</Text>
                 </View>
               </Col>
@@ -103,7 +107,7 @@ class SubscribeDetail extends React.Component {
           <Col style={styles.BtnCol}>
          
             <Button primary full style={styles.modifyBtn}>
-             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.SubscribeOrder.route, {item: item, mode: 'update'})}>
+             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.ModifySubscription.route, {item: item, mode: 'update'})}>
                <Icon name='edit' type='MaterialIcons' style={styles.modifyIcon} />
               <Text style={styles.btnText}> Modify </Text>
                </TouchableOpacity>
@@ -142,6 +146,7 @@ class SubscribeDetail extends React.Component {
 
   render(){
     const { navigation, mySubscription } = this.props;
+    console.log(mySubscription)
     const getItem = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
@@ -164,6 +169,7 @@ class SubscribeDetail extends React.Component {
             </View>
             <FlatList 
                vertical
+               initialNumToRender={mySubscription.length}
                showsVerticalScrollIndicator={false}
                numColumns={1}
                data={mySubscription}

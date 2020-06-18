@@ -57,67 +57,54 @@ class SubscribeOrder extends React.Component {
 
     super(props);
     let item = this.props.navigation.getParam('item')
-    let mode = this.props.navigation.getParam('mode')
+    let qty = this.props.navigation.getParam('qty')
 
      this.state = {
-       radioBtnsData: ['Daily', 'Alternate Days'],
-        checked: 0,
-       selected: false,
+      radioBtnsData: ['Daily', 'Alternate Days'],
+      checked: 0,
+      selected: false,
+      excludeWeekend: 0,
       date: '',
       time: '',
       //qty: item.quantity && mode != 'save' ? item.quantity : 1,
-      qty: 1,
+      qty: qty ? qty : 1,
       duration: 15,
       isChecked:true,
       itemId: item.id,
       subscriptionDtls: item, 
       subscriptionDtlsImg: {},
-      startDate: moment(new Date(), "MM/DD/YYYY"),
-      endDate: moment(new Date(), "MM/DD/YYYY").add(15, 'days'), 
+      startDate: moment(new Date()).format('MM/DD/YYYY'),
+      endDate: moment(new Date(), "MM/DD/YYYY").add(15, 'days').format('MM/DD/YYYY'), 
       displaystartDate: moment(new Date()).format('DD MMM YYYY'),
-      mode: mode ? mode : 'save',
       excludeWeekend: 0,
     };
     this.setStartDate = this.setStartDate.bind(this);
     this.setEndDate = this.setEndDate.bind(this);
 
   }
-   componentDidMount() {
-    /*
-    this.props.getItemDetail(this.state.itemId).then(res=>{
-        if(res.status == "success"){
-          if(res.data.item.length > 0){
-            this.setState({subscriptionDtls: res.data.item[0], subscriptionDtlsImg: res.data.itemImages[0]});
-          }else{
-            showToast("Not found subscription detail","danger");
-            this.props.navigation.navigate(Screens.ProductList.route);
-            
-          }
-        }
-    });
 
-    */
+  componentDidMount() {
+  
   }
-    openControlPanel = () => {
-      this.props.navigation.goBack(); // open drawer
-    };
 
-   onDurationValueChange(value) {
+  openControlPanel = () => {
+    this.props.navigation.goBack(); // open drawer
+  };
+
+  onDurationValueChange(value) {
     this.setState({
       duration: value,
-      endDate: moment(this.startDate).add(value, 'days')
+      endDate: moment(this.startDate).add(value, 'days').format('MM/DD/YYYY')
     });
   }
 
   setStartDate(value){
-    
-    this.setState({startDate: value, displaystartDate: moment(value).format('DD MMM YYYY'), endDate: moment(value).add(this.state.duration, 'days')})
+    this.setState({startDate: value, displaystartDate: moment(value).format('DD MMM YYYY'), endDate: moment(value).add(this.state.duration, 'days').format('MM/DD/YYYY')})
   }
 
   setEndDate(value){
     this.setState({endDate: moment(value).format('MM/DD/YYYY')})
   }
-
 
   subscribeSubmitHandler(){
     if(this.state.startDate == ''){
@@ -134,12 +121,12 @@ class SubscribeOrder extends React.Component {
       startDate: this.state.startDate,
       endDate: this.state.endDate,
       duration: this.state.duration,
-      frequency: 'daily',
+      frequency: this.state.checked == 0  ? 'daily' : 'alternate',
       excludeWeekend: this.state.excludeWeekend,
       isActive: 1,
       quantity: this.state.qty
     };
-   
+
     this.props.saveSubscribeOrderDetails(data).then(res=> {
         if(res.status == 'success'){
           this.props.navigation.navigate(Screens.SubscribeSuccess.route, {subscriptionDate: this.state.displaystartDate})
@@ -222,7 +209,7 @@ class SubscribeOrder extends React.Component {
            <Item  success style={{ marginLeft:Layout.indent, marginRight:Layout.indent}}>
             <Label style={styles.datelabel}>Start Date</Label>
             <DatePicker
-            minDate={new Date()}
+            minDate={moment(new Date()).format('MM/DD/YYYY')}
             locale={"en"}
             format="MM/DD/YYYY"
             onDateChange={this.setStartDate}
@@ -277,7 +264,7 @@ class SubscribeOrder extends React.Component {
            <Item  success style={{ marginLeft:Layout.indent, marginRight:Layout.indent}}>
            <Label style={styles.datelabel}>End Date</Label>
             <DatePicker
-            minDate={new Date()}
+            minDate={this.state.endDate}
             locale={"en"}
             format="MM/DD/YYYY"
             onDateChange={this.setEndDate}
@@ -329,15 +316,14 @@ class SubscribeOrder extends React.Component {
           <Left>
           <CheckBox
                style={styles.checkboxStyle}
-               onClick={()=>{
+               onClick={(value)=>{
                   this.setState({
-                      Checked:!this.state.Checked,
-                      excludeWeekend: this.state.Checked
+                      excludeWeekend:!this.state.excludeWeekend ? 1 : 0,
                   })
                 }}
               checkedImage={<Icon name='check' type='AntDesign' style={{color:Colors.primary}} />}
               unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons' style={{color:'transparent'}} /> }
-              isChecked={this.state.Checked}
+              isChecked={this.state.excludeWeekend}
             />
             
           </Left>

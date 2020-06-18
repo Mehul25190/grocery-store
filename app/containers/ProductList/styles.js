@@ -338,7 +338,7 @@ categoryStyles: {
    proPrice:{
     marginLeft:1,
     fontSize:18,
-    textDecoration:'none',
+    //textDecoration:'none',
     // backgroundColor:'#ddd',
     flex:0,
     fontFamily:'Font-Medium'

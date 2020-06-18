@@ -65,6 +65,9 @@ export default {
     type: 'Feather',
     label: 'My Subscription',
   },
+  ModifySubscription: {
+    route: 'ModifySubscription',
+  },
   ProductDetail:{
     route: 'ProductDetail',
   },

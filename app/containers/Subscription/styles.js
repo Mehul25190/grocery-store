@@ -348,7 +348,15 @@ addressText:{
 },
 addressIcon:{
   fontSize:22
-}
+},
+img:{
+       color:Colors.primary
+    },
+    btn:{
+        flexDirection: 'row',
+        flex:0,
+       width:150
+    },
 
 
 
