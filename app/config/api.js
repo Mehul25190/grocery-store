@@ -23,5 +23,6 @@ export default {
   fetchSubCategory: 'item/fetchSubCategory',
   searchItem: 'item/searchItem',
   fetchOffersOnLandingPage: 'offer/fetchOffersOnLandingPage',
-  fetchSubscriptionDtlsById: 'order/fetchSubscriptionDtlsById'
+  fetchSubscriptionDtlsById: 'order/fetchSubscriptionDtlsById',
+  viewCart: 'userCart/viewCart',
 }
