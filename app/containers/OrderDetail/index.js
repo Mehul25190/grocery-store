@@ -63,13 +63,13 @@ class OrderDetail extends React.Component {
     //alert(para_orderId);
     this.props.getOrderDetails(para_orderId).then (res =>{
       
-      console.log(res);
+      //console.log(res);
         if(res.status == "success"){
-          console.log(res.data.orderDetails["2020-06-17"]);
-              this.setState({ orderData:res.data.orderDetails["2020-06-17"] });
+          //console.log(res.data.orderDetails["2020-06-17"]);
+              this.setState({ orderData:res.data.orderDetails});
               this.setState({ orderItem:res.data.orderItems });
-          console.log(this.state.orderData); 
-          console.log(this.state.orderData[0].orderNumber);    
+          //console.log(this.state.orderData); 
+          //console.log(this.state.orderData[0].orderNumber);    
               
         } else {
               console.log("something wrong with varification call");

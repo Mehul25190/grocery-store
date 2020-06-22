@@ -154,7 +154,7 @@ class MyOrder extends React.Component {
                     <Body style={styles.bodyText}>
                       <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage(item)}>
                         {/* <Text style={styles.proTitle}>{item.proName}</Text>*/}
-                        <Text numberOfLines={1} style={styles.proTitle}>{item.orderNumber}| {item.id}</Text>
+                        <Text numberOfLines={1} style={styles.proTitle}>{item.orderNumber}</Text>
                         <Text style={styles.paidTime}>{this.dateFormate(item.orderDate)} {item.orderTime}</Text>
 
                       </TouchableOpacity>
