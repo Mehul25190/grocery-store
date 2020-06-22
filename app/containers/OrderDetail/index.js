@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, FlatList} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
-import { Logo, Statusbar, Headers } from '../../components';
+import { Logo, Statusbar, Headers, DeliveryAddress } from '../../components';
 import imgs from '../../assets/images';
 import {
   Container,
@@ -13,6 +13,7 @@ import {
   Text,
   Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem
 } from 'native-base';
+import url from "../../config/api";
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
@@ -28,12 +29,15 @@ class OrderDetail extends React.Component {
       //default value of the date time
       date: '',
        time: '',
+       orderData: [],  
+       orderItem:[],
     };
+    
 
   }
    componentDidMount() {
     var that = this;
- var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
+    var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     var date = new Date().getDate(); //Current Date
       var month = monthNames[new Date().getMonth()]; //Current Month
@@ -46,6 +50,37 @@ class OrderDetail extends React.Component {
       date:   date + ' ' + month + ' ' + year ,
       time:   hours + ':' + min 
     });
+
+    const { navigation } = this.props;
+    const para_orderId = navigation.getParam('orderId');
+
+    //alert(para_orderId);
+    //get user's order List
+    this.getOrderDetails(para_orderId);
+  }
+
+  getOrderDetails(para_orderId) {
+    //alert(para_orderId);
+    this.props.getOrderDetails(para_orderId).then (res =>{
+      
+      //console.log(res);
+        if(res.status == "success"){
+          //console.log(res.data.orderDetails["2020-06-17"]);
+              this.setState({ orderData:res.data.orderDetails});
+              this.setState({ orderItem:res.data.orderItems });
+          //console.log(this.state.orderData); 
+          //console.log(this.state.orderData[0].orderNumber);    
+              
+        } else {
+              console.log("something wrong with varification call");
+              showToast("Something wrong with Server response","danger");
+        }
+         
+      })
+      .catch(error => {
+          console.log('Error messages returned from server', error);
+          showToast("Error messages returned from server","danger");
+      });
   }
     openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
@@ -56,9 +91,28 @@ class OrderDetail extends React.Component {
     this.props.navigation.navigate('CancelOrder', { item });
   };
 
+  renderItems = ({ item, index }) => (
+    <ListItem style={styles.ListItems} noBorder>
+                <Left style={styles.ListLeft}>
+                     <Image style={styles.proImage} source={{ uri: url.imageURL + item.imagePath }} />
+                </Left>
+              
+                <Body style={styles.bodyText}>
+                    <Text  style={[styles.proTitle,{  fontFamily:'Font-Medium'}]}>{item.itemName} </Text>
+  <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
+                 </Body>
+                 
+                <Right style={styles.ListRight}>
+                  <View>
+  <Text style={styles.proPrice}>{'\u20B9'} {item.itemPrice}</Text>
+                                   
+                  </View>
+                </Right>
+         </ListItem>
+  );
+
   render(){
-    const { navigation } = this.props;
-    const getItem = navigation.getParam('item');
+    
     return (
       <Container style={appStyles.container}>
 
@@ -71,8 +125,11 @@ class OrderDetail extends React.Component {
               Title='View Order Details'
              />
       
-          <Content enableOnAndroid>
-       
+      <Content enableOnAndroid style={appStyles.content}>
+          {this.props.isLoading ? (
+            <Spinner color={Colors.secondary} style={appStyles.spinner} />
+          ) : (
+       <View>
         <Card style={[appStyles.addBox,{height:'auto'},styles.orderBox]}>
           <Grid >
             <Row style={styles.orderRow}>
@@ -80,7 +137,7 @@ class OrderDetail extends React.Component {
                 <Text style={styles.orderTitleText}>Order Date</Text>
               </Col>
               <Col style={styles.orderValue}>
-               <Text style={styles.orderValText}>{this.state.date}</Text>
+               <Text style={styles.orderValText}>{(this.state.orderData.length >0 )? this.state.orderData[0].orderDate : ""}</Text>
               </Col>
             </Row>
              <Row style={styles.orderRow}>
@@ -88,7 +145,7 @@ class OrderDetail extends React.Component {
                 <Text style={styles.orderTitleText}>Order#</Text>
               </Col>
               <Col style={styles.orderValue}>
-                <Text style={styles.orderValText}>123-7894561</Text>
+                <Text style={styles.orderValText}>{(this.state.orderData.length >0 )? this.state.orderData[0].orderNumber : ""}</Text>
               </Col>
             </Row>
              <Row style={styles.orderRow}>
@@ -96,45 +153,19 @@ class OrderDetail extends React.Component {
                 <Text style={styles.orderTitleText}>Order Total</Text>
               </Col>
               <Col style={styles.orderValue}>
-                <Text style={styles.orderValText}><Text style={{fontFamily:'Roboto',color:'gray'}}>{'\u20B9'}</Text> 500.00</Text>
+                <Text style={styles.orderValText}>
+                  <Text style={{fontFamily:'Roboto',color:'gray'}}>{'\u20B9'}
+                  </Text>{(this.state.orderData.length >0 )? this.state.orderData[0].orderAmt : ""}</Text>
               </Col>
             </Row>
           </Grid>
 
          
         </Card>
-        
-         <View >
-          <Text style={styles.title}>Delivery Address </Text>
-         </View>
-        <Card style={[appStyles.addBox,styles.deliveryAddress]}>
-       
-          <ListItem  noBorder icon style={{ marginLeft: Layout.indent,}}>
-                <Left >
-                  <Icon name="location-on" 
-                   type="MaterialIcons"
-                   
-                    style={[appStyles.IconStyle,styles.addressIcon]}
-                    />
-                </Left>
-                <Body>
-                  <Text style={[appStyles.userArea,styles.addressText]} >South Bopal,</Text>
-                  <Text style={[appStyles.userCity,styles.addressText]} >Ahmedabad - Gandhinagar,</Text>
-                 
-                </Body>
 
-                <Right>
-                 <TouchableOpacity  onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
-                  <Icon name="edit" type="MaterialIcons"
-                 
-                    style={[appStyles.IconStyle,styles.addressIcon]}
-                    />
-                </TouchableOpacity>
-                </Right>
-              </ListItem>
-          
-      
-          </Card>
+        
+         <DeliveryAddress />
+        
      
           <Card style={[appStyles.addBox,{height:'auto',borderBottomWidth:1},styles.orderBox]}>
           <View>
@@ -144,24 +175,19 @@ class OrderDetail extends React.Component {
             <Text style={styles.deliveryTitle}>Delivery Estimate: </Text>
             <Text style={styles.deliveryDate}>Monday {this.state.date} </Text>
           </View>
+        
+          <ScrollView>
+                <FlatList
+                  
+                  initialScrollIndex={this.currentIndex}
+                  showsHorizontalScrollIndicator={false}
+                  data={this.state.orderItem}
+                  renderItem={this.renderItems}
+                  keyExtractor={(item) => `${item.itemName}`}
+                />
+              </ScrollView>
 
-          <ListItem style={styles.ListItems} noBorder>
-                <Left style={styles.ListLeft}>
-                     <Image style={styles.proImage} source={getItem.image} />
-                </Left>
-              
-                <Body style={styles.bodyText}>
-                    <Text  style={[styles.proTitle,{  fontFamily:'Font-Medium'}]}>Paid for {getItem.proName}</Text>
-                    <Text style={styles.QtyPro}>Qty: 2</Text>
-                 </Body>
-                 
-                <Right style={styles.ListRight}>
-                  <View>
-                  <Text style={styles.proPrice}>{'\u20B9'} {getItem.price}</Text>
-                                   
-                  </View>
-                </Right>
-         </ListItem>
+          
 
          
         </Card>
@@ -177,8 +203,8 @@ class OrderDetail extends React.Component {
 
           </TouchableOpacity>
         </Card>
-
-        
+           
+        </View> )}
           </Content>
         
       </Container>
@@ -189,11 +215,13 @@ class OrderDetail extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    isLoading: state.common.isLoading,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+      getOrderDetails: (orderId) => dispatch(userActions.getOrderDetailById({id: orderId})),
       logout: () => dispatch(userActions.logoutUser()),
    };
 };

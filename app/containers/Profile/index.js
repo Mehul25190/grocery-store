@@ -205,7 +205,11 @@ class Profile extends React.Component {
           Title='Update Profile'
 
         />
-        <Content enableOnAndroid>
+       <Content enableOnAndroid style={appStyles.content}>
+          {this.props.isLoading ? (
+            <Spinner color={Colors.secondary} style={appStyles.spinner} />
+          ) : (
+            <View>
 
           <Form>
             <Grid>
@@ -402,7 +406,8 @@ class Profile extends React.Component {
 
           </Form>
 
-
+         </View>
+          )}           
         </Content>
 
       </Container>
@@ -413,6 +418,7 @@ class Profile extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    isLoading: state.common.isLoading,
   };
 };
 

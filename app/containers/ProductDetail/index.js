@@ -21,7 +21,6 @@ import {productList,productImages} from '../data/data';
 import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
 import { AirbnbRating } from 'react-native-ratings';
-
 import Carousel,{Pagination } from 'react-native-snap-carousel';
 
 import url from '../../config/api';
@@ -62,22 +61,19 @@ class ProductDetail extends React.Component {
   }
 
    componentDidMount() {
-    var that = this;
-    var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    var date = new Date().getDate(); //Current Date
-    var month = monthNames[new Date().getMonth()]; //Current Month
-    var year = new Date().getFullYear(); //Current Year
-    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
-
-    that.setState({
-      productImages:productImages,
-      //Setting the value of the date time
-      date:   date + ' ' + month + ' ' + year ,
-      time:   hours + ':' + min 
+    this.setState({
+      productImages:this.props.ProductDetail.itemImages,
+    });
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.setState({
+        productImages:this.props.ProductDetail.itemImages,
+      });
     });
    
+  }
+
+  componentWillUnmount() {
+    this.focusListener.remove();
   }
 
   openControlPanel = () => {
@@ -94,9 +90,10 @@ class ProductDetail extends React.Component {
     this.setState({ selectedIndex });
   };   
   _renderItem = ({item, index}) => {
+    //console.log('item', item)
         return (
            <View>
-            <Image source={imgs.amulMoti} style={styles.amulMoti} />
+            <Image source={{ uri: url.imageURL + item.imagePath }} style={styles.amulMoti} />
           </View>
           
         );
@@ -131,8 +128,6 @@ class ProductDetail extends React.Component {
 
     const { navigation, ProductDetail } = this.props;
     console.log(ProductDetail);
-
-    const getItem = navigation.getParam('item');
     const { selectedIndex } = this.state;
     return (
       <Container style={appStyles.container}>
@@ -185,14 +180,13 @@ class ProductDetail extends React.Component {
               ref={(c) => { this._carousel = c; }}
               loop={true}
               autoplay={true}
-
-              data={productImages}
+              data={ProductDetail.itemImages}
               renderItem={this._renderItem}
               sliderWidth={Layout.window.width}
               itemWidth={Layout.window.width}
               autoplayInterval={3000}
               autoplayDelay={3000}
-                 onSnapToItem={(index) => this.setState({ activeSlide: index }) }
+              onSnapToItem={(index) => this.setState({ activeSlide: index }) }
             />
             { this.pagination }
              </Col>   

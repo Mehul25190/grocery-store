@@ -20,5 +20,10 @@ export const initialState = {
 	},
 	product: {
 		productDetail: {},
-	}
+	},
+	cart: {
+		cartDetail: {},
+		totalItem: 0,
+		totalAmount: 0,
+	},
 };

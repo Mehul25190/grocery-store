@@ -66,6 +66,7 @@ class ProductList extends React.Component {
       selectSubCat: null,
       text: "",
       flalistIndex: 0,
+      buyOndeSelected: [],
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
@@ -106,7 +107,7 @@ class ProductList extends React.Component {
   }
 
   subCategoryList() {
-    //console.log(this.categoryId);
+    //console.log('sub category call');
     this.props
       .fetchSubCategory(this.props.navigation.getParam("para_categoryId"))
       .then((res) => {
@@ -149,10 +150,10 @@ class ProductList extends React.Component {
       });
   }
 
-  productItemList(catId, subCatId,index) {
-    //this.currentIndex = index-3;
-    console.log(catId);
+  productItemList(catId, subCatId, index) {
+    this.currentIndex = index-1;
     //catId = this.props.navigation.getParam("para_categoryId") ? this.props.navigation.getParam("para_categoryId") : this.state.selectSubCat;
+    this.setState({flalistIndex: index})
     this.props
       .productItemList(catId, subCatId)
       .then((res) => {
@@ -160,7 +161,8 @@ class ProductList extends React.Component {
         if (res.status == "success") {
           if(res.data.itemList.length > 0){
             this.setState({ productData: res.data.itemList, selectSubCat: subCatId });
-            this.courseFilterArr = res.data.itemList;         
+            this.courseFilterArr = res.data.itemList;   
+
           }else{
             this.courseFilterArr = [];
             this.setState({ productData: [], selectSubCat: subCatId });
@@ -172,6 +174,10 @@ class ProductList extends React.Component {
       .catch((error) => {
         showToast("Error messages returned from server", "danger");
       });
+
+      //this.refs.flatListRef.scrollToIndex({animated: true,index:5})
+
+    console.log(catId);
   }
   //func call when click item category
   _itemChoose(item) {
@@ -214,7 +220,26 @@ class ProductList extends React.Component {
     });
   }
 
+  buyOncePressHnadler(productId, value){
+    console.log(productId, value)
+    if(value == 0 || value == 3){
+      var array = [...this.state.buyOndeSelected]; // make a separate copy of the array
+      var index = array.indexOf(productId)
+      if (index !== -1) {
+        array.splice(index, 1);
+        this.setState({buyOndeSelected: array});
+      }else{
+        array.push(productId)
+        this.setState({buyOndeSelected: array});
+      }
+    }
+    //this.setState({value: value})
+  }
+
+
   render() {
+
+    console.log(this.state.buyOndeSelected)
     const { navigation } = this.props;
     const getTitle = navigation.getParam("item");
     const categoryName = this.props.navigation.getParam("categoryName");
@@ -238,7 +263,8 @@ class ProductList extends React.Component {
               <ScrollView>
                 <FlatList
                   horizontal
-                  initialScrollIndex={this.currentIndex}
+                  initialScrollIndex={this.state.flalistIndex}
+                  onScrollToIndexFailed={()=>{}}
                   showsHorizontalScrollIndicator={false}
                   data={this.state.subCategory}
                   renderItem={this.renderItems}
@@ -282,9 +308,7 @@ class ProductList extends React.Component {
                           {item.discountedPrice > 0 && item.discountedPrice < item.price  ? (
                             <View style={{ flexDirection: "row" }}>
                               <Text style={styles.proPriceStrike}>
-                                <Text
-                                  style={(appStyles.currency, { fontSize: 18 })}
-                                >
+                                <Text style={(appStyles.currency, { fontSize: 18 })}>
                                   {"\u20B9"}
                                 </Text>{" "}
                                 {item.price}
@@ -315,14 +339,15 @@ class ProductList extends React.Component {
                     </Body>
                     <Right style={styles.ListRight}>
                       <View>
-                        
-                          <NumericInput
-                            value={this.state.value}
-                            onChange={(value) => this.setState({ value })}
+                        {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
+                          (<NumericInput
+                            initValue={1}
+                            //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
+                            onChange={(value) => value == 0 ? this.buyOncePressHnadler(item.id, value) : ''}
                             onLimitReached={(isMax, msg) =>
                               console.log(isMax, msg)
                             }
-                            minValue={1}
+                            minValue={0}
                             totalWidth={90}
                             totalHeight={20}
                             iconSize={30}
@@ -335,7 +360,8 @@ class ProductList extends React.Component {
                             iconStyle={{ color: "#F8BB1B", fontSize: 14 }}
                             rightButtonBackgroundColor="#fff"
                             leftButtonBackgroundColor="#fff"
-                          />
+                          />)
+                          : null }
                       </View>
                       <View>
                         {item.isSubscribable ? (
@@ -356,19 +382,19 @@ class ProductList extends React.Component {
                         ) : (
                           <View style={{ padding: 0, margin: 0 }}></View>
                         )}
-                        <Button style={styles.buyButton}>
+                         {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
+                          null : 
+                          (<Button style={styles.buyButton}>
                           <TouchableOpacity
                             onPress={() =>
-                              this.setState({value: 1})
+                              this.buyOncePressHnadler(item.id, 1)
                             }
                           >
-                            {index == 0 || index == 2 ? (
-                              <Text style={styles.buyText}>Buy Once</Text>
-                            ) : (
-                              <Text style={styles.buyText}>Buy</Text>
-                            )}
+                           
+                         <Text style={styles.buyText}>Buy Once</Text>
+                            
                           </TouchableOpacity>
-                        </Button>
+                        </Button>)}
                       </View>
                     </Right>
                   </ListItem>

@@ -11,6 +11,8 @@ import Svgicon from "./Svgicon";
 import Headers from "./Headers";
 import Category from "./Category";
 import Slideshow from "./Slideshow";
+import DeliveryAddress from "./DeliveryAddress";
+
 
 export { 
 	Loader, 
@@ -25,6 +27,7 @@ export {
 	Svgicon, 
 	Headers, 
 	Category,
-	Slideshow
+	Slideshow,
+	DeliveryAddress,
 	
 };

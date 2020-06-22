@@ -221,7 +221,11 @@ class MyAddress extends React.Component {
           Title='My MyAddress'
 
         />
-        <Content enableOnAndroid>
+        <Content enableOnAndroid style={appStyles.content}>
+          {this.props.isLoading ? (
+            <Spinner color={Colors.secondary} style={appStyles.spinner} />
+          ) : (
+            <View>
           <Card style={[appStyles.addBox, { height: 'auto', marginTop: 15, position: 'relative' }]}>
             <Icon type='MaterialIcons' name='my-location' style={styles.locationIcon} />
             <GooglePlacesAutocomplete
@@ -441,7 +445,8 @@ class MyAddress extends React.Component {
 
               </Grid>
             </Card>)}
-
+            </View>
+          )}         
         </Content>
 
       </Container>
@@ -452,6 +457,7 @@ class MyAddress extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    isLoading: state.common.isLoading,
   };
 };
 

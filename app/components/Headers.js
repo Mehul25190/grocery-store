@@ -67,6 +67,7 @@ class Headers extends React.Component {
       />
     );
     const { searcBar } = this.state;
+    const { totalItem } = this.props;
     return (
       <Header searchBar rounded style={[appStyles.headerStyle]}>
         <Left style={appStyles.headerLeft} icon>
@@ -155,7 +156,7 @@ class Headers extends React.Component {
             >
               <Icon style={appStyles.cartIcon} name="cart" />
               {cartCount > 0 && (
-                <Text style={appStyles.cartCount}>{cartCount}</Text>
+                <Text style={appStyles.cartCount}>{totalItem}</Text>
               )}
             </TouchableOpacity>
           )}
@@ -176,7 +177,9 @@ class Headers extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    totalItem: state.cart.totalItem
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

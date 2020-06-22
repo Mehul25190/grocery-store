@@ -25,6 +25,7 @@ import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import { array } from 'prop-types';
 import Carousel from 'react-native-snap-carousel';
+import * as cartActions from "../../actions/cart";
 
 const cartCount = 1;
 
@@ -47,12 +48,14 @@ class Home extends React.Component {
 
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
       this.getOfferList(); 
+      this.props.viewCart(this.props.user.user.id);
     });
   
     //set array from category list from api to get category list
       this.getOfferList(); 
     this.props.getDeviveryAddress(this.props.user.user.id);
-    this.getCategoryList();   
+    this.getCategoryList();  
+     
   }
 
   getOfferList(){
@@ -154,6 +157,7 @@ class Home extends React.Component {
     //console.log("first render");
     //console.log(this.state.categoryData);
     //console.log("after render");
+    const { totalItem } = this.props;
     return (
       <Container style={[appStyles.container,{ width: Layout.window.width, height: Layout.window.height}]}>
            <Header searchBar rounded style={appStyles.headerStyle}>
@@ -173,7 +177,7 @@ class Home extends React.Component {
              <Button transparent>
              <TouchableOpacity style={appStyles.cartIconArea} onPress={()=>this.props.navigation.navigate(Screens.MyCart.route)}>
                <Icon style={appStyles.cartIcon} name="cart" />
-               { cartCount >0 && (<Text style={appStyles.cartCount}>{cartCount}</Text>) }
+               { cartCount >0 && (<Text style={appStyles.cartCount}>{totalItem}</Text>) }
               </TouchableOpacity>
 
               <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
@@ -255,6 +259,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     isLoading: state.common.isLoading,
+    totalItem: state.cart.totalItem,
   };
 };
 
@@ -264,6 +269,7 @@ const mapDispatchToProps = (dispatch) => {
       showCategoryList: () => dispatch(userActions.showCategoryList()),
       getDeviveryAddress: (useId) => dispatch(userActions.getDeviveryAddress({userId: useId})),
       fetchOffersOnLandingPage: () => dispatch(productActions.fetchOffers()),
+      viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
    };
 };
 

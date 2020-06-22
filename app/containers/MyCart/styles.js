@@ -233,6 +233,21 @@ QtyBox:{
  checkOutText:{
   fontFamily:'Font-Medium'
  },
- 
+ proPrice:{
+    marginLeft:1,
+    fontSize:14,
+    //textDecoration:'none',
+    // backgroundColor:'#ddd',
+    flex:0,
+    fontFamily:'Font-Medium'
+   },
+   proPriceStrike:{
+    marginLeft:1,
+    fontFamily:'Font-Medium',
+    flex:0,
+    // backgroundColor:'#333',
+    fontSize:14,
+    textDecorationLine:'line-through'
+   },
 
 };
