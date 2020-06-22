@@ -1,5 +1,13 @@
 import {Colors,Layout} from '../../constants/';
 export default {
+   img:{
+       color:Colors.primary
+    },
+    btn:{
+        flexDirection: 'row',
+        flex:0,
+       width:150
+    },
 calImage:{
   width: 30 ,
   resizeMode:'contain',

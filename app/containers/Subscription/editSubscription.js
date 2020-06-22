@@ -51,60 +51,72 @@ const DurationList =[
  
 ];
 
-class SubscribeOrder extends React.Component {
+class editSubscribe extends React.Component {
 
   constructor(props) {
-
     super(props);
     let item = this.props.navigation.getParam('item')
-    let qty = this.props.navigation.getParam('qty')
-
      this.state = {
       radioBtnsData: ['Daily', 'Alternate Days'],
-      checked: 0,
       selected: false,
-      excludeWeekend: 0,
       date: '',
       time: '',
-      //qty: item.quantity && mode != 'save' ? item.quantity : 1,
-      qty: qty ? qty : 1,
+      qty: 1,
       duration: 15,
       isChecked:true,
       itemId: item.id,
-      subscriptionDtls: item, 
+      subscriptionDtls: {}, 
       subscriptionDtlsImg: {},
-      startDate: moment(new Date()).format('MM/DD/YYYY'),
-      endDate: moment(new Date(), "MM/DD/YYYY").add(15, 'days').format('MM/DD/YYYY'), 
-      displaystartDate: moment(new Date()).format('DD MMM YYYY'),
+      startDate: '',
+      endDate: '', 
+      displaystartDate: item.startDate ? moment(item.startDate).format('DD MMM YYYY') : moment(new Date()).format('DD MMM YYYY'),
       excludeWeekend: 0,
     };
     this.setStartDate = this.setStartDate.bind(this);
     this.setEndDate = this.setEndDate.bind(this);
 
   }
+   componentDidMount() {
 
-  componentDidMount() {
-  
+    this.props.fetchSubscriptionDtlsById(this.state.itemId).then(res=>{
+      console.log(res)
+      if(res.status == "success"){
+          const subScriDet = res.data.subscriptionDtls[0]
+          this.setState({ 
+              subscriptionDtls: res.data.subscriptionDtls[0],
+              startDate: moment(subScriDet.startDate).format('MM/DD/YYYY'),
+              endDate: moment(subScriDet.endDate).format('MM/DD/YYYY'),
+              duration: subScriDet.duration,
+              checked: subScriDet.frequency == 'daily' ? 0 : 1,
+              excludeWeekend: subScriDet.excludeWeekend,
+              isActive: 1,
+              qty: subScriDet.quantity,
+              displaystartDate: moment(subScriDet.startDate).format('DD MMM YYYY'),
+          });
+      } 
+    });
+
+    
   }
+    openControlPanel = () => {
+      this.props.navigation.goBack(); // open drawer
+    };
 
-  openControlPanel = () => {
-    this.props.navigation.goBack(); // open drawer
-  };
-
-  onDurationValueChange(value) {
+   onDurationValueChange(value) {
     this.setState({
       duration: value,
-      endDate: moment(this.startDate).add(value, 'days').format('MM/DD/YYYY')
+      endDate: moment(this.state.startDate).add(value, 'days').format('MM/DD/YYYY')
     });
   }
 
   setStartDate(value){
-    this.setState({startDate: value, displaystartDate: moment(value).format('DD MMM YYYY'), endDate: moment(value).add(this.state.duration, 'days').format('MM/DD/YYYY')})
+    this.setState({startDate: value, displaystartDate: moment(value).format('DD MMM YYYY'),  endDate: moment(value).add(this.state.duration, 'days').format('MM/DD/YYYY')})
   }
 
   setEndDate(value){
     this.setState({endDate: moment(value).format('MM/DD/YYYY')})
   }
+
 
   subscribeSubmitHandler(){
     if(this.state.startDate == ''){
@@ -116,6 +128,7 @@ class SubscribeOrder extends React.Component {
       return;
     }
     const data = {
+      id: this.state.itemId,
       userAddressDtlsId: this.props.deliveryAddress.id,
       itemId: this.state.itemId,
       startDate: this.state.startDate,
@@ -126,19 +139,20 @@ class SubscribeOrder extends React.Component {
       isActive: 1,
       quantity: this.state.qty
     };
-
+   
     this.props.saveSubscribeOrderDetails(data).then(res=> {
         if(res.status == 'success'){
-          this.props.navigation.navigate(Screens.SubscribeSuccess.route, {subscriptionDate: this.state.displaystartDate})
+          showToast("Subscription modified successfully.","success");
+          this.props.navigation.navigate(Screens.Subscription.route)
         }else{
           showToast("Please enter proper value","danger");
         }
     });
+
   }
 
   render(){
     const { navigation, deliveryAddress } = this.props;
-    const getItem = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
 
@@ -148,7 +162,7 @@ class SubscribeOrder extends React.Component {
               IconRightF='search'
               setCart={true}
               bgColor='transparent'
-              Title='Subscribe Order'
+              Title='Modify Subscription'
              />
       
           <Content enableOnAndroid>
@@ -211,6 +225,7 @@ class SubscribeOrder extends React.Component {
             <DatePicker
             minDate={moment(new Date()).format('MM/DD/YYYY')}
             locale={"en"}
+            disabled={moment(this.state.startDate).format('MM/DD/YYYY') > moment(new Date()).format('MM/DD/YYYY') ? false : true }
             format="MM/DD/YYYY"
             onDateChange={this.setStartDate}
             date={this.state.startDate}
@@ -282,33 +297,33 @@ class SubscribeOrder extends React.Component {
         <View style={[styles.HoriLine,{marginTop:10}]}>
           <Text></Text>
         </View>
+       
         <Grid>
           <Row style={{ flex: 1, marginLeft:Layout.indent, marginTop:5, marginBottom:5, flexDirection: 'row'}}>
         
         {this.state.radioBtnsData.map((data, key) => {
+          return (  <View key={key}>       
+                  {this.state.checked == key ?
+                  
+                      <Col style={[styles.btn,{}]}>
+                          <Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />
+                          <Text style={[styles.bodyText, styles.bodyGreen]}>{data}</Text>
+                      </Col>
+                   
+                      :
+                    
+                      <Col onPress={()=>{this.setState({checked: key})}} style={[styles.btn,{}]}>
+                          <Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />
+                          <Text style={[styles.bodyText, styles.bodyGreen]}>{data}</Text>
+                      </Col>
+                    
 
-    return (  <View key={key}>       
-            {this.state.checked == key ?
-            
-                <Col style={[styles.btn,{}]}>
-                    <Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />
-                    <Text style={[styles.bodyText, styles.bodyGreen]}>{data}</Text>
-                </Col>
-             
-                :
-              
-                <Col onPress={()=>{this.setState({checked: key})}} style={[styles.btn,{}]}>
-                    <Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />
-                    <Text style={[styles.bodyText, styles.bodyGreen]}>{data}</Text>
-                </Col>
-              
-
-            }
-          </View>  
-    )
-})}
+                  }
+                </View>  
+          )
+      })}
        </Row>
-        </Grid>  
+        </Grid> 
          <View style={styles.HoriLine}>
               <Text></Text>
             </View>
@@ -396,7 +411,6 @@ class SubscribeOrder extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state.subscription.deviveryAddress);
   return {
     user: state.auth.user,
     isLoading: state.common.isLoading,
@@ -407,10 +421,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
-      getItemDetail: (id) => dispatch(subscriptionAction.getItemDetail({itemId: id})),
+      fetchSubscriptionDtlsById: (id) => dispatch(subscriptionAction.fetchSubscriptionDtlsById({id: id})),
       saveSubscribeOrderDetails: (data) => dispatch(subscriptionAction.saveSubscribeOrderDetails(data)),
    };
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(SubscribeOrder);
+export default connect(mapStateToProps, mapDispatchToProps)(editSubscribe);

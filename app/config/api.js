@@ -14,7 +14,7 @@ export default {
   saveUserAddress:'user/saveUserAddress',
   //showUserDeliveryAddress:'user/fetchUserAddress',
   showUserProfile:'user/fetchUserProfileDetails',
-  mySubscriptionList: 'order/fetchSubscriptionDtlsById',
+  mySubscriptionList: 'order/fetchMySubscriptions',
   getItemDetail: 'item/getItemById',
   getDeviveryAddress: 'user/fetchUserAddress',
   saveSubscribeOrderDetails: 'order/saveSubscribeOrderDetails',
@@ -25,4 +25,5 @@ export default {
   fetchOffersOnLandingPage: 'offer/fetchOffersOnLandingPage',
   getUserOrderList:'order/fetchOrderList',
   getOrderDetailById:'order/fetchOrderDetailsById',
+  fetchSubscriptionDtlsById: 'order/fetchSubscriptionDtlsById'
 }

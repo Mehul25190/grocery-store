@@ -8,7 +8,7 @@ import { ActionTypes, Strings } from '../constants/';
 export const mySubscriptionList = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.mySubscriptionList,  {queries: payloads}).then(res => {
-    console.log(payloads);
+    //console.log(payloads);
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         dispatch({ type: ActionTypes.MYSUBSCRIPTION, data: res.data.data.subscriptionDtls });
@@ -50,7 +50,7 @@ export const getDeviveryAddress = payloads => dispatch => {
 export const saveSubscribeOrderDetails = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.saveSubscribeOrderDetails,  {payloads: payloads}).then(res => {
-  	console.log(res);
+  	//console.log(res);
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         return res.data
@@ -63,7 +63,7 @@ export const saveSubscribeOrderDetails = payloads => dispatch => {
 export const playPauseSub = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.pauseResumeSubscription,  {payloads: payloads}).then(res => {
-    console.log(res);
+    //console.log(res);
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         return res.data
@@ -76,7 +76,20 @@ export const playPauseSub = payloads => dispatch => {
 export const deleteSubscription = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.deleteSubscription,  {payloads: payloads}).then(res => {
-    console.log(res.data);
+    //console.log(res.data);
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        return res.data
+      } else {
+        return res
+      }
+  });
+}
+
+export const fetchSubscriptionDtlsById = payloads => dispatch => {
+  //console.log(payloads)
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchSubscriptionDtlsById,  {queries: payloads}).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         return res.data

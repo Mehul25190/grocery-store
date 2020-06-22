@@ -44,11 +44,15 @@ class Home extends React.Component {
     this.setState({
       entries:{},  
     });
+
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.getOfferList(); 
+    });
   
     //set array from category list from api to get category list
+      this.getOfferList(); 
     this.props.getDeviveryAddress(this.props.user.user.id);
-    this.getCategoryList();
-    this.getOfferList();    
+    this.getCategoryList();   
   }
 
   getOfferList(){
@@ -56,7 +60,6 @@ class Home extends React.Component {
       // console.log(res);
       if(res.status == "success"){
         this.setState({entries: res.data.offerList})
-
         // console.log(res.data.offerList.length)
       }
     });
@@ -185,6 +188,9 @@ class Home extends React.Component {
          
             
           <Content enableOnAndroid style={appStyles.content}>
+          {this.props.isLoading ? (
+            <Spinner color={Colors.secondary} style={appStyles.spinner} />
+          ) : (<View>
             {this.state.entries ?
               <Card style={[appStyles.addBox,{height:'auto'}]}>
                  <Carousel
@@ -233,6 +239,7 @@ class Home extends React.Component {
                    </View>
                    
           </View>
+          </View> )}
             {/* <MasonryList sorted onPressImage={this.onPressImage} images={data}  />*/}
 
           </Content>
@@ -247,6 +254,7 @@ class Home extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    isLoading: state.common.isLoading,
   };
 };
 

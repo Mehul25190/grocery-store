@@ -52,14 +52,14 @@ import appStyles from "../../theme/appStyles";
 import styles from "./styles";
 import NumericInput from "react-native-numeric-input";
 
-let gm = "gm";
+
 class ProductList extends React.Component {
   constructor(props) {
     super(props);
     const categoryId = this.props.navigation.getParam("para_categoryId");
     this.state = {
       dataSource: productList,
-      value: 0,
+      value: 1,
       categoryId: this.props.navigation.getParam("para_categoryId"),
       productData: [],
       subCategory: [],
@@ -106,14 +106,19 @@ class ProductList extends React.Component {
   }
 
   subCategoryList() {
-    console.log(this.categoryId);
+    //console.log(this.categoryId);
     this.props
       .fetchSubCategory(this.props.navigation.getParam("para_categoryId"))
       .then((res) => {
-        console.log("sucess return", res.data.subCategory);
+        //console.log("sucess return", res.data.subCategory);
         if (res.status == "success") {
-          this.setState({ subCategory: res.data.subCategory, selectSubCat: res.data.subCategory[0].id });
-          this.productItemList(res.data.subCategory[0].id, 0);
+          if(res.data.subCategory.length > 0){
+            this.setState({ subCategory: res.data.subCategory, selectSubCat: res.data.subCategory[0].id });
+            this.productItemList(res.data.subCategory[0].categoryId, res.data.subCategory[0].id, 0);
+          }else{
+            showToast("No product found", "danger");
+             this.props.navigation.navigate(Screens.Home.route)
+          }
           //console.log('set return');
           //console.log(res.data.itemList);
         } else {
@@ -124,14 +129,9 @@ class ProductList extends React.Component {
   }
 
   subBySubCategoryList(catId, catName, index) {
-    console.log(index)
-    console.log(this.state.subCategory.length)
-    //this.setState({flalistIndex: index});
-    //this.currentIndex = this.state.subCategory.length - 3 > index ? index : '';
     this.props
       .searchItem(catName)
       .then((res) => {
-        //console.log('sucess return');
         if (res.status == "success") {
           if(res.data.itemList.length > 0){
             this.setState({ productData: res.data.itemList, selectSubCat: catId });
@@ -149,21 +149,21 @@ class ProductList extends React.Component {
       });
   }
 
-  productItemList(catId, index) {
+  productItemList(catId, subCatId,index) {
     //this.currentIndex = index-3;
     console.log(catId);
     //catId = this.props.navigation.getParam("para_categoryId") ? this.props.navigation.getParam("para_categoryId") : this.state.selectSubCat;
     this.props
-      .productItemList(catId)
+      .productItemList(catId, subCatId)
       .then((res) => {
         console.log('sucess return', res.data.itemList);
         if (res.status == "success") {
           if(res.data.itemList.length > 0){
-            this.setState({ productData: res.data.itemList, selectSubCat: catId });
+            this.setState({ productData: res.data.itemList, selectSubCat: subCatId });
             this.courseFilterArr = res.data.itemList;         
           }else{
             this.courseFilterArr = [];
-            this.setState({ productData: [], selectSubCat: catId });
+            this.setState({ productData: [], selectSubCat: subCatId });
           }
         } else {
           showToast("Something wrong with Server response", "danger");
@@ -186,7 +186,7 @@ class ProductList extends React.Component {
   };
 
   renderItems = ({ item, index }) => (
-    <TouchableOpacity onPress={() => this.productItemList(item.id, index)}>
+    <TouchableOpacity onPress={() => this.productItemList(item.categoryId, item.id, index)}>
       <View style={styles.cateContainer}>
         <Text
           style={
@@ -344,7 +344,7 @@ class ProductList extends React.Component {
                               onPress={() =>
                                 this.props.navigation.navigate(
                                   Screens.SubscribeOrder.route,
-                                  { item: item , mode: 'save'}
+                                  { item: item , qty: this.state.value}
                                 )
                               }
                             >
@@ -394,8 +394,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(userActions.logoutUser()),
-    productItemList: (categoryId) =>
-      dispatch(userActions.showProductList({ categoryId: categoryId })),
+    productItemList: (categoryId, subCategoryId) =>
+      dispatch(userActions.showProductList({ subCategoryId: subCategoryId, categoryId: categoryId })),
     fetchSubCategory: (categoryId) =>
       dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
     searchItem: (searchString) =>

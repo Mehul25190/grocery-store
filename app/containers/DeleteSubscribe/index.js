@@ -29,7 +29,8 @@ class DeleteSubscribe extends React.Component {
     const item = this.props.navigation.getParam('item');
      this.state = {
         selected: false,
-        item: item
+        item: item,
+        reason: '',
     }
 
     console.log(this.state.item)
@@ -51,9 +52,9 @@ class DeleteSubscribe extends React.Component {
   this.props.navigation.navigate('Confirmation', { item });
   };
 
-  deleteSubscription(id){
+  deleteSubscription(id, reason){
     console.log(id);
-    this.props.deleteSubscription(id).then(res => {
+    this.props.deleteSubscription(id, reason).then(res => {
       if(res.status == 'success'){
         showToast('Subscription deleted successfully', "success");
         this.props.navigation.navigate('Subscription');
@@ -90,7 +91,7 @@ class DeleteSubscribe extends React.Component {
                      <Text style={styles.AmuText}>{this.state.item.brandName}</Text>
                      <Text style={[styles.AmuText,styles.AmuTextTitle]}>{this.state.item.itemName}</Text>
                      <Text style={styles.AmuText}>{this.state.item.weight} {this.state.item.uom}</Text>
-                     <Text style={styles.AmuText}>Qty: {this.state.item.quantity}</Text>
+                     {/*<Text style={styles.AmuText}>Qty: {this.state.item.quantity}</Text>*/}
                      <Text style={styles.AmuText}>MRP: <Text style={{}}>{'\u20B9'}</Text> {this.state.item.price}</Text>
                     </View>
                   </Col>
@@ -105,28 +106,40 @@ class DeleteSubscribe extends React.Component {
                Cancellation Reason
               </Text>  
               <Card style={styles.listArea}> 
-                  <List>
-                  {
-                    CancelReason.map(data=>(
-                        <ListItem noBorder icon key={data.key} style={styles.ListReason}>
-                          <Left style={styles.reasonBody} onPress={() => this.setState({ selected: !this.state.selected })}>
-                            <Radio type="radio" selected={false} color={Colors.primary} selectedColor={Colors.primary}  />
-                            </Left>
-                            <Body style={styles.reasonBody}>
-                            <Text style={styles.reasonText}>{data.reason}</Text>
-                            </Body>
-                        </ListItem>
-                      ))
-                  }
+                   <Grid>
+          <Row style={{ flex: 1, marginLeft:Layout.indent, marginTop:15, marginBottom:5, flexDirection: 'column'}}>
+        
+        {CancelReason.map((data, key) => {
+          return (  <View key={key}>       
+                  {this.state.reason == data.reason ?
                   
-                  </List>
+                      <Col style={[styles.btn,{}]}>
+                          <Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />
+                          <Text style={styles.reasonText}>{data.reason}</Text>
+                      </Col>
+                   
+                      :
+                    
+                      <Col onPress={()=>{this.setState({reason: data.reason})}} style={[styles.btn,{}]}>
+                          <Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />
+                          <Text style={styles.reasonText}>{data.reason}</Text>
+                      </Col>
+                    
+
+                  }
+                </View>  
+          )
+      })}
+       </Row>
+        </Grid> 
                   <View style={{paddingLeft:Layout.indent, marginTop:10}}>
                     <Text style={{color:Colors.primary,fontFamily:'Font-Medium',lineHeight:18}}>Note: Please select  accurate reason for quicker refund process</Text>
                   </View>
                </Card>
+              
             </View>
       <TouchableOpacity style={styles.submitBtnArea} >
-        <Button primary full style={styles.submitBtn} onPress={()=>this.deleteSubscription(this.state.item.id)}>
+        <Button primary full style={styles.submitBtn} onPress={()=>this.deleteSubscription(this.state.item.id, this.state.reason)}>
         <Text style={styles.submitText}>Delete Subscription
         </Text>
         </Button>
@@ -150,7 +163,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
-      deleteSubscription: (id) => dispatch(subscriptionAction.deleteSubscription({id: id}))
+      deleteSubscription: (id, reason) => dispatch(subscriptionAction.deleteSubscription({id: id, reason: reason}))
    };
 };
 
