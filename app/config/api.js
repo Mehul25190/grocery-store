@@ -23,4 +23,6 @@ export default {
   fetchSubCategory: 'item/fetchSubCategory',
   searchItem: 'item/searchItem',
   fetchOffersOnLandingPage: 'offer/fetchOffersOnLandingPage',
+  getUserOrderList:'order/fetchOrderList',
+  getOrderDetailById:'order/fetchOrderDetailsById',
 }

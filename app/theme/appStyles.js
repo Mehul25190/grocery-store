@@ -482,7 +482,20 @@ fontFamily:'Font-Medium'
     },
     norecordfound: {
       flex: 1,justifyContent: 'center', alignItems: 'center'
+    },
+    deliveryAddress:{
+      padding:10,
+      height:70,
+      marginLeft:Layout.indent,
+       marginRight:Layout.indent ,
+       marginBottom:3
+    },
+    deliveryAddressTitle:{
+      marginLeft:12,
+      padding:5,
     }
+
+
     /* Slideshow*/
     
 });
