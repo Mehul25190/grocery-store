@@ -38,6 +38,7 @@ class Home extends React.Component {
     };
     this.courseFilterArr = [];
     console.log('Math', Math.floor(100000 + Math.random() * 900000));
+   
   }
 
 
@@ -151,6 +152,29 @@ class Home extends React.Component {
         text: text,
       });
   }
+
+  onDetailPage = () => {
+    
+    //get Order list & get first order ID
+    this.props.getOrderList(this.props.user.user.id).then (res =>{
+     
+        if(res.status == "success"){
+          this.para_orderId = res.data.orderList[0].id;
+          if(res.data.orderList[0].id!="") {
+            this.props.navigation.navigate('OrderDetail', { orderId:this.para_orderId });    
+          }
+        } else {
+              console.log("something wrong with varification call");
+              showToast("Something wrong with Server response","danger");
+        }
+         
+      })
+      .catch(error => {
+          console.log('Error messages returned from server', error);
+          showToast("Error messages returned from server","danger");
+      });
+
+  };
     
 
   render(){
@@ -213,7 +237,9 @@ class Home extends React.Component {
 
           <View style={styles.ItemLayout}>
             <View style={styles.shopSubTitle}>
+            <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
               <Text style={styles.shopSubTitleText}>Upcoming Orders</Text>
+              </TouchableOpacity>  
             </View>
            { <FlatList 
                      vertical
@@ -270,6 +296,7 @@ const mapDispatchToProps = (dispatch) => {
       getDeviveryAddress: (useId) => dispatch(userActions.getDeviveryAddress({userId: useId})),
       fetchOffersOnLandingPage: () => dispatch(productActions.fetchOffers()),
       viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
+      getOrderList: (useId) => dispatch(userActions.getUserOrderList({userId: useId})),
    };
 };
 
