@@ -73,7 +73,8 @@ export const showCategoryList = payloads => dispatch => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     //console.log(res.data);
     if(res.status == 200){
-      //console.log(res.data);
+      console.log("set cat", res.data.data.category);
+      dispatch({ type: ActionTypes.CATEGORYLIST, data: res.data.data.category });
       return res.data;
     } else {
       return res;

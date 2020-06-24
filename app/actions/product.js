@@ -44,7 +44,7 @@ export const fetchOffers = payloads => dispatch => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     //console.log(res.data);
       if(res.status == 200){
-        //dispatch({ type: ActionTypes.PRODUCTDETAIL, data: res.data.data }); 
+        dispatch({ type: ActionTypes.CATEGORYOFFER, data: res.data.data.offerList }); 
         return res.data
       } else {
         return res

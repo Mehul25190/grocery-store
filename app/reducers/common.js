@@ -17,6 +17,19 @@ const common = (state = initialState.common, action) => {
         showModal: action.showModal,
       }
     }
+    case ActionTypes.CATEGORYLIST : {
+      return {
+        ...state,
+        categoryData: action.data,
+      }
+    }
+    case ActionTypes.CATEGORYOFFER : {
+      return {
+        ...state,
+        categoryOfferData: action.data,
+      }
+    }
+    
 
     // Default
     default: {
