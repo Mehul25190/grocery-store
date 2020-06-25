@@ -26,6 +26,7 @@ import styles from './styles';
 import { getCurrentRoute } from '../../utils/common';
 import { Svgicon,LoginBackIcon } from '../../components';
 import IconFont from 'react-native-vector-icons/FontAwesome';
+import ActionTypes from "../../constants/ActionTypes";
 
 class Drawer extends React.Component {
   constructor(props) {
@@ -39,9 +40,17 @@ class Drawer extends React.Component {
     
   }
 
+  componentDidMount(){
+    
+    //check user logged in or not
+    if(this.props.user!=null){
+      this.props.navigation.navigate(Screens.SignInStack.route);
+    }
+  }  
+
   logout(){
-    this.props.logout();
-    this.props.navigation.navigate(Screens.SignOutStack.route);
+    this.props.resetState();
+    this.props.navigation.navigate(Screens.SignInStack.route);
   }
   render() {
     const { navigation, user, language, state, deliveryAddress } = this.props;
@@ -75,9 +84,11 @@ class Drawer extends React.Component {
             </Left>
             <Body>
             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
-              <Text style={appStyles.profileName} >{this.props.user.user.firstName} {this.props.user.user.lastName}</Text>
-              <Text style={appStyles.profileEmail}>{this.props.user.user.email}</Text>
-              <Text style={appStyles.profileEmail}>{this.props.user.user.mobile}</Text>
+              <Text style={appStyles.profileName} >
+                {(this.props.user.user.firstName!="") ? this.props.user.user.firstName : ""} 
+                {(this.props.user.user.lastName !="") ? this.props.user.user.lastName : ""}</Text>
+              <Text style={appStyles.profileEmail}>{(this.props.user.user.email!="") ? this.props.user.user.email :"" }</Text>
+              <Text style={appStyles.profileEmail}>{(this.props.user.user.mobile!="") ? this.props.user.user.mobile : ""}</Text>
               </TouchableOpacity>
             </Body>
 
@@ -178,6 +189,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
       logout: () => dispatch(userActions.logoutUser()),
+      resetState: () => dispatch({ type: ActionTypes.RESETSTATE }),
    };
 };
 

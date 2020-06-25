@@ -5,6 +5,7 @@ export default {
   signin: 'user/login',
   signup: 'user/register',
   signupVerifyMobile: 'user/verifyMobile',
+  loginVerifyMobile: 'user/verifyOTP',
   signinMobile:'user/login',
   categoryList:'item/fetchCategory',
   productList:'item/fetchItemList',

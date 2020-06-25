@@ -184,7 +184,7 @@ const mapDispatchToProps = (dispatch) => {
     setLanguage: () => dispatch(userActions.setLanguage({ id: 1, set: 1 })),
     showModal: () => dispatch({ type: ActionTypes.SHOWMODAL, showModal: true }),
     resetState: () => dispatch({ type: ActionTypes.RESETSTATE }),
-    signupMobileVerification: (mobileno,code) => dispatch(userActions.signupMobileVerification({mobileNo:mobileno, otp:code }))
+    signupMobileVerification: (mobileno,code) => dispatch(userActions.signupMobileVerification({mobileNo:mobileno, athenticationCode:code }))
   };
 };
 

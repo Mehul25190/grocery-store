@@ -27,6 +27,7 @@ import styles from './styles';
 import { array } from 'prop-types';
 import Carousel from 'react-native-snap-carousel';
 import * as cartActions from "../../actions/cart";
+import ActionTypes from "../../constants/ActionTypes";
 
 const cartCount = 1;
 
@@ -41,13 +42,17 @@ class Home extends React.Component {
     this.courseFilterArr = [];
     console.log('Math', Math.floor(100000 + Math.random() * 900000));
    
+    //this.props.resetState();
   }
 
 
   componentDidMount(){
+    
     this.setState({
       //entries:{},  
     });
+
+    //this.props.logout();
 
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
       this.getOfferList(); 
@@ -57,7 +62,7 @@ class Home extends React.Component {
     //set array from category list from api to get category list
      // this.getOfferList(); 
     this.props.getDeviveryAddress(this.props.user.user.id);
-    //this.getCategoryList();  
+    this.getCategoryList();  
      
   }
 
@@ -329,6 +334,7 @@ const mapDispatchToProps = (dispatch) => {
       fetchOffersOnLandingPage: () => dispatch(productActions.fetchOffers()),
       viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
       getOrderList: (useId) => dispatch(userActions.getUserOrderList({userId: useId})),
+      resetState: () => dispatch({ type: ActionTypes.RESETSTATE }),
    };
 };
 
