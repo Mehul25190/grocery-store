@@ -330,7 +330,6 @@ categoryStyles: {
    },
    prodInfo:{
     textAlign:'left',
-
    },
    proTitle:{
     textAlign:'left',

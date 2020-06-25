@@ -28,7 +28,6 @@ import { array } from 'prop-types';
 import Carousel from 'react-native-snap-carousel';
 import * as cartActions from "../../actions/cart";
 import ActionTypes from "../../constants/ActionTypes";
-
 const cartCount = 1;
 
 class Home extends React.Component {
