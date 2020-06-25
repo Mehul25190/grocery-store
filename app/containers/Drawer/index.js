@@ -28,6 +28,7 @@ import { Svgicon,LoginBackIcon } from '../../components';
 import IconFont from 'react-native-vector-icons/FontAwesome';
 import ActionTypes from "../../constants/ActionTypes";
 
+
 class Drawer extends React.Component {
   constructor(props) {
     super(props);

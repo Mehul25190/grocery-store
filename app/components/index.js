@@ -12,7 +12,7 @@ import Headers from "./Headers";
 import Category from "./Category";
 import Slideshow from "./Slideshow";
 import DeliveryAddress from "./DeliveryAddress";
-
+import ScreenLoader from "./ScreenLoader";
 
 export { 
 	Loader, 
@@ -29,5 +29,6 @@ export {
 	Category,
 	Slideshow,
 	DeliveryAddress,
+	ScreenLoader,
 	
 };

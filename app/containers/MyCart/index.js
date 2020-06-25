@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, FlatList} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, FlatList, ActivityIndicator, Modal} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers } from '../../components';
@@ -21,6 +21,9 @@ import styles from './styles';
 import {productList} from '../data/data';
 import NumericInput from 'react-native-numeric-input';
 import url from "../../config/api";
+import { showToast } from '../../utils/common';
+import { ScreenLoader } from '../../components';
+
 
 class MyCart extends React.Component {
 
@@ -32,6 +35,7 @@ class MyCart extends React.Component {
       time: '',
       cartItem: [],
       userAddressDtls: {},
+      loading: false,
     };
 
   }
@@ -70,7 +74,35 @@ class MyCart extends React.Component {
     this.props.navigation.goBack(); // open drawer
   };
 
-  renderItems = ({ item, index }) => (
+updateCartPress(itemId, value){
+
+  this.setState({loading: true}); 
+  if(value == 0){
+    this.props.deleteCartItem(itemId).then(res => {
+      if(res.status == "success"){
+        this.props.viewCart(this.props.user.user.id).then(res => {
+            showToast('Cart updated successfully.', "success")
+            this.setState({loading: false});
+        }) 
+      }
+      
+    })
+  }else if(value > 0){
+    this.props.updateCartItem(itemId, value).then(res => {
+      if(res.status == "success"){
+        this.props.viewCart(this.props.user.user.id).then(res => {
+          showToast('Cart updated successfully.', "success");
+          this.setState({loading: false});
+        })
+      }
+      
+    })
+  }
+}
+
+  renderItems = ({ item, index }) => {
+    if(item.isSubscribedItem == 1) return;
+    return (
     <Row style={styles.secondRow}>
                     <Col style={styles.amulCol}>
                       <Image
@@ -110,8 +142,9 @@ class MyCart extends React.Component {
                       <View>
                         <NumericInput 
                          inputStyle={{fontSize:13}}
-                            value={item.quantity} 
-                            onChange={value => this.setState({value})} 
+                            initValue={item.quantity}
+                            //value={item.quantity} 
+                            onChange={(value) => this.updateCartPress(item.id, value)}
                             onLimitReached={(isMax,msg) => console.log(isMax,msg)}
                             totalWidth={90} 
                             totalHeight={20} 
@@ -127,8 +160,8 @@ class MyCart extends React.Component {
                           />
                       </View> 
                     </Col>
-                  </Row>
-  );
+                  </Row>);
+  }
 
   render(){
     const { navigation, totalItem, cartDetail, totalAmount } = this.props;
@@ -183,12 +216,12 @@ class MyCart extends React.Component {
                 </Card>
                <Grid style={{marginRight:Layout.indent}}>
                 <Row style={{marginVertical:10}}>
-                  <Col style={{justifyContent:'center',alignItems:'flex-start',}}>
+                  {/*<Col style={{justifyContent:'center',alignItems:'flex-start',}}>
                    <Text style={styles.title}>Delivery Date </Text>
                   </Col>
                   <Col style={{justifyContent:'center',alignItems:'flex-end'}}>
                    <Text style={styles.txtDate}>{this.state.date}, Friday </Text>
-                  </Col>
+                  </Col>*/}
                 </Row>
                 <Row>
                   <Col>
@@ -204,22 +237,23 @@ class MyCart extends React.Component {
                
               
                 
-               
-                <Card style={[appStyles.addBox,{height:'auto'},styles.paddingBox]}>
-                <Grid >
-                 
-                <FlatList
-                  vertical
-                  showsHorizontalScrollIndicator={false}
-                  data={cartDetail}
-                  renderItem={this.renderItems}
-                  keyExtractor={(item) => `${item.id}`}
-                />   
-                 
-                </Grid>
-              </Card>
+                {cartDetail.length > 0 ?
+                  (
+                  <Card style={[appStyles.addBox,{height:'auto'},styles.paddingBox]}>
+                  <Grid >
+                  <FlatList
+                       vertical
+                       showsHorizontalScrollIndicator={false}
+                       data={cartDetail}
+                       renderItem={this.renderItems}
+                       keyExtractor={(item) => `${item.id}`}
+                     />
+                   
+                  </Grid>
+                </Card>) : null }
             </View>)}
-        </ScrollView>   
+        </ScrollView> 
+         <ScreenLoader loading={this.state.loading}/>
         <Footer style={styles.BottomView}>
            <Grid>
               <Col style={styles.footerCol}>
@@ -249,7 +283,7 @@ class MyCart extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    isLoading: state.common.isLoading,
+    //isLoading: state.common.isLoading,
     user: state.auth.user,
     totalItem: state.cart.totalItem,
     cartDetail: state.cart.cartDetail,
@@ -262,6 +296,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()), 
       viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
+      addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
+      updateCartItem: (id, qty) => dispatch(cartActions.updateCartItem({ id:id, quantity:qty  })),
+      deleteCartItem: (id) => dispatch(cartActions.deleteCartItem({ id:id })),
    };
 };
 

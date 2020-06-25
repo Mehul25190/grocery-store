@@ -11,16 +11,54 @@ export const viewcart = payloads => dispatch => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         dispatch({ type: ActionTypes.CARTDETAIL, data: res.data.data.cartList });
-        dispatch({ type: ActionTypes.TOTALITEM, data: res.data.data.cartList.length });
+        
         let totalAmount = 0;
+        let totalItem = 0;
         res.data.data.cartList.map(element => {
-          console.log(Number(tempPrice))
             let tempPrice = (element.discountedPrice > 0 && element.discountedPrice < element.itemPrice) ? Number(element.discountedPrice) : Number(element.itemPrice);
-            console.log(Number(tempPrice))
-            totalAmount = totalAmount + Number(tempPrice)
-            console.log(totalAmount)
+            totalAmount = totalAmount + Number(tempPrice * element.quantity)
+            if(element.isSubscribedItem == 0) totalItem = totalItem + 1;
         })
         dispatch({ type: ActionTypes.TOTALAMOUNT, data: totalAmount });
+        dispatch({ type: ActionTypes.TOTALITEM, data: totalItem });
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+export const addToCartItem = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.addToCartItem,  {payloads: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+
+export const updateCartItem = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.updateCartItem,  {payloads: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+
+export const deleteCartItem = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.deleteCartItem,  {payloads: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
         return res.data
       } else {
         return res

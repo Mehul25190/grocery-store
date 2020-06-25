@@ -248,6 +248,6 @@ QtyBox:{
     // backgroundColor:'#333',
     fontSize:14,
     textDecorationLine:'line-through'
-   },
+   }
 
 };

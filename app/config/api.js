@@ -28,4 +28,7 @@ export default {
   getOrderDetailById:'order/fetchOrderDetailsById',
   fetchSubscriptionDtlsById: 'order/fetchSubscriptionDtlsById',
   viewCart: 'userCart/viewCart',
+  updateCartItem: 'userCart/updateCartItemQty',
+  deleteCartItem: 'userCart/deleteCartItem',
+  addToCartItem: 'userCart/addToCart',
 }

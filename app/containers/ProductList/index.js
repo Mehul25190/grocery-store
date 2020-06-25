@@ -48,6 +48,7 @@ import { showToast } from '../../utils/common';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 import * as productActions from "../../actions/product";
+import * as cartActions from "../../actions/cart";
 import appStyles from "../../theme/appStyles";
 import styles from "./styles";
 import NumericInput from "react-native-numeric-input";
@@ -221,8 +222,29 @@ class ProductList extends React.Component {
   }
 
   buyOncePressHnadler(productId, value){
+
+   
+  if(value == 0){
+    
+  }else if(value == 1){
+    this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
+      console.log(res);
+      if(res.status == "success"){
+        this.props.viewCart(this.props.user.user.id);
+        showToast('Cart updated successfully.', "success")
+      }
+    })
+  }else if(value > 1){
+    this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
+      console.log(res);
+      if(res.status == "success"){
+        this.props.viewCart(this.props.user.user.id);
+        showToast('Cart updated successfully.', "success")
+      }
+    })
+  }
+
     console.log(productId, value)
-    if(value == 0 || value == 3){
       var array = [...this.state.buyOndeSelected]; // make a separate copy of the array
       var index = array.indexOf(productId)
       if (index !== -1) {
@@ -232,7 +254,7 @@ class ProductList extends React.Component {
         array.push(productId)
         this.setState({buyOndeSelected: array});
       }
-    }
+
     //this.setState({value: value})
   }
 
@@ -428,6 +450,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(productActions.searchItem({ searchString: searchString })),
     productDetail: (id) => 
       dispatch(productActions.productDetail({ itemId: id })),
+    viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
+    addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
+    updateCartItem: (id, qty) => dispatch(cartActions.updateCartItem({ id:id, quantity:qty  })),
+    deleteCartItem: (id) => dispatch(cartActions.deleteCartItem({ id:id })),
   };
 };
 

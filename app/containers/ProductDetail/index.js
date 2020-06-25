@@ -15,6 +15,7 @@ import {
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
+import * as cartActions from "../../actions/cart";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import {productList,productImages} from '../data/data';
@@ -22,6 +23,7 @@ import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
 import { AirbnbRating } from 'react-native-ratings';
 import Carousel,{Pagination } from 'react-native-snap-carousel';
+import { showToast } from '../../utils/common';
 
 import url from '../../config/api';
 
@@ -70,6 +72,20 @@ class ProductDetail extends React.Component {
       });
     });
    
+  }
+
+  addToCart(productId, value){
+    if(this.state.selected == 0)
+      showToast('Please select quantity', "danger")
+    this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
+      console.log(res);
+      if(res.status == "success"){
+        this.props.viewCart(this.props.user.user.id);
+        showToast('Product added successfully.', "success")
+        this.props.navigation.navigate(Screens.MyCart.route)
+      }
+    })
+    
   }
 
   componentWillUnmount() {
@@ -224,10 +240,16 @@ class ProductDetail extends React.Component {
                   placeholderIconColor={{borderWidth:2}}
                    >
                   <Picker.Item label="Qty" color={Colors.gray} style={{fontFamily:'Font-Medium'}}  value="0" />
-                  <Picker.Item label="2" value="1" />
-                  <Picker.Item label="3" value="2" />
-                  <Picker.Item label="4" value="3" />
-                  <Picker.Item label="5" value="4" />
+                  <Picker.Item label="1" value="1" />
+                  <Picker.Item label="2" value="2" />
+                  <Picker.Item label="3" value="3" />
+                  <Picker.Item label="4" value="4" />
+                  <Picker.Item label="5" value="5" />
+                  <Picker.Item label="6" value="6" />
+                  <Picker.Item label="7" value="7" />
+                  <Picker.Item label="8" value="8" />
+                  <Picker.Item label="9" value="9" />
+                  <Picker.Item label="10" value="10" />
 
                 </Picker>
                     <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
@@ -253,6 +275,12 @@ class ProductDetail extends React.Component {
            </View>
         </Card>
 
+        <TouchableOpacity>     
+          <Button style={styles.payBtn} primary full onPress={()=> this.addToCart(ProductDetail.item[0].id, this.state.selected)}>
+            <Text style={styles.payTextNow}>Add to cart</Text>
+          </Button>
+        </TouchableOpacity>
+
         <View style={styles.okayBtnArea}>
           <Button priamary full style={styles.doneBtn}>
             <TouchableOpacity onPress={()=> this.props.navigation.navigate(Screens.Home.route)}>
@@ -261,14 +289,6 @@ class ProductDetail extends React.Component {
           </Button>
         </View>
            
-         
-        <TouchableOpacity>     
-          <Button style={styles.payBtn} primary full onPress={()=>this.props.navigation.navigate(Screens.Checkout.route)}>
-            <Text style={styles.payTextNow}>Check Out</Text>
-          </Button>
-        </TouchableOpacity>
-       
-        
         </Content>
       
     </Container>
@@ -286,6 +306,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+      viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
+      addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
    };
 };
 
