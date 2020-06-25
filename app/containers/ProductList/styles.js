@@ -325,7 +325,8 @@ categoryStyles: {
     paddingBottom:5,
     marginLeft:Layout.indent-7,
     marginRight:Layout.indent-7,
-    paddingRight:Layout.indent-7
+    paddingRight:Layout.indent-7,
+    borderColor:Colors.primary
    },
    prodInfo:{
     textAlign:'left',

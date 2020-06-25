@@ -22,7 +22,7 @@ class SignInFormEmail extends React.Component {
         <Text style={styles.label}>Email</Text>
       </View>
         <Field 
-         
+         styles={{marginBottom:10}}
           name="email" 
           component={InputBox}
           // placeholder='Enter your email'
