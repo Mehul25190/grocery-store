@@ -42,7 +42,6 @@ class Drawer extends React.Component {
   }
 
   componentDidMount(){
-    
     //check user logged in or not
     if(this.props.user!=null){
       this.props.navigation.navigate(Screens.SignInStack.route);
@@ -50,8 +49,8 @@ class Drawer extends React.Component {
   }  
 
   logout(){
-    this.props.resetState();
-    this.props.navigation.navigate(Screens.SignInStack.route);
+    this.props.logout();
+    this.props.navigation.navigate(Screens.SignOutStack.route);
   }
   render() {
     const { navigation, user, language, state, deliveryAddress } = this.props;
@@ -73,7 +72,8 @@ class Drawer extends React.Component {
                 </Right>
              
         </Header>
-        <Card style={[appStyles.addBox,{height:'auto',}]}>
+        {this.props.user != null ?
+          (<Card style={[appStyles.addBox,{height:'auto',}]}>
           <ListItem avatar noBorder style={{ marginLeft: 10,}}>
             <Left style={{ flex: 0,  marginLeft: 0,   paddingLeft:0,  width: 40}}>
               <Svgicon name="user-circle" 
@@ -131,7 +131,7 @@ class Drawer extends React.Component {
             </TouchableOpacity>
             </Right>
           </ListItem>
-        </Card>
+        </Card>) : null }
         <Content style={{borderTopWidth:1,borderColor:Colors.primary,marginTop:5}}>
           <List
               dataArray={this.listItems}
