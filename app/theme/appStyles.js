@@ -249,7 +249,7 @@ export default StyleSheet.create({
   },
   // Input
   itemInput:{
-   height:45,
+   height:'auto',
     backgroundColor:'#f8f8f8',
     borderRadius:15
   },
@@ -265,7 +265,8 @@ export default StyleSheet.create({
   },
   inputError:{
     color: Colors.red,
-    top:20,
+    top:15,
+    paddingRight:10,
     fontSize:12
   },
   searchBar:{

@@ -297,7 +297,7 @@ class ProductList extends React.Component {
               {this.state.productData.map((item, index) => {
                 // productList.map((item, index) => {
                 return (
-                  <ListItem style={styles.ListItems} noBorder key={index}>
+                  <ListItem style={styles.ListItems} key={index}>
                     <Left style={styles.ListLeft}>
                       <Image
                         style={styles.proImage}
