@@ -48,11 +48,11 @@ class Home extends React.Component {
 
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
       this.getOfferList(); 
-      this.props.viewCart(this.props.user.user.id);
     });
   
     //set array from category list from api to get category list
-      this.getOfferList(); 
+    this.props.viewCart(this.props.user.user.id);
+    this.getOfferList(); 
     this.props.getDeviveryAddress(this.props.user.user.id);
     this.getCategoryList();  
      
