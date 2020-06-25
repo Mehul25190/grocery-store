@@ -3,6 +3,8 @@ export const initialState = {
 	common:{
 		isLoading: false,
 		showModal: false,
+		categoryData:{},
+		categoryOffer:{},
 		
 	},
 	auth:{

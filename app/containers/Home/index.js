@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet, View,TouchableHighlight,Image,FlatList,ScrollView, ImageBackground, StatusBar,TouchableOpacity} from 'react-native'
+import { StyleSheet, View,TouchableHighlight,Image,FlatList,ScrollView, ImageBackground, 
+  StatusBar,TouchableOpacity,RefreshControl} from 'react-native'
 import _ from 'lodash'; 
 import { Layout, Colors, Screens } from '../../constants';
 import { Logo, Svgicon, Headers, Catalog, List } from '../../components';
@@ -26,6 +27,7 @@ import styles from './styles';
 import { array } from 'prop-types';
 import Carousel from 'react-native-snap-carousel';
 import * as cartActions from "../../actions/cart";
+import ActionTypes from "../../constants/ActionTypes";
 
 const cartCount = 1;
 
@@ -34,17 +36,23 @@ class Home extends React.Component {
     super(props);
     this.state = {
       categoryData: [],  
-      text: '',    
+      text: '',
+      onRefreshLoading:false,    
     };
     this.courseFilterArr = [];
     console.log('Math', Math.floor(100000 + Math.random() * 900000));
+   
+    //this.props.resetState();
   }
 
 
   componentDidMount(){
+    
     this.setState({
-      entries:{},  
+      //entries:{},  
     });
+
+    //this.props.logout();
 
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
       this.getOfferList(); 
@@ -52,28 +60,35 @@ class Home extends React.Component {
   
     //set array from category list from api to get category list
     this.props.viewCart(this.props.user.user.id);
-    this.getOfferList(); 
+    //this.getOfferList(); 
     this.props.getDeviveryAddress(this.props.user.user.id);
     this.getCategoryList();  
      
   }
 
   getOfferList(){
+    this.setState({onRefreshLoading:true});
     this.props.fetchOffersOnLandingPage().then (res =>{
       // console.log(res);
       if(res.status == "success"){
-        this.setState({entries: res.data.offerList})
+        //this.setState({entries: res.data.offerList})
         // console.log(res.data.offerList.length)
       }
     });
+    this.setState({onRefreshLoading:false});
   }
 
+  //get pull to refressh 
+  
+
   getCategoryList() {
-    
+   
+    this.setState({onRefreshLoading:true});
+
     this.props.showCategoryList().then (res =>{
       
         if(res.status == "success"){
-              this.setState({ categoryData:res.data.category });
+              //this.setState({ categoryData:res.data.category });
               this.courseFilterArr = res.data.category;
         } else {
               console.log("something wrong with varification call");
@@ -85,6 +100,7 @@ class Home extends React.Component {
           console.log('Error messages returned from server', error);
           showToast("Error messages returned from server","danger");
       });
+      this.setState({onRefreshLoading:false});  
   }
 
   onPressRecipe = item => {
@@ -151,7 +167,35 @@ class Home extends React.Component {
         text: text,
       });
   }
+
+  onDetailPage = () => {
     
+    //get Order list & get first order ID
+    this.props.getOrderList(this.props.user.user.id).then (res =>{
+     
+        if(res.status == "success"){
+          this.para_orderId = res.data.orderList[0].id;
+          if(res.data.orderList[0].id!="") {
+            this.props.navigation.navigate('OrderDetail', { orderId:this.para_orderId });    
+          }
+        } else {
+              console.log("something wrong with varification call");
+              showToast("Something wrong with Server response","danger");
+        }
+         
+      })
+      .catch(error => {
+          console.log('Error messages returned from server', error);
+          showToast("Error messages returned from server","danger");
+      });
+
+  };
+  
+  refreshContent = () => {
+    //alert("ADFA");
+    this.getCategoryList;
+    this.getOfferList;
+  }
 
   render(){
     //console.log("first render");
@@ -191,17 +235,30 @@ class Home extends React.Component {
        </Header>
          
             
-          <Content enableOnAndroid style={appStyles.content}>
+          <Content enableOnAndroid style={appStyles.content} 
+          
+          refreshControl={
+            <RefreshControl
+            style={{backgroundColor: '#E0FFFF'}}
+            refreshing={this.state.onRefreshLoading}
+            onRefresh={this.getCategoryList.bind(this)}
+           // onRefresh={this.refreshContent.bind(this)}
+            tintColor="#ff0000"
+            title="Loading..."
+            titleColor="#00ff00"
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor="#ffff00"
+            />} >
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (<View>
-            {this.state.entries ?
+            {this.props.offerData ?
               <Card style={[appStyles.addBox,{height:'auto'}]}>
                  <Carousel
                     ref={(c) => { this._carousel = c; }}
                     loop={true}
                     autoplay={false}
-                    data={this.state.entries}
+                    data={this.props.offerData}
                     renderItem={this._renderItem}
                     sliderWidth={Layout.window.width}
                     itemWidth={Layout.window.width}
@@ -213,13 +270,15 @@ class Home extends React.Component {
 
           <View style={styles.ItemLayout}>
             <View style={styles.shopSubTitle}>
+            <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
               <Text style={styles.shopSubTitleText}>Upcoming Orders</Text>
+              </TouchableOpacity>  
             </View>
            { <FlatList 
                      vertical
                      showsVerticalScrollIndicator={false}
                      numColumns={2}
-                     data={this.state.categoryData}
+                     data={this.props.categoryData}
                      renderItem={this.renderItems}
                      keyExtractor={item => `${item.id}`}
                    />
@@ -256,10 +315,14 @@ class Home extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
+  
   return {
     user: state.auth.user,
     isLoading: state.common.isLoading,
     totalItem: state.cart.totalItem,
+    categoryData:state.common.categoryData,
+    offerData:state.common.categoryOfferData,
+    
   };
 };
 
@@ -270,6 +333,8 @@ const mapDispatchToProps = (dispatch) => {
       getDeviveryAddress: (useId) => dispatch(userActions.getDeviveryAddress({userId: useId})),
       fetchOffersOnLandingPage: () => dispatch(productActions.fetchOffers()),
       viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
+      getOrderList: (useId) => dispatch(userActions.getUserOrderList({userId: useId})),
+      resetState: () => dispatch({ type: ActionTypes.RESETSTATE }),
    };
 };
 

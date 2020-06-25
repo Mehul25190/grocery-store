@@ -25,11 +25,12 @@ export const signinWithMobile = payloads => dispatch => {
   return axios.post(url.signinMobile,  {payloads: payloads}).then(res => {
     
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    //console.log("sign in mobile");
+    console.log("sign in mobile");
     console.log(res);
     if(res.status == 200){
       if(res.data.status=="success"){
-        dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
+        dispatch({ type: ActionTypes.MOBILENO, data: payloads.mobileNo });
+        //dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
         //dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
       }
       return res.data
@@ -54,9 +55,11 @@ export const signup = payloads => dispatch => {
 
 export const signupMobileVerification = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
-  return axios.post(url.signupVerifyMobile,  {payloads: payloads}).then(res => {
+  return axios.post(url.loginVerifyMobile,  {payloads: payloads}).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    console.log(res);
     if(res.status == 200){
+      dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
       return res.data;
     } else {
       return res;
@@ -73,7 +76,8 @@ export const showCategoryList = payloads => dispatch => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     //console.log(res.data);
     if(res.status == 200){
-      //console.log(res.data);
+      console.log("set cat", res.data.data.category);
+      dispatch({ type: ActionTypes.CATEGORYLIST, data: res.data.data.category });
       return res.data;
     } else {
       return res;

@@ -52,7 +52,11 @@ class SignUp extends React.Component {
       if(res.status == "success"){  
         showToast(res.msg,"success");
         dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route }));
-      }else{
+      }
+      else if(res.code == "1000") {
+        showToast(res.message,"danger")
+      }
+      else{
         showToast(res.warnings[0].message,"danger");
       }
     }).catch(error => {
