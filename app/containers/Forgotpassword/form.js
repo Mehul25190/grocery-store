@@ -20,11 +20,10 @@ class ForgotForm extends React.Component {
         <Text style={styles.label}>Email</Text>
       </View>
         <Field 
+          styles={{marginBottom:10}}
           name="email" 
-          component={InputBox} 
-        
+          component={InputBox}
           keyboardType={'email-address'}
-          
           validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
         />
       </Form>
