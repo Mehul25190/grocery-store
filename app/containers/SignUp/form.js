@@ -7,6 +7,10 @@ import { Form, Item, Input, Title, Button, Text } from 'native-base';
 import { required, email, length, confirmation } from 'redux-form-validators'
 import { InputBox } from '../../components';
 import styles from '../SignIn/styles';
+export const phoneNumber = value =>
+  value && !/^(0|[1-9][0-9]{9})$/i.test(value)
+    ? 'Must be 10 digits'
+    : undefined
 
 class SignUpForm extends React.Component {
   constructor(props){
@@ -21,7 +25,7 @@ class SignUpForm extends React.Component {
           name="mobileNo" 
           component={InputBox} 
           keyboardType={'numeric'}
-          validate=''
+         validate={[required({msg: 'Mobile no. is required'}), phoneNumber]} 
         />
         <View><Text style={styles.label}>Email</Text></View>
         <Field 

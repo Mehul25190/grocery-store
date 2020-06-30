@@ -91,49 +91,55 @@ addAddressStyle: {
   color:'#fff'
   },
   InputView:{
-  marginTop: 5,
+  marginTop: 10,
   marginRight:Layout.indent-5,
-  marginLeft:Layout.indent-5,
-  flex:1,
-  borderRadius: 10,
-  paddingLeft:15,
-  backgroundColor:Colors.white,
-  color:Colors.white,
-  fontFamily:'Font-Medium',
-  marginBottom:10,
-  shadowColor: "#000",
-  shadowOffset: {
-  width: 0,
-  height: 2,
-    },
-    shadowOpacity:2,
-    shadowRadius: 4,
-    borderColor:'#E1E1E1',
-    borderWidth:1,
-    elevation: 1,
+  marginLeft:Layout.indent,
+  borderColor:Colors.primary
+  // flex:1,
+  // borderRadius: 10,
+  // paddingLeft:15,
+  // backgroundColor:Colors.white,
+  // color:Colors.white,
+  // fontFamily:'Font-Medium',
+  // marginBottom:10,
+  // shadowColor: "#000",
+  // shadowOffset: {
+  // width: 0,
+  // height: 2,
+  //   },
+  //   shadowOpacity:2,
+  //   shadowRadius: 4,
+  //   borderColor:'#E1E1E1',
+  //   borderWidth:1,
+  //   elevation: 1,
   },
+    labelText:{
+    fontFamily:'Font-Medium',
+    color:Colors.black,
+    marginLeft:Layout.indent-10
+   },
  reasonView:{
   
-    marginTop: 5,
+    marginTop: 15,
     marginRight:Layout.indent-5,
-    marginLeft:Layout.indent-5,
-    flex:1,
-    borderRadius: 10,
-    paddingLeft:3,
-    backgroundColor:Colors.white,
-    color:Colors.white,
-    fontFamily:'Font-Medium',
-    marginBottom:10,
-    shadowColor: "#000",
-    shadowOffset: {
-    width: 0,
-    height: 2,
-    },
-    shadowOpacity:2,
-    shadowRadius: 4,
-    borderWidth:1,
-    borderColor:'#E1E1E1',
-    elevation: 1,
+    
+    // flex:1,
+    // borderRadius: 10,
+    // paddingLeft:3,
+    // backgroundColor:Colors.white,
+    // color:Colors.white,
+    // fontFamily:'Font-Medium',
+    // marginBottom:10,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    // width: 0,
+    // height: 2,
+    // },
+    // shadowOpacity:2,
+    // shadowRadius: 4,
+    // borderWidth:1,
+    // borderColor:'#E1E1E1',
+    // elevation: 1,
   },
    DownArrow:{
     position:'absolute',
@@ -143,7 +149,7 @@ addAddressStyle: {
     top:15,zIndex:99
   },
    dorpDownReason: {
-   borderRadius:50,zIndex:50,
+   paddingLeft:5,
    flex:1,
    height:45,
    color:Colors.gray,
@@ -164,7 +170,11 @@ addAddressStyle: {
    },
    inputText:{
    	fontFamily:'Font-Medium',
-   	color:'#B9B9B9'
+   	color:'#B9B9B9',
+    marginLeft:Layout.indent-10,
+    marginRight:Layout.indent-5,
+    height:40,
+    paddingTop:10
    }
 
              

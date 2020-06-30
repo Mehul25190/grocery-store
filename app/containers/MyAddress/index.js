@@ -11,7 +11,7 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left, Body, Title, Right, Card, Grid, Row, Col, Form, Picker, Input, Item
+  Header, Left, Body, Title, Right, Card, Grid, Row, Col, Form, Picker, Input, Item, Label
 } from 'native-base';
 import { showToast } from '../../utils/common';
 import { connect } from "react-redux";
@@ -28,7 +28,7 @@ class MyAddress extends React.Component {
     this.state = {
       delAddress: '',
       selected: '0',
-      edit: true,
+      edit: false,
       id:null,
       cityId:1,
       areaId:1,
@@ -224,7 +224,7 @@ class MyAddress extends React.Component {
           setCart={true}
           IconRightF='search'
           bgColor='transparent'
-          Title='My MyAddress'
+          Title='My Address'
 
         />
         <Content enableOnAndroid style={appStyles.content}>
@@ -273,7 +273,7 @@ class MyAddress extends React.Component {
              </Grid> */ }
           {(this.state.delAddress == '' || this.state.edit == false) &&
 
-            (<Card style={[appStyles.addBox, { height: 'auto', paddingTop: 8, position: 'relative' }]}>
+            (<Card style={[appStyles.addBox, { height: 'auto',paddingLeft:0, paddingTop: 8, position: 'relative' }]}>
               <View>
                 {/* 
                 <Text style={[styles.addressTextStyle, { textAlign: "center" }]}>Add New Address </Text>
@@ -281,7 +281,8 @@ class MyAddress extends React.Component {
               </View>
               <Form>
                 <View style={styles.reasonView} >
-                  <Item style={{ borderBottomWidth: 0 }} >
+                  <Label style={[styles.labelText,{paddingLeft:13}]}  >City</Label>
+                  <Item style={{ borderBottomWidth: 1, borderColor: Colors.primary }} >
                     <Picker
                       note
                       mode="dropdown"
@@ -307,8 +308,10 @@ class MyAddress extends React.Component {
                   </Item>
                 </View>
 
-                <View style={styles.reasonView} >
-                  <Item style={{ borderBottomWidth: 0 }} >
+                <View style={[styles.reasonView,{}]} >
+               <Label style={[styles.labelText, {paddingLeft:13}]}  >Area</Label>
+                  <Item style={{ borderBottomWidth: 1, justifyContent:'flex-start',alignItems:'flex-start', borderColor: Colors.primary }} >
+
                     <Picker
                       note
                       mode="dropdown"
@@ -366,29 +369,33 @@ class MyAddress extends React.Component {
                     </Item> */}
                  
 
-                <View style={styles.InputView} >
-                  <Input placeholderTextColor="#B9B9B9" placeholder="Enter Building Name" style={styles.inputText}
+                <Item style={styles.InputView} stackedLabel>
+                 <Label style={styles.labelText}>Enter building name</Label>
+                  <Input placeholderTextColor="#B9B9B9" placeholder="" style={styles.inputText}
                   value={this.state.buildingName} 
                   onChangeText={(value) => {this.setState({buildingName:value});} }  />
-                </View>
-                <View style={styles.InputView} >
-                  <Input placeholderTextColor="#B9B9B9" placeholder="Apt.No." style={styles.inputText}
+                </Item>
+                <Item style={styles.InputView} stackedLabel>
+                 <Label style={styles.labelText}>Apt.No.</Label>
+                  <Input placeholderTextColor="#B9B9B9" placeholder="" style={styles.inputText}
                   value={this.state.aptNo} 
                   onChangeText={(value) => {this.setState({aptNo:value});} }
                   />
-                </View>
-                <View style={styles.InputView} >
-                  <Input placeholderTextColor="#B9B9B9" placeholder="Special Instruction" style={styles.inputText}
+                </Item>
+                <Item style={styles.InputView} stackedLabel>
+                 <Label style={styles.labelText}>Special Instruction</Label>
+                  <Input placeholderTextColor="#B9B9B9" placeholder="" style={styles.inputText}
                   value={this.state.specialIns} 
                   onChangeText={(value) => {this.setState({specialIns:value});} }
                   />
-                </View>
-                <View style={styles.InputView} >
-                  <Input placeholderTextColor="#B9B9B9" placeholder="PostBox No." style={styles.inputText}
+                </Item>
+                <Item style={styles.InputView} stackedLabel>
+                 <Label style={styles.labelText}>PostBox No.</Label>
+                  <Input placeholderTextColor="#B9B9B9" placeholder="" style={styles.inputText}
                   value={this.state.zipcode.toString()} 
                   onChangeText={(value) => {this.setState({zipcode:value});} }
                   />
-                </View>
+                </Item>
                 {<Grid style={{ marginTop: 20, marginBottom: 20 }}>
                   <Row>
                     <Col style={{ justifyContent: 'flex-start' }}>
@@ -396,7 +403,7 @@ class MyAddress extends React.Component {
                         <Button full primary style={[styles.saveBtn]} onPress={() => this.saveAddress()}>
                           <Text
                             style={[styles.saveBtnText, { textAlign: "center" }]}>Save
-                                            </Text>
+                            </Text>
                         </Button>
                       </TouchableOpacity>
                     </Col>

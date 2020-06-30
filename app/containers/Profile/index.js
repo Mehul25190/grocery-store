@@ -311,7 +311,7 @@ class Profile extends React.Component {
 
 
             <View style={{ paddingTop: 10, position: 'relative', marginRight: Layout.indent }}>
-              <Label style={[styles.labelText, { paddingLeft: Layout.indent, width: Layout.width }]}  >Ethencity</Label>
+             <Label style={[styles.labelText, { paddingLeft: Layout.indent, width: Layout.width }]}  >Ethencity</Label>
               <Item style={{}} >
                 <Picker
                   note
@@ -320,9 +320,8 @@ class Profile extends React.Component {
                   //selectedValue={this.state.selected}
                   //onValueChange={this.onValueChangeGender.bind(this)}
                   selectedValue={this.state.ethnicity}
-                  onValueChange={this.onValueChange.bind(this)}
-
-                >
+                  onValueChange={this.onValueChange.bind(this)} >
+                  
                   <Picker.Item label="Select Ethencity" value="key0" />
                   <Picker.Item label="Asians" value="Asians" />
                   <Picker.Item label="Bengalis" value="Bengalis" />
