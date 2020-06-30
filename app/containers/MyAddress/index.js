@@ -59,6 +59,7 @@ class MyAddress extends React.Component {
   }
   //get Delivery address
   getDeliveryAddress(){
+
     //console.log(this.props.user);
     //alert(this.props.user.user.id);  
     this.props.showDeliveryAddress(this.props.user.user.id).then (res => {
@@ -66,7 +67,7 @@ class MyAddress extends React.Component {
       if(res.status == "success"){
        // console.log(res.data.userAddress);
             if(res.data.userAddressDtls !="") {
-              //console.log('inside');
+              console.log('again');
               this.setState({ setDeliveryAddress:res.data.userAddressDtls});
               this.setState({id:res.data.userAddressDtls.id});
               this.setState({buildingName:res.data.userAddressDtls.buildingName});
@@ -191,8 +192,13 @@ class MyAddress extends React.Component {
         
         if(res.data.status == "success"){
               //this.setState({ categoryData:res.data.category });
-              showToast("Save Successfully","success");
+              
+              //get latest address
+             // this.getCityList();
+              // this.getDeliveryAddress();  
               //this.props.navigation.navigate(Screens.SignIn.route)
+
+              showToast("Save Successfully","success");
         } else {
               console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
