@@ -263,7 +263,9 @@ class ProductDetail extends React.Component {
          </Row>
         </Grid>
         
-       
+     {
+      ProductDetail.item[0].description1!=null && (
+        <View>
         <View>
           <Text style={styles.title}>Product Description </Text>
         </View>
@@ -275,7 +277,9 @@ class ProductDetail extends React.Component {
              </Text>
            </View>
         </Card>
-
+    </View>
+        )}  
+    
         <TouchableOpacity>     
           <Button style={styles.payBtn} primary full onPress={()=> this.addToCart(ProductDetail.item[0].id, this.state.selected)}>
             <Text style={styles.payTextNow}>Add to cart</Text>

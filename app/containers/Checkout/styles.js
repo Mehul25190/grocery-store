@@ -1,5 +1,63 @@
 import {Colors,Layout} from '../../constants/';
 export default {
+  bodyText:{
+    fontFamily:'Font-Medium',
+    paddingLeft:15
+  },
+
+  bodyGreen:{
+   color:Colors.primary,
+  },
+  img:{
+    color:Colors.primary
+  },
+  btn:{
+    flexDirection: 'row',
+    flex:0,
+    width:150
+  },
+  txtDate:{
+   textAlign:'center'
+  },
+  txtDay:{
+    textAlign:'center'
+  },
+  dateCol:{
+    backgroundColor:'#adeeb8',
+    paddingVertical:15,
+    position:'relative'
+  },
+  activeDateCol:{
+    backgroundColor:Colors.primary
+  },
+  activetxtDate:{
+    color:Colors.white
+  },
+  activetxtDay:{
+    color:Colors.white
+  },
+  clickBtn:{
+    //
+  marginLeft:Layout.indent,
+  marginRight:Layout.indent,
+  backgroundColor:Colors.secondary,
+  marginTop:5,
+
+   height:30,
+
+  textAlign:'center',
+  justifyContent:'center',
+  alignItems:'center',
+  borderRadius:25,
+  marginBottom:10
+},
+  textPayMode:{
+    fontFamily:'Font-Medium',
+    fontSize:14,
+    lineHeight:22,
+  
+    color:Colors.white
+  },
   OrderTitle:{
      borderBottomWidth:1.3,
       marginRight:Layout.indent,
@@ -126,7 +184,7 @@ checkOutBtnArea:{
   marginRight:Layout.indent,
     paddingLeft:Layout.indent,
   paddingRight:Layout.indent,
-  marginTop:30
+  marginTop:10
 
 },
 

@@ -1,6 +1,81 @@
  
 import {Colors,Layout} from '../../constants/';
 export default {
+	testStyles:{
+		fontFamily:'Font-Medium',
+		fontSize:14,
+		lineHeight:20
+	},
+	cardAdd:{
+		justifyContent:'center',
+		alignItems:'center',
+		width:77,
+		padding:0,
+		
+	},
+	cardAddText:{
+	color:Colors.primary,
+	fontSize:13,
+
+	fontFamily:'Font-Medium'
+},
+payRadio:{
+	width:40,
+},
+PayMethodOther:{
+	marginRight:Layout.indent,
+	marginBottom:0,
+	paddingBottom:10,
+	height:60,
+	justifyContent:'flex-start',
+paddingLeft:0,
+	marginLeft:0,
+	paddingTop:15
+},
+walletBtn:{
+  paddingVertical:10,
+  color:Colors.primary,
+  justifyContent:'center',
+  alignItems:'center',
+  borderLeftWidth:1,
+  borderColor:'#ddd',
+  paddingLeft:10,
+  marginLeft:Layout.indent,
+},
+walletBtnText:{
+	color:Colors.primary,
+	fontSize:14,
+	paddingHorizontal:7,
+	fontFamily:'Font-Medium'
+},
+payOptions:{
+	fontSize:14,
+	fontFamily:'Font-Medium',
+	lineHeight:18
+},
+payOptionscard:{
+	fontSize:14,
+	fontFamily:'Font-Medium',
+	lineHeight:18,
+	textAlign:'left',
+},
+payCashText:{
+	fontSize:11,
+	fontFamily:'Font-Medium',
+	lineHeight:18,
+	textAlign:'left',
+},
+	PayMethod:{
+  borderColor:'#ddd',
+  marginRight:Layout.indent,
+  borderBottomWidth:1.2,
+  marginBottom:5,
+  paddingTop:15,
+  paddingBottom:15,
+  height:60,
+  marginLeft:0
+  
+},
 BankImg:{
 	width:40,
 	height:40,
@@ -106,12 +181,35 @@ marginLeft:Layout.indent,
 fontFamily:'Font-Medium',color:'#B9B9B9',
 fontSize:16
 },
-saveCardBox:{
-	borderWidth:1,
-	borderRadius:10,
+greenback:{
+	backgroundColor:'#e8f8e9',
+	paddingTop:10,
+	borderColor:'#ddd',
+	flex:0,
+	paddingLeft:15,
+	paddingRight:15,
+	justifyContent:'center',
+	height:'auto',
+	paddingVertical:5
+},
+whiteBack:{
 	backgroundColor:'#fff',
+		borderBottomWidth:1,
+	
 	marginTop:10,
-	borderColor:'#B9B9B9',
+	borderColor:'#ddd',
+	flex:0,
+	paddingLeft:15,
+	paddingRight:15,
+	justifyContent:'center',
+	height:'auto',
+	paddingVertical:5
+},
+saveCardBox:{
+	borderBottomWidth:1,
+	
+	marginTop:10,
+	borderColor:'#ddd',
 	flex:0,
 	paddingLeft:15,
 	paddingRight:15,

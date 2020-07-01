@@ -38,6 +38,9 @@ class Verification extends React.Component {
       visibleModal: false,
       code:'',
     };
+    const { navigation } = this.props;
+    const para_email = navigation.getParam('para_email');
+    console.log(para_email);
   }
 
   componentDidMount() {
@@ -64,25 +67,67 @@ class Verification extends React.Component {
  signinverification(code) {
   var mobileno = this.props.mobileno; 
 
-  this.props.signupMobileVerification(mobileno,code).then (res =>{
-    
-      if(res.status == "success"){
+  //get value for para
+  const { navigation } = this.props;
+  const para_email = navigation.getParam('para_email');
+  console.log("para email>>>>");
+  console.log(para_email);
 
-            //console.log("Entereed after api >>>>");
-            showToast(res.message,"success");
-            this.props.navigation.navigate(Screens.SignIn.route)
-            //Screens.SignInStack.route
+  if(para_email=="") {
+  
+        //checking varification with login -> OTP -verification  
+        this.props.loginMobileVerification(mobileno,code).then (res =>{
+
+          console.log("response from loginMobileVerification")  
+          console.log(res);
+
+            if(res.status == "success"){
+
+                  //console.log("Entereed after api >>>>");
+                  showToast(res.message,"success");
+                  this.props.navigation.navigate(Screens.SignIn.route)
+                  //Screens.SignInStack.route
+                  
+            } else {
+                  console.log("something wrong with varification call");
+                  showToast(res.message,"danger");
+                  this.props.navigation.navigate(Screens.Verification.route)
+            }
             
-      } else {
-            console.log("something wrong with varification call");
-            showToast(res.message,"danger");
-            this.props.navigation.navigate(Screens.Verification.route)
-      }
-       
-    })
-    .catch(error => {
-        console.log('Error messages returned from server', error);
-    });
+          })
+          .catch(error => {
+              console.log('Error messages returned from server', error);
+          });
+
+  }else{
+
+    //checking varification with signup -> OTP -verification  
+
+    this.props.signupMobileVerification(mobileno,code).then (res =>{
+
+      console.log("response from signupMobileVerification")  
+      console.log(res);
+  
+        if(res.status == "success"){
+  
+              //console.log("Entereed after api >>>>");
+              showToast(res.message,"success");
+              this.props.navigation.navigate(Screens.SignIn.route)
+              //Screens.SignInStack.route
+              
+        } else {
+              console.log("something wrong with varification call");
+              showToast(res.message,"danger");
+              this.props.navigation.navigate(Screens.Verification.route)
+        }
+         
+      })
+      .catch(error => {
+          console.log('Error messages returned from server', error);
+      });
+
+  }
+
 
  }
 
@@ -184,7 +229,9 @@ const mapDispatchToProps = (dispatch) => {
     setLanguage: () => dispatch(userActions.setLanguage({ id: 1, set: 1 })),
     showModal: () => dispatch({ type: ActionTypes.SHOWMODAL, showModal: true }),
     resetState: () => dispatch({ type: ActionTypes.RESETSTATE }),
-    signupMobileVerification: (mobileno,code) => dispatch(userActions.signupMobileVerification({mobileNo:mobileno, athenticationCode:code }))
+    signupMobileVerification: (mobileno,code) => dispatch(userActions.signupMobileVerification({mobileNo:mobileno, otp:code })),
+
+    loginMobileVerification: (mobileno,code) => dispatch(userActions.signInMobileVerification({mobileNo:mobileno, athenticationCode:code }))
   };
 };
 

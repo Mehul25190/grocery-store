@@ -85,11 +85,12 @@ class Forgotpassword extends React.Component {
                       delay={1000}>
                       { this.props.isLoading ? 
                          <Spinner color={Colors.secondary} /> : 
-                          <TouchableOpacity onPress={() =>  this.props.pressReset()} >
+                          <TouchableOpacity >
                            <Button
                             full
                             primary
                             style={appStyles.btnSecontary}
+                            onPress={() =>  this.props.pressReset()} 
                               >
                             <Text style={styles.SignInbtn}>Reset </Text>
                           </Button>

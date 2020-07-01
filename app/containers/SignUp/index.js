@@ -51,7 +51,7 @@ class SignUp extends React.Component {
       
       if(res.status == "success"){  
         showToast(res.msg,"success");
-        dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route }));
+        dispatch(NavigationActions.navigate({ routeName: Screens.Verification.route, params:{para_email: values.email} }));
       }
       else if(res.code == "1000") {
         showToast(res.message,"danger")

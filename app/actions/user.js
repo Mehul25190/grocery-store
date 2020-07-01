@@ -55,6 +55,20 @@ export const signup = payloads => dispatch => {
 
 export const signupMobileVerification = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.signupVerifyMobile,  {payloads: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    console.log(res);
+    if(res.status == 200){
+      dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
+      return res.data;
+    } else {
+      return res;
+    }
+  })
+}
+
+export const signInMobileVerification = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.loginVerifyMobile,  {payloads: payloads}).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     console.log(res);
