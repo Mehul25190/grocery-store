@@ -365,13 +365,13 @@ categoryStyles: {
       paddingRight:0,
       width:90,
       height:25,
-      marginTop:5
    },
    subscribeBtn:{
    backgroundColor:Colors.secondary,
    minWidth:90,
     height:25,
     marginTop:5,
+    marginBottom:5,
     justifyContent: 'center',
    },
 

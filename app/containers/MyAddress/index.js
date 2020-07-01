@@ -218,7 +218,7 @@ class MyAddress extends React.Component {
           setCart={true}
           IconRightF='search'
           bgColor='transparent'
-          Title='My MyAddress'
+          Title='My Address'
 
         />
         <Content enableOnAndroid style={appStyles.content}>
@@ -231,7 +231,6 @@ class MyAddress extends React.Component {
             <GooglePlacesAutocomplete
               placeholder='Choose Current Location'
               minLength={2}
-              autoFocus={true}
               returnKeyType={'default'}
               fetchDetails={true}
               styles={styles.currentLocationStyle}

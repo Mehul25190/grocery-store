@@ -238,14 +238,8 @@ class Home extends React.Component {
           
           refreshControl={
             <RefreshControl
-            style={{backgroundColor: '#E0FFFF'}}
             refreshing={this.state.onRefreshLoading}
             onRefresh={this.getCategoryList.bind(this)}
-           // onRefresh={this.refreshContent.bind(this)}
-            tintColor="#ff0000"
-            title="Loading..."
-            titleColor="#00ff00"
-            colors={['#ff0000', '#00ff00', '#0000ff']}
             progressBackgroundColor="#ffff00"
             />} >
           {this.props.isLoading ? (

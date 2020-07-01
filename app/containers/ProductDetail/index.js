@@ -50,7 +50,7 @@ class ProductDetail extends React.Component {
       //default value of the date time
       date: '',
       time: '',
-      selected: "0",
+      selected: "1",
        selectedIndex: 0,
        productImages:''
     };
@@ -75,8 +75,10 @@ class ProductDetail extends React.Component {
   }
 
   addToCart(productId, value){
-    if(this.state.selected == 0)
+    if(this.state.selected == 0){
       showToast('Please select quantity', "danger")
+      return;
+    }
     this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
       console.log(res);
       if(res.status == "success"){
@@ -239,7 +241,6 @@ class ProductDetail extends React.Component {
                   placeholderStyle={{borderWidth:10, fontFamily:'Font-Medium' }}
                   placeholderIconColor={{borderWidth:2}}
                    >
-                  <Picker.Item label="Qty" color={Colors.gray} style={{fontFamily:'Font-Medium'}}  value="0" />
                   <Picker.Item label="1" value="1" />
                   <Picker.Item label="2" value="2" />
                   <Picker.Item label="3" value="3" />

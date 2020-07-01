@@ -52,7 +52,7 @@ import * as cartActions from "../../actions/cart";
 import appStyles from "../../theme/appStyles";
 import styles from "./styles";
 import NumericInput from "react-native-numeric-input";
-
+import { ScreenLoader } from '../../components';
 
 class ProductList extends React.Component {
   constructor(props) {
@@ -82,7 +82,7 @@ class ProductList extends React.Component {
     //alert(this.state.categoryId);
     //get product list default base on category selected
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
-      this.setState({ selectSubCat: null, text: '' });
+      this.setState({ selectSubCat: null, text: '', buyOndeSelected: [] });
       this.subCategoryList();
     });
   }
@@ -223,37 +223,41 @@ class ProductList extends React.Component {
 
   buyOncePressHnadler(productId, value){
 
-   
+   //console.log(value);
   if(value == 0){
     
   }else if(value == 1){
     this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
-      console.log(res);
+      //console.log('dddd', res);
       if(res.status == "success"){
-        this.props.viewCart(this.props.user.user.id);
-        showToast('Cart updated successfully.', "success")
+        this.props.viewCart(this.props.user.user.id).then(res => {
+          console.log('dddd', res);
+            showToast('Cart updated successfully.', "success")
+            //this.setState({loading: false});
+        }) 
       }
     })
   }else if(value > 1){
-    this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
-      console.log(res);
+    this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
+      //console.log(res);
       if(res.status == "success"){
-        this.props.viewCart(this.props.user.user.id);
-        showToast('Cart updated successfully.', "success")
+        this.props.viewCart(this.props.user.user.id).then(res => {
+            showToast('Cart updated successfully.', "success")
+            //this.setState({loading: false});
+        }) 
       }
     })
   }
 
-    console.log(productId, value)
-      var array = [...this.state.buyOndeSelected]; // make a separate copy of the array
-      var index = array.indexOf(productId)
-      if (index !== -1) {
-        array.splice(index, 1);
-        this.setState({buyOndeSelected: array});
-      }else{
-        array.push(productId)
-        this.setState({buyOndeSelected: array});
-      }
+  var array = [...this.state.buyOndeSelected]; // make a separate copy of the array
+  var index = array.indexOf(productId)
+  if (index !== -1 && value == 0) {
+    array.splice(index, 1);
+    this.setState({buyOndeSelected: array});
+  }else{
+    array.push(productId)
+    this.setState({buyOndeSelected: array});
+  }
 
     //this.setState({value: value})
   }
@@ -261,7 +265,7 @@ class ProductList extends React.Component {
 
   render() {
 
-    console.log(this.state.buyOndeSelected)
+    console.log('buyOndeSelected', this.state.buyOndeSelected)
     const { navigation } = this.props;
     const getTitle = navigation.getParam("item");
     const categoryName = this.props.navigation.getParam("categoryName");
@@ -280,8 +284,7 @@ class ProductList extends React.Component {
         <Content enableOnAndroid style={appStyles.content}>
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
-          ) : (
-            <View>
+          ) : (<View>
               <ScrollView>
                 <FlatList
                   horizontal
@@ -361,29 +364,7 @@ class ProductList extends React.Component {
                     </Body>
                     <Right style={styles.ListRight}>
                       <View>
-                        {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
-                          (<NumericInput
-                            initValue={1}
-                            //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
-                            onChange={(value) => value == 0 ? this.buyOncePressHnadler(item.id, value) : ''}
-                            onLimitReached={(isMax, msg) =>
-                              console.log(isMax, msg)
-                            }
-                            minValue={0}
-                            totalWidth={90}
-                            totalHeight={20}
-                            iconSize={30}
-                            borderColor="#F8BB1B"
-                            inputStyle={{ fontSize: 13 }}
-                            step={1}
-                            valueType="real"
-                            rounded
-                            textColor="#F8BB1B"
-                            iconStyle={{ color: "#F8BB1B", fontSize: 14 }}
-                            rightButtonBackgroundColor="#fff"
-                            leftButtonBackgroundColor="#fff"
-                          />)
-                          : null }
+                        
                       </View>
                       <View>
                         {item.isSubscribable ? (
@@ -397,7 +378,7 @@ class ProductList extends React.Component {
                               }
                             >
                               <Text style={styles.subText}>
-                                Subscribe@{"\u20B9"}{item.discountedPrice > 0 && item.discountedPrice < item.price ? item.discountedPrice : item.price}
+                                Subscribe@{"\u20B9"}{item.price}
                               </Text>
                             </TouchableOpacity>
                           </Button>
@@ -417,6 +398,29 @@ class ProductList extends React.Component {
                             
                           </TouchableOpacity>
                         </Button>)}
+                        {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
+                          (<NumericInput
+                            initValue={1}
+                            //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
+                            onChange={(value) => this.buyOncePressHnadler(item.id, value)}
+                            onLimitReached={(isMax, msg) =>
+                              console.log(isMax, msg)
+                            }
+                            minValue={0}
+                            totalWidth={90}
+                            totalHeight={20}
+                            iconSize={30}
+                            borderColor="#F8BB1B"
+                            inputStyle={{ fontSize: 13 }}
+                            step={1}
+                            valueType="real"
+                            rounded
+                            textColor="#F8BB1B"
+                            iconStyle={{ color: "#F8BB1B", fontSize: 14 }}
+                            rightButtonBackgroundColor="#fff"
+                            leftButtonBackgroundColor="#fff"
+                          />)
+                          : null }
                       </View>
                     </Right>
                   </ListItem>
@@ -424,7 +428,7 @@ class ProductList extends React.Component {
               })}
               {this.state.productData.length == 0 ? <View style={[appStyles.spinner, appStyles.norecordfound]}><Text>No Product Found</Text></View> : null }
             </View>
-          )}
+            )}
         </Content>
 
         {/*<Catalog {...this.props} />*/}
@@ -451,8 +455,8 @@ const mapDispatchToProps = (dispatch) => {
     productDetail: (id) => 
       dispatch(productActions.productDetail({ itemId: id })),
     viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
-    addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
-    updateCartItem: (id, qty) => dispatch(cartActions.updateCartItem({ id:id, quantity:qty  })),
+    addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
+    updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
     deleteCartItem: (id) => dispatch(cartActions.deleteCartItem({ id:id })),
   };
 };

@@ -74,25 +74,25 @@ class MyCart extends React.Component {
     this.props.navigation.goBack(); // open drawer
   };
 
-updateCartPress(itemId, value){
+updateCartPress(id, itemId, value){
 
-  this.setState({loading: true}); 
+  //this.setState({loading: true}); 
   if(value == 0){
-    this.props.deleteCartItem(itemId).then(res => {
+    this.props.deleteCartItem(id).then(res => {
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id).then(res => {
             showToast('Cart updated successfully.', "success")
-            this.setState({loading: false});
+            //this.setState({loading: false});
         }) 
       }
       
     })
   }else if(value > 0){
-    this.props.updateCartItem(itemId, value).then(res => {
+    this.props.updateCartItem(this.props.user.user.id, itemId, value).then(res => {
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id).then(res => {
           showToast('Cart updated successfully.', "success");
-          this.setState({loading: false});
+          //this.setState({loading: false});
         })
       }
       
@@ -144,7 +144,7 @@ updateCartPress(itemId, value){
                          inputStyle={{fontSize:13}}
                             initValue={item.quantity}
                             //value={item.quantity} 
-                            onChange={(value) => this.updateCartPress(item.id, value)}
+                            onChange={(value) => this.updateCartPress(item.id, item.itemId, value)}
                             onLimitReached={(isMax,msg) => console.log(isMax,msg)}
                             totalWidth={90} 
                             totalHeight={20} 
@@ -297,7 +297,7 @@ const mapDispatchToProps = (dispatch) => {
       logout: () => dispatch(userActions.logoutUser()), 
       viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
       addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
-      updateCartItem: (id, qty) => dispatch(cartActions.updateCartItem({ id:id, quantity:qty  })),
+      updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
       deleteCartItem: (id) => dispatch(cartActions.deleteCartItem({ id:id })),
    };
 };
