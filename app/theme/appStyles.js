@@ -78,7 +78,8 @@ export default StyleSheet.create({
     height: 3
     },
     shadowRadius: 5,
-    shadowOpacity: 1.0
+    shadowOpacity: 1.0,
+    elevation:1
 },
   setLanguage: {
     justifyContent: 'flex-start',

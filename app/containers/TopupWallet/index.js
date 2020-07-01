@@ -72,7 +72,7 @@ class TopupWallet extends React.Component {
                      <ListItem noBorder>
           
                           <Body style={styles.cardLabel}>
-                            <Text style={styles.cardText}>Credit / Debit Card, NetBanking</Text>
+                            <Text style={styles.cardText}>Credit / Debit Card</Text>
                           </Body>
                          {/*   // <CheckBox style={{}}
                                 // style={{backgroundColor:Colors.primary,width:30,height:30,justifyContent:'center',alignItems:'center'}}

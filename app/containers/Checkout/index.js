@@ -82,7 +82,7 @@ class Checkout extends React.Component {
 
     onPressSubmit = item => {
   console.log(item);
-    this.props.navigation.navigate('OrderSuccess', { item });
+    this.props.navigation.navigate('MyPayments', { item });
   };
 
   toggleSwitch1= (value) =>{
@@ -107,7 +107,7 @@ class Checkout extends React.Component {
              />
     
        <ScrollView>   
-               <View style={{marginTop:5}}>
+              
                <View style={styles.clickBtn} onPress={()=>this.props.navigation.navigate(Screens.MyPayments.route)}>
                   <Text style={styles.textPayMode}>Choose delivery slots for this order</Text>
                 </View>
@@ -169,51 +169,8 @@ class Checkout extends React.Component {
                   })}
                </Row>
                 </Grid>
-                <Text style={styles.title}>Payment Method </Text>
-               </View>
-                 <ListItem style={styles.PayMethod} icon>
-                    <Left style={{flex:0}}>
-                        <Switch
-                       style={{color:Colors.primary,}}
-                       onValueChange = {this.toggleSwitch1}
-                       value = {this.state.switch1Value}/>
-                    </Left>
-                    <Body style={{borderBottomWidth:0}}>
-                      <Text style={styles.payOptions}>Use My Wallet Balance</Text>
-                      <Text style={styles.payOptions}>Current Balance: <Text style={[appStyles.currency,{fontSize:12}]}>{'\u20B9'}</Text>1000</Text>
-                    </Body>
-
-                    <TouchableOpacity style={styles.walletBtn} onPress={()=>this.props.navigation.navigate(Screens.TopupWallet.route)}>
-                      <Text style={styles.walletBtnText}>Topup Wallet</Text>
-                    </TouchableOpacity>
-                </ListItem>   
-                 <ListItem style={styles.PayMethodOther} icon>
-                   <Left style={styles.payRadio} onPress={() => this.setState({ selected: !this.state.selected })}>
-                       <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />
-                  </Left>
-                  <Body style={{borderBottomWidth:0}}>
-                    <Text style={styles.payOptionscard}>Pay with Card</Text>
-                    <Text style={[styles.payOptionscard,{color:Colors.gray}]}>xxx-xxxx-xxxx-0011</Text>
-                  </Body>
-
-                  <TouchableOpacity style={styles.walletBtn} onPress={()=>this.props.navigation.navigate(Screens.MyPayments.route)}>
-                    <Text style={styles.walletBtnText}>+ Add Card</Text>
-                  </TouchableOpacity>
-                </ListItem>  
-                 <ListItem style={styles.PayMethodOther} icon>
-                    <Left style={styles.payRadio} onPress={() => this.setState({ selected: !this.state.selected })}>
-                       <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />
-                  </Left>
-
-                  <Body style={{borderBottomWidth:0}}>
-                    <Text style={styles.payOptionscard}>Pay with Cash</Text>
-                    <Text style={[styles.payOptionscard,{color:Colors.gray}]}>(Eligible with amount above {'\u20B9'}5000)</Text>
-                  </Body>
-
-                  <View style={[styles.walletBtn,{backgroundColor:Colors.primary}]}>
-                    <Text style={[styles.walletBtnText,{textTransform:'uppercase'}]}>Cash</Text>
-                  </View>
-                </ListItem>  
+         
+                
                <View style={styles.OrderTitle}>
                 <Text style={styles.OrderTitleText}>Order Item List </Text>
                </View>
