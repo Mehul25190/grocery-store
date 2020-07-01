@@ -142,8 +142,9 @@ FirstItem:{
 addsSubTitle:{
   color:'#F8BB1B',
   textAlign:'right',
-  fontSize:16,
+  fontSize:14,
   paddingTop:5,
+   fontFamily:'Font-Medium',
   textTransform:'uppercase'
 },
 addsBigTitle:{

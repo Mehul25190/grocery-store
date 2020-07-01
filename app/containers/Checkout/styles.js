@@ -184,7 +184,7 @@ checkOutBtnArea:{
   marginRight:Layout.indent,
     paddingLeft:Layout.indent,
   paddingRight:Layout.indent,
-  marginTop:30
+  marginTop:10
 
 },
 
