@@ -78,11 +78,10 @@ updateCartPress(id, itemId, value){
 
   //this.setState({loading: true}); 
   if(value == 0){
-    this.props.deleteCartItem(id).then(res => {
+    this.props.deleteCartItem(itemId, this.props.user.user.id).then(res => {
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id).then(res => {
             showToast('Cart updated successfully.', "success")
-            //this.setState({loading: false});
         }) 
       }
       
@@ -298,7 +297,7 @@ const mapDispatchToProps = (dispatch) => {
       viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
       addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
       updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
-      deleteCartItem: (id) => dispatch(cartActions.deleteCartItem({ id:id })),
+      deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId:userId })),
    };
 };
 
