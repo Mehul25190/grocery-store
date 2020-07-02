@@ -1,4 +1,23 @@
 import imgs from '../../assets/images';
+
+export const CardDetails =[
+  {
+    id:1,
+    cardNo:'0011',
+    ExpiredM:'01',
+    ExpiredY:'2022',
+    autoDebit:'yes',
+
+  },
+   {
+    id:2,
+    cardNo:'0025',
+    ExpiredM:'11',
+    ExpiredY:'2024',
+    autoDebit:'no',
+
+  }
+];
 export const productImages=[
   {
     image:require("../../assets/images/amulMoti.png"), 

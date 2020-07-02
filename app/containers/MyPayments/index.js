@@ -19,27 +19,10 @@ import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import CheckBox from 'react-native-check-box';
-import {BankList} from '../data/data';
-import {BankOptions} from '../data/data';
+import {BankList,CardDetails,BankOptions} from '../data/data';
 
-const CardDetails =[
-  {
-    id:1,
-    cardNo:'0011',
-    ExpiredM:'01',
-    ExpiredY:'2022',
-    autoDebit:'yes',
 
-  },
-   {
-    id:2,
-    cardNo:'0025',
-    ExpiredM:'11',
-    ExpiredY:'2024',
-    autoDebit:'no',
 
-  }
-];
 class MyPayments extends React.Component {
 
   constructor(props) {
@@ -50,14 +33,19 @@ class MyPayments extends React.Component {
       time: '',
       value: null ,
       selected: '0',
-       switch1Value: false,
+       switch1Value: true,
        showMyCard:false,
        showAddCard:false,
-         
+            paywithcard: true,
+            paywithcash: true,
+            CardChecked:0,
+             radioBtnsData: ['Pay with Card', 'Pay with Cash'],
     };
   }
     componentDidMount() {
-
+      this.setState({
+      //  checked:true
+      });
     }
    openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
@@ -70,7 +58,9 @@ class MyPayments extends React.Component {
   }
    toggleSwitch1= (value) =>{
       this.setState({
-           switch1Value: value
+           switch1Value: value,
+           paywithcard:false,
+           paywithcash:false
       });
   }
   ShowCardList(){
@@ -141,6 +131,8 @@ class MyPayments extends React.Component {
                </Col>
               </Row>
             </Grid>
+
+          {/* ------------PAYMENT OPTIONS-----------*/}
              <View style={{marginTop:10}}>
                 <Text style={styles.titleText}>Payment Option(s) </Text>
              </View>
@@ -162,9 +154,18 @@ class MyPayments extends React.Component {
                     </TouchableOpacity>
                 </ListItem>   
                  <ListItem style={styles.PayMethodOther} icon>
-                   <Left style={styles.payRadio} onPress={() => this.setState({ selected: !this.state.selected })}>
-                       <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />
-                   </Left>
+                  
+                      {/* <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />*/}
+                        <TouchableOpacity style={[styles.btn,{}]} onPress={()=>{this.setState({paywithcard:true,paywithcash:false,switch1Value:false})}}>
+                        {this.state.paywithcard == true && this.state.paywithcash==false ?
+                          (<Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />):
+                          (<Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />)
+                          
+                        }
+                        
+                      </TouchableOpacity>
+             
+              
                   <Body style={{flex:0,borderBottomWidth:0, justifyContent:'center',alignItems:'flex-start'}}>
                     <Text style={styles.payOptionscard}>Pay with Card    </Text>
                    
@@ -180,9 +181,17 @@ class MyPayments extends React.Component {
                     </TouchableOpacity>
                 </ListItem>  
                   <ListItem style={styles.PayMethodOther} icon>
-                    <Left style={styles.payRadio} onPress={() => this.setState({ selected: !this.state.selected })}>
-                       <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />
-                    </Left>
+                    <TouchableOpacity style={styles.btn} onPress={()=>{this.setState({paywithcard: false,paywithcash:true,switch1Value:false})}}>
+                      {/* <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />*/}
+                     
+                      {this.state.paywithcash == true && this.state.paywithcard==false?
+                          (<Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />):
+                          (<Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />)
+                          
+                        }
+                    
+                    </TouchableOpacity>
+                 
 
                     <Body style={{borderBottomWidth:0}}>
                       <Text style={styles.payOptionscard}>Pay with Cash</Text>
@@ -194,7 +203,7 @@ class MyPayments extends React.Component {
                         <Icon name="cash" type="MaterialCommunityIcons" style={{color:Colors.primary,paddingTop:0,marginTop:0}} />
                     </View>
                 </ListItem>  
-              {/* Card credentail box */}
+          {/* ------------PAYMENT OPTIONS-----------*/}
 
               
               { (this.state.showMyCard==true || this.state.showAddCard==true)  && (
@@ -218,9 +227,15 @@ class MyPayments extends React.Component {
                 <Grid style={item.id==2 ? (styles.greenback):(styles.whiteBack)}>
                  <Row>
                      <Col style={{flex:0,justifyContent:'flex-start',width:35}}>
-                        <View style={{}}>
-                         <Radio type="radio" selected={item.id==2 && this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />
-                        </View>
+                        <TouchableOpacity style={{}} onPress={()=>this.setState({CardChecked:index})}>
+                     {/*    <Radio type="radio" selected={item.id==2 && this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />*/}
+                     {
+                      this.state.CardChecked==index ?
+                      (<Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />):
+                      (<Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />)
+                     }
+                       
+                        </TouchableOpacity>
                       </Col>
                       <Col style={{flex:0,justifyContent:'flex-start'}}>
                         <Text style={styles.savedCardText}>xxxx-{item.cardNo} ({item.ExpiredM}/{item.ExpiredY})</Text> 
@@ -244,7 +259,7 @@ class MyPayments extends React.Component {
            
       
               
-             { (this.state.showAddCard==true || getTab=='TopupWallet') && (
+             { (this.state.showAddCard==true) && (
               <View>
               
                <Grid style={styles.cardBox}>

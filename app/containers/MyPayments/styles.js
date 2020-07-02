@@ -1,6 +1,12 @@
  
 import {Colors,Layout} from '../../constants/';
 export default {
+	btn:{
+	paddingRight:10
+	},
+	  img:{
+	   color:Colors.primary
+	},
 	testStyles:{
 		fontFamily:'Font-Medium',
 		fontSize:14,
@@ -18,7 +24,7 @@ export default {
 	fontSize:13,
 
 	fontFamily:'Font-Medium'
-},
+	},
 payRadio:{
 	width:40,
 },
@@ -41,6 +47,8 @@ walletBtn:{
   borderColor:'#ddd',
   paddingLeft:10,
   marginLeft:Layout.indent,
+  height:65,
+ 
 },
 walletBtnText:{
 	color:Colors.primary,
@@ -72,7 +80,7 @@ payCashText:{
   marginBottom:5,
   paddingTop:15,
   paddingBottom:15,
-  height:60,
+  height:65,
   marginLeft:0
   
 },

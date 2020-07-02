@@ -287,7 +287,7 @@ class SubscribeOrder extends React.Component {
         
         {this.state.radioBtnsData.map((data, key) => {
 
-    return (  <View key={key}>       
+        return (<View key={key}>       
             {this.state.checked == key ?
             
                 <Col style={[styles.btn,{}]}>

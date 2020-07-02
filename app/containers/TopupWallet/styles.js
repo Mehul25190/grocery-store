@@ -1,5 +1,201 @@
 import {Colors,Layout} from '../../constants/';
 export default {
+  checkboxStyle:{borderColor:Colors.primary, width:32, borderRadius:5, borderWidth:2},
+  ExpiresTitleCol:  {marginLeft:Layout.indent, width:80, justifyContent:'center'},
+  ExpiresCol:{borderRightWidth:2, alignItems:'center',borderColor:'#B9B9B9',marginRight:0},
+  CardRow:{borderBottomWidth:2,borderColor:'#B9B9B9', height:53.33, paddingBottom:4, paddingTop:4,},
+
+inputStyleCard:{
+  marginLeft:Layout.indent,
+  fontSize:16,
+  color:'#B9B9B9',
+  fontFamily:'Font-Medium',
+  height:40
+},
+CardIcon:{
+marginRight:Layout.indent,
+color:'#B9B9B9',
+fontSize:35
+},
+ExpiresStyle:{
+fontFamily:'Font-Medium',color:'#B9B9B9',
+height:35,
+fontSize:16
+},
+lockStyle:{
+  fontSize:30,
+  color:'#B9B9B9',
+},
+
+CardNameStyle:{
+marginLeft:Layout.indent,
+fontFamily:'Font-Medium',color:'#B9B9B9',
+fontSize:16
+},
+greenback:{
+  backgroundColor:'#e8f8e9',
+  paddingTop:10,
+  borderColor:'#ddd',
+  flex:0,
+  paddingLeft:15,
+  paddingRight:15,
+  justifyContent:'center',
+  height:'auto',
+  paddingVertical:5
+},
+whiteBack:{
+  backgroundColor:'#fff',
+    borderBottomWidth:1,
+  
+  marginTop:10,
+  borderColor:'#ddd',
+  flex:0,
+  paddingLeft:15,
+  paddingRight:15,
+  justifyContent:'center',
+  height:'auto',
+  paddingVertical:5
+},
+saveCardBox:{
+  borderBottomWidth:1,
+  
+  marginTop:10,
+  borderColor:'#ddd',
+  flex:0,
+  paddingLeft:15,
+  paddingRight:15,
+  justifyContent:'center',
+  height:'auto',
+  paddingVertical:5
+},
+autoDebitText:{
+  fontFamily:'Font-Medium',
+  color:Colors.primary,
+  fontSize:14
+},
+savedCardText:{
+  fontFamily:'Font-Medium',
+  fontSize:14,
+  color:'#B9B9B9',
+  lineHeight:20
+},
+trashIcon:{
+  fontSize:20,
+  color:Colors.secondary
+},
+cardBox:{
+  borderWidth:2,
+  borderRadius:15,
+  backgroundColor:'#fff',
+  marginTop:10,
+  borderColor:'#B9B9B9',
+  flex:0,
+  height:'auto',
+  justifyContent:'center',
+  height:160
+},
+addmoney:{
+  paddingTop:10,
+  paddingBottom:15
+},
+moneyBorder:{
+  borderWidth:1,
+  paddingLeft:10,
+  paddingRight:10,
+  borderColor:Colors.primary,
+  borderRadius:12,
+  marginBottom:0,
+  paddingBottom:0,
+  marginLeft:5,
+  marginRight:5
+},
+TopupView:{
+  marginLeft:Layout.indent,
+  marginRight:Layout.indent
+},
+btn:{
+  paddingRight:10
+},
+img:{
+  color:Colors.primary
+},
+testStyles:{
+  fontFamily:'Font-Medium',
+  fontSize:14,
+  lineHeight:20
+},
+cardAdd:{
+  justifyContent:'center',
+  alignItems:'center',
+  width:77,
+  padding:0,
+
+},
+cardAddText:{
+  color:Colors.primary,
+  fontSize:13,
+
+  fontFamily:'Font-Medium'
+},
+payRadio:{
+  width:40,
+},
+PayMethodOther:{
+borderRadius:3,
+marginTop:5,
+  height:60,
+  justifyContent:'center',
+paddingLeft:0,
+  marginLeft:0,
+ backgroundColor:'rgba(160, 160, 160, 0.2)',
+
+},
+walletBtn:{
+  paddingVertical:10,
+  color:Colors.primary,
+  justifyContent:'center',
+  alignItems:'center',
+  borderLeftWidth:1,
+  borderColor:'#ddd',
+  paddingLeft:10,
+  marginLeft:Layout.indent,
+  height:65,
+ 
+},
+walletBtnText:{
+  color:Colors.primary,
+  fontSize:14,
+  paddingHorizontal:7,
+  fontFamily:'Font-Medium'
+},
+payOptions:{
+  fontSize:14,
+  fontFamily:'Font-Medium',
+  lineHeight:18
+},
+payOptionscard:{
+  fontSize:14,
+  fontFamily:'Font-Medium',
+  lineHeight:18,
+  textAlign:'left',
+},
+payCashText:{
+  fontSize:11,
+  fontFamily:'Font-Medium',
+  lineHeight:18,
+  textAlign:'left',
+},
+  PayMethod:{
+  borderColor:'#ddd',
+  marginRight:Layout.indent,
+  borderBottomWidth:1.2,
+  marginBottom:5,
+  paddingTop:15,
+  paddingBottom:15,
+  height:65,
+  marginLeft:0
+  
+},
   redButton:{
 fontFamily:'Font-Bold',
 fontSize:22,
@@ -17,12 +213,7 @@ paddingTop:5
  walletBtn:{
   fontFamily:'Font-Medium',
  },
- cardBox:{
- 	marginLeft:Layout.indent,
- 	marginRight:Layout.indent,
-  marginTop:15,
-  paddingLeft:0
- },
+ 
    cardRow:{
    marginBottom:15,
    marginTop:10
