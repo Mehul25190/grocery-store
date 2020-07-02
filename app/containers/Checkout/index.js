@@ -143,7 +143,7 @@ class Checkout extends React.Component {
                       </TouchableOpacity>
                     </Col>
                    </Row>
-                    <Row style={{ flex: 1, marginLeft:Layout.indent, marginTop:20, marginBottom:15, flexDirection: 'row', justifyContent: 'center', alignItems:'center'}}>
+                    <Row style={{ flex: 1, marginLeft:Layout.indent, marginTop:20, marginBottom:15, flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>
                         
                         {this.state.radioBtnsData.map((data, key) => {
 

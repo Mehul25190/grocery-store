@@ -37,7 +37,7 @@ class MyPayments extends React.Component {
        showAddCard:false,
             paywithcard: true,
             paywithcash: true,
-            CardChecked:0,
+            CardChecked:null,
              radioBtnsData: ['Pay with Card', 'Pay with Cash'],
     };
   }
@@ -99,7 +99,7 @@ class MyPayments extends React.Component {
                 <Col>
                   <Text style={styles.testStyles}>Total Order Value</Text>
                 </Col>
-               <Col style={{flex:0, width:60}}>
+               <Col style={{flex:0, width:75, justifyContent:'center',alignItems:'center'}}>
                  <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> 200.00</Text>
                </Col>
               </Row>
@@ -107,7 +107,7 @@ class MyPayments extends React.Component {
                 <Col>
                   <Text style={styles.testStyles}>Delivery Charges/Subscription Fees</Text>
                 </Col>
-                <Col style={{flex:0, width:60}}>
+                <Col style={{flex:0, width:75, justifyContent:'center',alignItems:'center'}}>
                  <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> 200.00</Text>
                </Col>
               </Row>
@@ -117,7 +117,7 @@ class MyPayments extends React.Component {
                 <Col>
                   <Text style={styles.testStyles}>Total Amount Payable </Text>
                 </Col>
-               <Col style={{flex:0, width:60}}>
+               <Col style={{flex:0, width:75, justifyContent:'center',alignItems:'center'}}>
                  <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> 100.00</Text>
                </Col>
               </Row>
@@ -125,7 +125,7 @@ class MyPayments extends React.Component {
                 <Col>
                   <Text style={[styles.testStyles,{color:Colors.primary}]}>Your Savings with this order</Text>
                 </Col>
-                <Col style={{flex:0, width:60}}>
+                <Col style={{flex:0, width:75, justifyContent:'center',alignItems:'center'}}>
                  <Text style={[styles.testStyles,{color:Colors.primary}]}><Text style={[appStyles.currency,{color:Colors.primary}]}>{'\u20B9'}</Text> 200.00</Text>
                </Col>
               </Row>
@@ -198,7 +198,7 @@ class MyPayments extends React.Component {
                     </Body>
 
                     <View style={{justifyContent:'center',alignItems:'center'}}>
-                      <Text style={[styles.walletBtnText,{textTransform:'uppercase',lineHeight:15,paddingBottom:0}]}>Cash</Text>
+                      <Text style={[styles.walletBtnText,{lineHeight:15,paddingBottom:0}]}>Cash</Text>
                         <Icon name="cash" type="MaterialCommunityIcons" style={{color:Colors.primary,paddingTop:0,marginTop:0}} />
                     </View>
                 </ListItem>  
