@@ -22,7 +22,6 @@ import CheckBox from 'react-native-check-box';
 import {BankList,CardDetails,BankOptions} from '../data/data';
 
 
-
 class MyPayments extends React.Component {
 
   constructor(props) {
