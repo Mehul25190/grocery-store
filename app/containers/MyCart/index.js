@@ -74,6 +74,16 @@ class MyCart extends React.Component {
     this.props.navigation.goBack(); // open drawer
   };
 
+deleteCartPress(itemId){
+  this.props.deleteCartItem(itemId, this.props.user.user.id).then(res => {
+      if(res.status == "success"){
+        this.props.viewCart(this.props.user.user.id).then(res => {
+            showToast('Cart updated successfully.', "success")
+        }) 
+      }    
+    })
+}
+
 updateCartPress(id, itemId, value){
 
   //this.setState({loading: true}); 
@@ -138,6 +148,7 @@ updateCartPress(id, itemId, value){
 
                     </Col>
                    <Col style={styles.QtyBox}>
+                      <View style={{top:0}}><TouchableOpacity onPress={() => this.deleteCartPress(item.itemId)}><Text>Delete</Text></TouchableOpacity></View>
                       <View>
                         <NumericInput 
                          inputStyle={{fontSize:13}}
