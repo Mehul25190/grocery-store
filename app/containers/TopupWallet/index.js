@@ -96,11 +96,13 @@ class TopupWallet extends React.Component {
 
                    <TouchableOpacity style={styles.cardAdd} onPress={()=>this.ShowCardList()}>
                       <Text style={styles.cardAddText}>My card </Text>
-                      <Icon name="credit-card" type="MaterialIcons" style={{color:Colors.primary}} />
+                    
+                      <Image source={imgs.cardIcon} style={styles.cardIcon} />
                     </TouchableOpacity>
                      <TouchableOpacity style={styles.cardAdd} onPress={()=>this.ShowAddCard()}>
                       <Text style={styles.cardAddText}>Add card </Text>
-                      <Icon name="plus" type="AntDesign" style={{color:Colors.primary}} />
+                     
+                       <Image source={imgs.addCardIcon} style={styles.addCardIcon} />
                     </TouchableOpacity>
                 </ListItem>  
                  

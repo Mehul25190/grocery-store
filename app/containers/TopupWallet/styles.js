@@ -1,5 +1,21 @@
 import {Colors,Layout} from '../../constants/';
 export default {
+    cardIcon:{
+    width:38,
+    height:25,
+    contain:'cover',
+    marginTop:2,
+  paddingBottom:5
+  },
+
+  addCardIcon:{
+  width:45,
+    height:26,
+    contain:'cover',
+    marginTop:2,
+    paddingBottom:5,
+    
+  },
   checkboxStyle:{borderColor:Colors.primary, width:32, borderRadius:5, borderWidth:2},
   ExpiresTitleCol:  {marginLeft:Layout.indent, width:80, justifyContent:'center'},
   ExpiresCol:{borderRightWidth:2, alignItems:'center',borderColor:'#B9B9B9',marginRight:0},
@@ -143,7 +159,7 @@ payRadio:{
 PayMethodOther:{
 borderRadius:3,
 marginTop:5,
-  height:60,
+  height:65,
   justifyContent:'center',
 paddingLeft:0,
   marginLeft:0,
