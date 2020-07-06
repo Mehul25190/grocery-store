@@ -27,7 +27,11 @@ const images = {
 	refreshIcon: require('./refreshIcon.png'),
 	bag: require('./bag.png'),
 	walletIcon: require('./walletIcon.png'),
-	calImg: require('./CalenderIcon.png')
+	calImg: require('./CalenderIcon.png'),
+	walletIcon2: require('./walletIcon2.png'),
+	cardIcon: require('./cardIcon.png'),
+	addCardIcon: require('./addCardIcon.png'),
+	CachIcon: require('./CachIcon.png'),
 };
 
 export default images;

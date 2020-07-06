@@ -29,15 +29,15 @@ class TopupWallet extends React.Component {
       date: '',
        time: '',
         isChecked:false,
-          showMyCard:false,
+        showMyCard:false,
         showAddCard:false,
-           CardChecked:0,
+           CardChecked:null,
     };
    
   }
  componentDidMount() {
       this.setState({
-       showAddCard:true
+      // showAddCard:true
       });
     }
  onPressSubmit = item => {
@@ -78,46 +78,15 @@ class TopupWallet extends React.Component {
 
        
         <ScrollView>
-      
-          
+              
          <View style={styles.TopupView}>
-
              <Item style={{borderColor:Colors.primary,height:70,marginBottom:10}} stackedLabel>
                       <Label style={styles.amountLabel}>Enter Amount</Label>
                       <Input  />
              </Item>
-            
-             <Card style={[appStyles.addBox,{height:'auto',paddingVertical:0,marginLeft:0,marginRight:0}]}>
-                 
-                     <ListItem noBorder>
-          
-                          <Body style={styles.cardLabel}>
-                            <Text style={styles.cardText}>Credit / Debit Card</Text>
-                          </Body>
-                         {/*   // <CheckBox style={{}}
-                                // style={{backgroundColor:Colors.primary,width:30,height:30,justifyContent:'center',alignItems:'center'}}
-                                  //  checked={true} /> */}
-                       <CheckBox
-                          style={{borderColor:Colors.primary, width:32, borderRadius:5, borderWidth:2}}
-                          onClick={()=>{
-                            this.setState({
-                                isChecked:!this.state.isChecked
-                            })
-                          }}
+         </View>
 
-                          checkedImage={<Icon name='check' type='AntDesign' style={{color:Colors.primary}} />}
-                          unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons' style={{color:'transparent'}} /> }
-                          isChecked={this.state.isChecked}
-                       //   leftText={"CheckBox"}
-                      />
-                           
-                      </ListItem> 
-                 
-              </Card>
-              </View>
- { this.state.isChecked==true && 
-
-  (<View style={styles.TopupView}>
+        <View style={styles.TopupView}>
 
                  <ListItem style={styles.PayMethodOther} icon>
                    <Body style={{flex:0,borderBottomWidth:0, justifyContent:'center',alignItems:'flex-start'}}>
@@ -139,7 +108,7 @@ class TopupWallet extends React.Component {
 
               
             
-                { this.state.showMyCard==true && (
+              { this.state.showMyCard==true && (
                <FlatList
                 data={CardDetails}
                 renderItem={({ item, index }) => 
@@ -252,8 +221,8 @@ class TopupWallet extends React.Component {
          )}
       
     
-  </View>)
-  }  
+  </View>
+ 
       <TouchableOpacity style={{marginBottom:50}}>
               <Button full primary style={[appStyles.btnSecontary]} onPress={()=>this.onPressSubmit('TopupWallet')}>
                 <Text style={[styles.redButton]}>Submit</Text>
