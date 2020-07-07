@@ -170,7 +170,8 @@ class MyPayments extends React.Component {
 
                     <TouchableOpacity style={styles.walletBtn} onPress={()=>this.props.navigation.navigate(Screens.TopupWallet.route)}>
                       <Text style={styles.walletBtnText}>Topup </Text>
-                      <Icon name="wallet" type="Entypo" style={{color:Colors.primary}} />
+                      
+                      <Image source={imgs.walletIcon2} style={styles.walletIcon} />
                     </TouchableOpacity>
                 </ListItem>   
                  <ListItem style={styles.PayMethodOther} icon>
@@ -193,14 +194,16 @@ class MyPayments extends React.Component {
 
                    <TouchableOpacity style={styles.cardAdd} onPress={()=>this.ShowCardList()}>
                       <Text style={styles.cardAddText}>My card </Text>
-                      <Icon name="credit-card" type="MaterialIcons" style={{color:Colors.primary}} />
+                     
+                       <Image source={imgs.cardIcon} style={styles.cardIcon} />
                     </TouchableOpacity>
                      <TouchableOpacity style={styles.cardAdd} onPress={()=>this.ShowAddCard()}>
                       <Text style={styles.cardAddText}>Add card </Text>
-                      <Icon name="plus" type="AntDesign" style={{color:Colors.primary}} />
+                      
+                       <Image source={imgs.addCardIcon} style={styles.addCardIcon} />
                     </TouchableOpacity>
                 </ListItem>  
-                  <ListItem style={styles.PayMethodOther} icon>
+                  <ListItem style={[styles.PayMethodOther,{marginTop:10}]} icon>
                     <TouchableOpacity style={styles.btn} onPress={()=>{this.setState({paywithcard: false,paywithcash:true,switch1Value:false})}}>
                       {/* <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />*/}
                      
@@ -218,9 +221,10 @@ class MyPayments extends React.Component {
                       <Text style={[styles.payCashText,{color:Colors.gray}]}>(Eligible with amount above {'\u20B9'}5000)</Text>
                     </Body>
 
-                    <View style={{justifyContent:'center',alignItems:'center'}}>
+                    <View style={{justifyContent:'center',alignItems:'center',marginTop:5}}>
                       <Text style={[styles.walletBtnText,{lineHeight:15,paddingBottom:0}]}>Cash</Text>
-                        <Icon name="cash" type="MaterialCommunityIcons" style={{color:Colors.primary,paddingTop:0,marginTop:0}} />
+                      
+                          <Image source={imgs.CachIcon} style={styles.CachIcon} />
                     </View>
                 </ListItem>  
           {/* ------------PAYMENT OPTIONS-----------*/}
