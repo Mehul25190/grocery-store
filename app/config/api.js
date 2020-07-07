@@ -31,4 +31,7 @@ export default {
   updateCartItem: 'userCart/updateCartItemQty',
   deleteCartItem: 'userCart/deleteCartItem',
   addToCartItem: 'userCart/addToCart',
+  getAvailableTimeSlots: 'adminSettings/getAvailableTimeSlots',
+  fetchDeliveryCharges: 'adminSettings/fetchDeliveryCharges',
+  placeOrder: 'userCart/placeOrder',
 }

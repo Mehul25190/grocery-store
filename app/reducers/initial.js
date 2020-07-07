@@ -27,5 +27,7 @@ export const initialState = {
 		cartDetail: {},
 		totalItem: 0,
 		totalAmount: 0,
+		deliveryCharges: 0,
+		actualTotal: 0,
 	},
 };

@@ -60,7 +60,6 @@ class MyCart extends React.Component {
 
   getCartDetail(){
     this.props.viewCart(this.props.user.user.id).then(res => {
-      console.log(res.data)
       if(res.status == 'success'){
           this.setState({userAddressDtls: res.data.userAddressDtls})
       }else{
@@ -174,7 +173,7 @@ updateCartPress(id, itemId, value){
   }
 
   render(){
-    const { navigation, totalItem, cartDetail, totalAmount } = this.props;
+    const { navigation, totalItem, cartDetail, totalAmount, actualTotal, user } = this.props;
     const getItem = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
@@ -269,12 +268,12 @@ updateCartPress(id, itemId, value){
               <Col style={styles.footerCol}>
                  <View><Text style={styles.footerTitle}>Wallet</Text></View>
                  <View style={{textAlign:'center'}}><Text style={styles.footerAmount}>
-                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> 100</Text></View>
+                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> {user.user.walletAmount ? user.user.walletAmount: 0}</Text></View>
               </Col>
             <Col style={styles.footerCol}>
                 <View><Text style={styles.footerTitle}>Savings</Text></View>
                  <View><Text style={styles.footerAmount}>
-                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> 10</Text></View>
+                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> {actualTotal - totalAmount}</Text></View>
               </Col>
             <Col style={[styles.footerCol,{borderRightWidth:0}]}>
                 <TouchableOpacity style={styles.orderSummary} onPress={()=>this.props.navigation.navigate(Screens.Checkout.route)}>
@@ -298,7 +297,7 @@ const mapStateToProps = (state) => {
     totalItem: state.cart.totalItem,
     cartDetail: state.cart.cartDetail,
     totalAmount: state.cart.totalAmount,
-    
+    actualTotal: state.cart.actualTotal,
   };
 };
 
