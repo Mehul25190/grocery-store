@@ -223,27 +223,29 @@ class ProductList extends React.Component {
 
   buyOncePressHnadler(productId, value){
 
-   //console.log(value);
   if(value == 0){
-    
+    this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
+      if(res.status == "success"){
+        this.props.viewCart(this.props.user.user.id).then(res => {
+            showToast('Cart updated successfully.', "success")
+        }) 
+      }
+      
+    })
   }else if(value == 1){
     this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
-      //console.log('dddd', res);
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id).then(res => {
           console.log('dddd', res);
             showToast('Cart updated successfully.', "success")
-            //this.setState({loading: false});
         }) 
       }
     })
   }else if(value > 1){
     this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
-      //console.log(res);
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id).then(res => {
             showToast('Cart updated successfully.', "success")
-            //this.setState({loading: false});
         }) 
       }
     })
@@ -457,7 +459,8 @@ const mapDispatchToProps = (dispatch) => {
     viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
     addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
     updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
-    deleteCartItem: (id) => dispatch(cartActions.deleteCartItem({ id:id })),
+    deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId:userId })),
+
   };
 };
 

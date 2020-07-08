@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, FlatList} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
-import { Logo, Statusbar, Headers } from '../../components';
+import { Logo, Statusbar, Headers, DeliveryAddress } from '../../components';
 import imgs from '../../assets/images';
 import {
   Container,
@@ -15,10 +15,14 @@ import {
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
+import * as cartActions from "../../actions/cart";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
+import moment from "moment";
 import {orderList} from '../data/data';
 import NumericInput from 'react-native-numeric-input';
+import { showToast } from '../../utils/common';
+
 
 class Checkout extends React.Component {
 
@@ -27,26 +31,54 @@ class Checkout extends React.Component {
      this.state = {
       //default value of the date time
       date: '',
-       time: '',
-       dayName:'',
-       tomorrow:'',
-       afterTmr:'',
-       dayTmr:'',
-       dayAfterTmr:'',
-        selected: false,
-         switch1Value: false,
-         activedate:true,
-         deactive:true,
-          radioBtnsData: ['4PM-5PM', '5PM-7PM'],
-       checked: 0,
+      time: '',
+      dayName:'',
+      tomorrow:'',
+      afterTmr:'',
+      dayTmr:'',
+      dayAfterTmr:'',
+      selected: false,
+      switch1Value: false,
+      activedate:0,
+      deactive:true,
+      radioBtnsData: ['4PM-5PM', '5PM-7PM'],
+      availTimeSlot: [],
+      itemData: [],
+      selectedDate: '',
+      selectedTimeSlot: '',
+
     };
 
   }
+
+  getCartDetail(){
+    if(this.props.user.user.isFreeSubscription == 1){
+      this.props.freeDeliveryCharge();
+    }else{
+      this.props.fetchDeliveryCharges(this.props.totalAmount);
+    }
+    this.props.getAvailableTimeSlots(this.props.deliveryAddress.areaId).then(res => {
+      //console.log(JSON.stringify(res.data.availableTimeSlots))     
+      const newArr = Object.keys(res.data.availableTimeSlots).map((key) => res.data.availableTimeSlots[key])
+      const newArr1 = Object.keys(res.data.availableTimeSlots).map((key) => key)
+      newArr.map((data, key) => {
+          data.date = newArr1[key];
+      });
+
+      this.setState({availTimeSlot: Object.values(res.data.availableTimeSlots), selectedDate: newArr1[0]})
+      
+    })
+  }
+
    componentDidMount() {
+     this.getCartDetail();
+    
+
+
     var that = this;
     var days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
- var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
+    var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   
 
@@ -64,7 +96,7 @@ class Checkout extends React.Component {
   var dayAfterTmr = days[new Date().getDay()+ 2];
    var tomorrowDay = (dayTmr==undefined) ? 'SUN': dayTmr;
    var afterTomorrow = (dayAfterTmr==undefined) ? 'MON': dayAfterTmr;
-   console.log("dayAfterTmr:"+ tomorrow);
+   
     that.setState({
       //Setting the value of the date time
       date:   date + ' ' + month ,
@@ -80,9 +112,12 @@ class Checkout extends React.Component {
       this.props.navigation.goBack(); // open drawer
     };
 
-    onPressSubmit = item => {
-  console.log(item);
-    this.props.navigation.navigate('MyPayments', { item });
+  onPressSubmit = item => {
+    if(this.state.selectedTimeSlot == ''){
+      showToast("Select the time slot.", "danger");
+      return;
+    }
+    this.props.navigation.navigate('MyPayments', { timeslot:this.state.selectedTimeSlot, dateslot:this.state.selectedDate });
   };
 
   toggleSwitch1= (value) =>{
@@ -91,8 +126,42 @@ class Checkout extends React.Component {
       });
   }
 
+  renderItems = ({ item, index }) => {
+    return (
+      <Col style={[styles.dateCol,]}>
+        <TouchableOpacity style={styles.dateWithDay}>
+           <Text style={styles.txtDate}>{item.day.substring(0, 3)}</Text>
+           <Text style={styles.txtDay}>{moment(item.date).format('DD MMM')}</Text>
+        </TouchableOpacity>
+      </Col>
+    );
+  }
+
+  renderCartItems = ({ item , index }) => {
+    return (
+      <ListItem style={styles.ItemList}>
+        <Left>
+          <Text style={styles.orderName}>{item.itemName}</Text>
+        </Left>
+        <Body>
+          <Text style={styles.orderQty}>{item.quantity} X</Text>
+        </Body>
+
+        <View>
+          <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> {item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? item.discountedPrice : item.itemPrice}</Text>
+        </View>
+      </ListItem>   
+    );
+  }
+  selectDateTimeSlot(key, data) {
+    this.setState({activedate:key, selectedDate:data.date, selectedTimeSlot:''  })
+  }
+  selectTimeSlot(slotId){
+    this.setState({selectedTimeSlot:slotId })
+  }
+
   render(){
-    const { navigation } = this.props;
+    const { navigation, cartDetail, totalItem, totalAmount, deliveryCharges } = this.props;
     const getItem = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
@@ -113,18 +182,14 @@ class Checkout extends React.Component {
                 </View>
                   <Grid>
                   <Row>
-                    <Col style={[styles.dateCol,]}>
-                      <TouchableOpacity style={styles.dateWithDay}>
-                         <Text style={styles.txtDate}>{this.state.dayName}</Text>
-                         <Text style={styles.txtDay}>{this.state.date}</Text>
-                      </TouchableOpacity>
-                    </Col>
-                    <Col style={[styles.dateCol, this.state.activedate==true?styles.activeDateCol:'']}>
-                      <TouchableOpacity style={styles.dateWithDay} onPress={()=> this.setState({activedate:!this.state.activedate})}>
-                         <Text style={[styles.txtDate,this.state.activedate==true?styles.activetxtDate:'']}>{this.state.dayTmr}</Text>
-                         <Text style={[styles.txtDay,this.state.activedate==true?styles.activetxtDay:'']}>{this.state.tomorrow}</Text>
+                    {this.state.availTimeSlot.map((data, key) => {
+                        return (
+                          <Col style={[styles.dateCol, this.state.activedate==key?styles.activeDateCol:'']}>
+                      <TouchableOpacity style={styles.dateWithDay} onPress={()=> this.selectDateTimeSlot(key,data)}>
+                         <Text style={[styles.txtDate,this.state.activedate==key?styles.activetxtDate:'']}>{data.day.substring(0, 3)}</Text>
+                         <Text style={[styles.txtDay,this.state.activedate==true?styles.activetxtDay:'']}>{moment(data.date).format('DD MMM')}</Text>
                          {
-                          this.state.activedate==true?
+                          this.state.activedate==key?
                           <Icon  name="triangle-down" type="Entypo" 
                            style={{
                               position: "absolute",
@@ -136,77 +201,50 @@ class Checkout extends React.Component {
                          }
                       </TouchableOpacity>
                     </Col>
-                    <Col style={styles.dateCol}>
-                      <TouchableOpacity style={styles.dateWithDay}>
-                         <Text style={styles.txtDate}>{this.state.dayAfterTmr}</Text>
-                          <Text style={styles.txtDay}>{this.state.afterTmr}</Text>
-                      </TouchableOpacity>
-                    </Col>
+                    );
+
+                    })}
                    </Row>
-                    <Row style={{ flex: 1, marginLeft:Layout.indent, marginTop:20, marginBottom:15, flexDirection: 'row', justifyContent: 'center', alignItems:'center'}}>
+                   {this.state.availTimeSlot.map((data, key) => {
+                    return (
+                        <View>
+                        {this.state.activedate == key ?
+                        (<Row style={{ flex: 1, marginLeft:Layout.indent, marginTop:20, marginBottom:15, flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>
                         
-                        {this.state.radioBtnsData.map((data, key) => {
-
-                       return (<View key={key}>       
-                            {this.state.checked == key ?
-                            
-                                <Col style={[styles.btn,{}]}>
-                                    <Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />
-                                    <Text style={[styles.bodyText, styles.bodyGreen]}>{data}</Text>
-                                </Col>
-                             
-                                :
-                              
-                                <Col onPress={()=>{this.setState({checked: key})}} style={[styles.btn,{}]}>
-                                    <Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />
-                                    <Text style={[styles.bodyText, styles.bodyGreen]}>{data}</Text>
-                                </Col>
-                              
-
-                            }
-                          </View>  
-                      )
-                  })}
-               </Row>
-                </Grid>
-         
-                
+                        {data.slots.map((data, key1) => {  
+                               return (<View key={key1}>       
+                                  
+                                        <Col onPress={()=>{ this.selectTimeSlot(data.id) }} style={[styles.btn,{}]}>
+                                            <Icon style={styles.img} name={this.state.selectedTimeSlot == data.id ? 'radio-button-checked' : 'radio-button-unchecked' } type='MaterialIcons' />
+                                            <Text style={[styles.bodyText, styles.bodyGreen]}>{data.time} </Text>
+                                        </Col>
+                                      
+                                  </View>  
+                              )
+                          })}
+                       </Row>) : null }
+                        </View>       
+                    );
+                })}
+                </Grid> 
                <View style={styles.OrderTitle}>
                 <Text style={styles.OrderTitleText}>Order Item List </Text>
                </View>
 
                <List>
 
-               
-                      <ListItem style={styles.ItemList}>
-                          <Left>
-                            <Text style={styles.orderName}>Vegitable Salad</Text>
-                          </Left>
-                          <Body>
-                            <Text style={styles.orderQty}>1 X</Text>
-                          </Body>
-
-                          <View>
-                            <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> 200</Text>
-                          </View>
-                        </ListItem>   
-                        {/* loop */} 
-                       <ListItem style={styles.ItemList}>
-                          <Left>
-                            <Text style={styles.orderName}>Vegitable Salad</Text>
-                          </Left>
-                          <Body>
-                            <Text style={styles.orderQty}>1 X</Text>
-                          </Body>
-
-                          <View>
-                            <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> 200</Text>
-                          </View>
-                        </ListItem>    
+                      <FlatList
+                       vertical
+                       showsHorizontalScrollIndicator={false}
+                       data={cartDetail}
+                       renderItem={this.renderCartItems}
+                       keyExtractor={(item) => `${item.id}`}
+                     />
+                      
    {/* Sub Total */} 
                         <ListItem style={[styles.TotalList,{marginTop:10}]}>
                           <Left>
-                             <Text style={styles.orderName}>Items &nbsp; 2</Text>   
+                             <Text style={styles.orderName}>Items &nbsp; {totalItem}</Text>   
                           </Left>
                          
                           <Body style={styles.TotalBar}>
@@ -214,7 +252,7 @@ class Checkout extends React.Component {
                           </Body>
 
                           <View>
-                           <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> 400</Text>
+                           <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> {totalAmount}</Text>
                           </View>
                         </ListItem>   
 {/* Deliver Charge */} 
@@ -227,7 +265,7 @@ class Checkout extends React.Component {
                           </Body>
 
                           <View>
-                          <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> 40</Text>
+                          <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> {deliveryCharges}</Text>
                           </View>
                         </ListItem>   
 {/* Sub Total */}                         
@@ -240,44 +278,14 @@ class Checkout extends React.Component {
                           </Body>
 
                           <View>
-                           <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> 440</Text>
+                           <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> {totalAmount + deliveryCharges}</Text>
                           </View>
                         </ListItem>   
            
                 
                </List>
 
-               <View style={{marginTop:10}}>
-                <Text style={styles.title}>Delivery Address </Text>
-               </View>
-               <Card style={[appStyles.addBox,styles.deliveryAddress]}>
-             
-                <ListItem  noBorder icon style={{ marginLeft: Layout.indent,}}>
-                      <Left >
-                        <Icon name="location-on" 
-                         type="MaterialIcons"
-                         
-                          style={[appStyles.IconStyle,styles.addressIcon]}
-                          />
-                      </Left>
-                      <Body>
-                        <Text style={[appStyles.userArea,styles.addressText]} >South Bopal,</Text>
-                        <Text style={[appStyles.userCity,styles.addressText]} >Ahmedabad - Gandhinagar,</Text>
-                       
-                      </Body>
-
-                      <Right>
-                       <TouchableOpacity  onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
-                        <Icon name="edit" type="MaterialIcons"
-                       
-                          style={[appStyles.IconStyle,styles.addressIcon]}
-                          />
-                      </TouchableOpacity>
-                      </Right>
-                    </ListItem>
-                
-            
-                </Card>
+               <DeliveryAddress/>
 
 
          
@@ -301,12 +309,21 @@ class Checkout extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    deliveryAddress: state.subscription.deviveryAddress,
+    totalItem: state.cart.totalItem,
+    cartDetail: state.cart.cartDetail,
+    totalAmount: state.cart.totalAmount,
+    deliveryCharges: state.cart.deliveryCharges,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+      viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
+      getAvailableTimeSlots: (areaId) => dispatch(cartActions.getAvailableTimeSlots({areaId:areaId})),
+      fetchDeliveryCharges: (orderValue) => dispatch(cartActions.fetchDeliveryCharges({orderValue:orderValue})),
+      freeDeliveryCharge: () => dispatch({ type: ActionTypes.DELIVERYCHARGES, data: 0 }),
    };
 };
 

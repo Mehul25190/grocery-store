@@ -60,7 +60,6 @@ class MyCart extends React.Component {
 
   getCartDetail(){
     this.props.viewCart(this.props.user.user.id).then(res => {
-      console.log(res.data)
       if(res.status == 'success'){
           this.setState({userAddressDtls: res.data.userAddressDtls})
       }else{
@@ -74,15 +73,24 @@ class MyCart extends React.Component {
     this.props.navigation.goBack(); // open drawer
   };
 
+deleteCartPress(itemId){
+  this.props.deleteCartItem(itemId, this.props.user.user.id).then(res => {
+      if(res.status == "success"){
+        this.props.viewCart(this.props.user.user.id).then(res => {
+            showToast('Cart updated successfully.', "success")
+        }) 
+      }    
+    })
+}
+
 updateCartPress(id, itemId, value){
 
   //this.setState({loading: true}); 
   if(value == 0){
-    this.props.deleteCartItem(id).then(res => {
+    this.props.deleteCartItem(itemId, this.props.user.user.id).then(res => {
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id).then(res => {
             showToast('Cart updated successfully.', "success")
-            //this.setState({loading: false});
         }) 
       }
       
@@ -139,6 +147,7 @@ updateCartPress(id, itemId, value){
 
                     </Col>
                    <Col style={styles.QtyBox}>
+                      <View style={{top:0}}><TouchableOpacity onPress={() => this.deleteCartPress(item.itemId)}><Text>Delete</Text></TouchableOpacity></View>
                       <View>
                         <NumericInput 
                          inputStyle={{fontSize:13}}
@@ -164,7 +173,7 @@ updateCartPress(id, itemId, value){
   }
 
   render(){
-    const { navigation, totalItem, cartDetail, totalAmount } = this.props;
+    const { navigation, totalItem, cartDetail, totalAmount, actualTotal, user } = this.props;
     const getItem = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
@@ -259,12 +268,12 @@ updateCartPress(id, itemId, value){
               <Col style={styles.footerCol}>
                  <View><Text style={styles.footerTitle}>Wallet</Text></View>
                  <View style={{textAlign:'center'}}><Text style={styles.footerAmount}>
-                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> 100</Text></View>
+                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> {user.user.walletAmount ? user.user.walletAmount: 0}</Text></View>
               </Col>
             <Col style={styles.footerCol}>
                 <View><Text style={styles.footerTitle}>Savings</Text></View>
                  <View><Text style={styles.footerAmount}>
-                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> 10</Text></View>
+                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> {actualTotal - totalAmount}</Text></View>
               </Col>
             <Col style={[styles.footerCol,{borderRightWidth:0}]}>
                 <TouchableOpacity style={styles.orderSummary} onPress={()=>this.props.navigation.navigate(Screens.Checkout.route)}>
@@ -288,7 +297,7 @@ const mapStateToProps = (state) => {
     totalItem: state.cart.totalItem,
     cartDetail: state.cart.cartDetail,
     totalAmount: state.cart.totalAmount,
-    
+    actualTotal: state.cart.actualTotal,
   };
 };
 
@@ -298,7 +307,7 @@ const mapDispatchToProps = (dispatch) => {
       viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
       addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
       updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
-      deleteCartItem: (id) => dispatch(cartActions.deleteCartItem({ id:id })),
+      deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId:userId })),
    };
 };
 

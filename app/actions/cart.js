@@ -14,13 +14,16 @@ export const viewcart = payloads => dispatch => {
         
         let totalAmount = 0;
         let totalItem = 0;
+        let actualTotal = 0;
         res.data.data.cartList.map(element => {
             let tempPrice = (element.discountedPrice > 0 && element.discountedPrice < element.itemPrice) ? Number(element.discountedPrice) : Number(element.itemPrice);
             totalAmount = totalAmount + Number(tempPrice * element.quantity)
             if(element.isSubscribedItem == 0) totalItem = totalItem + 1;
+            actualTotal = actualTotal + element.itemPrice;
         })
         dispatch({ type: ActionTypes.TOTALAMOUNT, data: totalAmount });
         dispatch({ type: ActionTypes.TOTALITEM, data: totalItem });
+        dispatch({ type: ActionTypes.ACTUALTOTAL, data: actualTotal });
         return res.data
       } else {
         return res
@@ -65,6 +68,50 @@ export const deleteCartItem = payloads => dispatch => {
       }
     });
 }
+
+export const getAvailableTimeSlots = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.getAvailableTimeSlots,  {queries: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+export const fetchDeliveryCharges = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchDeliveryCharges,  {queries: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        dispatch({ type: ActionTypes.DELIVERYCHARGES, data: res.data.data.deliveryCharge });
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+export const placeOrder = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.placeOrder,  {payloads: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        if(res.data.status == 'success')
+          dispatch({ type: ActionTypes.RESETCARTSTATE });
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+
+
+
+
 
 
 

@@ -1,6 +1,34 @@
  
 import {Colors,Layout} from '../../constants/';
 export default {
+	walletIcon:{
+		width:40,
+		height:32,
+		contain:'cover',
+		marginTop:5,
+		marginBottom:5
+	},
+	cardIcon:{
+		width:38,
+		height:25,
+		contain:'cover',
+		marginTop:5,
+	paddingBottom:5
+	},
+	CachIcon:{
+		width:45,
+		height:35,
+		contain:'cover',
+		
+	paddingBottom:5
+	},
+	addCardIcon:{
+	width:45,
+		height:26,
+		contain:'cover',
+		marginTop:5,
+		
+	},
 	btn:{
 	paddingRight:10
 	},
@@ -15,7 +43,7 @@ export default {
 	cardAdd:{
 		justifyContent:'center',
 		alignItems:'center',
-		width:77,
+		width:80,
 		padding:0,
 		
 	},
@@ -80,7 +108,7 @@ payCashText:{
   marginBottom:5,
   paddingTop:15,
   paddingBottom:15,
-  height:65,
+  height:75,
   marginLeft:0
   
 },

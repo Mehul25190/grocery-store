@@ -73,7 +73,7 @@ class SubscribeOrder extends React.Component {
       itemId: item.id,
       subscriptionDtls: item, 
       subscriptionDtlsImg: {},
-      startDate: moment(new Date()).format('MM/DD/YYYY'),
+      startDate: moment(new Date()).add(1, 'days').format('MM/DD/YYYY'),
       endDate: moment(new Date(), "MM/DD/YYYY").add(15, 'days').format('MM/DD/YYYY'), 
       displaystartDate: moment(new Date()).format('DD MMM YYYY'),
       excludeWeekend: 0,
@@ -209,7 +209,7 @@ class SubscribeOrder extends React.Component {
            <Item  success style={{ marginLeft:Layout.indent, marginRight:Layout.indent}}>
             <Label style={styles.datelabel}>Start Date</Label>
             <DatePicker
-            minDate={moment(new Date()).format('MM/DD/YYYY')}
+            minDate={moment(new Date()).add(1, 'days').format('MM/DD/YYYY')}
             locale={"en"}
             format="MM/DD/YYYY"
             onDateChange={this.setStartDate}
