@@ -40,6 +40,7 @@ class MyAddress extends React.Component {
       selectedCity: '',
       areaData:[],
       selectedArea:'',
+      buildingType:"0",
       setDeliveryAddress:[],
       
 
@@ -167,6 +168,14 @@ class MyAddress extends React.Component {
     });
   }
 
+  //selected buildingType
+  onValueChangeBuildingType(value: string) {
+    this.setState({
+      buildingType: value,
+    });
+    //alert(value);
+  }
+
   //save address
   saveAddress() {
 
@@ -186,6 +195,8 @@ class MyAddress extends React.Component {
                         specialIns:this.state.specialIns,
                         zipcode:this.state.zipcode,
                         id:this.state.id,
+                        buildingType:this.state.buildingType,
+                        
 
                       };
       this.props.saveAddress(formdata).then (res =>{
@@ -308,7 +319,7 @@ class MyAddress extends React.Component {
                 </View>
 
                 <View style={[styles.reasonView,{}]} >
-               <Label style={[styles.labelText, {paddingLeft:13}]}  >Area</Label>
+                  <Label style={[styles.labelText, {paddingLeft:13}]}  >Area</Label>
                   <Item style={{ borderBottomWidth: 1, justifyContent:'flex-start',alignItems:'flex-start', borderColor: Colors.primary }} >
 
                     <Picker
@@ -334,6 +345,32 @@ class MyAddress extends React.Component {
 
 
                     </Picker>
+                    <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
+                  </Item>
+                </View>
+
+                <View style={[styles.reasonView,{}]} >
+                  <Label style={[styles.labelText, {paddingLeft:13}]}  >Building Type</Label>
+                  <Item style={{ borderBottomWidth: 1, justifyContent:'flex-start',alignItems:'flex-start', borderColor: Colors.primary }} >
+
+                    <Picker
+                      note
+                      mode="dropdown"
+                      itemStyle={{ fontFamily: 'Font-Medium' }}
+                      itemTextStyle={{ fontFamily: 'Font-Medium' }}
+                      textStyle={{ fontFamily: 'Font-Medium' }}
+                      style={styles.dorpDownReason}
+                      selectedValue={this.state.buildingType}
+                      
+                      onValueChange={this.onValueChangeBuildingType.bind(this)}
+                      onValueChangeBuildingType={this.onValueChange.bind(this)}
+                      placeholderStyle={{ borderWidth: 10, fontFamily: 'Font-Medium' }}
+                      placeholderIconColor={{ borderWidth: 2 }}
+                    >
+                      <Picker.Item label="Select Type" value="0" />
+                        <Picker.Item label="Building" value="B" />
+                        <Picker.Item label="Villa" value="V" />
+                      </Picker>
                     <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
                   </Item>
                 </View>
