@@ -67,7 +67,7 @@ class MyAddress extends React.Component {
       
       if(res.status == "success"){
        // console.log(res.data.userAddress);
-            if(res.data.userAddressDtls !="") {
+            if(res.data.userAddressDtls !=null) {
               console.log('again');
               this.setState({ setDeliveryAddress:res.data.userAddressDtls});
               this.setState({id:res.data.userAddressDtls.id});
@@ -101,7 +101,9 @@ class MyAddress extends React.Component {
         if(res.status == "success"){
               this.setState({ cityData:res.cityList, 
                 selectedCity: this.state.selectedCity=="" ? res.cityList[0].id: this.state.selectedCity });
-             
+                //call agrea list by default condition
+                this.getAreaList(res.cityList[0].id);
+
         } else {
               console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
@@ -116,12 +118,14 @@ class MyAddress extends React.Component {
 
   //get area List  
   getAreaList(city_id) {
-    
+    console.log("under area");
+    console.log(city_id);
     this.props.showAreaList(city_id).then (res =>{
        //console.log(res.status); 
         if(res.status == "success"){
               this.setState({ areaData:res.data.areaList });
-              if(this.state.selectedArea==null) {
+              if(this.state.selectedArea==null || this.state.selectedArea=='') {
+               
                 this.setState({selectedArea:res.data.areaList[0].id});
               }
              
@@ -210,6 +214,7 @@ class MyAddress extends React.Component {
               //this.props.navigation.navigate(Screens.SignIn.route)
 
               showToast("Save Successfully","success");
+              this.getDeliveryAddress();
         } else {
               console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
@@ -475,21 +480,22 @@ class MyAddress extends React.Component {
                     </Col>)}
 
                 </Row>
-                {this.state.setDeliveryAddress != null ?
+                {this.state.setDeliveryAddress.length > 0  ?
                   (<Row>
 
                   <View>
+                    
                     <Text style={{ marginBottom: 10, paddingLeft: 10, paddingRight: 10, fontFamily: 'Font-Medium', fontSize: 14 }}>
-                      {(this.state.setDeliveryAddress.aptNo!="" ? this.state.setDeliveryAddress.aptNo + "," : "" )}, 
-                      {(this.state.setDeliveryAddress.buildingName!="" ? this.state.setDeliveryAddress.buildingName + "," : "")}
+                      {(this.state.setDeliveryAddress.aptNo!=null ? (this.state.setDeliveryAddress.aptNo + ",") : "" )} 
+                      {(this.state.setDeliveryAddress.buildingName!=null ? (this.state.setDeliveryAddress.buildingName + ",") : "")}
                     </Text>
                     <Text style={{ marginBottom: 10, paddingLeft: 10, paddingRight: 10, fontFamily: 'Font-Medium', fontSize: 14 }}>  
-                      {(this.state.setDeliveryAddress.areaName!="" ? this.state.setDeliveryAddress.areaName + ",": "")}, 
-                      {(this.state.setDeliveryAddress.zipcode!="" ?  this.state.setDeliveryAddress.zipcode+",":"")}, 
-                      {(this.state.setDeliveryAddress.cityName!=""? this.state.setDeliveryAddress.cityName : "")}
+                      {(this.state.setDeliveryAddress.areaName!=null ? this.state.setDeliveryAddress.areaName + ",": "")} 
+                      {(this.state.setDeliveryAddress.zipcode!=null ?  this.state.setDeliveryAddress.zipcode+",":"")} 
+                      {(this.state.setDeliveryAddress.cityName!=null? this.state.setDeliveryAddress.cityName : "")}
                     </Text> 
                   </View>
-                </Row>): null}
+                </Row>): <Text style={{ marginBottom: 10, paddingLeft: 10, paddingRight: 10, fontFamily: 'Font-Medium', fontSize: 14 }}>Enter your address</Text>}
 
 
               </Grid>

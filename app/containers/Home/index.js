@@ -15,6 +15,7 @@ import {
   Header,Item, Left,Input, Body, Title, Right,Grid,Col,Card, Thumbnail
 
 } from 'native-base';
+import { showToast } from '../../utils/common';
 import url from '../../config/api';
 import {ItemList,entries} from '../data/data';
 //import MasonryList from "react-native-masonry-list";
@@ -46,7 +47,10 @@ class Home extends React.Component {
 
 
   componentDidMount(){
-    
+    //check delivery address that user entered or not
+    //check points
+    this.getDeliveryAddress();  
+
     this.setState({
       //entries:{},  
     });
@@ -63,6 +67,35 @@ class Home extends React.Component {
     this.props.getDeviveryAddress(this.props.user.user.id);
     this.getCategoryList();  
      
+  }
+
+  //get Delivery address
+  getDeliveryAddress(){
+
+    //console.log(this.props.user);
+    //alert(this.props.user.user.id);  
+    this.props.showDeliveryAddress(this.props.user.user.id).then (res => {
+      
+      if(res.status == "success"){
+        console.log(res.data.userAddressDtls);
+            if(res.data.userAddressDtls ==null) {
+              //console.log("inside");
+              //redirect to address screen
+              showToast("Please enter your delivery address so we serve better experience and products offer","danger");
+              this.props.navigation.navigate('MyAddress');  
+            }
+
+        } else {
+              //console.log("something wrong with varification call");
+              showToast("Something wrong with Server response","danger");
+        }
+
+    })
+    .catch(error => {
+      console.log('Error messages returned from server', error);
+      showToast("Error messages returned from server","danger");
+    });
+
   }
 
   getOfferList(){
@@ -328,6 +361,7 @@ const mapDispatchToProps = (dispatch) => {
       viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
       getOrderList: (useId) => dispatch(userActions.getUserOrderList({userId: useId})),
       resetState: () => dispatch({ type: ActionTypes.RESETSTATE }),
+      showDeliveryAddress: (userid) => dispatch(userActions.getDeviveryAddress({userId:userid})),
    };
 };
 
