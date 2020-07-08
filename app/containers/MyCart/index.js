@@ -59,6 +59,23 @@ class MyCart extends React.Component {
   }
 
   getCartDetail(){
+    //check user addredd is available or not
+    this.props.getDeviveryAddress(this.props.user.user.id).then (res => {
+      if(res.status == "success"){
+        console.log(res.data.userAddressDtls);
+            if(res.data.userAddressDtls ==null) {
+              //redirect to address screen
+              showToast("Please enter your delivery address so we serve better experience and products offer","danger");
+              this.props.navigation.navigate('MyAddress');  
+            }
+
+        } else {
+              showToast("Something wrong with Server response","danger");
+        }
+
+    })
+
+
     this.props.viewCart(this.props.user.user.id).then(res => {
       if(res.status == 'success'){
           this.setState({userAddressDtls: res.data.userAddressDtls})
@@ -206,8 +223,12 @@ updateCartPress(id, itemId, value){
                           />
                       </Left>
                       <Body>
-                        <Text style={[appStyles.userArea,styles.addressText]} >{this.state.userAddressDtls.aptNo}, {this.state.userAddressDtls.buildingName},</Text>
-                        <Text style={[appStyles.userCity,styles.addressText]} >{this.state.userAddressDtls.city} - {this.state.userAddressDtls.state},</Text>
+                        <Text style={[appStyles.userArea,styles.addressText]} >
+                          {(this.state.userAddressDtls.aptNo!=null ? (this.state.userAddressDtls.aptNo + ",") : "" )} {(this.state.userAddressDtls.buildingName!=null ? (this.state.userAddressDtls.buildingName + ",") : "")} 
+                        </Text>
+                        <Text style={[appStyles.userCity,styles.addressText]} >
+                          {(this.state.userAddressDtls.city!=null ? (this.state.userAddressDtls.city + "-") : "" )} {(this.state.userAddressDtls.state!=null ? (this.state.userAddressDtls.state) : "" )}
+                        </Text>
                        
                       </Body>
 
@@ -273,7 +294,7 @@ updateCartPress(id, itemId, value){
             <Col style={styles.footerCol}>
                 <View><Text style={styles.footerTitle}>Savings</Text></View>
                  <View><Text style={styles.footerAmount}>
-                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> {actualTotal - totalAmount}</Text></View>
+                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> {(actualTotal - totalAmount).toFixed(2)}</Text></View>
               </Col>
             <Col style={[styles.footerCol,{borderRightWidth:0}]}>
                 <TouchableOpacity style={styles.orderSummary} onPress={()=>this.props.navigation.navigate(Screens.Checkout.route)}>
@@ -308,6 +329,8 @@ const mapDispatchToProps = (dispatch) => {
       addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
       updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
       deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId:userId })),
+      getDeviveryAddress: (useId) => dispatch(userActions.getDeviveryAddress({userId: useId})),
+
    };
 };
 

@@ -251,9 +251,9 @@ class Home extends React.Component {
          
           <Right style={appStyles.headerRight}>
              <Button transparent>
-             <TouchableOpacity style={appStyles.cartIconArea} onPress={()=>this.props.navigation.navigate(Screens.MyCart.route)}>
+             <TouchableOpacity style={appStyles.cartIconArea} onPress={()=> totalItem > 0 ? this.props.navigation.navigate(Screens.MyCart.route) : ''}>
                <Icon style={appStyles.cartIcon} name="cart" />
-               { cartCount >0 && (<Text style={appStyles.cartCount}>{totalItem}</Text>) }
+               { totalItem >0 && (<Text style={appStyles.cartCount}>{totalItem}</Text>) }
               </TouchableOpacity>
 
               <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>

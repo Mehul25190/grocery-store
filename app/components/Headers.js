@@ -152,10 +152,10 @@ class Headers extends React.Component {
           {this.props.setCart == true && (
             <TouchableOpacity
               style={appStyles.cartIconArea}
-              onPress={() => this.props.cartPage()}
+              onPress={() => totalItem > 0 ? this.props.cartPage() : ''}
             >
               <Icon style={appStyles.cartIcon} name="cart" />
-              {cartCount > 0 && (
+              {totalItem > 0 && (
                 <Text style={appStyles.cartCount}>{totalItem}</Text>
               )}
             </TouchableOpacity>

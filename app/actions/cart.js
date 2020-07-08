@@ -10,8 +10,8 @@ export const viewcart = payloads => dispatch => {
   return axios.get(url.viewCart,  {queries: payloads}).then(res => {
     //dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
-        dispatch({ type: ActionTypes.CARTDETAIL, data: res.data.data.cartList });
-        
+        dispatch({ type: ActionTypes.VIEWCARTDETAIL, data: res.data.data });
+        dispatch({ type: ActionTypes.CARTDETAIL, data: res.data.data.cartList });      
         let totalAmount = 0;
         let totalItem = 0;
         let actualTotal = 0;
@@ -19,7 +19,7 @@ export const viewcart = payloads => dispatch => {
             let tempPrice = (element.discountedPrice > 0 && element.discountedPrice < element.itemPrice) ? Number(element.discountedPrice) : Number(element.itemPrice);
             totalAmount = totalAmount + Number(tempPrice * element.quantity)
             if(element.isSubscribedItem == 0) totalItem = totalItem + 1;
-            actualTotal = actualTotal + element.itemPrice;
+            actualTotal = actualTotal + Number(element.itemPrice * element.quantity);
         })
         dispatch({ type: ActionTypes.TOTALAMOUNT, data: totalAmount });
         dispatch({ type: ActionTypes.TOTALITEM, data: totalItem });

@@ -38,6 +38,12 @@ const cart = (state = initialState.cart, action) => {
         actualTotal: action.data,
       }
     }
+    case ActionTypes.VIEWCARTDETAIL: {
+      return {
+        ...state,
+          viewCartDetail: action.data,
+      }
+    }
     // Default
     default: {
       return state;

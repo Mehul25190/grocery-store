@@ -34,7 +34,7 @@ class MyPayments extends React.Component {
       time: '',
       value: null ,
       selected: '0',
-       switch1Value: true,
+       switch1Value: false,
        showMyCard:false,
        showAddCard:false,
         paywithcard: true,
@@ -81,8 +81,10 @@ class MyPayments extends React.Component {
     const {navigation} = this.props;
     const selectedTimeSlot = navigation.getParam('selectedTimeSlot');
     const dateslot = navigation.getParam('dateslot');
+    const useWallet = this.state.switch1Value ? 'Y' : 'N';
+    const paymentMode = this.props.viewCartDetail.paymentMode;
 
-    this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), '', '').then(res => {
+    this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet ,'', '').then(res => {
       console.log(res)
       if(res.status == 'success'){
         this.props.navigation.navigate(Screens.OrderSuccess.route);
@@ -96,7 +98,7 @@ class MyPayments extends React.Component {
     })
   }
   render(){
-    const {navigation, totalAmount, deliveryCharges, actualTotal} = this.props;
+    const {navigation, user, totalAmount, deliveryCharges, actualTotal, viewCartDetail} = this.props;
     const getTab = navigation.getParam('item')
 
     
@@ -147,7 +149,7 @@ class MyPayments extends React.Component {
                   <Text style={[styles.testStyles,{color:Colors.primary}]}>Your Savings with this order</Text>
                 </Col>
                 <Col style={{flex:0, width:75, justifyContent:'center',alignItems:'center'}}>
-                 <Text style={[styles.testStyles,{color:Colors.primary}]}><Text style={[appStyles.currency,{color:Colors.primary}]}>{'\u20B9'}</Text> {actualTotal - totalAmount}</Text>
+                 <Text style={[styles.testStyles,{color:Colors.primary}]}><Text style={[appStyles.currency,{color:Colors.primary}]}>{'\u20B9'}</Text> {(actualTotal - totalAmount).toFixed(2)}</Text>
                </Col>
               </Row>
             </Grid>
@@ -165,7 +167,7 @@ class MyPayments extends React.Component {
                     </Left>
                     <View style={{borderBottomWidth:0}}>
                       <Text style={styles.payOptions}>Use My Wallet Balance</Text>
-                      <Text style={styles.payOptions}>Current Balance: <Text style={[appStyles.currency,{fontSize:12}]}>{'\u20B9'}</Text>1000</Text>
+                      <Text style={styles.payOptions}>Current Balance: <Text style={[appStyles.currency,{fontSize:12}]}>{'\u20B9'}</Text>{user.user.walletAmount ? user.user.walletAmount : 0 }</Text>
                     </View>
 
                     <TouchableOpacity style={styles.walletBtn} onPress={()=>this.props.navigation.navigate(Screens.TopupWallet.route)}>
@@ -203,6 +205,7 @@ class MyPayments extends React.Component {
                        <Image source={imgs.addCardIcon} style={styles.addCardIcon} />
                     </TouchableOpacity>
                 </ListItem>  
+                {viewCartDetail.codEligibiltyAmt <= totalAmount?
                   <ListItem style={[styles.PayMethodOther,{marginTop:10}]} icon>
                     <TouchableOpacity style={styles.btn} onPress={()=>{this.setState({paywithcard: false,paywithcash:true,switch1Value:false})}}>
                       {/* <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />*/}
@@ -218,7 +221,7 @@ class MyPayments extends React.Component {
 
                     <Body style={{borderBottomWidth:0}}>
                       <Text style={styles.payOptionscard}>Pay with Cash</Text>
-                      <Text style={[styles.payCashText,{color:Colors.gray}]}>(Eligible with amount above {'\u20B9'}5000)</Text>
+                      <Text style={[styles.payCashText,{color:Colors.gray}]}>(Eligible with amount above {'\u20B9'}{viewCartDetail.codEligibiltyAmt})</Text>
                     </Body>
 
                     <View style={{justifyContent:'center',alignItems:'center',marginTop:5}}>
@@ -226,7 +229,8 @@ class MyPayments extends React.Component {
                       
                           <Image source={imgs.CachIcon} style={styles.CachIcon} />
                     </View>
-                </ListItem>  
+                </ListItem> 
+                : null } 
           {/* ------------PAYMENT OPTIONS-----------*/}
 
               
@@ -372,11 +376,13 @@ class MyPayments extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
+  console.log(state.auth.user);
   return {
     user: state.auth.user,
     deliveryAddress: state.subscription.deviveryAddress,
     totalItem: state.cart.totalItem,
     cartDetail: state.cart.cartDetail,
+    viewCartDetail: state.cart.viewCartDetail,
     totalAmount: state.cart.totalAmount,
     actualTotal: state.cart.actualTotal,
     deliveryCharges: state.cart.deliveryCharges,
@@ -386,7 +392,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
-      placeholder: (user_id, addressId, slotId, deliveryDate, deliveryCharges, subscriptionFees) => dispatch(cartActions.placeOrder({ userId:user_id, userAddressDtlsId:addressId, deliverySlot:slotId, deliveryDate:deliveryDate  ,deliveryCharges:deliveryCharges, subscriptionFees:subscriptionFees })),
+      placeholder: (user_id, addressId, slotId, deliveryDate, paymentMode, useWallet, deliveryCharges, subscriptionFees) => dispatch(cartActions.placeOrder({ userId:user_id, userAddressDtlsId:addressId, deliverySlot:slotId, deliveryDate:deliveryDate, paymentMode:paymentMode, useWallet:useWallet, deliveryCharges:deliveryCharges, subscriptionFees:subscriptionFees })),
    };
 };
 
