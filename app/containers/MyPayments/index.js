@@ -79,7 +79,7 @@ class MyPayments extends React.Component {
 
   placeOrder() {
     const {navigation} = this.props;
-    const selectedTimeSlot = navigation.getParam('selectedTimeSlot');
+    const selectedTimeSlot = navigation.getParam('timeslot');
     const dateslot = navigation.getParam('dateslot');
     const useWallet = this.state.switch1Value ? 'Y' : 'N';
     const paymentMode = this.props.viewCartDetail.paymentMode;
@@ -376,7 +376,7 @@ class MyPayments extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state.auth.user);
+  //console.log(state.auth.user);
   return {
     user: state.auth.user,
     deliveryAddress: state.subscription.deviveryAddress,
