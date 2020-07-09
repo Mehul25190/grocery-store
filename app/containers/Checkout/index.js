@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, FlatList} from 'react-native'
 import _ from 'lodash'; 
-import {Screens, Layout, Colors } from '../../constants';
+import {Screens, Layout, Colors, ActionTypes } from '../../constants';
 import { Logo, Statusbar, Headers, DeliveryAddress } from '../../components';
 import imgs from '../../assets/images';
 import {
@@ -22,6 +22,7 @@ import moment from "moment";
 import {orderList} from '../data/data';
 import NumericInput from 'react-native-numeric-input';
 import { showToast } from '../../utils/common';
+
 
 
 class Checkout extends React.Component {

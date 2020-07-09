@@ -60,7 +60,7 @@ class OrderDetail extends React.Component {
   }
 
   getOrderDetails(para_orderId) {
-    //alert(para_orderId);
+    alert(para_orderId);
     this.props.getOrderDetails(para_orderId).then (res =>{
       
       //console.log(res);
