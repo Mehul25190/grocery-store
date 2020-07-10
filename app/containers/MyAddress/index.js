@@ -78,6 +78,7 @@ class MyAddress extends React.Component {
               this.setState({selectedCity:res.data.userAddressDtls.cityId});
               this.setState({selectedArea:res.data.userAddressDtls.areaId});
               this.getAreaList(res.data.userAddressDtls.cityId);
+              console.log(res.data.userAddressDtls);
             }
 
         } else {
@@ -480,7 +481,7 @@ class MyAddress extends React.Component {
                     </Col>)}
 
                 </Row>
-                {this.state.setDeliveryAddress.length > 0  ?
+                {this.state.setDeliveryAddress.length > 0 || this.state.setDeliveryAddress!=null ?
                   (<Row>
 
                   <View>
