@@ -51,7 +51,9 @@ class DeliveryAddress extends React.Component {
           </Left>
 
           <Body>
-            <Text style={[appStyles.userArea, styles.addressText]} >{deliveryAddress ? deliveryAddress.buildingName + ',' : ''}</Text>
+            <Text style={[appStyles.userArea,styles.addressText]} >
+              {(deliveryAddress ? (deliveryAddress.aptNo + ",") : "" )} {(deliveryAddress ? (deliveryAddress.buildingName + ",") : "")} 
+            </Text>
             <Text style={[appStyles.userCity, styles.addressText]} >{deliveryAddress ? deliveryAddress.cityName + ' - ' + deliveryAddress.state : ''} </Text>
           </Body>
 

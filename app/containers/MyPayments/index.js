@@ -33,11 +33,10 @@ class MyPayments extends React.Component {
       date: '',
       time: '',
       value: null ,
-      selected: '0',
        switch1Value: false,
        showMyCard:false,
        showAddCard:false,
-        paywithcard: true,
+        paywithcard: false,
         paywithcash: true,
         CardChecked:null,
          radioBtnsData: ['Pay with Card', 'Pay with Cash'],
@@ -53,15 +52,14 @@ class MyPayments extends React.Component {
     }
      onValueChange(value: string) {
     this.setState({
-      selected: value,
       switch1Value: value
     });
   }
    toggleSwitch1= (value) =>{
       this.setState({
            switch1Value: value,
-           paywithcard:false,
-           paywithcash:false
+           //paywithcard:false,
+           //paywithcash:false
       });
   }
   ShowCardList(){
@@ -82,7 +80,7 @@ class MyPayments extends React.Component {
     const selectedTimeSlot = navigation.getParam('timeslot');
     const dateslot = navigation.getParam('dateslot');
     const useWallet = this.state.switch1Value ? 'Y' : 'N';
-    const paymentMode = this.props.viewCartDetail.paymentMode;
+    const paymentMode = this.state.paywithcash ? 'COD' : this.state.paywithcard ? 'CARD' : '' ;
 
     this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet ,'', '').then(res => {
       console.log(res)
@@ -179,7 +177,7 @@ class MyPayments extends React.Component {
                  <ListItem style={styles.PayMethodOther} icon>
                   
                       {/* <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />*/}
-                        <TouchableOpacity style={[styles.btn,{}]} onPress={()=>{this.setState({paywithcard:true,paywithcash:false,switch1Value:false})}}>
+                        <TouchableOpacity style={[styles.btn,{}]} onPress={()=>{this.setState({paywithcard:true,paywithcash:false})}}>
                         {this.state.paywithcard == true && this.state.paywithcash==false ?
                           (<Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />):
                           (<Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />)
@@ -207,7 +205,7 @@ class MyPayments extends React.Component {
                 </ListItem>  
                 {viewCartDetail.codEligibiltyAmt <= totalAmount?
                   <ListItem style={[styles.PayMethodOther,{marginTop:10}]} icon>
-                    <TouchableOpacity style={styles.btn} onPress={()=>{this.setState({paywithcard: false,paywithcash:true,switch1Value:false})}}>
+                    <TouchableOpacity style={styles.btn} onPress={()=>{this.setState({paywithcard: false,paywithcash:true})}}>
                       {/* <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />*/}
                      
                       {this.state.paywithcash == true && this.state.paywithcard==false?

@@ -84,6 +84,7 @@ export const getAvailableTimeSlots = payloads => dispatch => {
 export const fetchDeliveryCharges = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.fetchDeliveryCharges,  {queries: payloads}).then(res => {
+    console.log('res', res)
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         dispatch({ type: ActionTypes.DELIVERYCHARGES, data: res.data.data.deliveryCharge });
@@ -107,6 +108,21 @@ export const placeOrder = payloads => dispatch => {
       }
     });
 }
+
+export const fetchSubscriptionCharges = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchSubscriptionCharges,  {queries: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        dispatch({ type: ActionTypes.DELIVERYCHARGES, data: res.data.data.subscriptionFees ? res.data.data.subscriptionFees : 0 });
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+
 
 
 
