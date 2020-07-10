@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, FlatList} from 'react-native'
 import _ from 'lodash'; 
-import {Screens, Layout, Colors } from '../../constants';
+import {Screens, Layout, Colors, ActionTypes } from '../../constants';
 import { Logo, Statusbar, Headers, DeliveryAddress } from '../../components';
 import imgs from '../../assets/images';
 import {
@@ -64,6 +64,7 @@ class Checkout extends React.Component {
       newArr.map((data, key) => {
           data.date = newArr1[key];
       });
+      
 
       this.setState({availTimeSlot: Object.values(res.data.availableTimeSlots), selectedDate: newArr1[0]})
       
@@ -156,7 +157,28 @@ class Checkout extends React.Component {
   selectDateTimeSlot(key, data) {
     this.setState({activedate:key, selectedDate:data.date, selectedTimeSlot:''  })
   }
-  selectTimeSlot(slotId){
+  selectTimeSlot(slotId, subscriptionFees){
+    
+    if(this.props.user.user.isFreeSubscription == 0 || this.props.user.user.isFreeSubscription == null)
+    {  
+      if(subscriptionFees == 'Y'){
+        console.log(this.props.user.user)
+        if(this.props.user.user.subscriptionEndDate < moment(new Date()).format('YYYY-MM-DD')){
+          this.props.fetchSubscriptionCharges(this.props.user.user.id);
+        }else{
+          this.props.freeDeliveryCharge();
+        }
+      }else{
+        this.props.fetchDeliveryCharges(this.props.totalAmount).then(res => {
+          console.log('wewee', res)
+        });
+      }
+    }
+    // if(this.props.user.user.isFreeSubscription == 1){
+    //   this.props.freeDeliveryCharge();
+    // }else{
+    //   this.props.fetchDeliveryCharges(this.props.totalAmount);
+    // }
     this.setState({selectedTimeSlot:slotId })
   }
 
@@ -214,7 +236,7 @@ class Checkout extends React.Component {
                         {data.slots.map((data, key1) => {  
                                return (<View key={key1}>       
                                   
-                                        <Col onPress={()=>{ this.selectTimeSlot(data.id) }} style={[styles.btn,{}]}>
+                                        <Col onPress={()=>{ this.selectTimeSlot(data.id, data.subscriptionFees) }} style={[styles.btn,{}]}>
                                             <Icon style={styles.img} name={this.state.selectedTimeSlot == data.id ? 'radio-button-checked' : 'radio-button-unchecked' } type='MaterialIcons' />
                                             <Text style={[styles.bodyText, styles.bodyGreen]}>{data.time} </Text>
                                         </Col>
@@ -324,6 +346,7 @@ const mapDispatchToProps = (dispatch) => {
       getAvailableTimeSlots: (areaId) => dispatch(cartActions.getAvailableTimeSlots({areaId:areaId})),
       fetchDeliveryCharges: (orderValue) => dispatch(cartActions.fetchDeliveryCharges({orderValue:orderValue})),
       freeDeliveryCharge: () => dispatch({ type: ActionTypes.DELIVERYCHARGES, data: 0 }),
+      fetchSubscriptionCharges: (user_id) => dispatch(cartActions.fetchSubscriptionCharges({userId: user_id})),
    };
 };
 
