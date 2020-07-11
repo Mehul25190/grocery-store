@@ -190,7 +190,7 @@ updateCartPress(id, itemId, value){
   }
 
   render(){
-    const { navigation, totalItem, cartDetail, totalAmount, actualTotal, user } = this.props;
+    const { navigation, totalItem, cartDetail, totalAmount, actualTotal, user, walletAmount } = this.props;
     const getItem = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
@@ -289,7 +289,7 @@ updateCartPress(id, itemId, value){
               <Col style={styles.footerCol}>
                  <View><Text style={styles.footerTitle}>Wallet</Text></View>
                  <View style={{textAlign:'center'}}><Text style={styles.footerAmount}>
-                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> {user.user.walletAmount ? user.user.walletAmount: 0}</Text></View>
+                 <Text style={{fontFamily:'Roboto',color:Colors.primary}}>{'\u20B9'}</Text> {walletAmount ? walletAmount: 0}</Text></View>
               </Col>
             <Col style={styles.footerCol}>
                 <View><Text style={styles.footerTitle}>Savings</Text></View>
@@ -319,6 +319,7 @@ const mapStateToProps = (state) => {
     cartDetail: state.cart.cartDetail,
     totalAmount: state.cart.totalAmount,
     actualTotal: state.cart.actualTotal,
+    walletAmount: state.cart.walletAmount,
   };
 };
 

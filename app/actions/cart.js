@@ -10,6 +10,7 @@ export const viewcart = payloads => dispatch => {
   return axios.get(url.viewCart,  {queries: payloads}).then(res => {
     //dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
+        console.log(res.data.data);
         dispatch({ type: ActionTypes.VIEWCARTDETAIL, data: res.data.data });
         dispatch({ type: ActionTypes.CARTDETAIL, data: res.data.data.cartList });      
         let totalAmount = 0;
@@ -24,6 +25,7 @@ export const viewcart = payloads => dispatch => {
         dispatch({ type: ActionTypes.TOTALAMOUNT, data: totalAmount });
         dispatch({ type: ActionTypes.TOTALITEM, data: totalItem });
         dispatch({ type: ActionTypes.ACTUALTOTAL, data: actualTotal });
+        dispatch({ type: ActionTypes.WALLETAMOUNT , data: res.data.data.userWalletBalance})
         return res.data
       } else {
         return res

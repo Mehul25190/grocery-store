@@ -31,7 +31,8 @@ import OrderSuccess from "./OrderSuccess";
 import SubscribeSuccess from "./SubscribeSuccess";
 import ProductDetail from "./ProductDetail";
 import MyOffers from "./MyOffers";
-import ModifySubscription from "./Subscription/editSubscription.js"
+import ModifySubscription from "./Subscription/editSubscription.js";
+import SearchProduct from "./SearchProduct";
 
 export { SignIn, CancelOrder, MyOffers, MyCart, ProductDetail, OrderSuccess, SubscribeSuccess, Checkout, Confirmation, DeleteSubscribe, OrderReturn, OrderReturnDetail, SubscribeOrder, SubscribeDetail, TopupWallet, OrderDetail, Profile, MyAddress, MyNotification, MyRatings,  MyWallet, Subscription, ProductList, SignInEmail, Verification, SignInMobile,
- SignUp, Forgotpassword, Drawer, Home, MyOrder, Settings, MyPayments, ModifySubscription};
+ SignUp, Forgotpassword, Drawer, Home, MyOrder, Settings, MyPayments, ModifySubscription, SearchProduct};

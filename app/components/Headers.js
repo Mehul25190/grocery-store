@@ -44,6 +44,7 @@ class Headers extends React.Component {
       visibleModal: false,
       searcBar: false,
       filter: false,
+      textValue: "",
     };
   }
   onPress = () => {
@@ -57,6 +58,11 @@ class Headers extends React.Component {
   onPressFilter = () => {
     this.setState({ filter: !this.state.filter });
   };
+
+  onChangeSearchText(text) {
+    this.setState({textValue:text});
+    setTimeout(() => {  this.props.searchPage(this.state.textValue) }, 3000)
+  }
   render() {
 
     const CheckedOption = (props) => (
@@ -91,9 +97,9 @@ class Headers extends React.Component {
             <Input
               style={appStyles.searchInput}
               onChangeText={(text)=>{
-              this.props.onChangeSearchText(text)
+              this.onChangeSearchText(text)
               }}
-              value={this.props.textValue}
+              value={this.state.textValue}
               placeholder="Search..."
             />
           </Item>
@@ -187,9 +193,10 @@ const mapDispatchToProps = (dispatch) => {
     showModal: () => {
       dispatch({ type: ActionTypes.SHOWMODAL, showModal: true });
     },
-    cartPage: () =>
-      dispatch(NavigationActions.navigate({ routeName: Screens.MyCart.route })),
+    cartPage: () => dispatch(NavigationActions.navigate({ routeName: Screens.MyCart.route })),
     onPress: () => dispatch(NavigationActions.back()),
+    searchPage: (text) => dispatch(NavigationActions.navigate({ routeName: Screens.SearchProduct.route, params:{text:text } })),
+
   };
 };
 

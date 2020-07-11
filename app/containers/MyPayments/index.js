@@ -37,7 +37,7 @@ class MyPayments extends React.Component {
        showMyCard:false,
        showAddCard:false,
         paywithcard: false,
-        paywithcash: true,
+        paywithcash: false,
         CardChecked:null,
          radioBtnsData: ['Pay with Card', 'Pay with Cash'],
     };
@@ -76,6 +76,16 @@ class MyPayments extends React.Component {
   }
 
   placeOrder() {
+    if(!this.state.switch1Value && !this.state.paywithcard && !this.state.paywithcard){
+      showToast('Please select the payment method', "danger");
+      return;
+    }
+
+    if(this.props.walletAmount < (this.props.totalAmount + this.props.deliveryCharges)){
+      showToast('Your wallet amount is not sufficent to place the order, please select card or cash option.', "danger");
+      return;
+    }
+
     const {navigation} = this.props;
     const selectedTimeSlot = navigation.getParam('timeslot');
     const dateslot = navigation.getParam('dateslot');
@@ -96,7 +106,7 @@ class MyPayments extends React.Component {
     })
   }
   render(){
-    const {navigation, user, totalAmount, deliveryCharges, actualTotal, viewCartDetail} = this.props;
+    const {navigation, user, totalAmount, deliveryCharges, actualTotal, viewCartDetail, walletAmount} = this.props;
     const getTab = navigation.getParam('item')
 
     
@@ -165,7 +175,7 @@ class MyPayments extends React.Component {
                     </Left>
                     <View style={{borderBottomWidth:0}}>
                       <Text style={styles.payOptions}>Use My Wallet Balance</Text>
-                      <Text style={styles.payOptions}>Current Balance: <Text style={[appStyles.currency,{fontSize:12}]}>{'\u20B9'}</Text>{user.user.walletAmount ? user.user.walletAmount : 0 }</Text>
+                      <Text style={styles.payOptions}>Current Balance: <Text style={[appStyles.currency,{fontSize:12}]}>{'\u20B9'}</Text>{walletAmount ? walletAmount : 0 }</Text>
                     </View>
 
                     <TouchableOpacity style={styles.walletBtn} onPress={()=>this.props.navigation.navigate(Screens.TopupWallet.route)}>
@@ -384,6 +394,7 @@ const mapStateToProps = (state) => {
     totalAmount: state.cart.totalAmount,
     actualTotal: state.cart.actualTotal,
     deliveryCharges: state.cart.deliveryCharges,
+    walletAmount: state.cart.walletAmount,
   };
 };
 

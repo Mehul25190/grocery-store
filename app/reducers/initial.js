@@ -30,5 +30,6 @@ export const initialState = {
 		totalAmount: 0,
 		deliveryCharges: 0,
 		actualTotal: 0,
+		walletAmount: 0,
 	},
 };

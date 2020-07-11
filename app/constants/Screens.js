@@ -143,4 +143,7 @@ export default {
   ForgotPassword : {
     route: 'ForgotPassword'
   }, 
+  SearchProduct: {
+    route: 'SearchProduct'
+  }
 };

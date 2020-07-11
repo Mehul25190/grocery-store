@@ -44,6 +44,13 @@ const cart = (state = initialState.cart, action) => {
           viewCartDetail: action.data,
       }
     }
+    case ActionTypes.WALLETAMOUNT: {
+      return {
+        ...state,
+        walletAmount: action.data,
+      }
+    }
+    
     // Default
     default: {
       return state;

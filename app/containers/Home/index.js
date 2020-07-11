@@ -188,6 +188,7 @@ class Home extends React.Component {
 
 
   SearchFilterFunction(text) {
+    this.props.navigation.navigate('SearchProduct', {text: text});
         //passing the inserted text in textinput
       const newData = this.courseFilterArr.filter(function (item) {
         const itemData = item.categoryName ? item.categoryName.toUpperCase() : ''.toUpperCase();
@@ -196,7 +197,7 @@ class Home extends React.Component {
       });
       this.setState({
         categoryData: newData,
-        text: text,
+        text: "",
       });
   }
 
@@ -246,7 +247,12 @@ class Home extends React.Component {
        
           <Item style={[appStyles.searchBar]} >
             <Icon name="search" style={{color:Colors.primary}} />
-             <Input style={appStyles.searchInput} onChangeText={text => this.SearchFilterFunction(text)} placeholder='Search Product'/>
+             <Input style={appStyles.searchInput} value={this.state.text} onChangeText={text => 
+                {
+                    this.setState({text:text});
+                setTimeout(() => { this.SearchFilterFunction(this.state.text) }, 2000)
+                }
+              } placeholder='Search Product'/>
           </Item>
          
           <Right style={appStyles.headerRight}>
