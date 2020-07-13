@@ -60,7 +60,7 @@ class OrderDetail extends React.Component {
   }
 
   getOrderDetails(para_orderId) {
-    alert(para_orderId);
+    //alert(para_orderId);
     this.props.getOrderDetails(para_orderId).then (res =>{
       
       //console.log(res);
@@ -87,9 +87,8 @@ class OrderDetail extends React.Component {
     };
 
     onCancelPage = item => {
-    
-    this.props.navigation.navigate('CancelOrder', { item });
-  };
+      this.props.navigation.navigate('CancelOrder', { item});
+    };
 
   renderItems = ({ item, index }) => (
     <ListItem style={styles.ListItems} noBorder>
@@ -198,7 +197,7 @@ class OrderDetail extends React.Component {
           </TouchableOpacity>
         </Card>
          <Card style={[appStyles.addBox,styles.trackBox,{marginTop:-9,borderTopWidth:0,zIndex:-1}]}>
-          <TouchableOpacity onPress={()=> this.onCancelPage(getItem)}>
+          <TouchableOpacity onPress={()=> this.onCancelPage(this.state.orderData)}>
             <Text style={styles.detailTitle2}>Cancel Order</Text>
 
           </TouchableOpacity>

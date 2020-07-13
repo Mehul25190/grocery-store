@@ -75,6 +75,8 @@ class MyAddress extends React.Component {
               this.setState({aptNo:res.data.userAddressDtls.aptNo});
               this.setState({specialIns:res.data.userAddressDtls.specialIns});
               this.setState({zipcode:res.data.userAddressDtls.zipcode});
+              this.setState({buildingType:res.data.userAddressDtls.buildingType});
+              
               this.setState({selectedCity:res.data.userAddressDtls.cityId});
               this.setState({selectedArea:res.data.userAddressDtls.areaId});
               this.getAreaList(res.data.userAddressDtls.cityId);
@@ -147,6 +149,7 @@ class MyAddress extends React.Component {
       edit: !this.state.edit
     });
     //console.log(this.state.edit);
+    this.props.navigation.navigate(Screens.SignIn.route);
   }
   openControlPanel = () => {
     this.props.navigation.goBack(); // open drawer
@@ -215,7 +218,8 @@ class MyAddress extends React.Component {
               //this.props.navigation.navigate(Screens.SignIn.route)
 
               showToast("Save Successfully","success");
-              this.getDeliveryAddress();
+              //this.getDeliveryAddress();
+              this.props.navigation.navigate(Screens.SignIn.route)
         } else {
               console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");

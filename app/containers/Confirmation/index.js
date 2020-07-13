@@ -84,8 +84,7 @@ class Confirmation extends React.Component {
                 Are You Sure?
                 </Text>
             <Text style={styles.msgText}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-             Lorem Ipsum has been the industry's standard
+            Your order has been canceled once you click button.
             </Text>
             </View>) }
 

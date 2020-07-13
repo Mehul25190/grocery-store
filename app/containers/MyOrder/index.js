@@ -60,7 +60,7 @@ class MyOrder extends React.Component {
       
       //console.log(res);
         if(res.status == "success"){
-          //console.log(res);
+          console.log(res);
               this.setState({ orderData:res.data.orderList });
               
         } else {

@@ -17,7 +17,7 @@ import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
-import {productList} from '../data/data';
+import { showToast } from '../../utils/common';
 
 class CancelOrder extends React.Component {
 
@@ -33,12 +33,35 @@ class CancelOrder extends React.Component {
   openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
     }
-  onPressSubmit=item =>{
+  onPressSubmit = item => {
+
+    const { navigation } = this.props;
+    const getItem = navigation.getParam('item');
+
+    alert(getItem[0].id);
+    this.props.myCancelOrder(getItem[0].id).then (res =>{
+      
+      console.log(res);
+        if(res.status == "success"){
+            
+          showToast(res.message,"success");
+        } else {
+              console.log("something wrong with varification call");
+              showToast("Something wrong with Server response","danger");
+        }
+         
+      })
+      .catch(error => {
+          console.log('Error messages returned from server', error);
+          showToast("Error messages returned from server","danger");
+      });
+
     this.props.navigation.navigate('Confirmation', { item });
   }
   render(){
      const { navigation } = this.props;
     const getItem = navigation.getParam('item');
+    //alert(getItem[0].orderAmt);
     return (
       <Container style={appStyles.container}>
 
@@ -58,18 +81,17 @@ class CancelOrder extends React.Component {
                 Are You Sure?
                 </Text>
             <Text style={styles.msgText}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-             Lorem Ipsum has been the industry's standard
+               Your order has been canceled once you click "Cancel Order" & your payment will be deposited in your wallet..
             </Text>
             </View>
             <View style={styles.borderTop}>
             </View>
-            <ListItem noBorder style={{paddingTop:10, height:30, alignItems:'flex-start'}}>
+            {/* <ListItem noBorder style={{paddingTop:10, height:30, alignItems:'flex-start'}}>
               <Left style={{alignItems:'flex-start',textAign:'left', marginLeft:0, paddingLeft:0}}>
                 <Text style={styles.TotalTitle}>Sub Total</Text>
               </Left>
               <Right>
-              <Text style={styles.cancelRs}>{'\u20B9'} {getItem.price}</Text>
+              <Text style={styles.cancelRs}>{'\u20B9'}{getItem.price}</Text>
               </Right>
             </ListItem>
               <ListItem style={{paddingBottom:30,height:35,borderColor:Colors.primary}}>
@@ -79,13 +101,13 @@ class CancelOrder extends React.Component {
               <Right>
               <Text style={styles.cancelRs}>{'\u20B9'} 50.00</Text>
               </Right>
-            </ListItem>
-               <ListItem noBorder>
+    </ListItem> */}
+            <ListItem noBorder>
               <Left>
                 <Text style={styles.TotalTitle}>Total</Text>
               </Left>
               <Right>
-              <Text>{'\u20B9'} 0.00</Text>
+              <Text>{'\u20B9'} {(getItem[0].orderAmt !="" )? getItem[0].orderAmt : ""} </Text>
               </Right>
             </ListItem>
            <TouchableOpacity>
@@ -113,7 +135,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+
       logout: () => dispatch(userActions.logoutUser()),
+      myCancelOrder: (orderId) => dispatch(userActions.cancelOrder({orderId: orderId})),
    };
 };
 

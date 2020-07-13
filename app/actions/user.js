@@ -303,6 +303,25 @@ export const getUserOrderList = payloads => dispatch => {
 }
 
 /**
+ * Get Cancel order
+ * @param {} payloads 
+ */
+export const cancelOrder = payloads => dispatch => {
+  //console.log('payloads', payloads);
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.cancelOrder,  {payloads: payloads}).then(res => {
+   // console.log("get del add"+res.data);
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        //console.log("get del add"+res.data);
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+/**
  * getOrderDetailById
  * @param {*} payloads 
  */
