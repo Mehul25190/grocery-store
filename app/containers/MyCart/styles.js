@@ -31,19 +31,19 @@ clickBtn:{
    fontFamily:'Font-Bold'
   },
   totalAmount:{
-    backgroundColor:Colors.primary,
+    //backgroundColor:Colors.primary,
     borderRadius:25,
     paddingLeft:Layout.indent,
     paddingRight:Layout.indent
   },
   totalText:{
-    color:Colors.white,
+    color:Colors.black,
     fontFamily:'Font-Medium',
     fontSize:14
   },
 Amount:{
   fontSize:18,
-  color:'#fff',
+  color:Colors.black,
   fontFamily:'Font-Medium'
 },
 subscibed:{
@@ -64,8 +64,8 @@ footerCol:{
   justifyContent:'center',
   borderRightWidth:1,
   alignItems:'center',
-  paddingLeft:7,
-  paddingRight:7,
+  paddingLeft:6,
+  paddingRight:6,
   borderColor:Colors.gray
   
 },
@@ -95,13 +95,13 @@ footerAmount:{
 textSummary:{
   textAlign:'center',
     fontFamily:'Font-Medium',
-    color:Colors.white,
+    color:Colors.primary,
     fontSize:14,
     lineHeight:18,
     paddingVertical:7
 },
 orderSummary:{
-  backgroundColor:Colors.secondary,
+  //backgroundColor:Colors.secondary,
   borderRadius:5
 },
  title:{
@@ -112,6 +112,7 @@ orderSummary:{
 
 },
  deliveryAddress:{
+   top:10,
   padding:10,
   height:'auto',
   marginLeft:Layout.indent,

@@ -167,6 +167,7 @@ class Headers extends React.Component {
             </TouchableOpacity>
           )}
 
+        {this.props.setSearch != false && (
           <TouchableOpacity
             style={appStyles.StyleIconRightS}
             onPress={() => this.onPressSearch()}
@@ -176,6 +177,7 @@ class Headers extends React.Component {
               name={this.props.IconRightF}
             />
           </TouchableOpacity>
+        )}
         </Right>
       </Header>
     );

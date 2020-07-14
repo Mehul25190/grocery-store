@@ -22,6 +22,8 @@ import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
 import * as subscriptionAction from "../../actions/subscription";
 import url from '../../config/api';
+import moment from "moment";
+
 
 class SubscribeDetail extends React.Component {
 
@@ -78,7 +80,7 @@ class SubscribeDetail extends React.Component {
           <Grid >
             <Row style={styles.firstRow}>
               <Col style={styles.orderTitle}>
-                <Text style={styles.orderTitleText}>Subscribe:</Text>
+                <Text style={styles.orderTitleText}>Frequency:</Text>
               </Col>
               <Col style={styles.dailyTitle}>
                  <Text style={styles.dayText}>{item.frequency}</Text>
@@ -94,6 +96,8 @@ class SubscribeDetail extends React.Component {
                  <Text style={[styles.AmuText,styles.AmuTextTitle]}>{item.itemName}</Text>
                  <Text style={styles.AmuText}>{item.weight} {item.uom}</Text>
                  {/*<Text style={styles.AmuText}>Qty: {item.quantity}</Text>*/}
+                 <Text style={styles.AmuText}>Start Date: {moment(item.startDate).format('DD-MM-YYYY')}</Text>
+                 <Text style={styles.AmuText}>End Date: {moment(item.endDate).format('DD-MM-YYYY')}</Text>
                  <Text style={styles.AmuText}>MRP: <Text style={{}}>{'\u20B9'}</Text> {item.price}</Text>
                 </View>
               </Col>

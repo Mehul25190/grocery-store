@@ -208,9 +208,9 @@ updateCartPress(id, itemId, value){
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (<View>  
-                <TouchableOpacity style={styles.clickBtn} onPress={()=>this.props.navigation.navigate(Screens.MyPayments.route)}>
+                {/*<TouchableOpacity style={styles.clickBtn} onPress={()=>this.props.navigation.navigate(Screens.MyPayments.route)}>
                   <Text style={styles.textPayMode}>Kindly add payment mode <Icon style={styles.pointer} name='hand-pointer-o' type='FontAwesome' /> CLICK HERE</Text>
-                </TouchableOpacity>
+          </TouchableOpacity>*/}
              
                <Card style={[appStyles.addBox,styles.deliveryAddress]}>
              
@@ -257,9 +257,9 @@ updateCartPress(id, itemId, value){
                   <Col>
                   <Text style={styles.title}>{totalItem} Cart Items </Text>
                   </Col>
-                  <Col style={{justifyContent:'center',alignItems:'flex-end'}}>
+                  <Col style={{justifyContent:'center',alignItems:'flex-end', width:Layout.window.width/2}}>
                     <View style={styles.totalAmount}>
-                      <Text style={styles.totalText}>Total Amount <Text style={{fontFamily:'Roboto',color:Colors.white}}>{'\u20B9'}</Text><Text style={styles.Amount}>{totalAmount}</Text></Text>
+                      <Text style={styles.totalText}>Total Amount <Text style={{fontFamily:'Roboto',color:Colors.black}}>{'\u20B9'}</Text><Text style={styles.Amount}>{totalAmount}</Text></Text>
                      </View> 
                   </Col>
                 </Row>
@@ -298,7 +298,7 @@ updateCartPress(id, itemId, value){
               </Col>
             <Col style={[styles.footerCol,{borderRightWidth:0}]}>
                 <TouchableOpacity style={styles.orderSummary} onPress={()=>this.props.navigation.navigate(Screens.Checkout.route)}>
-                     <Text style={styles.textSummary}>Order Summary</Text>
+                     <Text style={styles.textSummary}>Checkout now</Text>
                 </TouchableOpacity>
               </Col>
            </Grid>
@@ -313,7 +313,7 @@ updateCartPress(id, itemId, value){
 }
 const mapStateToProps = (state) => {
   return {
-    //isLoading: state.common.isLoading,
+    isLoading: state.common.isLoading,
     user: state.auth.user,
     totalItem: state.cart.totalItem,
     cartDetail: state.cart.cartDetail,

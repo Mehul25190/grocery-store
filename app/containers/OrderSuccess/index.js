@@ -34,7 +34,7 @@ class OrderSuccess extends React.Component {
       <Container style={appStyles.container}>
        
            <Headers
-              IconLeft='arrowleft'
+              //IconLeft='arrowleft'
               onPress={() => this.openControlPanel()}
               IconRightS=''
               IconRightF='search'
