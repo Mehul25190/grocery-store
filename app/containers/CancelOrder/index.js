@@ -38,7 +38,7 @@ class CancelOrder extends React.Component {
     const { navigation } = this.props;
     const getItem = navigation.getParam('item');
 
-    alert(getItem[0].id);
+    //alert(getItem[0].id);
     this.props.myCancelOrder(getItem[0].id).then (res =>{
       
       console.log(res);

@@ -58,10 +58,12 @@ class MyOrder extends React.Component {
     //alert(this.props.user.user.id);
     this.props.getOrderList(this.props.user.user.id).then (res =>{
       
-      //console.log(res);
+      //console.log(orderData);
         if(res.status == "success"){
           console.log(res);
-              this.setState({ orderData:res.data.orderList });
+              if(res.data.orderList!=null){
+                this.setState({ orderData:res.data.orderList});
+              }
               
         } else {
               console.log("something wrong with varification call");
@@ -86,8 +88,14 @@ class MyOrder extends React.Component {
     if (item.orderStatus == 'PEN') {
       this.props.navigation.navigate('OrderDetail', { orderId:item.id });
     }
-    else {
+    else  if (item.orderStatus == 'CAN') {
+      alert("Your order already has been canceled");
+    } 
+    else  if (item.orderStatus == 'DEL') {
       this.props.navigation.navigate('OrderReturn', { orderId:item.id });
+    }  
+    else {
+     // this.props.navigation.navigate('OrderReturn', { orderId:item.id });
     }
 
   };
@@ -125,11 +133,11 @@ class MyOrder extends React.Component {
             <View>
 
 
-            <View style={{ flex: 0, zIndex: -1, width: 200, }}>
-              <View>
-                <Text style={styles.BalanceTitle}>
+              <View style={{ flex: 0, zIndex: -1, width: 200, }}>
+                <View>
+                  <Text style={styles.BalanceTitle}>
                   Recent Order
-          </Text>
+                 </Text>
               </View>
 
               <View style={styles.dateRow}>
@@ -138,9 +146,16 @@ class MyOrder extends React.Component {
                 </Text>
               </View>
             </View>
+           
+            {
+               (this.state.orderData.length < 1) ? 
+                  <Text style={{flexDirection:'row',textAlign:"center"}}>No Orders</Text> : null 
+                
+            }
             {
 
               //orderList.map((item, index) => {
+                
               this.state.orderData.map((item, index) => {
                 return (
 
