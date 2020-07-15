@@ -298,7 +298,7 @@ fontFamily:'Font-Medium'
 
   },
   StyleIconRightS:{
-    paddingLeft:10,
+    paddingLeft:15,
     paddingRight:Layout.indent
   },
    IconRight:{

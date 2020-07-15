@@ -149,7 +149,10 @@ class MyAddress extends React.Component {
       edit: !this.state.edit
     });
     //console.log(this.state.edit);
-    this.props.navigation.navigate(Screens.SignIn.route);
+    //this.props.navigation.navigate(Screens.Home.route);
+  }
+  cancelAddress = () => {
+    this.props.navigation.navigate(Screens.Home.route);
   }
   openControlPanel = () => {
     this.props.navigation.goBack(); // open drawer
@@ -219,7 +222,7 @@ class MyAddress extends React.Component {
 
               showToast("Save Successfully","success");
               //this.getDeliveryAddress();
-              this.props.navigation.navigate(Screens.SignIn.route)
+              this.props.navigation.navigate(Screens.Home.route)
         } else {
               console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
@@ -246,7 +249,7 @@ class MyAddress extends React.Component {
           IconRightF='search'
           bgColor='transparent'
           Title='My Address'
-
+          //setSearch={false}
         />
         <Content enableOnAndroid style={appStyles.content}>
           {this.props.isLoading ? (
@@ -455,7 +458,7 @@ class MyAddress extends React.Component {
                     </Col>
                     <Col style={{ justifyContent: 'flex-end' }}>
                       <TouchableOpacity  >
-                        <Button full primary style={styles.saveBtn} onPress={() => this.editAddress()}>
+                        <Button full primary style={styles.saveBtn} onPress={() => this.cancelAddress()}>
                           <Text style={[styles.saveBtnText, { textAlign: "center" }]}>Cancel </Text>
                         </Button>
                       </TouchableOpacity>

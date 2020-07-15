@@ -303,7 +303,7 @@ class Home extends React.Component {
           <View style={styles.ItemLayout}>
             <View style={styles.shopSubTitle}>
             <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
-              <Text style={styles.shopSubTitleText}>Upcoming Orders</Text>
+              <Text style={styles.shopSubTitleText}>My Next Order</Text>
               </TouchableOpacity>  
             </View>
            { <FlatList 
