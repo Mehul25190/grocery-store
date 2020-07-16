@@ -264,6 +264,13 @@ class ProductList extends React.Component {
     //this.setState({value: value})
   }
 
+  subscribePressHandlder(item){
+    showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
+    this.props.navigation.navigate(
+      Screens.SubscribeOrder.route,
+      { item: item , qty: this.state.value}
+    )
+  }
 
   render() {
 
@@ -373,10 +380,7 @@ class ProductList extends React.Component {
                           <Button style={styles.subscribeBtn}>
                             <TouchableOpacity
                               onPress={() =>
-                                this.props.navigation.navigate(
-                                  Screens.SubscribeOrder.route,
-                                  { item: item , qty: this.state.value}
-                                )
+                                this.subscribePressHandlder(item)
                               }
                             >
                               <Text style={styles.subText}>

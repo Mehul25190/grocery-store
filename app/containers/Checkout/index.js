@@ -116,7 +116,7 @@ class Checkout extends React.Component {
 
   onPressSubmit = item => {
     if(this.state.selectedTimeSlot == ''){
-      showToast("Select the time slot.", "danger");
+      showToast("Please select time slot", "danger");
       return;
     }
     this.props.navigation.navigate('MyPayments', { timeslot:this.state.selectedTimeSlot, dateslot:this.state.selectedDate });
@@ -150,7 +150,7 @@ class Checkout extends React.Component {
         </Body>
 
         <View>
-          <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> {item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? item.discountedPrice : item.itemPrice}</Text>
+          <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> {item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? item.discountedPrice.toFixed(2) : item.itemPrice.toFixed(2)}</Text>
         </View>
       </ListItem>   
     );
@@ -195,7 +195,7 @@ class Checkout extends React.Component {
               IconRightF='search'
               setCart={true}
               bgColor='transparent'
-              Title='Order Summary'
+              Title='Checkout'
              />
     
        <ScrollView>   
@@ -275,7 +275,7 @@ class Checkout extends React.Component {
                           </Body>
 
                           <View>
-                           <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> {totalAmount}</Text>
+                           <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> {totalAmount.toFixed(2)}</Text>
                           </View>
                         </ListItem>   
 {/* Deliver Charge */} 
@@ -301,7 +301,7 @@ class Checkout extends React.Component {
                           </Body>
 
                           <View>
-                           <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> {totalAmount + deliveryCharges}</Text>
+                           <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
                           </View>
                         </ListItem>   
            

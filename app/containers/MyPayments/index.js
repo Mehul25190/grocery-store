@@ -131,7 +131,7 @@ class MyPayments extends React.Component {
                   <Text style={styles.testStyles}>Total Order Value</Text>
                 </Col>
                <Col style={{flex:0, width:75, justifyContent:'center',alignItems:'center'}}>
-                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> {totalAmount}</Text>
+                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> {totalAmount.toFixed(2)}</Text>
                </Col>
               </Row>
                <Row>
@@ -139,7 +139,7 @@ class MyPayments extends React.Component {
                   <Text style={styles.testStyles}>Delivery Charges/Subscription Fees</Text>
                 </Col>
                 <Col style={{flex:0, width:75, justifyContent:'center',alignItems:'center'}}>
-                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> {deliveryCharges}</Text>
+                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> {deliveryCharges.toFixed(2)}</Text>
                </Col>
               </Row>
             </Grid>
@@ -149,7 +149,7 @@ class MyPayments extends React.Component {
                   <Text style={styles.testStyles}>Total Amount Payable </Text>
                 </Col>
                <Col style={{flex:0, width:75, justifyContent:'center',alignItems:'center'}}>
-                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> {totalAmount + deliveryCharges}</Text>
+                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
                </Col>
               </Row>
                <Row>
@@ -175,7 +175,7 @@ class MyPayments extends React.Component {
                     </Left>
                     <View style={{borderBottomWidth:0}}>
                       <Text style={styles.payOptions}>Use My Wallet Balance</Text>
-                      <Text style={styles.payOptions}>Current Balance: <Text style={[appStyles.currency,{fontSize:12}]}>{'\u20B9'}</Text>{walletAmount ? walletAmount : 0 }</Text>
+                      <Text style={styles.payOptions}>Current Balance: <Text style={[appStyles.currency,{fontSize:12}]}>{'\u20B9'}</Text>{walletAmount ? walletAmount.toFixed(2) : 0 }</Text>
                     </View>
 
                     <TouchableOpacity style={styles.walletBtn} onPress={()=>this.props.navigation.navigate(Screens.TopupWallet.route)}>
