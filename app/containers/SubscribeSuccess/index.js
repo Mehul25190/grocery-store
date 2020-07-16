@@ -50,7 +50,7 @@ class SubscribeSuccess extends React.Component {
           </Button>
         </Left>
         <Body>
-         <Text style={{ width: 100, backgroundColor: "transparent" }}>
+         <Text style={{ width: 120, backgroundColor: "transparent" }}>
             <Text style={appStyles.headerTitle}>Thank you</Text>
           </Text>
         </Body>
@@ -65,7 +65,7 @@ class SubscribeSuccess extends React.Component {
                />
                <View style={{textAlign:'center'}}>
                   <View style={{marginBottom:5}}>
-                   <Text style={styles.SuccesTittle}>Subscribe Succesfull</Text>
+                   <Text style={styles.SuccesTittle}>Subscribe Successfull</Text>
                   </View>
                    <View style={{marginBottom:5}}>
                    <Text style={styles.SuccessText}>Your subscription will start from</Text>
@@ -74,10 +74,20 @@ class SubscribeSuccess extends React.Component {
                    <View style={{marginBottom:5}}>
                     <Text style={styles.SuccessText}>Please recharge your foodapp wallet for uninterprited serivices.</Text>
                   </View>
-              </View>
+                  
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Subscription.route)}>
+                    <Text  style={styles.SuccessText}>To see your current subscrption,<Text style={{fontWeight:'bold'}}> please visit My Subscription</Text></Text>
+                    </TouchableOpacity>
+                  
+                 </View>
                     <TouchableOpacity style={styles.checkOutBtnArea} >
                       <Button primary full style={styles.checkOutBtn} onPress={()=>this.props.navigation.navigate(Screens.MyWallet.route)}>
                           <Text style={styles.checkOutText}>Add Money</Text>
+                       </Button>
+                    </TouchableOpacity>
+                     <TouchableOpacity style={styles.checkOutBtnArea} >
+                      <Button primary full style={styles.checkOutBtn} onPress={()=>this.props.navigation.navigate(Screens.Home.route)}>
+                          <Text style={styles.checkOutText}>Continue Shopping</Text>
                        </Button>
                     </TouchableOpacity>
              </Card>
@@ -97,7 +107,7 @@ class SubscribeSuccess extends React.Component {
                   </Text>
                    <Text style={styles.IconText}>
                    Don't forgot to hang a bag on your door everyday.
-                  This will ensure that the items willremain fresh and infact.
+                  This will ensure that the items will remain fresh and infact.
                   </Text>
                   </View>
                 </Body>
@@ -109,10 +119,10 @@ class SubscribeSuccess extends React.Component {
                 <Body>
                   <View>
                  <Text style={styles.IconTitle}>
-                 Prepaid wallete service
+                 Prepaid wallet service
                   </Text>
                    <Text style={styles.IconText}>
-                   Maintain a positive balance  in your wallate else your subscription might go on hold.
+                   Maintain a positive balance in your wallat else your subscription might go on hold.
                   </Text>
                   
                   </View>
