@@ -172,7 +172,8 @@ TotalBar:{
 fontFamily:'Font-Medium'
 },
 orderQty:{
-  fontSize:14,
+  fontSize:16,
+  lineHeight: 25,
   fontFamily:'Font-Medium'
 },
 OrderPrice:{

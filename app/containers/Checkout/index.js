@@ -145,8 +145,12 @@ class Checkout extends React.Component {
         <Left>
           <Text style={styles.orderName}>{item.itemName}</Text>
         </Left>
-        <Body>
-          <Text style={styles.orderQty}>{item.quantity} X</Text>
+        <Body style={{flexDirection: 'row',flex:0,justifyContent:'center',alignItems:'center'}}>
+         
+           <Text style={styles.orderQty}>{item.quantity}  <Text style={{fontSize: 10, lineHeight: 20}}>X</Text></Text>
+         
+        
+       
         </Body>
 
         <View>
@@ -254,7 +258,7 @@ class Checkout extends React.Component {
                 <Text style={styles.OrderTitleText}>Order Item List </Text>
                </View>
 
-               <List>
+               <List style={{paddingBottom:10}}>
 
                       <FlatList
                        vertical
@@ -267,11 +271,11 @@ class Checkout extends React.Component {
    {/* Sub Total */} 
                         <ListItem style={[styles.TotalList,{marginTop:10}]}>
                           <Left>
-                             <Text style={styles.orderName}>Items &nbsp; {totalItem}</Text>   
+                              <Text style={styles.TotalText}>Subtotal</Text>
                           </Left>
                          
                           <Body style={styles.TotalBar}>
-                              <Text style={styles.TotalText}>Subtotal</Text>
+                              <Text style={styles.orderName}>Items &nbsp; {totalItem}</Text>   
                           </Body>
 
                           <View>
@@ -281,10 +285,10 @@ class Checkout extends React.Component {
 {/* Deliver Charge */} 
                          <ListItem style={styles.TotalList}>
                           <View>
-                            <Text></Text>
+                            <Text style={styles.TotalText}>Delivery Charges</Text>
                           </View>
                          <Body style={styles.TotalBar}>
-                            <Text style={styles.TotalText}>Delivery Charges</Text>
+                          <Text></Text>
                           </Body>
 
                           <View>
@@ -292,12 +296,12 @@ class Checkout extends React.Component {
                           </View>
                         </ListItem>   
 {/* Sub Total */}                         
-                         <ListItem style={styles.TotalList}>
+                         <ListItem style={[styles.TotalList]}>
                           <View>
-                            <Text></Text>
+                            <Text style={styles.TotalText}> Total</Text>
                           </View>
                          <Body style={styles.TotalBar}>
-                                <Text style={styles.TotalText}> Total</Text>
+                                <Text></Text>
                           </Body>
 
                           <View>

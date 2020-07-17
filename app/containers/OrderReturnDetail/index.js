@@ -72,16 +72,17 @@ class OrderReturnDetail extends React.Component {
 
 
   renderItems = ({ item, index }) => (
-    <ListItem style={styles.ListItems} noBorder>
-      <Left style={styles.ListLeft}>
+    <ListItem icon style={styles.ListItems}>
+      <Left>
         <Image style={styles.proImage} source={{ uri: url.imageURL + item.imagePath }} />
-        <Text style={styles.proPrice}>{'\u20B9'} {item.itemPrice}</Text>
+      
       </Left>
-
-      <Body style={styles.bodyText}>
-        <Text style={[styles.proTitle, { fontFamily: 'Font-Medium' }]}>{item.itemName} </Text>
-        <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
-      </Body>
+ <Body style={styles.bodyText}>
+              <Text  numberOfLines={2}  style={styles.proTitle}>{item.itemName} </Text>
+               <Text style={[styles.proTitle, { fontFamily: 'Font-Medium' }]}>
+                   <Text style={{ fontFamily: 'Roboto', color: '#000' }}>{'\u20B9'}</Text> {item.itemPrice} </Text>   
+            </Body>
+     
 
       <Right style={styles.ListRight}>
         <View style={styles.RigView}>
@@ -89,9 +90,7 @@ class OrderReturnDetail extends React.Component {
         </View>
         <View style={[styles.RigView, styles.qtyCol]}>
           <Text style={styles.qtyText}>Qty</Text>
-          <TextInput style={styles.qtyInput}
-            keyboardType='numeric'
-            maxLength={2} value={10} />
+          <Input keyboardType='numeric' style={styles.qtyInput} value={item.quantity}  maxLength={2}  />
         </View>
 
         <Button style={styles.RigView} style={styles.returnBtn}>

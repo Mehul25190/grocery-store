@@ -182,7 +182,8 @@ class MyCart extends React.Component {
           </TouchableOpacity>
         </Col>
         <Col style={styles.QtyBox}>
-          <View style={{ top: 0 }}><TouchableOpacity onPress={() => this.deleteCartPress(item.itemId)}><Text>Delete</Text></TouchableOpacity></View>
+          <View style={{ bottom: 10 }}><TouchableOpacity onPress={() => this.deleteCartPress(item.itemId)}>
+          <Icon type="Ionicons" name="trash" style={{color:'red'}} /></TouchableOpacity></View>
           <View>
             <NumericInput
               inputStyle={{ fontSize: 13 }}
@@ -287,7 +288,7 @@ class MyCart extends React.Component {
 
             {cartDetail.length > 0 ?
               (
-                <Card style={[appStyles.addBox, { height: 'auto' }, styles.paddingBox]}>
+                <View style={[{ height: 'auto',borderWidth:0,elevation:0 }, styles.paddingBox]}>
                   <Grid >
                     <FlatList
                       vertical
@@ -298,7 +299,7 @@ class MyCart extends React.Component {
                     />
 
                   </Grid>
-                </Card>) : null}
+                </View>) : null}
           </View>)}
         </ScrollView>
         <ScreenLoader loading={this.state.loading} />

@@ -130,15 +130,15 @@ class MyPayments extends React.Component {
                 <Col>
                   <Text style={styles.testStyles}>Total Order Value</Text>
                 </Col>
-               <Col style={{flex:0, width:75, justifyContent:'center',alignItems:'center'}}>
+               <Col style={{flex:0, width:78, justifyContent:'center',alignItems:'center'}}>
                  <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> {totalAmount.toFixed(2)}</Text>
                </Col>
               </Row>
                <Row>
-                <Col>
+                <Col style={{}}>
                   <Text style={styles.testStyles}>Delivery Charges/Subscription Fees</Text>
                 </Col>
-                <Col style={{flex:0, width:75, justifyContent:'center',alignItems:'center'}}>
+                <Col style={{flex:0, width:78, justifyContent:'center',alignItems:'center'}}>
                  <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> {deliveryCharges.toFixed(2)}</Text>
                </Col>
               </Row>
