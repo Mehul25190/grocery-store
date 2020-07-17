@@ -156,23 +156,23 @@ alignItems:'flex-end'
   bodyText:{
     fontFamily:'Font-Medium',
     justifyContent:'center',
-   borderBottomColor:Colors.primary,
- 
-    height:80
+    borderBottomColor:Colors.primary,
+ paddingTop:10,
+    height:85
  },
   ListLeft:{
   padding:10
 
   },
    ListItems:{
-  marginLeft:0,
-  flex:1,
-  justifyContent:'center',
-  alignItems:'center',
     marginLeft:0,
-  marginBottom:5,
-  paddingBottom:3,
-  marginTop:10
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    marginLeft:0,
+    marginBottom:5,
+    paddingBottom:3,
+    marginTop:10
   },
   ListRight:{
    alignItems:'center',
