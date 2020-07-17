@@ -72,16 +72,17 @@ class OrderReturnDetail extends React.Component {
 
 
   renderItems = ({ item, index }) => (
-    <ListItem icon style={styles.ListItems}>
+<View style={{}}>
+
+    <ListItem icon style={[styles.ListItems,{borderColor:Colors.primary,borderTopWidth:1,paddingTop:20 }]} noBorder>
       <Left>
         <Image style={styles.proImage} source={{ uri: url.imageURL + item.imagePath }} />
-      
       </Left>
- <Body style={styles.bodyText}>
-              <Text  numberOfLines={2}  style={styles.proTitle}>{item.itemName} </Text>
-               <Text style={[styles.proTitle, { fontFamily: 'Font-Medium' }]}>
-                   <Text style={{ fontFamily: 'Roboto', color: '#000' }}>{'\u20B9'}</Text> {item.itemPrice} </Text>   
-            </Body>
+      <Body style={styles.bodyText}>
+            <Text  numberOfLines={2}  style={styles.proTitle}>{item.itemName} </Text>
+             <Text style={[styles.proTitle, { fontFamily: 'Font-Medium' }]}>
+             <Text style={{ fontFamily: 'Roboto', color: '#000' }}>{'\u20B9'}</Text> {item.itemPrice} </Text>   
+      </Body>
      
 
       <Right style={styles.ListRight}>
@@ -100,6 +101,38 @@ class OrderReturnDetail extends React.Component {
         </Button>
       </Right>
     </ListItem>
+     <View style={{ merginRight: Layout.indent, justifyContent: 'center',marginTop:15}}>
+             
+              <View style={styles.reasonView} >
+                <Item style={{ borderBottomWidth: 0 }} >
+                  <Picker
+                    note
+                    mode="dropdown"
+                    style={styles.dorpDownReason}
+                    selectedValue={this.state.selected}
+                    onValueChange={this.onValueChange.bind(this)}
+                    placeholderStyle={{ borderWidth: 10 }}
+                    placeholderIconColor={{ borderWidth: 2 }}
+                  >
+                      <Picker.Item label="Select Reason to Return Order" value="0" /> 
+                    {
+
+                      ReturnReason.map(data => (
+                        <Picker.Item key={data.key} label={data.reason} value={data.key} />
+
+                      ))
+
+                    }
+
+
+                  </Picker>
+                  <Image source={imgs.DownArrow} style={styles.DownArrow} />
+                </Item>
+              </View>
+            </View>
+
+   
+  </View>
   );
 
   render() {
@@ -121,8 +154,8 @@ class OrderReturnDetail extends React.Component {
 
 
         <ScrollView>
-          <Card style={[appStyles.addBox, { height: 'auto' }, styles.orderBox]}>
-            <Grid >
+          <Card style={[appStyles.addBox, { height: 'auto', }, styles.orderBox]}>
+            <Grid style={{paddingBottom:5,}}>
               <Row style={styles.orderRow}>
                 <Col style={styles.orderTitle}>
                   <Text style={styles.orderTitleText}>Order Date</Text>
@@ -151,35 +184,7 @@ class OrderReturnDetail extends React.Component {
               </Row>
             </Grid>
 
-            <View style={{ merginRight: Layout.indent, justifyContent: 'center' }}>
-              <Text style={styles.title}>Select Reason to Return Order</Text>
-              <View style={styles.reasonView} >
-                <Item style={{ borderBottomWidth: 0 }} >
-                  <Picker
-                    note
-                    mode="dropdown"
-                    style={styles.dorpDownReason}
-                    selectedValue={this.state.selected}
-                    onValueChange={this.onValueChange.bind(this)}
-                    placeholderStyle={{ borderWidth: 10 }}
-                    placeholderIconColor={{ borderWidth: 2 }}
-                  >
-                    {/* <Picker.Item label="Select Reason to Return Order" value="0" /> */}
-                    {
-
-                      ReturnReason.map(data => (
-                        <Picker.Item key={data.key} label={data.reason} value={data.key} />
-
-                      ))
-
-                    }
-
-
-                  </Picker>
-                  <Image source={imgs.DownArrow} style={styles.DownArrow} />
-                </Item>
-              </View>
-            </View>
+           
 
             <ScrollView>
               <FlatList

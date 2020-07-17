@@ -170,7 +170,8 @@ alignItems:'flex-end'
   justifyContent:'center',
   alignItems:'center',
     marginLeft:0,
-  marginBottom:20,
+  marginBottom:5,
+  paddingBottom:3,
   marginTop:10
   },
   ListRight:{
