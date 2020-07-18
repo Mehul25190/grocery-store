@@ -72,9 +72,9 @@ class OrderReturnDetail extends React.Component {
 
 
   renderItems = ({ item, index }) => (
-<View style={{}}>
+<View>
 
-    <ListItem icon style={[styles.ListItems,{borderColor:Colors.primary,borderTopWidth:1,paddingTop:20 }]} noBorder>
+    <ListItem icon style={[styles.ListItems,{borderColor:Colors.primary,borderTopWidth:1,paddingTop:15 }]} noBorder>
       <Left>
         <Image style={styles.proImage} source={{ uri: url.imageURL + item.imagePath }} />
       </Left>
@@ -101,7 +101,7 @@ class OrderReturnDetail extends React.Component {
         </Button>
       </Right>
     </ListItem>
-     <View style={{ merginRight: Layout.indent, justifyContent: 'center',marginTop:15}}>
+     <View style={{ merginRight: Layout.indent, justifyContent: 'center'}}>
              
               <View style={styles.reasonView} >
                 <Item style={{ borderBottomWidth: 0 }} >
@@ -131,6 +131,8 @@ class OrderReturnDetail extends React.Component {
               </View>
             </View>
 
+
+
    
   </View>
   );
@@ -155,7 +157,7 @@ class OrderReturnDetail extends React.Component {
 
         <ScrollView>
           <Card style={[appStyles.addBox, { height: 'auto', }, styles.orderBox]}>
-            <Grid style={{paddingBottom:5,}}>
+            <Grid style={{paddingBottom:10,}}>
               <Row style={styles.orderRow}>
                 <Col style={styles.orderTitle}>
                   <Text style={styles.orderTitleText}>Order Date</Text>
