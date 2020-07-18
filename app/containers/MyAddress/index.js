@@ -221,7 +221,7 @@ class MyAddress extends React.Component {
               //this.props.navigation.navigate(Screens.SignIn.route)
 
               showToast("Save Successfully","success");
-              //this.getDeliveryAddress();
+              this.getDeliveryAddress();
               this.props.navigation.navigate(Screens.Home.route)
         } else {
               console.log("something wrong with varification call");

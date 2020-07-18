@@ -182,7 +182,8 @@ class editSubscribe extends React.Component {
                       value={this.state.qty} 
                       onChange={value => this.setState({qty: value})} 
                       onLimitReached={(isMax,msg) => console.log(isMax,msg)}
-                       minValue={1}
+                       minValue={this.state.qty}
+                       maxValue={this.state.qty}
                       totalWidth={90} 
                       totalHeight={20} 
                       iconSize={10}
@@ -194,6 +195,7 @@ class editSubscribe extends React.Component {
                       iconStyle={{ color: Colors.primary,fontSize:13 }} 
                       rightButtonBackgroundColor='#fff' 
                       leftButtonBackgroundColor='#fff'
+                      editable={false}
                     />
                 </View> 
               </Col>

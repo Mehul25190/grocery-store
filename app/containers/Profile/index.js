@@ -67,13 +67,7 @@ class Profile extends React.Component {
   //get User Profile
   getUserProfile(){
 
-   // alert(this.props.user.user.id);  
     this.props.showUserProfile(this.props.user.user.id).then (res => {
-      //console.log('im in profile');
-      ///console.log(res);
-      //console.log(res.status); 
-      
-      //console.log(res.data.userProfile);
       if(res.status == "success"){
 
         if(res.data.userProfile.length > 0){
@@ -81,20 +75,15 @@ class Profile extends React.Component {
           //this.setState({ setUserData:res.data.userProfile});
           this.setState({firstName:res.data.userProfile[0].firstName});
           this.setState({lastName:res.data.userProfile[0].lastName});
-
           this.setState({mobileNo:this.props.user.user.mobile});
           this.setState({email:this.props.user.user.email});
-
           //startDate: item.startDate ? moment(item.startDate).format('MM/DD/YYYY') : '',
-
-          this.setState({dob:moment(res.data.userProfile[0].dob.date).format('MM/DD/YYYY')});
+          if(res.data.userProfile[0].dob != null)
+            this.setState({dob:moment(res.data.userProfile[0].dob.date).format('MM/DD/YYYY')});
           this.setState({gender:res.data.userProfile[0].gender});
           this.setState({ethnicity:res.data.userProfile[0].ethnicity});
           this.setState({promotionalEmail:res.data.userProfile[0].promotionalEmail});
           this.setState({ringBell:res.data.userProfile[0].ringBell});
-          //console.log(res.data.userProfile[0].dob.date);
-          //console.log(firstName:this.state.setUserData[0].firstName);
-            //alert(this.state.mobileNo);
         }
         this.setState({mobileNo:this.props.user.user.mobile});
         this.setState({email:this.props.user.user.email});
