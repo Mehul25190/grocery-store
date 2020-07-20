@@ -147,7 +147,7 @@ class Checkout extends React.Component {
         </Left>
         <Body style={{flexDirection: 'row',flex:0,justifyContent:'center',alignItems:'center'}}>
          
-           <Text style={styles.orderQty}>{item.quantity}  <Text style={{fontSize: 10, lineHeight: 20}}>X</Text></Text>
+           <Text style={styles.orderQty}>{item.quantity}<Text style={{fontSize: 10, lineHeight: 20}}> X</Text></Text>
          
         
        
@@ -222,7 +222,7 @@ class Checkout extends React.Component {
                               position: "absolute",
                               color: Colors.primary,
                               bottom:-35,
-                              right:50
+                              right:75
                             }}
                           />:null
                          }
@@ -254,10 +254,14 @@ class Checkout extends React.Component {
                     );
                 })}
                 </Grid> 
-               <View style={styles.OrderTitle}>
+              <Grid style={styles.OrderTitle}>
+               <Col>
                 <Text style={styles.OrderTitleText}>Order Item List </Text>
-               </View>
-
+               </Col>
+                <Col style={{justifyContent:'flex-end',alignItems:'flex-end'}}>
+                  <Text style={styles.OrderTitleText}>Total Items &nbsp; {totalItem}</Text> 
+               </Col>
+               </Grid>
                <List style={{paddingBottom:10}}>
 
                       <FlatList
@@ -275,7 +279,7 @@ class Checkout extends React.Component {
                           </Left>
                          
                           <Body style={styles.TotalBar}>
-                              <Text style={styles.orderName}>Items &nbsp; {totalItem}</Text>   
+                              <Text></Text>   
                           </Body>
 
                           <View>

@@ -32,6 +32,7 @@ const images = {
 	cardIcon: require('./cardIcon.png'),
 	addCardIcon: require('./addCardIcon.png'),
 	CachIcon: require('./CachIcon.png'),
+	addPlus:require('./by_once_pls.png'),
 };
 
 export default images;

@@ -301,11 +301,17 @@ class Home extends React.Component {
           : null }
 
           <View style={styles.ItemLayout}>
-            <View style={styles.shopSubTitle}>
+            <Grid style={styles.shopSubTitle}>
             <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
               <Text style={styles.shopSubTitleText}>My Next Order</Text>
               </TouchableOpacity>  
-            </View>
+              <View style={{textAlign:'right',paddingLeft:10}}>
+                  <Text style={styles.pendingDays}> You have 20 days pending for free delivery</Text>
+              </View>
+                <TouchableOpacity style={{textAlign:'right'}}>
+                  <Icon type="AntDesign" name="exclamationcircle" style={styles.infoCircle} />
+              </TouchableOpacity>
+            </Grid>
            { <FlatList 
                      vertical
                      showsVerticalScrollIndicator={false}

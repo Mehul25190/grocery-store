@@ -331,13 +331,22 @@ categoryStyles: {
    prodInfo:{
     textAlign:'left',
    },
+   proBrand:{
+    fontSize:13,
+     textAlign:'left',
+    marginLeft:1,
+    lineHeight:15
+   },
    proTitle:{
     textAlign:'left',
-    marginLeft:1
+    marginLeft:1,
+    fontSize:18,
+    lineHeight:23
    },
    proPrice:{
     marginLeft:1,
     fontSize:18,
+    color:Colors.primary,
     //textDecoration:'none',
     // backgroundColor:'#ddd',
     flex:0,
@@ -356,7 +365,7 @@ categoryStyles: {
     marginLeft:1
    },
    buyButton:{
-      backgroundColor:'#F8BB1B',
+     // backgroundColor:'#F8BB1B',
       justifyContent: 'center',
       alignItems: 'center',
       textAlign:'center',
