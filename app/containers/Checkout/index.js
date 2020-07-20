@@ -266,7 +266,7 @@ class Checkout extends React.Component {
 
                       <FlatList
                        vertical
-                       showsHorizontalScrollIndicator={false}
+                       //showsHorizontalScrollIndicator={false}
                        data={cartDetail}
                        renderItem={this.renderCartItems}
                        keyExtractor={(item) => `${item.id}`}

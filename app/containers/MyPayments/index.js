@@ -23,6 +23,8 @@ import CheckBox from 'react-native-check-box';
 import {BankList,CardDetails,BankOptions} from '../data/data';
 import { showToast } from '../../utils/common';
 import moment from "moment";
+import { WebView } from 'react-native-webview';
+
 
 class MyPayments extends React.Component {
 
@@ -93,9 +95,9 @@ class MyPayments extends React.Component {
     const paymentMode = this.state.paywithcash ? 'COD' : this.state.paywithcard ? 'CARD' : '' ;
 
     this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet ,'', '').then(res => {
-      console.log(res)
+      //console.log('resrersr', res.data.orderNumber)
       if(res.status == 'success'){
-        this.props.navigation.navigate(Screens.OrderSuccess.route);
+        this.props.navigation.navigate(Screens.OrderSuccess.route, {orderNumber: res.data.orderNumber});
       }else{
         if(res.message)
           showToast(res.message, "danger");
@@ -121,7 +123,11 @@ class MyPayments extends React.Component {
               Title='Payment'
             />
           <Content enableOnAndroid>
-           
+         {/* <WebView
+        originWhitelist={['*']}
+        source={{ uri: 'http://dev.tieskills.com/payment/payment.html' }}
+        style={{ height:200 }}
+         />*/}
 {/* ---------------------------------Credit / Debit Card----------------------------------*/}
 
          <ScrollView style={{marginLeft:Layout.indent, marginRight:Layout.indent}}>
@@ -375,8 +381,9 @@ class MyPayments extends React.Component {
                   <Text style={styles.checkOutText}> Pay Now</Text>
                </Button>
           </TouchableOpacity>
-
+         
              </ScrollView>
+            
           </Content>
       </Container>
      
