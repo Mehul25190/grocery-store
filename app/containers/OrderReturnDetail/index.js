@@ -29,7 +29,7 @@ class OrderReturnDetail extends React.Component {
       //default value of the date time
       date: '',
       time: '',
-      selected: 'key0'
+      selected: 0
     };
 
   }
@@ -114,7 +114,7 @@ class OrderReturnDetail extends React.Component {
                     placeholderStyle={{ borderWidth: 10 }}
                     placeholderIconColor={{ borderWidth: 2 }}
                   >
-                      <Picker.Item label="Select Reason to Return Order" value="0" /> 
+                     {/* <Picker.Item label="Select Reason to Return Order" value={0} key={0} /> */}
                     {
 
                       ReturnReason.map(data => (
