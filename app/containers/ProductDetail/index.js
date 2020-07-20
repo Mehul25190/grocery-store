@@ -153,10 +153,10 @@ class ProductDetail extends React.Component {
            <Headers
               IconLeft='arrowleft'
               onPress={() => this.openControlPanel()}
-             
               setCart={true}
               bgColor='transparent'
               Title='Product Detail'
+              IconRightF="search"
              />
       
           <Content enableOnAndroid>

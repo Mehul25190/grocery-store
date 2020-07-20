@@ -40,7 +40,7 @@ export default {
     //
   marginLeft:Layout.indent,
   marginRight:Layout.indent,
-  backgroundColor:Colors.secondary,
+  //backgroundColor:Colors.secondary,
   marginTop:5,
 
    height:30,
@@ -55,8 +55,7 @@ export default {
     fontFamily:'Font-Medium',
     fontSize:14,
     lineHeight:22,
-  
-    color:Colors.white
+    color:Colors.primary
   },
   OrderTitle:{
      borderBottomWidth:1.3,
