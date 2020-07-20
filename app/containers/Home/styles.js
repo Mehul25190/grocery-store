@@ -14,17 +14,26 @@ export default {
     flexDirection: 'column',
   },
    photo: {
-     flex:1,
+    flex:1,
     width: null,
     height: null,
     resizeMode: 'contain',
-      justifyContent: 'flex-end',
-      flexDirection:'column',
-      marginTop:50,
-      marginLeft:Layout.indent
+    justifyContent: 'flex-end',
+    flexDirection:'column',
+    marginTop:50,
+    marginLeft:Layout.indent
      
   },
-
+  pendingDays:{
+    fontSize:11,
+    color:Colors.primary,
+    lineHeight:20,
+  },
+  infoCircle:{
+    color:Colors.primary,
+    fontSize:20,
+    paddingLeft:5
+  },
     slide: {
         marginRight:Layout.indent,
         width: Layout.window.width-10,

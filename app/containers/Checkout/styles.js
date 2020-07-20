@@ -2,7 +2,9 @@ import {Colors,Layout} from '../../constants/';
 export default {
   bodyText:{
     fontFamily:'Font-Medium',
-    paddingLeft:15
+    paddingLeft:10,
+    fontSize:14,
+    lineHeight:28
   },
 
   bodyGreen:{
@@ -17,10 +19,11 @@ export default {
     width:150
   },
   txtDate:{
-   textAlign:'center'
+   textAlign:'center',
+
   },
   txtDay:{
-    textAlign:'center'
+    textAlign:'center',
   },
   dateCol:{
     backgroundColor:'#adeeb8',
@@ -53,8 +56,8 @@ export default {
 },
   textPayMode:{
     fontFamily:'Font-Medium',
-    fontSize:14,
-    lineHeight:22,
+    fontSize:15,
+    lineHeight:25,
     color:Colors.primary
   },
   OrderTitle:{
@@ -173,7 +176,7 @@ fontFamily:'Font-Medium'
 orderQty:{
   fontSize:16,
   lineHeight: 25,
-  fontFamily:'Font-Medium'
+  fontFamily:'Font-Medium',
 },
 OrderPrice:{
   fontFamily:'Font-Medium',

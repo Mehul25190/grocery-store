@@ -323,7 +323,10 @@ class ProductList extends React.Component {
                           this.productDetail(item.id)
                         }
                       >
-                        <Text style={styles.proTitle}>{item.brandName} - {item.itemName}</Text>
+                       
+                          <Text style={styles.proBrand}>{item.brandName}</Text>
+                       
+                        <Text style={styles.proTitle}>{item.itemName}</Text>
 
                         <Text style={styles.proQuanitty} note>
                           {item.weight !== ""
@@ -349,7 +352,7 @@ class ProductList extends React.Component {
                               </Text>
                               <Text style={styles.proPrice}>
                                 <Text
-                                  style={(appStyles.currency, { fontSize: 18 })}
+                                  style={[appStyles.currency,{fontSize: 18,color:Colors.primary}]}
                                 >
                                   {"\u20B9"}
                                  </Text>{" "}
@@ -358,7 +361,7 @@ class ProductList extends React.Component {
                             </View>
                           ) : (
                             <View>
-                              <Text style={styles.proPrice}>
+                              <Text style={[styles.proPrice,{color:'#000'}]}>
                                 <Text
                                   style={(appStyles.currency, { fontSize: 18 })}
                                 >
@@ -393,17 +396,17 @@ class ProductList extends React.Component {
                         )}
                          {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
                           null : 
-                          (<Button style={styles.buyButton}>
+                          (
                           <TouchableOpacity
                             onPress={() =>
                               this.buyOncePressHnadler(item.id, 1)
                             }
                           >
                            
-                         <Text style={styles.buyText}>Buy Once</Text>
-                            
+                         
+                            <Image source={imgs.addPlus} style={styles.buyButton} />
                           </TouchableOpacity>
-                        </Button>)}
+                        )}
                         {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
                           (<NumericInput
                             initValue={1}

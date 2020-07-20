@@ -274,11 +274,11 @@ class MyCart extends React.Component {
               </Row>
               <Row>
                 <Col>
-                  <Text style={styles.title}>{totalItem} Cart Items </Text>
+                  <Text style={styles.title}>Total items {totalItem}</Text>
                 </Col>
                 <Col style={{ justifyContent: 'center', alignItems: 'flex-end', width: Layout.window.width / 1.8 }}>
                   <View style={styles.totalAmount}>
-                    <Text style={styles.totalText}>Total Amount <Text style={{ fontFamily: 'Roboto', color: Colors.black }}>{'\u20B9'}</Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
+                    <Text style={styles.totalText}>Total Amount <Text style={{ fontFamily: 'Roboto', color: Colors.black }}> {'\u20B9'}</Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
                   </View>
                 </Col>
               </Row>
@@ -286,7 +286,7 @@ class MyCart extends React.Component {
 
 
 
-            {cartDetail.length > 0 ?
+            {cartDetail.length > 0 ? 
               (
                 <View style={[{ height: 'auto',borderWidth:0,elevation:0 }, styles.paddingBox]}>
                   <Grid >

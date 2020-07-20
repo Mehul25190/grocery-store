@@ -39,7 +39,7 @@ clickBtn:{
   totalText:{
     color:Colors.black,
     fontFamily:'Font-Medium',
-    fontSize:14
+    fontSize:16
   },
 Amount:{
   fontSize:18,
@@ -96,7 +96,7 @@ textSummary:{
   textAlign:'center',
     fontFamily:'Font-Medium',
     color:Colors.primary,
-    fontSize:14,
+    fontSize:16,
     lineHeight:18,
     paddingVertical:7
 },
