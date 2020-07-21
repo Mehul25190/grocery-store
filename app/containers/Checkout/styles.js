@@ -6,7 +6,25 @@ export default {
     fontSize:14,
     lineHeight:28
   },
-
+ Modeltext: {
+     color:'#000',
+     fontSize:14,
+     fontFamily:'Font-Medium'
+   },
+   closeOk:{
+    marginTop:10,
+    paddingVertical:10,
+    backgroundColor:Colors.primary,
+    justifyContent:'center',
+    alignItems:'center'
+   },
+   closeIcon:{
+  position:'absolute',
+  top:15,
+  right:15,
+    justifyContent:'flex-end',
+    alignItems:'flex-end'
+   },
   bodyGreen:{
    color:Colors.primary,
   },

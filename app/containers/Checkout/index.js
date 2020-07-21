@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, FlatList} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, FlatList,TouchableHighlight} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors, ActionTypes } from '../../constants';
 import { Logo, Statusbar, Headers, DeliveryAddress } from '../../components';
@@ -13,6 +13,7 @@ import {
   Text,
   Header, Left, Body, Footer, Title, Right,Card,Grid,Col,Row,ListItem,List,Switch,Radio
 } from 'native-base';
+import Modal from 'react-native-modal';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 import * as cartActions from "../../actions/cart";
@@ -31,6 +32,7 @@ class Checkout extends React.Component {
     super(props);
      this.state = {
       //default value of the date time
+        isModalVisible: false,
       date: '',
       time: '',
       dayName:'',
@@ -179,20 +181,25 @@ class Checkout extends React.Component {
         });
       }
     }
+   
     // if(this.props.user.user.isFreeSubscription == 1){
     //   this.props.freeDeliveryCharge();
     // }else{
     //   this.props.fetchDeliveryCharges(this.props.totalAmount);
     // }
-    this.setState({selectedTimeSlot:slotId })
+    this.setState({
+      selectedTimeSlot:slotId,
+       isModalVisible: !this.state.isModalVisible
+     })
   }
 
+ 
   render(){
     const { navigation, cartDetail, totalItem, totalAmount, deliveryCharges } = this.props;
     const getItem = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
-
+     
            <Headers
               IconLeft='arrowleft'
               onPress={() => this.openControlPanel()}
@@ -201,9 +208,35 @@ class Checkout extends React.Component {
               bgColor='transparent'
               Title='Checkout'
              />
-    
+   
+              <Modal 
+              isVisible={this.state.isModalVisible}
+              coverScreen={false}
+              backdropColor={'#fff'}
+              backdropOpacity={0.6}
+              animationIn={'slideInDown'}
+              style={{flex:1}}
+              >
+                  <View style={{backgroundColor:'#fff',padding:10,borderWidth:1, borderColor:Colors.gray, borderRadius:5}}>
+                    <TouchableOpacity style={styles.closeIcon} onPress = {() => this.setState({isModalVisible:false}) }>
+                      <Icon type="AntDesign" name="closecircleo" />
+                    </TouchableOpacity>
+                    <Text style = {[styles.Modeltext,{fontSize:16}]}>Valuable Customer..!</Text>
+                    <Text></Text>
+                    <Text  style = {styles.Modeltext}>
+                    Seems your free subscription period is over, 
+                    Now have your morning deliveries free by paying a small subscription amount <Text style={appStyles.currency}>{'\u20B9'}</Text> 123.
+                    You can still enjoy our evening slots with nominal delviery charge</Text>
+                    <TouchableOpacity style={styles.closeOk} onPress = {() => this.setState({isModalVisible:false}) }>
+                    <Text style={{color:'#fff',fontSize:16,fontFamily:'Font-Medium'}}>OK</Text>
+                    </TouchableOpacity>
+                  
+                  </View>
+                  
+              </Modal>
        <ScrollView>   
-              
+                 
+   
                <View style={styles.clickBtn} onPress={()=>this.props.navigation.navigate(Screens.MyPayments.route)}>
                   <Text style={styles.textPayMode}>Choose delivery slots for this order</Text>
                 </View>

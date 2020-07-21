@@ -376,20 +376,24 @@ categoryStyles: {
       height:25,
    },
    subscribeBtn:{
-   backgroundColor:Colors.secondary,
-   minWidth:90,
-    height:25,
-    marginTop:5,
-    marginBottom:5,
-    justifyContent: 'center',
+    borderWidth:0,
+    elevation:1,
+      color:Colors.primary,
+      backgroundColor:'transparent',
+      minWidth:90,
+      height:25,
+      marginTop:5,
+      marginBottom:5,
+      justifyContent: 'center',
    },
 
    subText:{
     textAlign:'center',
-    fontSize:10,
+    fontSize:11,
     paddingLeft:0,
     paddingRight:0,
-    color:'#fff'
+   color:Colors.primary,
+ 
    },
 
    buyText:{

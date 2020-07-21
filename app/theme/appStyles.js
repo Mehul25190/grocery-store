@@ -173,8 +173,8 @@ export default StyleSheet.create({
      // backgroundColor:'#ddd'
   },
   userIconStyle:{
-    fontSize:40,
-    width:50,
+    fontSize:30,
+    width:30,
    
   },
   IconStyle:{
