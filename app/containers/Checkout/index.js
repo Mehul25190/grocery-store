@@ -32,7 +32,8 @@ class Checkout extends React.Component {
     super(props);
      this.state = {
       //default value of the date time
-        isModalVisible: false,
+      isModalVisible: false,
+      isEveningModalVisible: false,
       date: '',
       time: '',
       dayName:'',
@@ -55,11 +56,11 @@ class Checkout extends React.Component {
   }
 
   getCartDetail(){
-    if(this.props.user.user.isFreeSubscription == 1){
+    /*if(this.props.user.user.isFreeSubscription == 1){
       this.props.freeDeliveryCharge();
     }else{
       this.props.fetchDeliveryCharges(this.props.totalAmount);
-    }
+    }*/
     this.props.getAvailableTimeSlots(this.props.deliveryAddress.areaId).then(res => {
       //console.log(JSON.stringify(res.data.availableTimeSlots))     
       const newArr = Object.keys(res.data.availableTimeSlots).map((key) => res.data.availableTimeSlots[key])
@@ -164,20 +165,21 @@ class Checkout extends React.Component {
   selectDateTimeSlot(key, data) {
     this.setState({activedate:key, selectedDate:data.date, selectedTimeSlot:''  })
   }
-  selectTimeSlot(slotId, subscriptionFees){
+  selectTimeSlot(slotId, subscriptionFees, time){
     
     if(this.props.user.user.isFreeSubscription == 0 || this.props.user.user.isFreeSubscription == null)
     {  
       if(subscriptionFees == 'Y'){
-        console.log(this.props.user.user)
         if(this.props.user.user.subscriptionEndDate < moment(new Date()).format('YYYY-MM-DD')){
-          this.props.fetchSubscriptionCharges(this.props.user.user.id);
+          this.props.fetchSubscriptionCharges(this.props.user.user.id).then(res => {
+              this.openModal(time);
+          })
         }else{
           this.props.freeDeliveryCharge();
         }
       }else{
         this.props.fetchDeliveryCharges(this.props.totalAmount).then(res => {
-          console.log('wewee', res)
+          this.openModal(time);
         });
       }
     }
@@ -187,10 +189,15 @@ class Checkout extends React.Component {
     // }else{
     //   this.props.fetchDeliveryCharges(this.props.totalAmount);
     // }
-    this.setState({
-      selectedTimeSlot:slotId,
-       isModalVisible: !this.state.isModalVisible
-     })
+    this.setState({selectedTimeSlot:slotId})
+  }
+
+  openModal(time){
+    if(time.search("AM")){
+      this.setState({ isModalVisible: !this.state.isModalVisible})
+    }else{
+      this.setState({ isEveningModalVisible: !this.state.isEveningModalVisible})
+    }
   }
 
  
@@ -228,6 +235,33 @@ class Checkout extends React.Component {
                     Now have your morning deliveries free by paying a small subscription amount <Text style={appStyles.currency}>{'\u20B9'}</Text> 123.
                     You can still enjoy our evening slots with nominal delviery charge</Text>
                     <TouchableOpacity style={styles.closeOk} onPress = {() => this.setState({isModalVisible:false}) }>
+                    <Text style={{color:'#fff',fontSize:16,fontFamily:'Font-Medium'}}>OK</Text>
+                    </TouchableOpacity>
+                  
+                  </View>
+                  
+              </Modal>
+
+              <Modal 
+              isVisible={this.state.isEveningModalVisible}
+              coverScreen={false}
+              backdropColor={'#fff'}
+              backdropOpacity={0.6}
+              animationIn={'slideInDown'}
+              style={{flex:1}}
+              >
+                  <View style={{backgroundColor:'#fff',padding:10,borderWidth:1, borderColor:Colors.gray, borderRadius:5}}>
+                    <TouchableOpacity style={styles.closeIcon} onPress = {() => this.setState({isEveningModalVisible:false}) }>
+                      <Icon type="AntDesign" name="closecircleo" />
+                    </TouchableOpacity>
+                    <Text style = {[styles.Modeltext,{fontSize:16}]}>Valuable Customer..!</Text>
+                    <Text></Text>
+                    <Text  style = {styles.Modeltext}>
+                    Seems your free delivery period is over , 
+                    You can still enjoy our evening slots with nominal delviery charge"
+                    Now have your morning deliveries free by paying a small subscription amount (Just <Text style={appStyles.currency}>{'\u20B9'}</Text> 123)
+                   </Text>
+                    <TouchableOpacity style={styles.closeOk} onPress = {() => this.setState({isEveningModalVisible:false}) }>
                     <Text style={{color:'#fff',fontSize:16,fontFamily:'Font-Medium'}}>OK</Text>
                     </TouchableOpacity>
                   
@@ -274,7 +308,7 @@ class Checkout extends React.Component {
                         {data.slots.map((data, key1) => {  
                                return (<View key={key1}>       
                                   
-                                        <Col onPress={()=>{ this.selectTimeSlot(data.id, data.subscriptionFees) }} style={[styles.btn,{}]}>
+                                        <Col onPress={()=>{ this.selectTimeSlot(data.id, data.subscriptionFees, data.time) }} style={[styles.btn,{}]}>
                                             <Icon style={styles.img} name={this.state.selectedTimeSlot == data.id ? 'radio-button-checked' : 'radio-button-unchecked' } type='MaterialIcons' />
                                             <Text style={[styles.bodyText, styles.bodyGreen]}>{data.time} </Text>
                                         </Col>
