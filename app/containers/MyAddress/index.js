@@ -363,7 +363,7 @@ class MyAddress extends React.Component {
                 </View>
 
                 <View style={[styles.reasonView,{}]} >
-                  <Label style={[styles.labelText, {paddingLeft:13}]}  >Building Type</Label>
+                  <Label style={[styles.labelText, {paddingLeft:13}]}  >Property Type </Label>
                   <Item style={{ borderBottomWidth: 1, justifyContent:'flex-start',alignItems:'flex-start', borderColor: Colors.primary }} >
 
                     <Picker
@@ -419,7 +419,7 @@ class MyAddress extends React.Component {
                  
 
                 <Item style={styles.InputView} stackedLabel>
-                 <Label style={styles.labelText}>Enter building name</Label>
+                 <Label style={styles.labelText}>Enter Building Name/Street Name</Label>
                   <Input placeholderTextColor="#B9B9B9" placeholder="" style={styles.inputText}
                   value={this.state.buildingName} 
                   onChangeText={(value) => {this.setState({buildingName:value});} }  />

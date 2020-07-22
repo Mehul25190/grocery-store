@@ -58,9 +58,9 @@ class DeliveryAddress extends React.Component {
           </Body>
 
           <Right>
-            <TouchableOpacity onPress={() => this.props.redirectToDeliveryAddress()}>
+            <TouchableOpacity style={{padding:5}} onPress={() => this.props.redirectToDeliveryAddress()}>
               <Icon name="edit" type="MaterialIcons"
-                style={[appStyles.IconStyle, styles.addressIcon]}
+                style={[appStyles.IconStyle, styles.addressIcon,{fontSize:23}]}
               />
             </TouchableOpacity>
           </Right>

@@ -24,10 +24,41 @@ export default {
     marginLeft:Layout.indent
      
   },
+   Modeltext: {
+     color:'#000',
+     fontSize:14,
+     fontFamily:'Font-Regular',
+     textAlign:'center',
+     paddingHorizontal:5
+   },
+   closeOk:{
+    marginTop:10,
+    paddingVertical:10,
+    backgroundColor:Colors.primary,
+    justifyContent:'center',
+    alignItems:'center'
+   },
+   closeIcon:{
+  position:'absolute',
+  top:15,
+  right:15,
+    justifyContent:'flex-end',
+    alignItems:'flex-end'
+   },
   pendingDays:{
     fontSize:11,
     color:Colors.primary,
-    lineHeight:20,
+    lineHeight:22,
+    fontFamily:'Font-Medium',
+  },
+  smileIcon:{
+    color:'#CCCC00',
+    justifyContent:'center',
+    alignItems:'center',
+    width:50,
+    fontSize:30,
+    padding:10,
+    alignSelf:'center'
   },
   infoCircle:{
     color:Colors.primary,
@@ -100,14 +131,26 @@ FirstItem:{
   },
   shopSubTitle:{
     marginTop:5,
-    marginLeft:Layout.indent,
+    marginLeft:Layout.indent-5,
     marginRight:Layout.indent,
     paddingBottom:0,
     
   },
   shopSubTitleText:{
-    fontSize:14,
-    color:'#000'
+    fontSize:11,
+    fontFamily:'Font-Medium',
+    color:'blue',
+    // borderWidth:1,
+    // borderColor:'blue',
+    // borderRadius:25,
+    lineHeight:22,
+
+   
+    paddingBottom:0,
+    justifyContent:'center',
+    alignSelf:'center',
+    alignItems:'center',
+    marginBottom:0
   },
   itemStyle:{
     // marginTop: 5

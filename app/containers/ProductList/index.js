@@ -402,9 +402,7 @@ class ProductList extends React.Component {
                               this.buyOncePressHnadler(item.id, 1)
                             }
                           >
-                           
-                         
-                            <Image source={imgs.addPlus} style={styles.buyButton} />
+                           <Image source={imgs.addPlus} style={styles.buyButton} />
                           </TouchableOpacity>
                         )}
                         {this.state.buyOndeSelected.indexOf(item.id) != -1 ?

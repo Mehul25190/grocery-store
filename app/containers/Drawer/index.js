@@ -75,8 +75,8 @@ class Drawer extends React.Component {
         </Header>
         {this.props.user != null ?
           (<Card style={[appStyles.addBox,{height:'auto',}]}>
-          <ListItem avatar noBorder style={{ marginLeft: 10,}}>
-            <Left style={{ flex: 0,  marginLeft: 0,   paddingLeft:0,  width: 40}}>
+          <ListItem avatar noBorder style={{ marginLeft: 10, paddingBottom:2}}>
+            <Left style={{ flex: 0,  marginLeft: 0,   paddingLeft:0,  }}>
               <Svgicon name="user-circle" 
                type="FontAwesome"
                 color={Colors.primary} 
@@ -84,21 +84,26 @@ class Drawer extends React.Component {
                 IconStyle={appStyles.userIconStyle}
                 />
             </Left>
-            <Body>
+            <Body style={{justifyContent:'center',alignItems:'center',paddingBottom:10,marginLeft:0}}>
             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
-              <Text style={appStyles.profileName} >
+            {this.props.user.user.firstName!="" && (
+               <Text style={appStyles.profileName} >
                 {(this.props.user.user.firstName!="") ? this.props.user.user.firstName : ""} 
                 {(this.props.user.user.lastName !="") ? this.props.user.user.lastName : ""}</Text>
+              )
+
+            }
+             
               <Text style={appStyles.profileEmail}>{(this.props.user.user.email!="") ? this.props.user.user.email :"" }</Text>
               <Text style={appStyles.profileEmail}>{(this.props.user.user.mobile!="") ? this.props.user.user.mobile : ""}</Text>
               </TouchableOpacity>
             </Body>
 
             <Right>
-             <TouchableOpacity onPress= {()=> this.props.navigation.navigate(Screens.Profile.route)}>
+             <TouchableOpacity style={{padding:5}} onPress= {()=> this.props.navigation.navigate(Screens.Profile.route)}>
               <Svgicon name="edit" type="MaterialIcons"
                color={Colors.primary} 
-                IconStyle={appStyles.IconStyle}
+               IconStyle={[appStyles.IconStyle,{fontSize:23}]}
                 />
             </TouchableOpacity>
             </Right>
@@ -124,10 +129,10 @@ class Drawer extends React.Component {
             </Body>
 
             <Right>
-              <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
+              <TouchableOpacity style={{padding:5}} onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
               <Svgicon name="edit" type="MaterialIcons"
                 color={Colors.primary} 
-                IconStyle={appStyles.IconStyle}
+                IconStyle={[appStyles.IconStyle,{fontSize:23}]}
                 />
             </TouchableOpacity>
             </Right>
