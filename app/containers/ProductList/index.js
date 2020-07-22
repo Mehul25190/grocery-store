@@ -156,7 +156,7 @@ class ProductList extends React.Component {
     //catId = this.props.navigation.getParam("para_categoryId") ? this.props.navigation.getParam("para_categoryId") : this.state.selectSubCat;
     this.setState({flalistIndex: index})
     this.props
-      .productItemList(catId, subCatId)
+      .productItemList(catId, subCatId, this.props.user.user.id)
       .then((res) => {
         console.log('sucess return', res.data.itemList);
         if (res.status == "success") {
@@ -394,18 +394,8 @@ class ProductList extends React.Component {
                         ) : (
                           <View style={{ padding: 0, margin: 0 }}></View>
                         )}
+                        {/*<Text>{this.state.buyOndeSelected.indexOf(item.id)} {item.cartQty}</Text>*/}
                          {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
-                          null : 
-                          (
-                          <TouchableOpacity
-                            onPress={() =>
-                              this.buyOncePressHnadler(item.id, 1)
-                            }
-                          >
-                           <Image source={imgs.addPlus} style={styles.buyButton} />
-                          </TouchableOpacity>
-                        )}
-                        {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
                           (<NumericInput
                             initValue={1}
                             //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
@@ -426,8 +416,16 @@ class ProductList extends React.Component {
                             iconStyle={{ color: "#F8BB1B", fontSize: 14 }}
                             rightButtonBackgroundColor="#fff"
                             leftButtonBackgroundColor="#fff"
-                          />)
-                          : null }
+                          />) : 
+                          (
+                          <TouchableOpacity
+                            onPress={() =>
+                              this.buyOncePressHnadler(item.id, 1)
+                            }
+                          >
+                           <Image source={imgs.addPlus} style={styles.buyButton} />
+                          </TouchableOpacity>
+                        )}
                       </View>
                     </Right>
                   </ListItem>
@@ -453,8 +451,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(userActions.logoutUser()),
-    productItemList: (categoryId, subCategoryId) =>
-      dispatch(userActions.showProductList({ subCategoryId: subCategoryId, categoryId: categoryId })),
+    productItemList: (categoryId, subCategoryId, userId) =>
+      dispatch(userActions.showProductList({ subCategoryId: subCategoryId, categoryId: categoryId, userId: userId })),
     fetchSubCategory: (categoryId) =>
       dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
     searchItem: (searchString) =>

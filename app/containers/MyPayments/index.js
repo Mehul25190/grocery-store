@@ -110,7 +110,7 @@ class MyPayments extends React.Component {
   render(){
     const {navigation, user, totalAmount, deliveryCharges, actualTotal, viewCartDetail, walletAmount} = this.props;
     const getTab = navigation.getParam('item')
-
+    const applyDeliveryCharge = navigation.getParam('applyDeliveryCharge')
     
     return (
       <Container style={appStyles.container}>
@@ -142,7 +142,7 @@ class MyPayments extends React.Component {
               </Row>
                <Row>
                 <Col style={{}}>
-                  <Text style={styles.testStyles}>Delivery Charges/Subscription Fees</Text>
+                    <Text style={styles.testStyles}>{applyDeliveryCharge ? 'Delivery Charges' : 'Subscription Fees' }</Text>
                 </Col>
                 <Col style={{flex:0, width:78, justifyContent:'center',alignItems:'center'}}>
                  <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> {deliveryCharges.toFixed(2)}</Text>

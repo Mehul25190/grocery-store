@@ -50,6 +50,7 @@ class Checkout extends React.Component {
       itemData: [],
       selectedDate: '',
       selectedTimeSlot: '',
+      applyDeliveryCharge: false,
 
     };
 
@@ -122,7 +123,7 @@ class Checkout extends React.Component {
       showToast("Please select time slot", "danger");
       return;
     }
-    this.props.navigation.navigate('MyPayments', { timeslot:this.state.selectedTimeSlot, dateslot:this.state.selectedDate });
+    this.props.navigation.navigate('MyPayments', { timeslot:this.state.selectedTimeSlot, dateslot:this.state.selectedDate, applyDeliveryCharge: this.state.applyDeliveryCharge });
   };
 
   toggleSwitch1= (value) =>{
@@ -177,9 +178,11 @@ class Checkout extends React.Component {
         }else{
           this.props.freeDeliveryCharge();
         }
+        this.setState({applyDeliveryCharge: false})
       }else{
         this.props.fetchDeliveryCharges(this.props.totalAmount).then(res => {
           this.openModal(time);
+          this.setState({applyDeliveryCharge: true})
         });
       }
     }
