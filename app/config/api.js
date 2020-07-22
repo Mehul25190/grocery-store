@@ -27,6 +27,7 @@ export default {
   //getUserOrderList:'order/fetchOrderList',
   getUserOrderList:'order/fetchMyOrders',
   cancelOrder:'order/cancelOrder',
+  returnOrder:'order/returnOrderItem',
   getOrderDetailById:'order/fetchOrderDetailsById',
   fetchSubscriptionDtlsById: 'order/fetchSubscriptionDtlsById',
   viewCart: 'userCart/viewCart',

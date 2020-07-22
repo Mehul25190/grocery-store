@@ -204,9 +204,9 @@ class OrderDetail extends React.Component {
           </TouchableOpacity>
         </Card>
          <Card style={[appStyles.addBox,styles.trackBox,{marginTop:-9,borderTopWidth:0,zIndex:-1}]}>
-          <TouchableOpacity onPress={()=> this.onReturnDetailPage(this.state.orderData)}>
+          <TouchableOpacity onPress={()=> this.onReturnDetailPage('OrderReturnDetail')}>
             <Text style={styles.detailTitle2}>Return Order</Text>
-
+           
           </TouchableOpacity>
         </Card>
            

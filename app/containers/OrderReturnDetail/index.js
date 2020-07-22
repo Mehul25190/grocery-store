@@ -19,6 +19,7 @@ import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import { ReturnReason } from '../data/data';
+import { showToast } from '../../utils/common';
 
 
 class OrderReturnDetail extends React.Component {
@@ -29,7 +30,8 @@ class OrderReturnDetail extends React.Component {
       //default value of the date time
       date: '',
       time: '',
-      selected: 0
+      selected: 0,
+      returnItems:[]
     };
 
   }
@@ -66,13 +68,63 @@ class OrderReturnDetail extends React.Component {
       switch1Value: value
     });
   }
-  /* onPressSubmit = (item) => {
-      this.props.navigation.navigate('Confirmation', { item });
-    }; */
+
+  makeObject = (orderItemId,returnReason,returnQty) => {
+    alert("Pending");
+    this.state.returnItems = [
+      {
+      "orderItemId": orderItemId,
+      "returnReason": returnReason,
+      "returnQty": returnQty,
+      "image":''
+    }
+  ];
+  }
+   onPressSubmit = (item) => {
+     
+     //start
+      //to make demo object & call api
+      this.state.returnItems = [
+        {
+        "orderItemId": 1,
+        "returnReason": "Quality",
+        "returnQty": 1,
+        "image":''
+      },
+      {
+        "orderItemId": 1,
+        "returnReason": "Quality",
+        "returnQty": 1,
+        "image":''
+      },
+    ];
+     
+
+        //return order api call
+        this.props.saveReturnOrder(JSON.stringify(this.state.returnItems)).then (res =>{
+          
+         // console.log(res);
+          if(res.status == "success"){
+              // showToast("Save Successfully","success");
+              showToast(res.message,"success");
+              this.props.navigation.navigate('Confirmation', { item });
+          } else {
+                console.log("something wrong with order return process");
+                showToast("Something wrong with Server response","danger");
+          }
+          
+        })
+        .catch(error => {
+            console.log('Error messages returned from server', error);
+            showToast("Error messages returned from server","danger");
+        });
+     //end
+    };
 
 
   renderItems = ({ item, index }) => (
-<View>
+
+    <View>
 
     <ListItem icon style={[styles.ListItems,{borderColor:Colors.primary,borderTopWidth:1,paddingTop:15 }]} noBorder>
       <Left>
@@ -81,7 +133,7 @@ class OrderReturnDetail extends React.Component {
       <Body style={styles.bodyText}>
             <Text  numberOfLines={2}  style={styles.proTitle}>{item.itemName} </Text>
              <Text style={[styles.proTitle, { fontFamily: 'Font-Medium' }]}>
-             <Text style={{ fontFamily: 'Roboto', color: '#000' }}>{'\u20B9'}</Text> {item.itemPrice} </Text>   
+             <Text style={{ fontFamily: 'Roboto', color: '#000' }}>{'\u20B9'}</Text> {item.itemPrice} (Qty:{item.quantity})</Text>   
       </Body>
      
 
@@ -91,11 +143,12 @@ class OrderReturnDetail extends React.Component {
         </View>
         <View style={[styles.RigView, styles.qtyCol]}>
           <Text style={styles.qtyText}>Qty</Text>
-          <Input keyboardType='numeric' style={styles.qtyInput} value={item.quantity}  maxLength={2}  />
+          <Input keyboardType='numeric' style={styles.qtyInput} value={item.quantity}  maxLength={2}  /> 
+          
         </View>
 
         <Button style={styles.RigView} style={styles.returnBtn}>
-          <TouchableOpacity >
+          <TouchableOpacity onPress={() => this.makeObject()} >
             <Text style={styles.btnText}> Return </Text>
           </TouchableOpacity>
         </Button>
@@ -129,12 +182,8 @@ class OrderReturnDetail extends React.Component {
                   <Image source={imgs.DownArrow} style={styles.DownArrow} />
                 </Item>
               </View>
-            </View>
-
-
-
-   
-  </View>
+            </View>   
+    </View>
   );
 
   render() {
@@ -207,7 +256,7 @@ class OrderReturnDetail extends React.Component {
         </ScrollView>
         <View style={styles.doneBtnArea}>
           <Button priamary full style={styles.doneBtn}>
-            <TouchableOpacity onPress={() => this.onPressSubmit()}>
+            <TouchableOpacity onPress={() => this.onPressSubmit('OrderReturnDetail')}>
               <Text style={styles.btnTextDone}>Done</Text>
             </TouchableOpacity>
           </Button>
@@ -233,6 +282,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(userActions.logoutUser()),
+    saveReturnOrder: (returnItems) => dispatch(userActions.saveReturnOrder(returnItems)),
   };
 };
 

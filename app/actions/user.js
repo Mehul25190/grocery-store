@@ -322,6 +322,25 @@ export const cancelOrder = payloads => dispatch => {
 }
 
 /**
+ * return order
+ * @param {} payloads 
+ */
+export const saveReturnOrder = payloads => dispatch => {
+  //console.log('payloads', payloads);
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.returnOrder,  {payloads: payloads}).then(res => {
+   // console.log("get del add"+res.data);
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        //console.log("get del add"+res.data);
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+/**
  * getOrderDetailById
  * @param {*} payloads 
  */

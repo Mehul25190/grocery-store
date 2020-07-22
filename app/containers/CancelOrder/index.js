@@ -112,7 +112,7 @@ class CancelOrder extends React.Component {
             </ListItem>
            <TouchableOpacity>
               <Button style={[styles.cancelBtn,{marginTop:30,marginLeft:Layout.indent,marginRight:Layout.indent}]}
-               primary full  onPress={()=>this.onPressSubmit('CancelOrder')}>
+               primary full  onPress={()=>this.onPressSubmit('OrderReturnDetail')}>
                
                 <Text style={styles.cancelBtnTxt}>Cancel Order </Text>
                 
