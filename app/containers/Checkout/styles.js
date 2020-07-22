@@ -9,7 +9,9 @@ export default {
  Modeltext: {
      color:'#000',
      fontSize:14,
-     fontFamily:'Font-Medium'
+     fontFamily:'Font-Regular',
+       textAlign:'center',
+     paddingHorizontal:5
    },
    closeOk:{
     marginTop:10,
@@ -25,6 +27,15 @@ export default {
     justifyContent:'flex-end',
     alignItems:'flex-end'
    },
+     smileIcon:{
+    color:'#CCCC00',
+    justifyContent:'center',
+    alignItems:'center',
+    width:50,
+    fontSize:30,
+    padding:10,
+    alignSelf:'center'
+  },
   bodyGreen:{
    color:Colors.primary,
   },

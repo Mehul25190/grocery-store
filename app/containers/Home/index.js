@@ -18,6 +18,7 @@ import {
 import { showToast } from '../../utils/common';
 import url from '../../config/api';
 import {ItemList,entries} from '../data/data';
+import Modal from 'react-native-modal';
 //import MasonryList from "react-native-masonry-list";
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
@@ -35,6 +36,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isModalVisible: false,
       categoryData: [],  
       text: '',
       onRefreshLoading:false,    
@@ -230,6 +232,12 @@ class Home extends React.Component {
     this.getOfferList;
   }
 
+   openFreeDeliveryPopup(){
+    
+    this.setState({
+       isModalVisible: !this.state.isModalVisible
+     })
+  }
   render(){
     //console.log("first render");
     //console.log(this.state.categoryData);
@@ -272,7 +280,32 @@ class Home extends React.Component {
          
        </Header>
          
-            
+              <Modal 
+              isVisible={this.state.isModalVisible}
+              coverScreen={false}
+              backdropColor={'#fff'}
+              backdropOpacity={0.6}
+              animationIn={'slideInDown'}
+              style={{flex:1}}
+              >
+                  <View style={{backgroundColor:'#fff',padding:10,borderWidth:1, borderColor:Colors.gray, borderRadius:5}}>
+                    <TouchableOpacity style={styles.closeIcon} onPress = {() => this.setState({isModalVisible:false}) }>
+                      <Icon type="AntDesign" name="closecircleo" />
+                    </TouchableOpacity>
+                    <Text style = {[styles.Modeltext,{fontSize:16,alignSelf:'center'}]}>Valuable Customer..!</Text>
+                    
+                    <Icon type="SimpleLineIcons" name="emotsmile"  style={styles.smileIcon} />
+                    <Text  style = {styles.Modeltext}>
+                    Seems your free subscription period is over, 
+                    Now have your morning deliveries free by paying a small subscription amount <Text style={appStyles.currency}>{'\u20B9'}</Text> 123.</Text>
+                    <Text style={styles.Modeltext}>You can still enjoy our evening slots with nominal delviery charge</Text>
+                    <TouchableOpacity style={styles.closeOk} onPress = {() => this.setState({isModalVisible:false}) }>
+                    <Text style={{color:'#fff',fontSize:16,fontFamily:'Font-Medium'}}>OK</Text>
+                    </TouchableOpacity>
+                  
+                  </View>
+                  
+              </Modal> 
           <Content enableOnAndroid style={appStyles.content} 
           
           refreshControl={
@@ -300,15 +333,15 @@ class Home extends React.Component {
                 </Card>
           : null }
 
-          <View style={styles.ItemLayout}>
+        <View style={styles.ItemLayout}>
             <Grid style={styles.shopSubTitle}>
-            <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
-              <Text style={styles.shopSubTitleText}>My Next Order</Text>
+              <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
+                <Text style={styles.shopSubTitleText}>My Next Order</Text>
               </TouchableOpacity>  
-              <View style={{textAlign:'right',paddingLeft:10}}>
-                  <Text style={styles.pendingDays}> You have 20 days pending for free delivery</Text>
+              <View style={{textAlign:'right',paddingLeft:10,}}>
+                  <Text style={styles.pendingDays}>Your free delivery offer ends in 20 days..!</Text>
               </View>
-                <TouchableOpacity style={{textAlign:'right'}}>
+                <TouchableOpacity style={{textAlign:'right'}}  onPress={()=>{ this.openFreeDeliveryPopup() }} >
                   <Icon type="AntDesign" name="exclamationcircle" style={styles.infoCircle} />
               </TouchableOpacity>
             </Grid>

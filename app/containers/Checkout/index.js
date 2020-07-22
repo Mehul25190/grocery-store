@@ -228,12 +228,12 @@ class Checkout extends React.Component {
                     <TouchableOpacity style={styles.closeIcon} onPress = {() => this.setState({isModalVisible:false}) }>
                       <Icon type="AntDesign" name="closecircleo" />
                     </TouchableOpacity>
-                    <Text style = {[styles.Modeltext,{fontSize:16}]}>Valuable Customer..!</Text>
-                    <Text></Text>
+                    <Text style = {[styles.Modeltext,{fontSize:16,alignSelf:'center'}]}>Valuable Customer..!</Text>
+                       <Icon type="SimpleLineIcons" name="emotsmile"  style={styles.smileIcon} />
                     <Text  style = {styles.Modeltext}>
                     Seems your free subscription period is over, 
-                    Now have your morning deliveries free by paying a small subscription amount <Text style={appStyles.currency}>{'\u20B9'}</Text> 123.
-                    You can still enjoy our evening slots with nominal delviery charge</Text>
+                    Now have your morning deliveries free by paying a small subscription amount <Text style={appStyles.currency}>{'\u20B9'}</Text> 123.</Text>
+                    <Text style={styles.Modeltext}>You can still enjoy our evening slots with nominal delviery charge</Text>
                     <TouchableOpacity style={styles.closeOk} onPress = {() => this.setState({isModalVisible:false}) }>
                     <Text style={{color:'#fff',fontSize:16,fontFamily:'Font-Medium'}}>OK</Text>
                     </TouchableOpacity>
@@ -254,8 +254,8 @@ class Checkout extends React.Component {
                     <TouchableOpacity style={styles.closeIcon} onPress = {() => this.setState({isEveningModalVisible:false}) }>
                       <Icon type="AntDesign" name="closecircleo" />
                     </TouchableOpacity>
-                    <Text style = {[styles.Modeltext,{fontSize:16}]}>Valuable Customer..!</Text>
-                    <Text></Text>
+                    <Text style = {[styles.Modeltext,{fontSize:16,alignSelf:'center'}]}>Valuable Customer..!</Text>
+                     <Icon type="SimpleLineIcons" name="emotsmile" style={styles.smileIcon} />
                     <Text  style = {styles.Modeltext}>
                     Seems your free delivery period is over , 
                     You can still enjoy our evening slots with nominal delviery charge"
