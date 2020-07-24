@@ -20,7 +20,8 @@ checkOutBtn:{
   marginRight:Layout.indent,
     paddingLeft:Layout.indent,
   paddingRight:Layout.indent,
-  marginTop:30
+  marginTop:30,
+  marginBottom:10
 
 },
 thankText:{
@@ -51,10 +52,11 @@ btnText:{
 
 },
  checkOutText:{
-  fontFamily:'Font-Bold',
+  fontFamily:'Font-Medium',
   fontSize:20,
   lineHeight:28,
-  textTransform:'capitalize'
+  textTransform:'capitalize',
+  color:Colors.primary
  }
 
              

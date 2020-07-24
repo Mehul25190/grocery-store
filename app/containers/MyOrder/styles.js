@@ -2,8 +2,8 @@ import {Colors,Layout} from '../../constants/';
 export default {
   IconsRightT:{
     fontSize:16,
-    color:'#fff',
-    borderColor:'#fff',
+    color:Colors.primary,
+    borderColor:Colors.primary,
     width:25,
     alignItems:'center',
     height:25,

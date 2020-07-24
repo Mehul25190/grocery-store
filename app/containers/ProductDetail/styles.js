@@ -2,7 +2,8 @@ import {Colors,Layout} from '../../constants/';
 export default {
   
    okayBtnArea:{
-  marginTop:5,
+  marginTop:3,
+  marginBottom:5,
   paddingTop:20
   },
   doneBtn:{
@@ -13,8 +14,9 @@ export default {
     borderRadius:25
   },
   btnTextDone:{
-  fontFamily:'Font-Bold',
-  fontSize:20
+  fontFamily:'Font-Medium',
+  fontSize:20,
+  color:Colors.primary
   },
   backgroundImage: {
     height: "100%",
@@ -144,10 +146,10 @@ reasonView:{
  },
  
 payTextNow:{
-color:Colors.white,
-fontFamily:'Font-Bold',
+color:Colors.primary,
+fontFamily:'Font-Medium',
 textTransform:'capitalize',
-fontSize:22
+fontSize:20
 },
 
 paynowBtn:{

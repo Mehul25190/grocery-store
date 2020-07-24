@@ -24,8 +24,6 @@ import {orderList} from '../data/data';
 import NumericInput from 'react-native-numeric-input';
 import { showToast } from '../../utils/common';
 
-
-
 class Checkout extends React.Component {
 
   constructor(props) {

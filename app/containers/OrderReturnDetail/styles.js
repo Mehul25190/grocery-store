@@ -200,7 +200,8 @@ alignItems:'flex-end'
     borderRadius:25
   },
   btnTextDone:{
-  fontFamily:'Font-Bold',
-  fontSize:20
+  fontFamily:'Font-Medium',
+  fontSize:20,
+  color:Colors.primary
   }
 };

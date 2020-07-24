@@ -39,7 +39,7 @@ export default StyleSheet.create({
     fontFamily: 'Font-Regular',
   },
   btnSecontary:{
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.secondary2,
     fontFamily: 'Font-Regular',
     borderRadius:20,
     marginLeft: Layout.indent,
@@ -51,7 +51,7 @@ export default StyleSheet.create({
   },
   redButton:{
    fontSize:22,
-    
+    color:Colors.primary,
   fontFamily:'Font-Bold',
   textTransform:'capitalize'
     
@@ -251,7 +251,13 @@ export default StyleSheet.create({
   itemInput:{
    height:'auto',
     backgroundColor:'#f8f8f8',
-    borderRadius:15
+    borderRadius:20,
+    borderLeftWidth:1,
+    borderRightWidth:1,
+    borderTopWidth:1,
+     borderBottomWidth:1,
+    borderColor:'#DADADA',
+      
   },
   textbox:{
     marginTop:3,
@@ -261,7 +267,8 @@ export default StyleSheet.create({
     paddingLeft:Layout.indent,
     paddingRight:Layout.indent,
     fontFamily: 'Font-Regular',
-    fontSize:16
+    fontSize:16,
+
   },
   inputError:{
     color: Colors.red,
@@ -275,7 +282,8 @@ export default StyleSheet.create({
    
   },
   menuBar:{
-   fontSize:32
+   fontSize:32,
+   color:Colors.primary
   },
   searchInput:{
     color:'#AAAAAA',
@@ -286,7 +294,7 @@ export default StyleSheet.create({
   },
   headerTitle:{
 fontSize:18,
-color:Colors.white,
+color:Colors.primary,
 fontFamily:'Font-Medium'
   },
   headerLeft: {
@@ -313,7 +321,7 @@ fontFamily:'Font-Medium'
    width:40,
  },
   IconsRight:{
-    color:Colors.white,
+    color:Colors.primary,
     
   },
   cartIconArea:{
@@ -329,15 +337,16 @@ fontFamily:'Font-Medium'
   userIcon:{
     fontSize:20,
     paddingLeft:5,
-    paddingTop:3
+    paddingTop:3,
+    color:Colors.primary
   },
   cartIcon:{
    paddingTop:8,
    fontSize:24,
-   color:Colors.white
+   color:Colors.primary
   },
   cartCount:{
-   backgroundColor:Colors.secondary,
+   backgroundColor:Colors.primary,
    borderRadius:50,
    paddingLeft:3,
    paddingRight:3,
@@ -349,7 +358,8 @@ fontFamily:'Font-Medium'
    padding:1,
    margin:1,
    textAlign:'center',
-   margin:'auto'
+   margin:'auto',
+   color:Colors.secondary
   },
   headerRight: {
     
@@ -370,7 +380,7 @@ fontFamily:'Font-Medium'
     textAlign:'center'
   },
   headerStyle:{
-    backgroundColor:Colors.primary,
+    backgroundColor:Colors.secondary,
     height:70,
     borderBottomLeftRadius:8,
     borderBottomRightRadius:8,

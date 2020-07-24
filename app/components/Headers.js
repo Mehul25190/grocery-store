@@ -135,7 +135,7 @@ class Headers extends React.Component {
                 type="Entypo"
                 style={{
                   position: "absolute",
-                  color: "#D2EAD2",
+                  color: Colors.primary,
                   top: -20,
                   right: 50,
                 }}

@@ -44,7 +44,8 @@ export default {
   },
   signFormBox:{
     marginBottom:3,
-    paddingBottom:3
+    paddingBottom:3,
+    marginRight:Layout.indent
   },
   loginBoxEmail:{
     
@@ -69,7 +70,7 @@ export default {
   },
   linkTextEmail:{
     textTransform:'capitalize',
-    color: 'grey',
+    color:Colors.primary2,
     fontSize:14,
     lineHeight:20,
     paddingVertacal:10,
@@ -82,21 +83,23 @@ export default {
   },
   linkTextLogin:{
   textTransform:'capitalize',
-    color: Colors.primary,
+    color: Colors.primary2,
     fontSize:16,
     fontFamily: 'Font-Regular',
     paddingBottom:20,
-    paddingLeft:Layout.indent
+    paddingLeft:Layout.indent+5,
+    paddingVertical:10
   },
   linkTextSignup:{
     textTransform:'capitalize',
-    color: Colors.primary,
+    color: Colors.primary2,
     fontSize:14,
     lineHeight:20,
     
     fontFamily: 'Font-Regular',
-    paddingVertical:5,
-    paddingLeft:5
+  
+    paddingLeft:5,
+      paddingVertical:10
   },
   loginForm:{
     marginTop: Layout.doubleIndent,
@@ -117,9 +120,12 @@ export default {
   },
   SignInbtn:{
     fontSize:22,
-    fontWeight:'bold',
-    textTransform:'capitalize'
-  },
+    lineHeight:33,
+    textTransform:'capitalize',
+    color:Colors.primary2,
+    fontFamily:'Font-Regular'
+   },
+     
   loginWith:{
     marginLeft:Layout.indent,
     marginRight:Layout.indent,
@@ -129,10 +135,10 @@ export default {
 
   },
   loginWithText:{
-    color:Colors.secondary,
+    color:Colors.primary2,
     padding:5,
     fontSize:20,
-    fontWeight:'bold',
+    fontFamily:'Font-Medium',
     textAlign:'center'
   },
   hairlineleft: {
@@ -160,7 +166,7 @@ orText:{
   padding:10,
   backgroundColor:'#fff',
   color:'#787878',
-  fontSize:18,
+  fontSize:22,
   fontWeight:'bold'
 },
   
