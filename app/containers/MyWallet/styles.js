@@ -17,9 +17,9 @@ export default {
     alignSelf:'flex-start'
   },
  redButton:{
-    fontSize:22,
-    
-    fontFamily:'Font-Bold',
+    fontSize:20,
+    color:Colors.primary,
+    fontFamily:'Font-Medium',
     textTransform:'capitalize'
  },
  walletBtn:{
