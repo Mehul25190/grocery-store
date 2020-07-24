@@ -24,11 +24,11 @@
       "app/assets/*"
     ],
     "android": {
-      "package": "com.pushpanathan.pushbase"
+      "package": "com.myallaadin"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.pushpanathan.pushbase"
+      "bundleIdentifier": "com.myallaadin"
     }
   }
 }
