@@ -94,7 +94,7 @@ class SignInEmail extends React.Component {
                         <Button transparent full  
                          style={[{justifyContent:'flex-start'}]} >
                           <TouchableOpacity  onPress={() => this.onSignupButtonPressHandler()}>
-                          <Text style={[styles.linkTextSignup,appStyles.textRight]} >Signup</Text>
+                          <Text style={[styles.linkTextSignup,appStyles.textRight]} ></Text>
                           </TouchableOpacity>
                         </Button>
                       </Col>
@@ -132,7 +132,7 @@ class SignInEmail extends React.Component {
                    
                     >
                     <TouchableOpacity  onPress={() =>  this.props.pressSigninMob()}>
-                    <Text style={styles.loginWithText}>Login with your Number</Text>
+                    <Text style={styles.loginWithText}>Login with OTP</Text>
                     </TouchableOpacity>
                  </Animatable.View>
               </View>          

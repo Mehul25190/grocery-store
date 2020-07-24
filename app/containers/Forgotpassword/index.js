@@ -60,10 +60,10 @@ class Forgotpassword extends React.Component {
         <Content bounces={false} enableOnAndroid>
 
           <ImageBackground 
-              source={imgs.greenBg} 
+              source={imgs.signupBg} 
               style={ styles.backGroundstyleEmail}>
               <View style={appStyles.BackIconTop}>
-                  <LoginBackIcon  props={this.props}  /> 
+                  <LoginBackIcon  arrowColor={Colors.primary2} props={this.props}  /> 
               </View>
               <View style={[styles.loginBox, styles.forgotBox]}>
                   <Animatable.View 

@@ -34,12 +34,14 @@ TotalTitle:{
 },
 cancelBtn:{
 	backgroundColor:Colors.secondary,
-	borderRadius:25
+	borderRadius:25,
+	marginBottom:10
 },
 cancelBtnTxt:{
-fontFamily:'Font-Bold',
+fontFamily:'Font-Medium',
 textTransform:'capitalize',
 fontSize:20,
+color:Colors.primary
 
 }
 };

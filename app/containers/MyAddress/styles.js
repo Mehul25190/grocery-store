@@ -166,7 +166,8 @@ addAddressStyle: {
    saveBtnText:{
    	fontFamily:'Font-Medium',
    	textTransform:'capitalize',
-   	fontSize:18
+   	fontSize:18,
+    color:Colors.primary
    },
    inputText:{
    	fontFamily:'Font-Medium',

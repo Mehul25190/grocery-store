@@ -479,7 +479,8 @@ addAddressStyle: {
   marginRight:Layout.indent,
     paddingLeft:Layout.indent,
   paddingRight:Layout.indent,
-  marginTop:20
+  marginTop:20,
+  marginBottom:10
 
 },
 addmoneyArea:{
@@ -507,10 +508,11 @@ btnText:{
 
 },
  checkOutText:{
-  fontFamily:'Font-Bold',
+  fontFamily:'Font-Medium',
   fontSize:20,
   lineHeight:28,
-  textTransform:'capitalize'
+  textTransform:'capitalize',
+  color:Colors.primary
  }
 
              

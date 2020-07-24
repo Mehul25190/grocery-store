@@ -26,11 +26,13 @@ export default {
     marginLeft:Layout.indent,
     marginRight:Layout.indent,
     backgroundColor:Colors.secondary,
-    borderRadius:25
+    borderRadius:25,
+    marginBottom:10
   },
   btnTextDone:{
-  fontFamily:'Font-Bold',
-  fontSize:20
+  fontFamily:'Font-Medium',
+  fontSize:20,
+  color:Colors.primary
   },
   msgTitleTxt:{
   fontFamily:'Font-Medium',
