@@ -65,7 +65,7 @@ class Drawer extends React.Component {
                   <LoginBackIcon />
                 </Left>
                 <Body>
-                 <Title style={{fontSize:16, fontFamily:'Font-Medium'}}>My Account</Title>
+                 <Title style={{fontSize:16, color:Colors.primary, fontFamily:'Font-Medium'}}>My Account</Title>
                 </Body>
 
                 <Right>

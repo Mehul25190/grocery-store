@@ -11,7 +11,7 @@ const InputBox = ({
   meta:{ touched, error, warning },
   disabled = false,
   placeholder="",
-  placeholderTextColor= Colors.black,
+  placeholderTextColor= '#B7B7B7',
   keyboardType='default',
   autoCapitalize="none",
   maxLength=100,

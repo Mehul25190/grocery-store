@@ -220,12 +220,15 @@ class ProductDetail extends React.Component {
          
         
     
-        <View style={styles.pricePart}>
-          <Text style={styles.priceText}><Text style={appStyles.currency,{fontSize:23,color:Colors.gray}}> {'\u20B9'}</Text> {ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}</Text>
-        </View>
+       
 
         <Grid>
          <Row>
+         <Col style={{flex:0}}>
+          <View style={styles.pricePart}>
+          <Text style={styles.priceText}><Text style={appStyles.currency,{fontSize:23,color:Colors.gray}}> {'\u20B9'}</Text> {ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}</Text>
+        </View>
+         </Col>
             <Col>
                <View  style={styles.reasonView}>
                 <Item style={{borderBottomWidth:0}} >

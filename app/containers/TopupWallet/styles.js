@@ -213,10 +213,11 @@ payCashText:{
   
 },
   redButton:{
-fontFamily:'Font-Bold',
-fontSize:22,
+fontFamily:'Font-Medium',
+fontSize:20,
 textTransform:'capitalize',
-paddingTop:5
+paddingTop:5,
+color:Colors.primary
   },
 
  topPart:{

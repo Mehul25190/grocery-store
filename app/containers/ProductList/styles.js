@@ -39,7 +39,7 @@ export default {
   marginRight:0
   },
   titleBackground:{
-backgroundColor:Colors.secondary,
+backgroundColor:Colors.primary,
   paddingTop:3,
     paddingBottom:5,
     color:Colors.white,

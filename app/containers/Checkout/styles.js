@@ -6,12 +6,12 @@ export default {
     fontSize:14,
     lineHeight:28
   },
- Modeltext: {
-     color:'#000',
-     fontSize:14,
-     fontFamily:'Font-Regular',
-       textAlign:'center',
-     paddingHorizontal:5
+  Modeltext: {
+    color:'#000',
+    fontSize:14,
+    fontFamily:'Font-Regular',
+    textAlign:'center',
+    paddingHorizontal:5
    },
    closeOk:{
     marginTop:10,
@@ -49,13 +49,15 @@ export default {
   },
   txtDate:{
    textAlign:'center',
+   color:Colors.white
 
   },
   txtDay:{
     textAlign:'center',
+    color:Colors.white
   },
   dateCol:{
-    backgroundColor:'#adeeb8',
+    backgroundColor:'#2a656d87',
     paddingVertical:15,
     position:'relative'
   },
@@ -216,7 +218,8 @@ checkOutBtnArea:{
   marginRight:Layout.indent,
     paddingLeft:Layout.indent,
   paddingRight:Layout.indent,
-  marginTop:10
+  marginTop:10,
+  marginBottom:10
 
 },
 
@@ -226,9 +229,10 @@ checkOutBtnArea:{
   
  },
  checkOutText:{
-  fontFamily:'Font-Bold',
+  fontFamily:'Font-Medium',
   fontSize:20,
   lineHeight:28,
+  color:Colors.primary,
   textTransform:'capitalize'
  }
 

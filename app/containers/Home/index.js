@@ -249,7 +249,7 @@ class Home extends React.Component {
       
           <Left style={appStyles.headerLeft}>
             <Button transparent style={appStyles.menuBtn}  onPress={() => this.props.navigation.openDrawer()}>
-              <Icon style={appStyles.menuBar} size={30} color={Colors.white} name="menu" />
+              <Icon style={appStyles.menuBar} size={30} color={Colors.primary} name="menu" />
             </Button>
           </Left>
        

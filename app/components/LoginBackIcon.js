@@ -18,7 +18,7 @@ class LoginBackIcon extends React.Component {
       
       <Button transparent full style={appStyles.loginBack}  >
         <TouchableOpacity  onPress={() => this.props.goBack()}>
-          <Icon name="arrow-back" style={appStyles.loginBackIcon} />
+          <Icon name="arrow-back" style={[appStyles.loginBackIcon,{color:this.props.arrowColor}]} />
          </TouchableOpacity>
       </Button> 
           

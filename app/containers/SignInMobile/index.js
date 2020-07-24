@@ -101,7 +101,7 @@ class SignInMobile extends React.Component {
                      <Col style={{width:100,marginLeft:Layout.indent}}>
                         <Button transparent full     
                          style={[{justifyContent:'flex-start'}]} >
-                          <TouchableOpacity  onPress={() => this.onSignupButtonPressHandler()}>
+                          <TouchableOpacity style={{paddingVerticle:10}}  onPress={() => this.onSignupButtonPressHandler()}>
                           <Text style={[styles.linkTextSignup,appStyles.textRight]} >Signup</Text>
                           </TouchableOpacity>
                         </Button>
@@ -129,7 +129,7 @@ class SignInMobile extends React.Component {
                         primary
                         style={appStyles.btnSecontary}
                          onPress={() =>  this.props.pressSigninVerify()}  >
-                        <Text style={styles.SignInbtn}>Login </Text>
+                        <Text style={styles.SignInbtn}>Login<Text style={{  textTransform:'none',fontSize:22,  lineHeight:33, fontFamily:'Font-Regular',  color:'#00545F',}}> using OTP</Text> </Text>
                       </Button>
                        </TouchableOpacity>
                   }
@@ -140,12 +140,12 @@ class SignInMobile extends React.Component {
                     style={[styles.loginWith,styles.loginWithMob]} >
                   	<View style={styles.hairlineleft} />
                     	   	<View style={styles.loginButtonBelowText1} >		
-                    		<Text style={styles.orText}>Or</Text>
+                    		<Text style={styles.orText}>or</Text>
                    </View>
                  
                     <TouchableOpacity  onPress={() =>  this.props.pressSigninEmail()}>
 
-                    <Text style={styles.loginWithText}>Login with your email</Text>
+                    <Text style={styles.loginWithText}>Login with email</Text>
                     </TouchableOpacity>
                  </Animatable.View>
               </View>          

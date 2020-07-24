@@ -50,13 +50,11 @@ class OrderSuccess extends React.Component {
                  
              </Card>
              <View style={styles.thanksHeading}>
-                <Text style={styles.thankText}>Thank you for placing your order with us.  </Text>
+                <Text style={styles.thankText}>Thank you..!  </Text>
                 <Text style={styles.thankText}>Your order ID is {this.props.navigation.getParam('orderNumber')}.  </Text>
              </View>
              <View style={styles.thanksInfo}>
-                <Text style={styles.infoText}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                 Lorem Ipsum has been the industry's standard dummy.Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                  Lorem Ipsum has been the industry's standard dummy  </Text>
+                <Text style={styles.infoText}>Hope you have enjoyed shopping with us. </Text>
              </View>
           <TouchableOpacity style={styles.checkOutBtnArea} >
             <Button primary full style={styles.checkOutBtn} onPress={()=>this.props.navigation.navigate(Screens.Home.route)}>

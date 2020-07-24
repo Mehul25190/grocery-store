@@ -17,9 +17,10 @@ class ForgotForm extends React.Component {
     return (
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
       <View>
-        <Text style={styles.label}>Email</Text>
+      
       </View>
         <Field 
+        placeholder="Email"
           styles={{marginBottom:10}}
           name="email" 
           component={InputBox}

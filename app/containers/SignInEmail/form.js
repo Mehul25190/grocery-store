@@ -16,26 +16,19 @@ class SignInFormEmail extends React.Component {
     const { handleSubmit, onSubmit, language } = this.props;
     return (
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
-     
-        
-         <View>
-        <Text style={styles.label}>Email</Text>
-      </View>
-        <Field 
+             <Field 
          styles={{marginBottom:10}}
           name="email" 
           component={InputBox}
-          // placeholder='Enter your email'
+          placeholder='Email'
           keyboardType={'email-address'}
           validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
         />
-      <View >
-        <Text style={styles.label}>Password</Text>
-      </View>
+    <View style={{}}><Text></Text></View>
         <Field 
           name="password" 
           component={InputBox} 
-          // placeholder='Enter password'
+          placeholder='Password'
           secureTextEntry={true}
           validate={[required({msg: `${language.password} ${language.required}`})]}
         />
