@@ -130,12 +130,12 @@ class SubscribeDetail extends React.Component {
        
           </Col>
 
-         <Col style={styles.BtnCol}>
+         <Col style={[styles.BtnCol,{flex:0}]}>
          
             <Button   style={styles.pauseBtn}>
              <TouchableOpacity onPress={()=> this.playPauseSub(item)}>
              <Icon name={item.status == null || item.status != 'PAU' ? "pause-circle" : "play-circle"} type="FontAwesome5" style={styles.pauseIcon} />
-             <Text style={[styles.btnText,{color:Colors.primary}]}>  {item.status == null || item.status != 'PAU' ?  'Pause' : 'Play' } </Text>
+             <Text style={[styles.btnText,{color:Colors.primary}]}>  {item.status == null || item.status != 'PAU' ?  'Pause' : 'Resume' } </Text>
             </TouchableOpacity>
             </Button>
             

@@ -356,8 +356,8 @@ categoryStyles: {
     marginLeft:1
    },
    buyButton:{
-      backgroundColor:'#F8BB1B',
-      justifyContent: 'center',
+    //  backgroundColor:'#F8BB1B',
+       justifyContent: 'center',
       alignItems: 'center',
       textAlign:'center',
       alignSelf:'center',
@@ -367,20 +367,24 @@ categoryStyles: {
       height:25,
    },
    subscribeBtn:{
-   backgroundColor:Colors.secondary,
-   minWidth:90,
-    height:25,
-    marginTop:5,
-    marginBottom:5,
-    justifyContent: 'center',
+    borderWidth:0,
+    elevation:0,
+      color:Colors.primary,
+      backgroundColor:'transparent',
+      minWidth:90,
+      height:32,
+      marginTop:5,
+      marginBottom:10,
+      justifyContent: 'flex-end',
    },
 
    subText:{
-    textAlign:'center',
-    fontSize:10,
+    textAlign:'right',
+    fontSize:11,
     paddingLeft:0,
-    paddingRight:0,
-    color:'#fff'
+    paddingRight:15,
+    paddingBottom:3,
+   color:Colors.primary,
    },
 
    buyText:{

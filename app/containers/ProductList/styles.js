@@ -377,21 +377,22 @@ categoryStyles: {
    },
    subscribeBtn:{
     borderWidth:0,
-    elevation:1,
+    elevation:0,
       color:Colors.primary,
       backgroundColor:'transparent',
       minWidth:90,
-      height:25,
+      height:32,
       marginTop:5,
-      marginBottom:5,
-      justifyContent: 'center',
+      marginBottom:10,
+      justifyContent: 'flex-end',
    },
 
    subText:{
-    textAlign:'center',
+    textAlign:'right',
     fontSize:11,
     paddingLeft:0,
-    paddingRight:0,
+    paddingRight:15,
+    paddingBottom:3,
    color:Colors.primary,
  
    },

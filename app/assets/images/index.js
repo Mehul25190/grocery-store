@@ -33,6 +33,8 @@ const images = {
 	addCardIcon: require('./addCardIcon.png'),
 	CachIcon: require('./CachIcon.png'),
 	addPlus:require('./by_once_pls.png'),
+	AEDpng:require('./aed3.png'),
+	subscribe:require('./subscribe.png'),
 };
 
 export default images;

@@ -169,7 +169,13 @@ class SearchProduct extends React.Component {
 
     //this.setState({value: value})
   }
-
+  subscribePressHandlder(item){
+    showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
+    this.props.navigation.navigate(
+      Screens.SubscribeOrder.route,
+      { item: item , qty: this.state.value}
+    )
+  }
 
   render() {
 
@@ -288,36 +294,29 @@ class SearchProduct extends React.Component {
                       </View>
                       <View>
                         {item.isSubscribable ? (
-                          <Button style={styles.subscribeBtn}>
+                          <ImageBackground source={imgs.AEDpng}  style={[styles.subscribeBtn,{}]}>
                             <TouchableOpacity
                               onPress={() =>
-                                this.props.navigation.navigate(
-                                  Screens.SubscribeOrder.route,
-                                  { item: item , qty: this.state.value}
-                                )
+                                this.subscribePressHandlder(item)
                               }
                             >
                               <Text style={styles.subText}>
-                                Subscribe@{"\u20B9"}{item.price}
+                                {item.price}
                               </Text>
                             </TouchableOpacity>
-                          </Button>
+                          </ImageBackground>
                         ) : (
                           <View style={{ padding: 0, margin: 0 }}></View>
                         )}
                          {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
                           null : 
-                          (<Button style={styles.buyButton}>
-                          <TouchableOpacity
+                          ( <TouchableOpacity
                             onPress={() =>
                               this.buyOncePressHnadler(item.id, 1)
                             }
                           >
-                           
-                         <Text style={styles.buyText}>Buy Once</Text>
-                            
-                          </TouchableOpacity>
-                        </Button>)}
+                           <Image source={imgs.addPlus} style={styles.buyButton} />
+                          </TouchableOpacity>)}
                         {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
                           (<NumericInput
                             initValue={1}
