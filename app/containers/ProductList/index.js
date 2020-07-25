@@ -380,17 +380,17 @@ class ProductList extends React.Component {
                       </View>
                       <View>
                         {item.isSubscribable ? (
-                          <Button style={styles.subscribeBtn}>
+                          <ImageBackground source={imgs.AEDpng}  style={[styles.subscribeBtn,{}]}>
                             <TouchableOpacity
                               onPress={() =>
                                 this.subscribePressHandlder(item)
                               }
                             >
                               <Text style={styles.subText}>
-                                Subscribe@{"\u20B9"}{item.price}
+                                {item.price}
                               </Text>
                             </TouchableOpacity>
-                          </Button>
+                          </ImageBackground>
                         ) : (
                           <View style={{ padding: 0, margin: 0 }}></View>
                         )}

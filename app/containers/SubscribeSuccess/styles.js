@@ -87,6 +87,7 @@ marginRight:Layout.indent,
 },
 
 checkOutText:{
+	color:Colors.primary,
 paddingTop:5,
 fontFamily:'Font-Medium',
 fontSize:16,
