@@ -317,7 +317,7 @@ class MyCart extends React.Component {
             </Col>
             <Col style={[styles.footerCol, { borderRightWidth: 0 }]}>
               <TouchableOpacity style={styles.orderSummary} onPress={() => this.props.navigation.navigate(Screens.Checkout.route)}>
-                <Text style={styles.textSummary}>Checkout now</Text>
+                <Text style={styles.textSummary}>Checkout now </Text>
               </TouchableOpacity>
             </Col>
           </Grid>
