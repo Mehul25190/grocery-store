@@ -19,6 +19,7 @@ import * as cartActions from "../../actions/cart";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import {productList,productImages} from '../data/data';
+import * as productActions from "../../actions/product";
 import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
 import { AirbnbRating } from 'react-native-ratings';
@@ -73,6 +74,45 @@ class ProductDetail extends React.Component {
     });
    
   }
+
+  productDetail(id){
+    this.props.productDetail(id, this.props.user.user.id);
+  }
+
+  buyOncePressHnadler(productId, value){
+
+    if(value == 0){ 
+      this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
+        if(res.status == "success"){
+          this.props.viewCart(this.props.user.user.id).then(res => {
+              showToast('Cart updated successfully.', "success")
+          }) 
+        }
+        
+      })
+    }else if(value == 1){
+      this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
+        if(res.status == "success"){
+          this.props.viewCart(this.props.user.user.id).then(res => {
+            console.log('dddd', res);
+              showToast('Cart updated successfully.', "success")
+          }) 
+        }
+      })
+    }else if(value > 1){
+      this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
+        if(res.status == "success"){
+          this.props.viewCart(this.props.user.user.id).then(res => {
+              showToast('Cart updated successfully.', "success")
+          }) 
+        }
+      })
+    }
+
+
+    this.productDetail(productId);
+      //this.setState({value: value})
+    }
 
   addToCart(productId, value){
     if(this.state.selected == 0){
@@ -145,7 +185,7 @@ class ProductDetail extends React.Component {
    // const { navigation } = this.props;
 
     const { navigation, ProductDetail } = this.props;
-    console.log(ProductDetail);
+    //console.log('ProductDetail', ProductDetail);
     const { selectedIndex } = this.state;
     return (
       <Container style={appStyles.container}>
@@ -231,39 +271,44 @@ class ProductDetail extends React.Component {
          </Col>
             <Col>
                <View  style={styles.reasonView}>
-                <Item style={{borderBottomWidth:0}} >
-                 <Picker
-                  note
-                  textStyle={{fontFamily:'Font-Medium'}}
-                  mode="dropdown"
-                  style={{fontFamily:'Font-Medium' ,}}
-                  selectedValue={this.state.selected}
-                  
-                  onValueChange={this.onValueChange.bind(this)}
-                
-                  placeholderStyle={{borderWidth:10, fontFamily:'Font-Medium' }}
-                  placeholderIconColor={{borderWidth:2}}
-                   >
-                  <Picker.Item label="1" value="1" />
-                  <Picker.Item label="2" value="2" />
-                  <Picker.Item label="3" value="3" />
-                  <Picker.Item label="4" value="4" />
-                  <Picker.Item label="5" value="5" />
-                  <Picker.Item label="6" value="6" />
-                  <Picker.Item label="7" value="7" />
-                  <Picker.Item label="8" value="8" />
-                  <Picker.Item label="9" value="9" />
-                  <Picker.Item label="10" value="10" />
-
-                </Picker>
-                    <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
-                </Item>
+                {ProductDetail.item[0].cartQty > 0 ?
+                  (<NumericInput
+                    initValue={ProductDetail.item[0].cartQty}
+                    //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
+                    onChange={(value) => this.buyOncePressHnadler(ProductDetail.item[0].id, value)}
+                    onLimitReached={(isMax, msg) =>
+                      console.log(isMax, msg)
+                    }
+                    minValue={0}
+                    totalWidth={90}
+                    totalHeight={20}
+                    iconSize={30}
+                    borderColor="#F8BB1B"
+                    inputStyle={{ fontSize: 13 }}
+                    step={1}
+                    valueType="real"
+                    rounded
+                    textColor="#F8BB1B"
+                    iconStyle={{ color: "#F8BB1B", fontSize: 14 }}
+                    rightButtonBackgroundColor="#fff"
+                    leftButtonBackgroundColor="#fff"
+                  />) : 
+                  (
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.buyOncePressHnadler(ProductDetail.item[0].id, 1)
+                    }
+                  >
+                    <Image source={imgs.addPlus} style={styles.buyButton} />
+                  </TouchableOpacity>
+                )}
               </View>
             </Col>
           <Col style={styles.cartPart}>
           {/*  <Icon name='shopping-cart' type='MaterialIcons' style={styles.bottomCart} /> */}
           </Col>
          </Row>
+         
         </Grid>
         
      {
@@ -283,11 +328,11 @@ class ProductDetail extends React.Component {
     </View>
         )}  
     
-        <TouchableOpacity>     
+        {/*<TouchableOpacity>     
           <Button style={styles.payBtn} primary full onPress={()=> this.addToCart(ProductDetail.item[0].id, this.state.selected)}>
             <Text style={styles.payTextNow}>Add to cart</Text>
           </Button>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
 
         <View style={styles.okayBtnArea}>
           <Button priamary full style={styles.doneBtn}>
@@ -316,6 +361,10 @@ const mapDispatchToProps = (dispatch) => {
       logout: () => dispatch(userActions.logoutUser()),
       viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
       addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
+      updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
+      deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId:userId })),
+      productDetail: (id, userId) => 
+      dispatch(productActions.productDetail({ itemId: id, userId: userId })),
    };
 };
 

@@ -148,13 +148,8 @@ class Checkout extends React.Component {
           <Text style={styles.orderName}>{item.itemName}</Text>
         </Left>
         <Body style={{flexDirection: 'row',flex:0,justifyContent:'center',alignItems:'center'}}>
-         
            <Text style={styles.orderQty}>{item.quantity}<Text style={{fontSize: 10, lineHeight: 20}}> X</Text></Text>
-         
-        
-       
         </Body>
-
         <View>
           <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> {item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? item.discountedPrice.toFixed(2) : item.itemPrice.toFixed(2)}</Text>
         </View>
@@ -259,7 +254,7 @@ class Checkout extends React.Component {
                      <Icon type="SimpleLineIcons" name="emotsmile" style={styles.smileIcon} />
                     <Text  style = {styles.Modeltext}>
                     Seems your free delivery period is over , 
-                    You can still enjoy our evening slots with nominal delviery charge"
+                    You can still enjoy our evening slots with nominal delivery charge
                     Now have your morning deliveries free by paying a small subscription amount (Just <Text style={appStyles.currency}>{'\u20B9'}</Text> 123)
                    </Text>
                     <TouchableOpacity style={styles.closeOk} onPress = {() => this.setState({isEveningModalVisible:false}) }>
@@ -270,8 +265,6 @@ class Checkout extends React.Component {
                   
               </Modal>
        <ScrollView>   
-                 
-   
                <View style={styles.clickBtn} onPress={()=>this.props.navigation.navigate(Screens.MyPayments.route)}>
                   <Text style={styles.textPayMode}>Choose delivery slots for this order</Text>
                 </View>
@@ -327,19 +320,26 @@ class Checkout extends React.Component {
                 <Text style={styles.OrderTitleText}>Order Item List </Text>
                </Col>
                 <Col style={{justifyContent:'flex-end',alignItems:'flex-end'}}>
-                  <Text style={styles.OrderTitleText}>Total Items &nbsp; {totalItem}</Text> 
+                  <Text style={styles.OrderTitleText}>Total Items {totalItem}</Text> 
                </Col>
                </Grid>
                <List style={{paddingBottom:10}}>
-
-                      <FlatList
-                       vertical
-                       //showsHorizontalScrollIndicator={false}
-                       data={cartDetail}
-                       renderItem={this.renderCartItems}
-                       keyExtractor={(item) => `${item.id}`}
-                     />
-                      
+                
+                      {cartDetail.map((item, index) => {
+                        return(
+                          <ListItem style={styles.ItemList}>
+                            <Left>
+                              <Text style={styles.orderName}>{item.itemName}</Text>
+                            </Left>
+                            <Body style={{flexDirection: 'row',flex:0,justifyContent:'center',alignItems:'center'}}>
+                              <Text style={styles.orderQty}>{item.quantity}<Text style={{fontSize: 10, lineHeight: 20}}> X</Text></Text>
+                            </Body>
+                            <View>
+                              <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{'\u20B9'}</Text> {item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? item.discountedPrice.toFixed(2) : item.itemPrice.toFixed(2)}</Text>
+                            </View>
+                          </ListItem>
+                        );
+                      })}
    {/* Sub Total */} 
                         <ListItem style={[styles.TotalList,{marginTop:10}]}>
                           <Left>
@@ -383,23 +383,13 @@ class Checkout extends React.Component {
            
                 
                </List>
-
                <DeliveryAddress/>
-
-
-         
             <TouchableOpacity style={styles.checkOutBtnArea} >
               <Button primary full style={styles.checkOutBtn} onPress={()=>this.onPressSubmit('Checkout')}>
                            <Text style={styles.checkOutText}> Pay Now</Text>
                          </Button>
-            </TouchableOpacity>
-       
-
-               
+            </TouchableOpacity>       
         </ScrollView>   
-       
-    
-        
       </Container>
      
     );
@@ -410,7 +400,7 @@ const mapStateToProps = (state) => {
     user: state.auth.user,
     deliveryAddress: state.subscription.deviveryAddress,
     totalItem: state.cart.totalItem,
-    cartDetail: state.cart.cartDetail,
+    cartDetail: state.cart.cartDetail ,
     totalAmount: state.cart.totalAmount,
     deliveryCharges: state.cart.deliveryCharges,
   };
