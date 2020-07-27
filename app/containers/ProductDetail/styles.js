@@ -98,7 +98,7 @@ reasonView:{
   },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-     elevation: 1,
+     elevation: 0,
   },
  paddingBox:{
   marginLeft:Layout.indent-10,
