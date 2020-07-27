@@ -161,6 +161,23 @@ export const showProductList = payloads => dispatch => {
   })
 }
 
+export const getProductList = payloads => dispatch => {
+  //console.log("showCategoryList>>> action ")
+  //console.log('payload>>'+payloads);
+  //dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.productList,{queries: payloads}).then(res => {
+    //dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res.data);
+    if(res.status == 200){
+      //console.log('product list return');  
+      //console.log(res);
+      return res.data;
+    } else {
+      return res;
+    }
+  })
+}
+
 /**
  * Save User Profile
  */

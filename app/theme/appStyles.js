@@ -46,13 +46,14 @@ export default StyleSheet.create({
     marginRight: Layout.indent,
     marginTop:20,
     fontSize:30,
-    fontWeight:'bold'
+    fontWeight:'bold',
+    marginBottom:10
 
   },
   redButton:{
-   fontSize:22,
+   fontSize:20,
     color:Colors.primary,
-  fontFamily:'Font-Bold',
+  fontFamily:'Font-Medium',
   textTransform:'capitalize'
     
 

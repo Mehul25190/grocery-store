@@ -98,7 +98,7 @@ reasonView:{
   },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-     elevation: 1,
+     elevation: 0,
   },
  paddingBox:{
   marginLeft:Layout.indent-10,
@@ -260,6 +260,17 @@ addressText:{
 },
 addressIcon:{
   fontSize:22
-}
+},
+buyButton:{
+  // backgroundColor:'#F8BB1B',
+   justifyContent: 'center',
+   alignItems: 'center',
+   textAlign:'center',
+   alignSelf:'center',
+   paddingLeft:0,
+   paddingRight:0,
+   width:90,
+   height:25,
+},
 
 };

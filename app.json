@@ -13,7 +13,7 @@
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "splash": {
-      "image": "./app/assets/splashScreen.jpg",
+      "image": "./app/assets/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#D7ECDD"
     },
@@ -24,11 +24,11 @@
       "app/assets/*"
     ],
     "android": {
-      "package": "com.pushpanathan.pushbase"
+      "package": "com.myallaadin"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.pushpanathan.pushbase"
+      "bundleIdentifier": "com.myallaadin"
     }
   }
 }

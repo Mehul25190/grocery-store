@@ -116,7 +116,7 @@ class ProductList extends React.Component {
         if (res.status == "success") {
           if(res.data.subCategory.length > 0){
             this.setState({ subCategory: res.data.subCategory, selectSubCat: res.data.subCategory[0].id });
-            this.productItemList(res.data.subCategory[0].categoryId, res.data.subCategory[0].id, 0);
+            this.productItemList(res.data.subCategory[0].categoryId, res.data.subCategory[0].id, this.props.user.user.id);
           }else{
             showToast("No product found", "danger");
              this.props.navigation.navigate(Screens.Home.route)
@@ -209,7 +209,7 @@ class ProductList extends React.Component {
   );
 
   productDetail(id){
-    this.props.productDetail(id).then(res => {
+    this.props.productDetail(id, this.props.user.user.id).then(res => {
       console.log(res);
       if(res.status == "success"){
         if(res.data.item.length > 0){
@@ -260,6 +260,20 @@ class ProductList extends React.Component {
     array.push(productId)
     this.setState({buyOndeSelected: array});
   }
+  
+  this.props.getproductItemList(this.state.categoryId, this.state.selectSubCat, this.props.user.user.id)
+  .then((res) => {
+    console.log('sucess return', res.data.itemList);
+    if (res.status == "success") {
+      if(res.data.itemList.length > 0){
+        this.setState({ productData: res.data.itemList, selectSubCat: this.state.selectSubCat });
+      }else{
+        this.setState({ productData: [], selectSubCat: this.state.selectSubCat });
+      }
+    } else {
+      showToast("Something wrong with Server response", "danger");
+    }
+  })
 
     //this.setState({value: value})
   }
@@ -297,7 +311,7 @@ class ProductList extends React.Component {
               <ScrollView>
                 <FlatList
                   horizontal
-                  initialScrollIndex={this.state.flalistIndex}
+                  //initialScrollIndex={this.state.flalistIndex}
                   onScrollToIndexFailed={()=>{}}
                   showsHorizontalScrollIndicator={false}
                   data={this.state.subCategory}
@@ -380,24 +394,24 @@ class ProductList extends React.Component {
                       </View>
                       <View>
                         {item.isSubscribable ? (
-                          <Button style={styles.subscribeBtn}>
+                          <ImageBackground source={imgs.AEDpng}  style={[styles.subscribeBtn,{}]}>
                             <TouchableOpacity
                               onPress={() =>
                                 this.subscribePressHandlder(item)
                               }
                             >
                               <Text style={styles.subText}>
-                                Subscribe@{"\u20B9"}{item.price}
+                                {item.price}
                               </Text>
                             </TouchableOpacity>
-                          </Button>
+                          </ImageBackground>
                         ) : (
                           <View style={{ padding: 0, margin: 0 }}></View>
                         )}
                         {/*<Text>{this.state.buyOndeSelected.indexOf(item.id)} {item.cartQty}</Text>*/}
-                         {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
+                         {item.cartQty > 0 ?
                           (<NumericInput
-                            initValue={1}
+                            initValue={item.cartQty}
                             //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
                             onChange={(value) => this.buyOncePressHnadler(item.id, value)}
                             onLimitReached={(isMax, msg) =>
@@ -407,13 +421,13 @@ class ProductList extends React.Component {
                             totalWidth={90}
                             totalHeight={20}
                             iconSize={30}
-                            borderColor="#F8BB1B"
+                            borderColor={Colors.primary}
                             inputStyle={{ fontSize: 13 }}
                             step={1}
                             valueType="real"
                             rounded
-                            textColor="#F8BB1B"
-                            iconStyle={{ color: "#F8BB1B", fontSize: 14 }}
+                            textColor={Colors.primary}
+                            iconStyle={{ color: Colors.primary, fontSize: 14 }}
                             rightButtonBackgroundColor="#fff"
                             leftButtonBackgroundColor="#fff"
                           />) : 
@@ -453,12 +467,14 @@ const mapDispatchToProps = (dispatch) => {
     logout: () => dispatch(userActions.logoutUser()),
     productItemList: (categoryId, subCategoryId, userId) =>
       dispatch(userActions.showProductList({ subCategoryId: subCategoryId, categoryId: categoryId, userId: userId })),
+    getproductItemList: (categoryId, subCategoryId, userId) =>
+      dispatch(userActions.getProductList({ subCategoryId: subCategoryId, categoryId: categoryId, userId: userId })),  
     fetchSubCategory: (categoryId) =>
       dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
     searchItem: (searchString) =>
       dispatch(productActions.searchItem({ searchString: searchString })),
-    productDetail: (id) => 
-      dispatch(productActions.productDetail({ itemId: id })),
+    productDetail: (id, userId) => 
+      dispatch(productActions.productDetail({ itemId: id, userId: userId })),
     viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
     addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
     updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),

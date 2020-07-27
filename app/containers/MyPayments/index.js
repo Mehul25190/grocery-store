@@ -23,7 +23,7 @@ import CheckBox from 'react-native-check-box';
 import {BankList,CardDetails,BankOptions} from '../data/data';
 import { showToast } from '../../utils/common';
 import moment from "moment";
-import { WebView } from 'react-native-webview';
+//import { WebView } from 'react-native-webview';
 
 
 class MyPayments extends React.Component {
@@ -123,11 +123,7 @@ class MyPayments extends React.Component {
               Title='Payment'
             />
           <Content enableOnAndroid>
-         {/* <WebView
-        originWhitelist={['*']}
-        source={{ uri: 'http://dev.tieskills.com/payment/payment.html' }}
-        style={{ height:200 }}
-         />*/}
+         
 {/* ---------------------------------Credit / Debit Card----------------------------------*/}
 
          <ScrollView style={{marginLeft:Layout.indent, marginRight:Layout.indent}}>

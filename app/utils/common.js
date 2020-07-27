@@ -10,7 +10,7 @@ const showToast = (msg,type) => {
 	    type: type || 'default',
 	    duration:4000,
 	    position: "top",
-	    style:{marginTop:35, borderWidth:3, borderColor:'#fff', borderRadius:10}
+	    style:{marginTop:35, borderWidth:3, backgroundColor:'#00545F', borderColor:'#fff', borderRadius:10}
 	  });
 }
 const getCurrentRoute = (state: Object) => {

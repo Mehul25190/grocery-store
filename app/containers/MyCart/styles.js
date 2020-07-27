@@ -98,7 +98,7 @@ textSummary:{
     color:Colors.primary,
     fontSize:16,
     lineHeight:18,
-    paddingVertical:7
+    //paddingVertical:7
 },
 orderSummary:{
   //backgroundColor:Colors.secondary,

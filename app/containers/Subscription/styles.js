@@ -231,7 +231,7 @@ HoriLine:{
   // backgroundColor:'#ddd'
  },
  payText:{
-  color:Colors.white,
+  color:Colors.primary,
   fontFamily:'Font-Medium',
   fontSize:15,
   lineHeight:18
@@ -245,10 +245,10 @@ HoriLine:{
   fontSize:16
  },
 payTextNow:{
-color:Colors.secondary,
-fontFamily:'Font-Bold',
+color:Colors.primary,
+fontFamily:'Font-Medium',
 textTransform:'capitalize',
-
+fontSize:16
 },
 
 paynowBtn:{
