@@ -160,7 +160,8 @@ class ProductList extends React.Component {
       .then((res) => {
         console.log('sucess return', res.data.itemList);
         if (res.status == "success") {
-          if(res.data.itemList.length > 0){
+          console.log(res.data);
+          if(res.data.itemList){
             this.setState({ productData: res.data.itemList, selectSubCat: subCatId });
             this.courseFilterArr = res.data.itemList;   
 

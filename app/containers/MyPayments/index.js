@@ -35,7 +35,7 @@ class MyPayments extends React.Component {
       date: '',
       time: '',
       value: null ,
-       switch1Value: false,
+       switch1Value: props.user.user.useWallet == "Y" ? true : false,
        showMyCard:false,
        showAddCard:false,
         paywithcard: false,
