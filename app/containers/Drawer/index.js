@@ -123,7 +123,7 @@ class Drawer extends React.Component {
             </Left>
             <Body>
              <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
-              <Text style={appStyles.userArea} > {(deliveryAddress.aptNo!=null ? (deliveryAddress.aptNo + ",") : "" )} {deliveryAddress ? deliveryAddress.buildingName + ',' : ''}</Text>
+              <Text style={appStyles.userArea} > {(deliveryAddress ? (deliveryAddress.aptNo + ",") : "" )} {deliveryAddress ? deliveryAddress.buildingName + ',' : ''}</Text>
               <Text style={appStyles.userCity} >{deliveryAddress ? deliveryAddress.cityName + ' - ' + deliveryAddress.state : ''} </Text>
              </TouchableOpacity>  
             </Body>
