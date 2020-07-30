@@ -243,10 +243,10 @@ class MyCart extends React.Component {
                 </Left>
                 <Body>
                   <Text style={[appStyles.userArea, styles.addressText]} >
-                    {(this.state.userAddressDtls.aptNo != null ? (this.state.userAddressDtls.aptNo + ",") : "")} {(this.state.userAddressDtls.buildingName != null ? (this.state.userAddressDtls.buildingName + ",") : "")}
+                    {(this.state.userAddressDtls ? (this.state.userAddressDtls.aptNo + ",") : "" )} {(this.state.userAddressDtls ? (this.state.userAddressDtls.buildingName + ",") : "")} 
                   </Text>
                   <Text style={[appStyles.userCity, styles.addressText]} >
-                    {(this.state.userAddressDtls.city != null ? (this.state.userAddressDtls.city + "-") : "")} {(this.state.userAddressDtls.state != null ? (this.state.userAddressDtls.state) : "")}
+                    {this.state.userAddressDtls ? this.state.userAddressDtls.city + ' - ' + this.state.userAddressDtls.state : ''}
                   </Text>
 
                 </Body>

@@ -145,5 +145,8 @@ export default {
   }, 
   SearchProduct: {
     route: 'SearchProduct'
+  },
+  OrderPayment: {
+    route: 'OrderPayment'
   }
 };

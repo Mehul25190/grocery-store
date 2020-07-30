@@ -16,7 +16,7 @@ class SignInFormEmail extends React.Component {
     const { handleSubmit, onSubmit, language } = this.props;
     return (
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
-             <Field 
+        <Field 
          styles={{marginBottom:10}}
           name="email" 
           component={InputBox}

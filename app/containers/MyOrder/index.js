@@ -51,7 +51,11 @@ class MyOrder extends React.Component {
       status: 'Pending'
     });
     //get user's order List
-    this.getOrderList();
+    
+
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.getOrderList();
+    });
   }
 
   getOrderList() {
@@ -82,7 +86,7 @@ class MyOrder extends React.Component {
   };
 
   onDetailPage = item => {
-    //alert(item.orderStatus);
+    alert(item.orderStatus);
     //this.props.navigation.navigate('ProductList', { para_categoryId:item.id, categoryName: item.categoryName});
   
     if (item.orderStatus == 'PEN') {
@@ -93,6 +97,9 @@ class MyOrder extends React.Component {
     } 
     else  if (item.orderStatus == 'DEL') {
       this.props.navigation.navigate('OrderReturn', { orderId:item.id });
+    } 
+    else  if (item.orderStatus == 'CNF') {
+      this.props.navigation.navigate('OrderDetail', { orderId:item.id });
     }  
     else {
      // this.props.navigation.navigate('OrderReturn', { orderId:item.id });
@@ -136,15 +143,16 @@ class MyOrder extends React.Component {
               <View style={{ flex: 0, zIndex: -1, width: 200, }}>
                 <View>
                   <Text style={styles.BalanceTitle}>
-                  Recent Order
+                  Recent Orders
                  </Text>
               </View>
-
+              { /*
               <View style={styles.dateRow}>
                 <Text style={styles.walletDate}>
                   {this.state.date}
                 </Text>
               </View>
+              */}
             </View>
            
             {

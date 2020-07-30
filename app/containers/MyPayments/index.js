@@ -35,7 +35,7 @@ class MyPayments extends React.Component {
       date: '',
       time: '',
       value: null ,
-       switch1Value: false,
+       switch1Value: props.user.user.useWallet == "Y" ? true : false,
        showMyCard:false,
        showAddCard:false,
         paywithcard: false,
@@ -94,6 +94,8 @@ class MyPayments extends React.Component {
     const useWallet = this.state.switch1Value ? 'Y' : 'N';
     const paymentMode = this.state.paywithcash ? 'COD' : this.state.paywithcard ? 'CARD' : '' ;
 
+    //this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), paymentMode:paymentMode, useWallet:useWallet, deliveryCharges:'', subscriptionFees:''});
+    
     this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet ,'', '').then(res => {
       //console.log('resrersr', res.data.orderNumber)
       if(res.status == 'success'){

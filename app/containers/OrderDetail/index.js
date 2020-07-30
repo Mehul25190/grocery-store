@@ -111,7 +111,45 @@ class OrderDetail extends React.Component {
   );
 
   render(){
-    
+
+    const cancelOrderCard = <View><Card style={[appStyles.addBox,styles.trackBox,{borderBottomWidth:3,zIndex:0}]}>
+    <TouchableOpacity onPress={()=> console.log()}>
+    <Text style={styles.detailTitle2}>Track Shipment</Text>
+    <Text style={styles.orderValText}>Your Order has being processed.</Text>
+      <Text style={styles.orderValText}>
+        Delivery Date : {(this.state.orderData.length >0 )? this.state.orderData[0].orderDeliveryDate : ""}
+      </Text>
+      <Text style={styles.orderValText}>
+        Delivery Time : {(this.state.orderData.length >0 )? this.state.orderData[0].deliveryFromTime + ' : ' + this.state.orderData[0].deliveryToTime : ""}
+      </Text>
+
+    </TouchableOpacity>
+  </Card>
+   <Card style={[appStyles.addBox,styles.trackBox,{marginTop:-9,borderTopWidth:0,zIndex:-1}]}>
+    <TouchableOpacity onPress={()=> this.onCancelPage(this.state.orderData)}>
+      <Text style={styles.detailTitle2}>Cancel Order</Text>
+
+    </TouchableOpacity>
+  </Card>
+  </View>;
+
+
+  const confirmOrderCard = <View><Card style={[appStyles.addBox,styles.trackBox,{borderBottomWidth:3,zIndex:0}]}>
+    <TouchableOpacity onPress={()=> console.log()}>
+      <Text style={styles.detailTitle2}>Track Shipment</Text>
+      <Text style={styles.orderValText}>Your Order assiged to Delivery Boy.</Text>
+      <Text style={styles.orderValText}>
+        Delivery Date : {(this.state.orderData.length >0 )? this.state.orderData[0].orderDeliveryDate : ""}
+      </Text>
+      <Text style={styles.orderValText}>
+        Delivery Time : {(this.state.orderData.length >0 )? this.state.orderData[0].deliveryFromTime + ' : ' + this.state.orderData[0].deliveryToTime : ""}
+      </Text>
+
+    </TouchableOpacity>
+  </Card>
+   
+  </View>;
+
     return (
       <Container style={appStyles.container}>
 
@@ -170,10 +208,12 @@ class OrderDetail extends React.Component {
           <View>
             <Text style={styles.detailTitle}>Shipment Details  </Text>
           </View>
+          {/*
           <View>
             <Text style={styles.deliveryTitle}>Delivery Estimate: </Text>
             <Text style={styles.deliveryDate}>Monday {this.state.date} </Text>
           </View>
+          */}
         
           <ScrollView>
                 <FlatList
@@ -190,18 +230,13 @@ class OrderDetail extends React.Component {
 
          
         </Card>
-        <Card style={[appStyles.addBox,styles.trackBox,{borderBottomWidth:3,zIndex:0}]}>
-          <TouchableOpacity onPress={()=> console.log()}>
-            <Text style={styles.detailTitle2}>Track Shipment</Text>
 
-          </TouchableOpacity>
-        </Card>
-         <Card style={[appStyles.addBox,styles.trackBox,{marginTop:-9,borderTopWidth:0,zIndex:-1}]}>
-          <TouchableOpacity onPress={()=> this.onCancelPage(this.state.orderData)}>
-            <Text style={styles.detailTitle2}>Cancel Order</Text>
-
-          </TouchableOpacity>
-        </Card>
+        {   this.state.orderData.length >0 ? 
+            (this.state.orderData[0].orderStatus == "PEN" ) ? cancelOrderCard : confirmOrderCard  
+             : 
+            null  
+        } 
+            
            
         </View> )}
           </Content>
