@@ -390,7 +390,7 @@ class ProductList extends React.Component {
                     </Body>
                     <Right style={styles.ListRight}>
                       <View>
-                        
+                      
                       </View>
                       <View>
                         {item.isSubscribable ? (

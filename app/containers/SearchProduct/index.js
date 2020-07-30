@@ -329,13 +329,13 @@ class SearchProduct extends React.Component {
                             totalWidth={90}
                             totalHeight={20}
                             iconSize={30}
-                            borderColor="#F8BB1B"
+                            borderColor={Colors.primary}
                             inputStyle={{ fontSize: 13 }}
                             step={1}
                             valueType="real"
                             rounded
-                            textColor="#F8BB1B"
-                            iconStyle={{ color: "#F8BB1B", fontSize: 14 }}
+                            textColor={Colors.primary}
+                            iconStyle={{ color: Colors.primary, fontSize: 14 }}
                             rightButtonBackgroundColor="#fff"
                             leftButtonBackgroundColor="#fff"
                           />)
