@@ -231,8 +231,12 @@ class OrderDetail extends React.Component {
          
         </Card>
 
-        { /* {(this.state.orderData[0].orderStatus=="PEN" ) ? cancelOrderCard : confirmOrderCard } */ }
-        { cancelOrderCard}
+        {   this.state.orderData.length >0 ? 
+            (this.state.orderData[0].orderStatus == "PEN" ) ? cancelOrderCard : confirmOrderCard  
+             : 
+            null  
+        } 
+            
            
         </View> )}
           </Content>

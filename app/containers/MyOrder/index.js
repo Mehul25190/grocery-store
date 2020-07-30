@@ -51,7 +51,11 @@ class MyOrder extends React.Component {
       status: 'Pending'
     });
     //get user's order List
-    this.getOrderList();
+    
+
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.getOrderList();
+    });
   }
 
   getOrderList() {
