@@ -110,7 +110,7 @@ class ProductDetail extends React.Component {
     }
 
 
-    this.productDetail(productId);
+    this.productDetail(productId, this.props.user.user.id);
       //this.setState({value: value})
     }
 
@@ -185,7 +185,7 @@ class ProductDetail extends React.Component {
    // const { navigation } = this.props;
 
     const { navigation, ProductDetail } = this.props;
-    //console.log('ProductDetail', ProductDetail);
+    console.log('ProductDetail', ProductDetail);
     const { selectedIndex } = this.state;
     return (
       <Container style={appStyles.container}>

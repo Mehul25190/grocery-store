@@ -157,16 +157,7 @@ class SearchProduct extends React.Component {
     })
   }
 
-  var array = [...this.state.buyOndeSelected]; // make a separate copy of the array
-  var index = array.indexOf(productId)
-  if (index !== -1 && value == 0) {
-    array.splice(index, 1);
-    this.setState({buyOndeSelected: array});
-  }else{
-    array.push(productId)
-    this.setState({buyOndeSelected: array});
-  }
-
+  
     //this.setState({value: value})
   }
   subscribePressHandlder(item){
@@ -308,18 +299,9 @@ class SearchProduct extends React.Component {
                         ) : (
                           <View style={{ padding: 0, margin: 0 }}></View>
                         )}
-                         {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
-                          null : 
-                          ( <TouchableOpacity
-                            onPress={() =>
-                              this.buyOncePressHnadler(item.id, 1)
-                            }
-                          >
-                           <Image source={imgs.addPlus} style={styles.buyButton} />
-                          </TouchableOpacity>)}
-                        {this.state.buyOndeSelected.indexOf(item.id) != -1 ?
+                        {item.cartQty > 0 ?
                           (<NumericInput
-                            initValue={1}
+                            initValue={item.cartQty}
                             //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
                             onChange={(value) => this.buyOncePressHnadler(item.id, value)}
                             onLimitReached={(isMax, msg) =>
@@ -329,17 +311,25 @@ class SearchProduct extends React.Component {
                             totalWidth={90}
                             totalHeight={20}
                             iconSize={30}
-                            borderColor="#F8BB1B"
+                            borderColor={Colors.primary}
                             inputStyle={{ fontSize: 13 }}
                             step={1}
                             valueType="real"
                             rounded
-                            textColor="#F8BB1B"
-                            iconStyle={{ color: "#F8BB1B", fontSize: 14 }}
+                            textColor={Colors.primary}
+                            iconStyle={{ color: Colors.primary, fontSize: 14 }}
                             rightButtonBackgroundColor="#fff"
                             leftButtonBackgroundColor="#fff"
-                          />)
-                          : null }
+                          />) : 
+                          (
+                          <TouchableOpacity
+                            onPress={() =>
+                              this.buyOncePressHnadler(item.id, 1)
+                            }
+                          >
+                           <Image source={imgs.addPlus} style={styles.buyButton} />
+                          </TouchableOpacity>
+                        )}
                       </View>
                     </Right>
                   </ListItem>
