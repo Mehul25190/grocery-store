@@ -97,7 +97,7 @@ class MyPayments extends React.Component {
     //this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), paymentMode:paymentMode, useWallet:useWallet, deliveryCharges:'', subscriptionFees:''});
     
     this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet ,'', '').then(res => {
-      //console.log('resrersr', res.data.orderNumber)
+      console.log('resrersr', res.data)
       if(res.status == 'success'){
         this.props.navigation.navigate(Screens.OrderSuccess.route, {orderNumber: res.data.orderNumber});
       }else{

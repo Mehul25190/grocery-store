@@ -144,8 +144,8 @@ class Profile extends React.Component {
   
   //save profile
   saveProfile() {
-
-    if(this.state.firstName.trim() == ""){
+    //console.log(this.state.firstName );
+    if(this.state.firstName == ""){
       this.setState({isLoading: false}, function() {
         showToast('Please enter firstname.','danger');
       });
@@ -287,7 +287,7 @@ class Profile extends React.Component {
                       placeholderStyle={{ borderWidth: 10, fontFamily: 'Font-Medium' }}
                       placeholderIconColor={{ borderWidth: 2 }}
                     >
-                      <Picker.Item label="Select Gender" value="0" />
+                      <Picker.Item label="Select Gender" />
                       <Picker.Item label="Male" value="M" />
                       <Picker.Item label="Female" value="F" />
 
