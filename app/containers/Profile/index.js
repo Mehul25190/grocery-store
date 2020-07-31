@@ -145,7 +145,7 @@ class Profile extends React.Component {
   //save profile
   saveProfile() {
     //console.log(this.state.firstName );
-    if(this.state.firstName == ""){
+    if(this.state.firstName.length < 1){
       this.setState({isLoading: false}, function() {
         showToast('Please enter firstname.','danger');
       });
