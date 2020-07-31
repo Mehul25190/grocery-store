@@ -131,6 +131,17 @@ height:35
   marginRight:Layout.indent,
   marginBottom:10
  },
+ startDate:{
+fontFamily:'Font-Medium',
+fontSize:16,
+paddingTop:7
+ },
+ startDateCol:{
+  marginLeft:Layout.indent,
+   justifyContent:'center',
+   flex:0,
+   width:100
+ },
  secondRow:{
   // backgroundColor:'#ddd',
   padding:10

@@ -116,12 +116,23 @@ class OrderDetail extends React.Component {
     <TouchableOpacity onPress={()=> console.log()}>
     <Text style={styles.detailTitle2}>Track Shipment</Text>
     <Text style={styles.orderValText}>Your Order has being processed.</Text>
-      <Text style={styles.orderValText}>
-        Delivery Date : {(this.state.orderData.length >0 )? this.state.orderData[0].orderDeliveryDate : ""}
-      </Text>
-      <Text style={styles.orderValText}>
-        Delivery Time : {(this.state.orderData.length >0 )? this.state.orderData[0].deliveryFromTime + ' : ' + this.state.orderData[0].deliveryToTime : ""}
-      </Text>
+     <Row style={styles.orderRow}>
+          <Col style={styles.orderTitle}>
+            <Text style={styles.orderTitleText}> Delivery Date :</Text>
+          </Col>
+          <Col style={styles.orderValue}>
+           <Text style={styles.orderValText}> {(this.state.orderData.length >0 )? this.state.orderData[0].orderDeliveryDate : ""}</Text>
+          </Col>
+    </Row>
+     <Row style={styles.orderRow}>
+          <Col style={styles.orderTitle}>
+            <Text style={styles.orderTitleText}> Delivery Time :</Text>
+          </Col>
+          <Col style={styles.orderValue}>
+           <Text style={styles.orderValText}> {(this.state.orderData.length >0 )? this.state.orderData[0].deliveryFromTime + ' : ' + this.state.orderData[0].deliveryToTime : ""}</Text>
+          </Col>
+    </Row>
+    
 
     </TouchableOpacity>
   </Card>
@@ -138,13 +149,23 @@ class OrderDetail extends React.Component {
     <TouchableOpacity onPress={()=> console.log()}>
       <Text style={styles.detailTitle2}>Track Shipment</Text>
       <Text style={styles.orderValText}>Your Order assiged to Delivery Boy.</Text>
-      <Text style={styles.orderValText}>
-        Delivery Date : {(this.state.orderData.length >0 )? this.state.orderData[0].orderDeliveryDate : ""}
-      </Text>
-      <Text style={styles.orderValText}>
-        Delivery Time : {(this.state.orderData.length >0 )? this.state.orderData[0].deliveryFromTime + ' : ' + this.state.orderData[0].deliveryToTime : ""}
-      </Text>
-
+      <Row style={styles.orderRow}>
+          <Col style={styles.orderTitle}>
+            <Text style={styles.orderTitleText}> Delivery Date :</Text>
+          </Col>
+          <Col style={styles.orderValue}>
+           <Text style={styles.orderValText}> {(this.state.orderData.length >0 )? this.state.orderData[0].orderDeliveryDate : ""}</Text>
+          </Col>
+    </Row>
+     <Row style={styles.orderRow}>
+          <Col style={styles.orderTitle}>
+            <Text style={styles.orderTitleText}> Delivery Time :</Text>
+          </Col>
+          <Col style={styles.orderValue}>
+           <Text style={styles.orderValText}> {(this.state.orderData.length >0 )? this.state.orderData[0].deliveryFromTime + ' : ' + this.state.orderData[0].deliveryToTime : ""} </Text>
+          </Col>
+    </Row>
+     
     </TouchableOpacity>
   </Card>
    
