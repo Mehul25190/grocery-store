@@ -98,7 +98,7 @@ const DrawerNavigation = createStackNavigator({
 
 // login stack
 const LoginStack = createStackNavigator({
-  [Screens.SignIn.route]: { screen: SignIn },
+  //[Screens.SignIn.route]: { screen: SignIn },
    [Screens.SignInEmail.route]: { screen: SignInEmail},
    [Screens.SignInMobile.route]: { screen: SignInMobile},
    [Screens.Verification.route]: { screen: Verification},

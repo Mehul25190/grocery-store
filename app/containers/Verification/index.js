@@ -85,7 +85,7 @@ class Verification extends React.Component {
 
                   //console.log("Entereed after api >>>>");
                   showToast(res.message,"success");
-                  this.props.navigation.navigate(Screens.SignIn.route)
+                  this.props.navigation.navigate(Screens.SignInStack.route)
                   //Screens.SignInStack.route
                   
             } else {
