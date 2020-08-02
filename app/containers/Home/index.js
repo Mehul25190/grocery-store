@@ -169,16 +169,10 @@ class Home extends React.Component {
                    <Text style={styles.addsBigTitle}>
                      {item.value}{item.valueType=='rs' ? <Text style={[appStyles.currency,{  color:'#F8BB1B',fontSize:32,}]}>{'\u20B9'}</Text> : item.valueType} OFF
                    </Text>
-                   <Text numberOfLines={2} style={styles.addsText}>
+                   <Text numberOfLines={4} style={styles.addsText}>
                     {item.description}               
                    </Text>
-                    <TouchableOpacity style={styles.btnBlock}>
-                    
-                      <Text style={styles.discountBtn}>Get Discount</Text>
-                  
-                  
-                   </TouchableOpacity>
-                 </View>
+                  </View>
                </Col>
              <Col style={{ marginLef:2,width: 120,}}>
                 <Image source={{uri: url.imageURL+item.offerImage}} style={{flex: 1, height: null, width: null,resizeMode:'contain'}} />
@@ -341,7 +335,7 @@ class Home extends React.Component {
               <View style={{textAlign:'right',paddingLeft:10,}}>
                   <Text style={styles.pendingDays}>Your free delivery offer ends in 20 days..!</Text>
               </View>
-                <TouchableOpacity style={{textAlign:'right'}}  onPress={()=>{ this.openFreeDeliveryPopup() }} >
+               <TouchableOpacity style={{textAlign:'right'}}  onPress={()=>{ this.openFreeDeliveryPopup() }} >
                   <Icon type="AntDesign" name="exclamationcircle" style={styles.infoCircle} />
               </TouchableOpacity>
             </Grid>

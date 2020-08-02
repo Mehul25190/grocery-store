@@ -64,7 +64,7 @@ export default {
  	paddingTop:0,
  	marginTop:0,
  	color:Colors.primary,
- 	fontSize:18,
+ 	fontSize:16,
  	fontFamily:'Font-Medium'
  },
  bodyText:{
@@ -72,12 +72,12 @@ export default {
  },
  proTitle:{
  lineHeight:20,
- 	fontSize:18,
- 	fontFamily:'Font-Medium'
+ 	fontSize:16,
+ 	fontFamily:'Font-Regular'
  },
   QtyPro:{
- 	fontWeight:'bold',
- 	fontFamily:'Font-Medium'
+ 	
+ 	fontFamily:'Font-Regular'
  },
  orderTitle:{
  	alignItems:'flex-start',

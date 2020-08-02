@@ -81,7 +81,7 @@ export default {
     },
 productTitle:{
     position : 'absolute',
-    fontSize:16,
+    fontSize:14,
     left:5,
     top:5,
     padding:5,
@@ -139,7 +139,7 @@ FirstItem:{
   shopSubTitleText:{
     fontSize:11,
     fontFamily:'Font-Medium',
-    color:'blue',
+    color:'#f05e1b',
     // borderWidth:1,
     // borderColor:'blue',
     // borderRadius:25,

@@ -25,8 +25,6 @@ import { showToast } from '../../utils/common';
 import { ScreenLoader } from '../../components';
 import * as productActions from "../../actions/product";
 
-
-
 class MyCart extends React.Component {
 
   constructor(props) {
