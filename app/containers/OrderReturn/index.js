@@ -174,11 +174,9 @@ class OrderDetail extends React.Component {
         
      
           <Card style={[appStyles.addBox,{height:'auto',borderBottomWidth:1},styles.orderBox]}>
+          
           <View>
-            <Text style={styles.detailTitle}>Shipment Details  </Text>
-          </View>
-          <View>
-            <Text style={styles.deliveryTitle}>Delivery Estimate: </Text>
+            <Text style={styles.deliveryTitle}>Delivered Item: </Text>
             <Text style={styles.deliveryDate}>Monday {this.state.date} </Text>
           </View>
         
@@ -197,12 +195,7 @@ class OrderDetail extends React.Component {
 
          
         </Card>
-        <Card style={[appStyles.addBox,styles.trackBox,{borderBottomWidth:3,zIndex:0}]}>
-          <TouchableOpacity onPress={()=> console.log()}>
-            <Text style={styles.detailTitle2}>Track Shipment</Text>
-
-          </TouchableOpacity>
-        </Card>
+       
          <Card style={[appStyles.addBox,styles.trackBox,{marginTop:-9,borderTopWidth:0,zIndex:-1}]}>
           <TouchableOpacity onPress={()=> this.onReturnDetailPage('OrderReturnDetail')}>
             <Text style={styles.detailTitle2}>Return Order</Text>

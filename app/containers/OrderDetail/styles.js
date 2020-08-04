@@ -69,13 +69,13 @@ export default {
  		fontFamily:'Font-Medium'
  },
  proTitle:{
- 	fontWeight:'bold',
- 	fontSize:18,
- 	fontFamily:'Font-Medium'
+ 	
+ 	fontSize:16,
+ 	fontFamily:'Font-Regular'
  },
   QtyPro:{
- 	fontWeight:'bold',
- 	fontFamily:'Font-Medium'
+ 	
+ 	fontFamily:'Font-Regular'
  },
  orderTitle:{
  	alignItems:'flex-start',

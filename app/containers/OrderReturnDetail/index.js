@@ -179,7 +179,7 @@ class OrderReturnDetail extends React.Component {
 
 
                   </Picker>
-                  <Image source={imgs.DownArrow} style={styles.DownArrow} />
+                  <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
                 </Item>
               </View>
             </View>   

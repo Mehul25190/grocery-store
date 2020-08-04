@@ -9,8 +9,8 @@ export default {
   flex:1,
   borderRadius: 10,
   paddingLeft:10,
-   backgroundColor:Colors.primary,
-   color:Colors.white,
+   backgroundColor:Colors.white,
+   color:Colors.primary,
      fontFamily:'Font-Medium',
      marginBottom:10,
      shadowColor: "#000",
@@ -27,7 +27,7 @@ export default {
     borderRadius:50,zIndex:50,
    flex:1,
    height:45,
-   color:Colors.white,
+   color:Colors.primary,
    fontFamily:'Font-Medium'
    },
 
@@ -107,7 +107,7 @@ alignItems:'flex-end'
  },
 
  proTitle:{
- 
+ lineHeight:20,
  	fontSize:16,
  	fontFamily:'Font-Medium'
  },
