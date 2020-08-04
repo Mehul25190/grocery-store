@@ -81,6 +81,7 @@ class ProductList extends React.Component {
     });
     //alert(this.state.categoryId);
     //get product list default base on category selected
+    this.subCategoryList();
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
       this.setState({ selectSubCat: null, text: '', buyOndeSelected: [] });
       this.subCategoryList();
