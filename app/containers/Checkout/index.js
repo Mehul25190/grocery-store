@@ -67,17 +67,17 @@ class Checkout extends React.Component {
       newArr.map((data, key) => {
           data.date = newArr1[key];
       });
-      
 
       this.setState({availTimeSlot: Object.values(res.data.availableTimeSlots), selectedDate: newArr1[0]})
-      
     })
   }
 
    componentDidMount() {
      this.getCartDetail();
     
-
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.props.freeDeliveryCharge();
+    });
 
     var that = this;
     var days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];

@@ -81,6 +81,7 @@ class ProductList extends React.Component {
     });
     //alert(this.state.categoryId);
     //get product list default base on category selected
+    this.subCategoryList();
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
       this.setState({ selectSubCat: null, text: '', buyOndeSelected: [] });
       this.subCategoryList();
@@ -116,7 +117,7 @@ class ProductList extends React.Component {
         if (res.status == "success") {
           if(res.data.subCategory.length > 0){
             this.setState({ subCategory: res.data.subCategory, selectSubCat: res.data.subCategory[0].id });
-            this.productItemList(res.data.subCategory[0].categoryId, res.data.subCategory[0].id, this.props.user.user.id);
+            this.productItemList(res.data.subCategory[0].categoryId, res.data.subCategory[0].id, 0);
           }else{
             showToast("No product found", "danger");
              this.props.navigation.navigate(Screens.Home.route)
@@ -312,7 +313,7 @@ class ProductList extends React.Component {
               <ScrollView>
                 <FlatList
                   horizontal
-                  //initialScrollIndex={this.state.flalistIndex}
+                  initialScrollIndex={this.state.flalistIndex}
                   onScrollToIndexFailed={()=>{}}
                   showsHorizontalScrollIndicator={false}
                   data={this.state.subCategory}

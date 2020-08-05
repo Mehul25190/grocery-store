@@ -12,7 +12,8 @@ export const viewcart = payloads => dispatch => {
       if(res.status == 200){
         console.log(res.data.data);
         dispatch({ type: ActionTypes.VIEWCARTDETAIL, data: res.data.data });
-        dispatch({ type: ActionTypes.CARTDETAIL, data: res.data.data.cartList });      
+        dispatch({ type: ActionTypes.CARTDETAIL, data: res.data.data.cartList });  
+        dispatch({ type: ActionTypes.SIGNIN, data: res.data.data.user });
         let totalAmount = 0;
         let totalItem = 0;
         let actualTotal = 0;

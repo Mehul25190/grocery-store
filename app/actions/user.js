@@ -183,13 +183,12 @@ export const getProductList = payloads => dispatch => {
  */
 
 export const saveUserProfile = payloads => dispatch => {
-  
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.saveUserProfile,  {payloads: payloads}).then(res => {
-    
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     //console.log(res);
       if(res.status == 200){
+        dispatch({ type: ActionTypes.SIGNIN, data: res.data.data.user });
         //console.log(res.data.userProfile);
         //dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
         return res.data
