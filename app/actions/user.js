@@ -11,6 +11,7 @@ export const signin = payloads => dispatch => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         if(res.data.status=="success"){
+          console.log(res.data.data)
           dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
         }
         return res.data
@@ -188,7 +189,7 @@ export const saveUserProfile = payloads => dispatch => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     //console.log(res);
       if(res.status == 200){
-        dispatch({ type: ActionTypes.SIGNIN, data: res.data.data.user });
+        dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
         //console.log(res.data.userProfile);
         //dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
         return res.data

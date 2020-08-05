@@ -13,7 +13,7 @@ export const viewcart = payloads => dispatch => {
         console.log(res.data.data);
         dispatch({ type: ActionTypes.VIEWCARTDETAIL, data: res.data.data });
         dispatch({ type: ActionTypes.CARTDETAIL, data: res.data.data.cartList });  
-        dispatch({ type: ActionTypes.SIGNIN, data: res.data.data.user });
+        dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
         let totalAmount = 0;
         let totalItem = 0;
         let actualTotal = 0;
