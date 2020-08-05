@@ -100,6 +100,7 @@ export const fetchDeliveryCharges = payloads => dispatch => {
 export const placeOrder = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.placeOrder,  {payloads: payloads}).then(res => {
+    console.log('ssss', res);
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         if(res.data.status == 'success')

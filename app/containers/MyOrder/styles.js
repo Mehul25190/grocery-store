@@ -41,7 +41,7 @@ export default {
  },
  statusBtn:{
   width:70,
-  backgroundColor:'#F8BB1B',
+  backgroundColor:Colors.secondary,
     justifyContent: 'center',
     alignItems: 'center',
     textAlign:'center',
@@ -52,7 +52,7 @@ export default {
     marginTop:5
  },
  statusText:{
-  color:Colors.secondary,
+  color:Colors.primary,
   fontFamily:'Font-Medium',
   fontSize:12,
    paddingLeft:2,
@@ -84,7 +84,7 @@ export default {
 
     paddingTop:5,
     paddingBottom:5,
-    marginLeft:Layout.indent-7,
+    marginLeft:Layout.indent,
     marginRight:Layout.indent-7,
     paddingRight:Layout.indent-7
    },

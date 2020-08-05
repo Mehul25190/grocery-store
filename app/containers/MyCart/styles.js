@@ -71,7 +71,8 @@ footerCol:{
 },
 footerTitle:{
   color:Colors.primary,
-  fontFamily:'Font-Medium'
+  fontFamily:'Font-Medium',
+  fontSize:14
  },
 
   BottomView:{
@@ -91,6 +92,7 @@ footerAmount:{
   color:Colors.primary,
   textAlign:'center',
   fontFamily:'Font-Medium',
+  fontSize:14
 },
 textSummary:{
   textAlign:'center',

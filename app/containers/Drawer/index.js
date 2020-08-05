@@ -51,7 +51,7 @@ class Drawer extends React.Component {
   logout(){
     this.props.logout();
     this.props.resetState();
-    this.props.navigation.navigate(Screens.SignOutStack.route);
+    this.props.navigation.navigate(Screens.SignInMobile.route);
   }
   render() {
     const { navigation, user, language, state, deliveryAddress } = this.props;

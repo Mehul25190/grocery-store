@@ -51,7 +51,11 @@ class MyOrder extends React.Component {
       status: 'Pending'
     });
     //get user's order List
-    this.getOrderList();
+    
+
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.getOrderList();
+    });
   }
 
   getOrderList() {
@@ -183,7 +187,7 @@ class MyOrder extends React.Component {
                       <View>
                         <Text style={styles.proPrice}>{'\u20B9'}  {item.orderAmt}</Text>
                         <Button style={styles.statusBtn}>
-                          <TouchableOpacity >
+                          <TouchableOpacity onPress={() => this.onDetailPage(item)}>
 
                             <Text style={styles.statusText}>
                               {item.orderStatus}
