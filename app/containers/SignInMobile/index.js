@@ -106,14 +106,14 @@ class SignInMobile extends React.Component {
                           </TouchableOpacity>
                         </Button>
                       </Col>
-                      <Col style={{marginRight:Layout.indent}}>
+                      {/*<Col style={{marginRight:Layout.indent}}>
                         <Button transparent full  
                          style={[{justifyContent:'flex-end'}]} >
                           <TouchableOpacity  onPress={() => this.onForgotpasswordPressHandler()}>
                           <Text style={[styles.linkTextEmail,appStyles.textRight]} > Forgot Password?</Text>
                           </TouchableOpacity>
                         </Button>
-                      </Col>
+                      </Col>*/}
                     </Row>
                    
                   </Animatable.View>

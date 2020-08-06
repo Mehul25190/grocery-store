@@ -99,12 +99,13 @@ borderColor:Colors.primary
  submitBtnArea:{
   marginLeft:Layout.indent,
   marginRight:Layout.indent,
-  marginTop:10
+  marginTop:10,
+  marginBottom:10
  },
 
  submitBtn:{
   borderRadius:25,
-  backgroundColor:Colors.secondary,
+  backgroundColor:Colors.primary,
   padding:12,
   
  },

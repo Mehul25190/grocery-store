@@ -132,7 +132,7 @@ FirstItem:{
   shopSubTitle:{
     marginTop:5,
     marginLeft:Layout.indent-5,
-    marginRight:Layout.indent,
+    marginRight:Layout.indent-5,
     paddingBottom:0,
     
   },

@@ -59,9 +59,12 @@ class OrderPayment extends React.Component {
     const userAddressDtlsId = navigation.getParam('userAddressDtlsId')
     const deliverySlot = navigation.getParam('deliverySlot')
     const deliveryDate = navigation.getParam('deliveryDate')
+    const amount = navigation.getParam('amount') * 100
     const paymentMode = navigation.getParam('paymentMode')
     const useWallet = navigation.getParam('useWallet')
-
+    const saveCard = navigation.getParam('saveCard')
+    const autoDebit = navigation.getParam('autoDebit')
+    console.log('http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate='+deliveryDate+'&amount='+amount+'&paymentMode='+paymentMode+'&useWallet='+useWallet+'&saveCard='+saveCard+'&autoDebit='+autoDebit)
     return (
       <Container style={appStyles.container}>
            <Header searchBar rounded style={appStyles.headerStyle}>
@@ -94,9 +97,9 @@ class OrderPayment extends React.Component {
          <ScrollView style={{marginLeft:Layout.indent, marginRight:Layout.indent}}>
                   <WebView
                     source={{
-                      uri: 'http://dev.tieskills.com/payment/payment.php?userId=userId&userAddressDtlsId=userAddressDtlsId&deliverySlot=deliverySlot&deliveryDate=deliveryDate&paymentMode=paymentMode&useWallet=useWallet'
+                      uri: 'http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate='+deliveryDate+'&amount='+amount+'&paymentMode='+paymentMode+'&useWallet='+useWallet+'&saveCard='+saveCard+'&autoDebit='+autoDebit
                     }}
-                    style={{ marginTop: 20, width:Layout.window.width, height: Layout.window.height * 0.5 }}
+                    style={{ marginTop: 20, width:Layout.window.width-30, height: Layout.window.height }}
                   />
          
              </ScrollView>

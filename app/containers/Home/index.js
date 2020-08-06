@@ -332,12 +332,13 @@ class Home extends React.Component {
               <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
                 <Text style={styles.shopSubTitleText}>My Next Order</Text>
               </TouchableOpacity>  
-              <View style={{textAlign:'right',paddingLeft:10,}}>
+              <View style={{flex:1,paddingLeft:10, flexDirection:'row', justifyContent:'flex-end'}}>
                   <Text style={styles.pendingDays}>Your free delivery offer ends in 20 days..!</Text>
-              </View>
-               <TouchableOpacity style={{textAlign:'right'}}  onPress={()=>{ this.openFreeDeliveryPopup() }} >
+                  <TouchableOpacity style={{textAlign:'right'}}  onPress={()=>{ this.openFreeDeliveryPopup() }} >
                   <Icon type="AntDesign" name="exclamationcircle" style={styles.infoCircle} />
               </TouchableOpacity>
+              </View>
+               
             </Grid>
            { <FlatList 
                      vertical

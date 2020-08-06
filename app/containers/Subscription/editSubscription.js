@@ -234,7 +234,7 @@ class editSubscribe extends React.Component {
             confirmBtnText="Done"
             cancelBtnText="Cancel"
             iconSource={imgs.calImg}
-            customStyles={{dateInput: { borderWidth:0, marginTop: 10 }}}
+            customStyles={{dateInput: { borderWidth:0, marginTop: 10, height:30 }}}
             />
           </Item>
        

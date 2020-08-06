@@ -71,6 +71,19 @@ class MyPayments extends React.Component {
     });
   }
   ShowAddCard(){
+    if(!this.state.paywithcard){
+      showToast('Please select the payment method', "danger");
+      return;
+    }
+
+    const {navigation} = this.props;
+    const selectedTimeSlot = navigation.getParam('timeslot');
+    const dateslot = navigation.getParam('dateslot');
+    const useWallet = this.state.switch1Value ? 'Y' : 'N';
+    const paymentMode = this.state.paywithcash ? 'COD' : this.state.paywithcard ? 'CARD' : '' ;
+
+    this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), amount: this.props.totalAmount + this.props.deliveryCharges ,paymentMode:paymentMode, useWallet:useWallet, saveCard:'Y', autoDebit:'Y'});
+
      this.setState({
       showMyCard:false,
       showAddCard:true

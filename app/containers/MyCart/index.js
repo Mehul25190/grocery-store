@@ -59,10 +59,20 @@ class MyCart extends React.Component {
   }
 
   getCartDetail() {
+
+    this.props.viewCart(this.props.user.user.id).then(res => {
+      if (res.status == 'success') {
+        this.setState({ userAddressDtls: res.data.userAddressDtls })
+      } else {
+        showToast("No cart detail found", "danger");
+        this.props.navigation.navigate(Screens.Home.route)
+      }
+    })
+
     //check user addredd is available or not
     this.props.getDeviveryAddress(this.props.user.user.id).then(res => {
       if (res.status == "success") {
-        console.log(res.data.userAddressDtls);
+        //console.log(res.data.userAddressDtls);
         if (res.data.userAddressDtls == null) {
           //redirect to address screen
           showToast("Please enter your delivery address so we serve better experience and products offer", "danger");
@@ -73,16 +83,6 @@ class MyCart extends React.Component {
         showToast("Something wrong with Server response", "danger");
       }
 
-    })
-
-
-    this.props.viewCart(this.props.user.user.id).then(res => {
-      if (res.status == 'success') {
-        this.setState({ userAddressDtls: res.data.userAddressDtls })
-      } else {
-        showToast("No cart detail found", "danger");
-        this.props.navigation.navigate(Screens.Home.route)
-      }
     })
 
   }
