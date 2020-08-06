@@ -87,11 +87,13 @@ class SearchProduct extends React.Component {
   productItemList(text) {
     this.setState({text: text})
     this.props
-      .searchItem(text)
+      .searchItem(text, this.props.user.user.id)
       .then((res) => {
         if (res.status == "success") {
+          if(res.data.itemList){
             this.setState({ productData: res.data.itemList });
-            this.courseFilterArr = res.data.itemList;   
+            this.courseFilterArr = res.data.itemList;  
+          } 
         } else {
           showToast("Something wrong with Server response", "danger");
         }
@@ -132,26 +134,45 @@ class SearchProduct extends React.Component {
   if(value == 0){
     this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
       if(res.status == "success"){
+        this.props.searchItem(this.state.text, this.props.user.user.id).then((res) => {
+          if (res.status == "success" && res.data.itemList) {
+              this.setState({ productData: res.data.itemList });  
+          }else{
+              this.setState({ productData: [] });
+          } 
+        })
         this.props.viewCart(this.props.user.user.id).then(res => {
-            showToast('Cart updated successfully.', "success")
+          showToast('Cart updated successfully.', "success")
         }) 
       }
-      
     })
   }else if(value == 1){
     this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
+        this.props.searchItem(this.state.text, this.props.user.user.id).then((res) => {
+          if (res.status == "success" && res.data.itemList) {
+              this.setState({ productData: res.data.itemList });  
+          }else{
+              this.setState({ productData: [] });
+          } 
+        })
         this.props.viewCart(this.props.user.user.id).then(res => {
-          console.log('dddd', res);
-            showToast('Cart updated successfully.', "success")
+          showToast('Cart updated successfully.', "success")
         }) 
       }
     })
   }else if(value > 1){
     this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
+        this.props.searchItem(this.state.text, this.props.user.user.id).then((res) => {
+          if (res.status == "success" && res.data.itemList) {
+              this.setState({ productData: res.data.itemList });  
+          }else{
+              this.setState({ productData: [] });
+          } 
+        })
         this.props.viewCart(this.props.user.user.id).then(res => {
-            showToast('Cart updated successfully.', "success")
+          showToast('Cart updated successfully.', "success")
         }) 
       }
     })
@@ -361,8 +382,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(userActions.showProductList({ subCategoryId: subCategoryId, categoryId: categoryId })),
     fetchSubCategory: (categoryId) =>
       dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
-    searchItem: (searchString) =>
-      dispatch(productActions.searchItem({ searchString: searchString })),
+    searchItem: (searchString, userId) =>
+      dispatch(productActions.searchItem({ searchString: searchString, userId:userId })),
     productDetail: (id) => 
       dispatch(productActions.productDetail({ itemId: id })),
     viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
