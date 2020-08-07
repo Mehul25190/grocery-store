@@ -64,7 +64,8 @@ class OrderPayment extends React.Component {
     const useWallet = navigation.getParam('useWallet')
     const saveCard = navigation.getParam('saveCard')
     const autoDebit = navigation.getParam('autoDebit')
-    console.log('http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate='+deliveryDate+'&amount='+amount+'&paymentMode='+paymentMode+'&useWallet='+useWallet+'&saveCard='+saveCard+'&autoDebit='+autoDebit)
+    console.log('http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate='+deliveryDate+'&amount='+100+'&paymentMode='+paymentMode+'&useWallet='+useWallet+'&saveCard='+saveCard+'&autoDebit='+autoDebit)
+    console.log('http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate=%27'+deliveryDate+'%27&amount='+amount+'&paymentMode=%27'+paymentMode+'%27&useWallet=%27'+useWallet+'%27&saveCard=%27'+saveCard+'%27&autoDebit=%27'+autoDebit)
     return (
       <Container style={appStyles.container}>
            <Header searchBar rounded style={appStyles.headerStyle}>
@@ -97,7 +98,7 @@ class OrderPayment extends React.Component {
          <ScrollView style={{marginLeft:Layout.indent, marginRight:Layout.indent}}>
                   <WebView
                     source={{
-                      uri: 'http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate='+deliveryDate+'&amount='+amount+'&paymentMode='+paymentMode+'&useWallet='+useWallet+'&saveCard='+saveCard+'&autoDebit='+autoDebit
+                      uri: 'http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate=%27'+deliveryDate+'%27&amount='+amount+'&paymentMode=%27'+paymentMode+'%27&useWallet=%27'+useWallet+'%27&saveCard=%27'+saveCard+'%27&autoDebit=%27'+autoDebit
                     }}
                     style={{ marginTop: 20, width:Layout.window.width-30, height: Layout.window.height }}
                   />
