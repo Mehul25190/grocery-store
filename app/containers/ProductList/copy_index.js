@@ -104,14 +104,14 @@ onPressRecipe(item){
                          Mango 1 kg
                       </Text>
                       <Text style={styles.MRPtext}>
-                         MRP &nbsp; <Text style={styles.currencyOffer}>{'\u20B9'}</Text>150
+                         MRP &nbsp; <Text style={styles.currencyOffer}>{Colors.CUR}</Text>150
                       </Text>
                       
                       <Text style={styles.officePrice}>
                          Offer Price
                       </Text>
                         <Text style={styles.PriceRate}>
-                          <Text style={styles.currencyPrice}>{'\u20B9'}</Text>95
+                          <Text style={styles.currencyPrice}>{Colors.CUR}</Text>95
                       </Text>
                       
                       <View style={styles.btnBlock}>
@@ -205,7 +205,7 @@ onPressRecipe(item){
                             {
                               item.weight!=='' ? '('+ item.weight +' '+gm+ ')' :''
                             } </Text>
-                            <Text style={styles.proPrice}>{'\u20B9'}{item.price}</Text>
+                            <Text style={styles.proPrice}>{Colors.CUR}{item.price}</Text>
                           </View>
                         </Body>
                         <Right style={styles.ListRight}>
@@ -235,7 +235,7 @@ onPressRecipe(item){
                             <Button style={styles.subscribeBtn}>
                              <TouchableOpacity>
                               <Text style={styles.subText}>
-                               Subscribe@{'\u20B9'}12
+                               Subscribe@{Colors.CUR}12
                               </Text>
 
                               </TouchableOpacity>

@@ -167,7 +167,7 @@ class Home extends React.Component {
                        {item.offerName}
                    </Text>
                    <Text style={styles.addsBigTitle}>
-                     {item.value}{item.valueType=='rs' ? <Text style={[appStyles.currency,{  color:'#F8BB1B',fontSize:32,}]}>{'\u20B9'}</Text> : item.valueType} OFF
+                     {item.value}{item.valueType=='rs' ? <Text style={[appStyles.currency,{  color:'#F8BB1B',fontSize:32,}]}>{Colors.CUR}</Text> : item.valueType} OFF
                    </Text>
                    <Text numberOfLines={4} style={styles.addsText}>
                     {item.description}               
@@ -291,7 +291,7 @@ class Home extends React.Component {
                     <Icon type="SimpleLineIcons" name="emotsmile"  style={styles.smileIcon} />
                     <Text  style = {styles.Modeltext}>
                     Seems your free subscription period is over, 
-                    Now have your morning deliveries free by paying a small subscription amount <Text style={appStyles.currency}>{'\u20B9'}</Text> 123.</Text>
+                    Now have your morning deliveries free by paying a small subscription amount <Text style={appStyles.currency}>{Colors.CUR}</Text> 123.</Text>
                     <Text style={styles.Modeltext}>You can still enjoy our evening slots with nominal delviery charge</Text>
                     <TouchableOpacity style={styles.closeOk} onPress = {() => this.setState({isModalVisible:false}) }>
                     <Text style={{color:'#fff',fontSize:16,fontFamily:'Font-Medium'}}>OK</Text>

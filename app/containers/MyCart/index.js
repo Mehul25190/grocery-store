@@ -160,18 +160,18 @@ class MyCart extends React.Component {
             {item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? (
               <Text style={styles.AmuText}>MRP:
                 <Text style={[styles.proPriceStrike, styles.AmuText]}>
-                  <Text style={{ color: Colors.gray }}>{'\u20B9'}</Text>{" "}
+                  <Text style={{ color: Colors.gray }}>{Colors.CUR}</Text>{" "}
                   {item.itemPrice}
                 </Text>
                 <Text style={styles.AmuText}>
-                  {" "}<Text style={{ color: Colors.gray }}>{'\u20B9'}</Text>{" "}
+                  {" "}<Text style={{ color: Colors.gray }}>{Colors.CUR}</Text>{" "}
                   {item.discountedPrice}
                 </Text>
               </Text>
             ) : (
                 <Text style={styles.AmuText}>MRP:
                   <Text style={styles.AmuText}>
-                    <Text style={{ color: Colors.gray }}>{'\u20B9'}</Text>{" "}
+                    <Text style={{ color: Colors.gray }}>{Colors.CUR}</Text>{" "}
                     {item.itemPrice}
                   </Text>
                 </Text>
@@ -276,7 +276,7 @@ class MyCart extends React.Component {
                 </Col>
                 <Col style={{ justifyContent: 'center', alignItems: 'flex-end', width: Layout.window.width / 1.8 }}>
                   <View style={styles.totalAmount}>
-                    <Text style={styles.totalText}>Total Amount <Text style={{ fontFamily: 'Roboto', color: Colors.black }}> {'\u20B9'}</Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
+                    <Text style={styles.totalText}>Total Amount <Text style={{ fontFamily: 'Roboto', color: Colors.black }}> {Colors.CUR}</Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
                   </View>
                 </Col>
               </Row>
@@ -306,12 +306,12 @@ class MyCart extends React.Component {
             <Col style={styles.footerCol}>
               <View><Text style={styles.footerTitle}>Wallet</Text></View>
               <View style={{ textAlign: 'center' }}><Text style={styles.footerAmount}>
-                <Text style={{ fontFamily: 'Roboto', color: Colors.primary }}>{'\u20B9'}</Text> {walletAmount ? walletAmount : 0}</Text></View>
+                <Text style={{ fontFamily: 'Roboto', color: Colors.primary }}>{Colors.CUR}</Text> {walletAmount ? walletAmount : 0}</Text></View>
             </Col>
             <Col style={styles.footerCol}>
               <View><Text style={styles.footerTitle}>Savings</Text></View>
               <View><Text style={styles.footerAmount}>
-                <Text style={{ fontFamily: 'Roboto', color: Colors.primary }}>{'\u20B9'}</Text> {(actualTotal - totalAmount).toFixed(2)}</Text></View>
+                <Text style={{ fontFamily: 'Roboto', color: Colors.primary }}>{Colors.CUR}</Text> {(actualTotal - totalAmount).toFixed(2)}</Text></View>
             </Col>
             <Col style={[styles.footerCol, { borderRightWidth: 0 }]}>
               <TouchableOpacity style={styles.orderSummary} onPress={() => this.props.navigation.navigate(Screens.Checkout.route)}>

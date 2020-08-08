@@ -60,7 +60,7 @@ class MyRatings extends React.Component {
                  <Text style={[styles.AmuText,styles.AmuTextTitle]}>Amul Moti</Text>
                  <Text style={styles.AmuText}>500 ml</Text>
                  <Text style={styles.AmuText}>Qty: 1</Text>
-                 <Text style={styles.AmuText}>MRP: <Text style={{}}>{'\u20B9'}</Text> 28</Text>
+                 <Text style={styles.AmuText}>MRP: <Text style={{}}>{Colors.CUR}</Text> 28</Text>
                 </View>
               </Col>
             </Row>

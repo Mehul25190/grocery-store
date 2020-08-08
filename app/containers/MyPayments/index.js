@@ -148,7 +148,7 @@ class MyPayments extends React.Component {
                   <Text style={styles.testStyles}>Total Order Value</Text>
                 </Col>
                <Col style={{flex:0, width:78, justifyContent:'center',alignItems:'center'}}>
-                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> {totalAmount.toFixed(2)}</Text>
+                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{Colors.CUR}</Text> {totalAmount.toFixed(2)}</Text>
                </Col>
               </Row>
                <Row>
@@ -156,7 +156,7 @@ class MyPayments extends React.Component {
                     <Text style={styles.testStyles}>{applyDeliveryCharge ? 'Delivery Charges' : 'Subscription Fees' }</Text>
                 </Col>
                 <Col style={{flex:0, width:78, justifyContent:'center',alignItems:'center'}}>
-                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> {deliveryCharges.toFixed(2)}</Text>
+                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{Colors.CUR}</Text> {deliveryCharges.toFixed(2)}</Text>
                </Col>
               </Row>
             </Grid>
@@ -166,7 +166,7 @@ class MyPayments extends React.Component {
                   <Text style={styles.testStyles}>Total Amount Payable </Text>
                 </Col>
                <Col style={{flex:0, width:75, justifyContent:'center',alignItems:'center'}}>
-                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{'\u20B9'}</Text> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
+                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{Colors.CUR}</Text> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
                </Col>
               </Row>
                <Row>
@@ -174,7 +174,7 @@ class MyPayments extends React.Component {
                   <Text style={[styles.testStyles,{color:Colors.primary}]}>Your Savings with this order</Text>
                 </Col>
                 <Col style={{flex:0, width:75, justifyContent:'center',alignItems:'center'}}>
-                 <Text style={[styles.testStyles,{color:Colors.primary}]}><Text style={[appStyles.currency,{color:Colors.primary}]}>{'\u20B9'}</Text> {(actualTotal - totalAmount).toFixed(2)}</Text>
+                 <Text style={[styles.testStyles,{color:Colors.primary}]}><Text style={[appStyles.currency,{color:Colors.primary}]}>{Colors.CUR}</Text> {(actualTotal - totalAmount).toFixed(2)}</Text>
                </Col>
               </Row>
             </Grid>
@@ -192,7 +192,7 @@ class MyPayments extends React.Component {
                     </Left>
                     <View style={{borderBottomWidth:0}}>
                       <Text style={styles.payOptions}>Use My Wallet Balance</Text>
-                      <Text style={styles.payOptions}>Current Balance: <Text style={[appStyles.currency,{fontSize:12}]}>{'\u20B9'}</Text>{walletAmount ? walletAmount.toFixed(2) : 0 }</Text>
+                      <Text style={styles.payOptions}>Current Balance: <Text style={[appStyles.currency,{fontSize:12}]}>{Colors.CUR}</Text>{walletAmount ? walletAmount.toFixed(2) : 0 }</Text>
                     </View>
 
                     <TouchableOpacity style={styles.walletBtn} onPress={()=>this.props.navigation.navigate(Screens.TopupWallet.route)}>
@@ -246,7 +246,7 @@ class MyPayments extends React.Component {
 
                     <Body style={{borderBottomWidth:0}}>
                       <Text style={styles.payOptionscard}>Pay with Cash</Text>
-                      <Text style={[styles.payCashText,{color:Colors.gray}]}>(Eligible with amount above {'\u20B9'}{viewCartDetail.codEligibiltyAmt})</Text>
+                      <Text style={[styles.payCashText,{color:Colors.gray}]}>(Eligible with amount above {Colors.CUR}{viewCartDetail.codEligibiltyAmt})</Text>
                     </Body>
 
                     <View style={{justifyContent:'center',alignItems:'center',marginTop:5}}>
@@ -267,7 +267,7 @@ class MyPayments extends React.Component {
                         </Col>
                        <Col style={{flex:0, width:60}}>
                          <Text style={[styles.testStyles,{color:Colors.primary}]}>
-                         <Text style={[appStyles.currency,{color:Colors.primary}]}>{'\u20B9'}</Text> 74.00</Text>
+                         <Text style={[appStyles.currency,{color:Colors.primary}]}>{Colors.CUR}</Text> 74.00</Text>
                        </Col>
                       </Row>
                       

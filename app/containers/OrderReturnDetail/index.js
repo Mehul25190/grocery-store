@@ -133,7 +133,7 @@ class OrderReturnDetail extends React.Component {
       <Body style={styles.bodyText}>
             <Text  numberOfLines={2}  style={styles.proTitle}>{item.itemName} </Text>
              <Text style={[styles.proTitle, { fontFamily: 'Font-Medium' }]}>
-             <Text style={{ fontFamily: 'Roboto', color: '#000' }}>{'\u20B9'}</Text> {item.itemPrice} (Qty:{item.quantity})</Text>   
+             <Text style={{ fontFamily: 'Roboto', color: '#000' }}>{Colors.CUR}</Text> {item.itemPrice} (Qty:{item.quantity})</Text>   
       </Body>
      
 
@@ -229,7 +229,7 @@ class OrderReturnDetail extends React.Component {
                 </Col>
                 <Col style={styles.orderValue}>
                   <Text style={styles.orderValText}>
-                    <Text style={{ fontFamily: 'Roboto', color: 'gray' }}>{'\u20B9'}
+                    <Text style={{ fontFamily: 'Roboto', color: 'gray' }}>{Colors.CUR}
                     </Text>{(orderData.length > 0) ? orderData[0].orderAmt : ""}</Text>
                 </Col>
               </Row>

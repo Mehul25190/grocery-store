@@ -110,7 +110,7 @@ class OrderDetail extends React.Component {
                  
                 <Right style={styles.ListRight}>
                   <View>
-  <Text style={styles.proPrice}>{'\u20B9'} {item.itemPrice}</Text>
+  <Text style={styles.proPrice}>{Colors.CUR} {item.itemPrice}</Text>
                                    
                   </View>
                 </Right>
@@ -160,7 +160,7 @@ class OrderDetail extends React.Component {
               </Col>
               <Col style={styles.orderValue}>
                 <Text style={styles.orderValText}>
-                  <Text style={{fontFamily:'Roboto',color:'gray'}}>{'\u20B9'}
+                  <Text style={{fontFamily:'Roboto',color:'gray'}}>{Colors.CUR}
                   </Text>{(this.state.orderData.length >0 )? this.state.orderData[0].orderAmt : ""}</Text>
               </Col>
             </Row>

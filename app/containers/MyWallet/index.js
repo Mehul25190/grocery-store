@@ -75,7 +75,7 @@ class MyWallet extends React.Component {
                 <Image source={imgs.wallet}  style={styles.walletIcon} />
               </Col>
               <Col style={styles.amountCol}>
-                <Text style={styles.amountRs}>{'\u20B9'}165.00</Text>
+                <Text style={styles.amountRs}>{Colors.CUR}165.00</Text>
               </Col>
             </Row>
           </Grid>
@@ -119,7 +119,7 @@ class MyWallet extends React.Component {
                        
                         <Right style={styles.ListRight}>
                           <View>
-                          <Text style={styles.proPrice}>{'\u20B9'}{item.price}</Text>
+                          <Text style={styles.proPrice}>{Colors.CUR}{item.price}</Text>
                                                 
                           </View>
                         </Right>

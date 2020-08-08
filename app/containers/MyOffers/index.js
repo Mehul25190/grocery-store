@@ -132,7 +132,7 @@ class MyOffers extends React.Component {
 
                         <Right style={styles.ListRight}>
                             <View>
-                              <Text style={styles.proPrice}>{'\u20B9'}  {item.price}</Text>
+                              <Text style={styles.proPrice}>{Colors.CUR}  {item.price}</Text>
                                                  
                             </View>
                         </Right>

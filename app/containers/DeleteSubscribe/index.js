@@ -92,7 +92,7 @@ class DeleteSubscribe extends React.Component {
                      <Text style={[styles.AmuText,styles.AmuTextTitle]}>{this.state.item.itemName}</Text>
                      <Text style={styles.AmuText}>{this.state.item.weight} {this.state.item.uom}</Text>
                      {/*<Text style={styles.AmuText}>Qty: {this.state.item.quantity}</Text>*/}
-                     <Text style={styles.AmuText}>MRP: <Text style={{}}>{'\u20B9'}</Text> {this.state.item.price}</Text>
+                     <Text style={styles.AmuText}>MRP: <Text style={{}}>{Colors.CUR}</Text> {this.state.item.price}</Text>
                     </View>
                   </Col>
                 </Row>

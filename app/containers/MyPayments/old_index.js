@@ -112,7 +112,7 @@ class MyPayments extends React.Component {
             <Card style={[appStyles.addBox,{height:'auto', position:'relative',marginLeft:0,marginRight:0}]}> 
                <View style={[styles.amountBox,{marginTop:10,marginBottom:10}]}>
                 <Text style={styles.amountText}>Wallet Balance:
-                <Text style={[appStyles.currency,{fontWeight:'bold', fontSize:18,color:Colors.primary}]}> {'\u20B9'}</Text> 20.00</Text>
+                <Text style={[appStyles.currency,{fontWeight:'bold', fontSize:18,color:Colors.primary}]}> {Colors.CUR}</Text> 20.00</Text>
                </View>
             </Card>
 
@@ -122,28 +122,28 @@ class MyPayments extends React.Component {
               <Card style={[appStyles.addBox,{height:'auto', position:'relative',padding:10,marginLeft:0,marginRight:0}]}> 
                <View style={{borderBottomWidth:1,marginRight:Layout.indent,borderColor:Colors.primary,paddingBottom:5,marginBottom:5}}>
                 <Text style={styles.selectedAmnt}>
-                  <Text style={appStyles.currency,{fontWeight:'bold'}}>{'\u20B9'}</Text>  1000.00
+                  <Text style={appStyles.currency,{fontWeight:'bold'}}>{Colors.CUR}</Text>  1000.00
                  </Text>
                </View>
               <ScrollView horizontal  style={styles.addmoney}>
                   <TouchableOpacity style={styles.moneyBorder}>
                     <Text style={[styles.listAmnt]}>
-                     <Text style={appStyles.currency}>{'\u20B9'}</Text> 1000.00
+                     <Text style={appStyles.currency}>{Colors.CUR}</Text> 1000.00
                    </Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.moneyBorder}>
                     <Text style={[styles.listAmnt]}>
-                     <Text style={appStyles.currency}>{'\u20B9'}</Text> 2000.00
+                     <Text style={appStyles.currency}>{Colors.CUR}</Text> 2000.00
                    </Text>
                   </TouchableOpacity>
                    <TouchableOpacity style={styles.moneyBorder}>
                     <Text style={[styles.listAmnt]}>
-                     <Text style={appStyles.currency}>{'\u20B9'}</Text>  3000.00
+                     <Text style={appStyles.currency}>{Colors.CUR}</Text>  3000.00
                    </Text>
                   </TouchableOpacity>
                    <TouchableOpacity style={styles.moneyBorder}>
                     <Text style={[styles.listAmnt]}>
-                     <Text style={appStyles.currency}>{'\u20B9'}</Text>  4000.00
+                     <Text style={appStyles.currency}>{Colors.CUR}</Text>  4000.00
                    </Text>
                   </TouchableOpacity>
                   

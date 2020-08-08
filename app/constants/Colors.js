@@ -20,5 +20,6 @@ export default {
   red:'#ee0701',
   icon: '#000000',
   lightIcon: '#BABABA',
-  gray: '#787878'
+  gray: '#787878',
+  CUR:'AED',
 };

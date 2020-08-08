@@ -91,7 +91,7 @@ class CancelOrder extends React.Component {
                 <Text style={styles.TotalTitle}>Sub Total</Text>
               </Left>
               <Right>
-              <Text style={styles.cancelRs}>{'\u20B9'}{getItem.price}</Text>
+              <Text style={styles.cancelRs}>{Colors.CUR}{getItem.price}</Text>
               </Right>
             </ListItem>
               <ListItem style={{paddingBottom:30,height:35,borderColor:Colors.primary}}>
@@ -99,7 +99,7 @@ class CancelOrder extends React.Component {
                 <Text style={styles.TotalTitle}>Delivery</Text>
               </Left>
               <Right>
-              <Text style={styles.cancelRs}>{'\u20B9'} 50.00</Text>
+              <Text style={styles.cancelRs}>{Colors.CUR} 50.00</Text>
               </Right>
     </ListItem> */}
             <ListItem noBorder>
@@ -107,7 +107,7 @@ class CancelOrder extends React.Component {
                 <Text style={styles.TotalTitle}>Total</Text>
               </Left>
               <Right>
-              <Text>{'\u20B9'} {(getItem[0].orderAmt !="" )? getItem[0].orderAmt : ""} </Text>
+              <Text>{Colors.CUR} {(getItem[0].orderAmt !="" )? getItem[0].orderAmt : ""} </Text>
               </Right>
             </ListItem>
            <TouchableOpacity>
