@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, ScrollView,FlatList, } from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, ScrollView,FlatList, Alert} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers } from '../../components';
@@ -35,13 +35,15 @@ class MyPayments extends React.Component {
       date: '',
       time: '',
       value: null ,
-       switch1Value: props.user.user.useWallet == "Y" ? true : false,
-       showMyCard:false,
-       showAddCard:false,
-        paywithcard: false,
-        paywithcash: false,
-        CardChecked:null,
-         radioBtnsData: ['Pay with Card', 'Pay with Cash'],
+      switch1Value: props.user.user.useWallet == "Y" ? true : false,
+      showMyCard:false,
+      showAddCard:false,
+      paywithcard: false,
+      paywithcash: false,
+      CardChecked:null,
+      CardCheckedId: "",
+      radioBtnsData: ['Pay with Card', 'Pay with Cash'],
+      cardList: [],  
     };
   }
     componentDidMount() {
@@ -64,7 +66,15 @@ class MyPayments extends React.Component {
            //paywithcash:false
       });
   }
+
+  getCardDetail(){
+    this.props.fetchCardDetails(this.props.user.user.id).then(res => {
+      //console.log('card', res.data.cardList);
+      this.setState({cardList: res.data.cardList});
+    });
+  }
   ShowCardList(){
+   this.getCardDetail();
     this.setState({
       showMyCard:true,
       showAddCard:false
@@ -96,6 +106,16 @@ class MyPayments extends React.Component {
       return;
     }
 
+    if(this.state.paywithcard && !this.state.showMyCard && !this.state.showAddCard){
+      showToast('Please select the card option', "danger");
+      return;
+    }
+
+    if(this.state.paywithcard && this.state.showMyCard && this.state.CardCheckedId == ""){
+      showToast('Please select the card', "danger");
+      return;
+    }
+
     if(this.props.walletAmount < (this.props.totalAmount + this.props.deliveryCharges)){
       showToast('Your wallet amount is not sufficent to place the order, please select card or cash option.', "danger");
       return;
@@ -109,7 +129,7 @@ class MyPayments extends React.Component {
 
     //this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), paymentMode:paymentMode, useWallet:useWallet, deliveryCharges:'', subscriptionFees:''});
     
-    this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet ,'', '').then(res => {
+    this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet , this.state.CardCheckedId).then(res => {
       console.log('resrersr', res.data)
       if(res.status == 'success'){
         this.props.navigation.navigate(Screens.OrderSuccess.route, {orderNumber: res.data.orderNumber});
@@ -122,6 +142,34 @@ class MyPayments extends React.Component {
       }
     })
   }
+
+  processDeleteCard(id){
+    this.props.deleteCard(this.props.user.user.id, id).then(res => {
+      console.log(res);
+      if(res.status == 'success'){
+        this.getCardDetail();
+        showToast("Card deleted successfully", "success");
+      }
+    });
+  }
+
+  deleteCard(id){
+    Alert.alert(
+      "Delete Card",
+      "Are you sure you want to delete the card?",
+      [
+        
+        {
+          text: "No",
+        },
+        { text: "Yes", onPress: () => this.processDeleteCard(id)}
+      ],
+      { cancelable: false }
+    );
+  
+
+  }
+
   render(){
     const {navigation, user, totalAmount, deliveryCharges, actualTotal, viewCartDetail, walletAmount} = this.props;
     const getTab = navigation.getParam('item')
@@ -265,9 +313,9 @@ class MyPayments extends React.Component {
                         <Col>
                           <Text style={[styles.testStyles,{color:Colors.primary}]}>Total Amount Payable by Card </Text>
                         </Col>
-                       <Col style={{flex:0, width:60}}>
+                       <Col style={{flex:0, width:80}}>
                          <Text style={[styles.testStyles,{color:Colors.primary}]}>
-                         <Text style={[appStyles.currency,{color:Colors.primary}]}>{Colors.CUR}</Text> 74.00</Text>
+                         <Text style={[appStyles.currency,{color:Colors.primary}]}>{Colors.CUR}</Text> {(totalAmount + deliveryCharges).toFixed(2)} </Text>
                        </Col>
                       </Row>
                       
@@ -275,12 +323,12 @@ class MyPayments extends React.Component {
                       )}
                 { this.state.showMyCard==true && (
                <FlatList
-                data={CardDetails}
+                data={this.state.cardList}
                 renderItem={({ item, index }) => 
                 <Grid style={item.id==2 ? (styles.greenback):(styles.whiteBack)}>
                  <Row>
                      <Col style={{flex:0,justifyContent:'flex-start',width:35}}>
-                        <TouchableOpacity style={{}} onPress={()=>this.setState({CardChecked:index})}>
+                        <TouchableOpacity style={{}} onPress={()=>this.setState({CardChecked:index, CardCheckedId: item.id})}>
                      {/*    <Radio type="radio" selected={item.id==2 && this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />*/}
                      {
                       this.state.CardChecked==index ?
@@ -291,14 +339,13 @@ class MyPayments extends React.Component {
                         </TouchableOpacity>
                       </Col>
                       <Col style={{flex:0,justifyContent:'flex-start'}}>
-                        <Text style={styles.savedCardText}>xxxx-{item.cardNo} ({item.ExpiredM}/{item.ExpiredY})</Text> 
-                        {index==1 && (<Input placeholderTextColor={Colors.primary} style={{backgroundColor:'#fff',width:60,height:35,marginTop:5}} placeholder='CVV' />) }
+                        <Text style={styles.savedCardText}>{item.cardNumber} ({item.expiry})</Text> 
                       </Col>
                       <Col style={{justifyContent:'flex-start',alignItems:'center'}}>
                         <Text style={styles.autoDebitText}>{item.autoDebit=='yes'? 'Auto Debit':''}</Text>
                       </Col>
                       <Col style={{width:40,justifyContent:'flex-start',alignItems:'center'}}>
-                        <TouchableOpacity style={{padding:10}}>
+                        <TouchableOpacity style={{padding:10}} onPress={() => this.deleteCard(item.id)}>
                           <Icon style={styles.trashIcon} name='trashcan' type='Octicons' />
                         </TouchableOpacity>
                       </Col>
@@ -419,7 +466,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
-      placeholder: (user_id, addressId, slotId, deliveryDate, paymentMode, useWallet, deliveryCharges, subscriptionFees) => dispatch(cartActions.placeOrder({ userId:user_id, userAddressDtlsId:addressId, deliverySlot:slotId, deliveryDate:deliveryDate, paymentMode:paymentMode, useWallet:useWallet, deliveryCharges:deliveryCharges, subscriptionFees:subscriptionFees })),
+      placeholder: (user_id, addressId, slotId, deliveryDate, paymentMode, useWallet, cardId) => dispatch(cartActions.placeOrder({ userId:user_id, userAddressDtlsId:addressId, deliverySlot:slotId, deliveryDate:deliveryDate, paymentMode:paymentMode, useWallet:useWallet, cardId: cardId })),
+      fetchCardDetails: (userId) => dispatch(cartActions.fetchCardDetails({userId: userId})),
+      deleteCard: (userId, id) => dispatch(cartActions.deleteCard({userId: userId, id: id})),
    };
 };
 

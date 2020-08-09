@@ -71,9 +71,7 @@ class OrderPayment extends React.Component {
            <Header searchBar rounded style={appStyles.headerStyle}>
       
       <Left style={appStyles.headerLeft}>
-        <Button transparent style={appStyles.menuBtn}  onPress={() => this.props.navigation.navigate(Screens.Home.route)}>
-          <Icon style={appStyles.menuBar}  type="AntDesign" size={30} color={Colors.white} name="arrowleft" />
-        </Button>
+        
       </Left>
    
       <Item style={{ width: 60, backgroundColor: "transparent" }}>
@@ -100,11 +98,15 @@ class OrderPayment extends React.Component {
                     source={{
                       uri: 'http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate=%27'+deliveryDate+'%27&amount='+amount+'&paymentMode=%27'+paymentMode+'%27&useWallet=%27'+useWallet+'%27&saveCard=%27'+saveCard+'%27&autoDebit=%27'+autoDebit
                     }}
-                    style={{ marginTop: 20, width:Layout.window.width-30, height: Layout.window.height }}
+                    style={{ marginTop: 0, width:Layout.window.width-30, height: Layout.window.height*0.9 }}
                   />
          
              </ScrollView>
-            
+             <TouchableOpacity style={styles.continueShoppingBtnArea} >
+            <Button primary full style={styles.checkOutBtn} onPress={()=>this.props.navigation.navigate(Screens.Home.route)}>
+                <Text style={styles.checkOutText}>Continue shopping</Text>
+             </Button>
+          </TouchableOpacity>
           </Content>
       </Container>
      

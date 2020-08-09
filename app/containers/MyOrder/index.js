@@ -29,7 +29,9 @@ class MyOrder extends React.Component {
       time: '',
       status: '',
       orderData: [],  
+      selectedStatus: '',
     };
+    this.courseFilterArr = [];
 
   }
 
@@ -55,6 +57,7 @@ class MyOrder extends React.Component {
 
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
       this.getOrderList();
+      this.setState({selectedStatus: ""})
     });
   }
 
@@ -67,6 +70,9 @@ class MyOrder extends React.Component {
           console.log(res);
               if(res.data.orderList!=null){
                 this.setState({ orderData:res.data.orderList});
+                this.courseFilterArr = res.data.orderList; 
+              }else{
+                this.courseFilterArr = [];
               }
               
         } else {
@@ -115,6 +121,17 @@ class MyOrder extends React.Component {
     return getDate;
   }
 
+  SearchWithStatusFilter(text) {
+    //passing the inserted text in textinput
+    const newData = this.courseFilterArr.filter(function (item) {
+      return text == item.orderStatus;
+    });
+    this.setState({
+      orderData: newData,
+      selectedStatus: text,
+    });
+  }
+
   render() {
     return (
       <MenuProvider customStyles={appStyles.containerProvider} >
@@ -126,6 +143,8 @@ class MyOrder extends React.Component {
             IconRightF='search'
             setCart={true}
             setFilter={true}
+            searchFilter={this.SearchWithStatusFilter.bind(this)}
+            selectedStatus={this.state.selectedStatus}
             IconRightT='sound-mix'
             StyleIconRightT={{ marginRight: 10 }}
             bgColor='transparent'

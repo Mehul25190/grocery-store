@@ -483,6 +483,15 @@ addAddressStyle: {
   marginBottom:10
 
 },
+continueShoppingBtnArea:{
+	marginLeft:Layout.indent,
+	marginRight:Layout.indent,
+	  paddingLeft:Layout.indent,
+	paddingRight:Layout.indent,
+	marginTop:-60,
+	marginBottom:10
+  
+  },
 addmoneyArea:{
   marginLeft:Layout.indent+15,
   marginRight:Layout.indent+15,

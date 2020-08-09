@@ -37,5 +37,7 @@ export default {
   getAvailableTimeSlots: 'adminSettings/getAvailableTimeSlots',
   fetchDeliveryCharges: 'adminSettings/fetchDeliveryCharges',
   placeOrder: 'userCart/placeOrder',
-  fetchSubscriptionCharges: 'adminSettings/fetchSubscriptionFees'
+  fetchSubscriptionCharges: 'adminSettings/fetchSubscriptionFees',
+  fetchCardDetails: 'userCardDetails/fetchCardDetails',
+  deleteCard: 'userCardDetails/deleteCard',
 }

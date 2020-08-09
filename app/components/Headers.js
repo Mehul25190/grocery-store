@@ -45,6 +45,7 @@ class Headers extends React.Component {
       searcBar: false,
       filter: false,
       textValue: "",
+      selectedStatus: "",
     };
   }
   onPress = () => {
@@ -67,7 +68,7 @@ class Headers extends React.Component {
 
     const CheckedOption = (props) => (
       <MenuOption
-        onSelect={() => alert(props.text)}
+        onSelect={() => this.props.searchFilter(props.value)}
         value={props.value}
         text={(props.checked ? "\u2713 " : "    ") + " " + props.text}
       />
@@ -120,10 +121,10 @@ class Headers extends React.Component {
                 />
               </MenuTrigger>
               <MenuOptions style={{ backgroundColor: "#D2EAD2" }}>
-                <CheckedOption value={1} text="Pending" />
-                <CheckedOption checked value={2} text="In Process" />
-                <CheckedOption value={3} text="Delivered" />
-                <CheckedOption value={4} text="Canceled" />
+                <CheckedOption  checked={this.props.selectedStatus == 'PEN' ? true : false } value={'PEN'} text="Pending" />
+                <CheckedOption value={2} text="In Process" />
+                <CheckedOption checked={this.props.selectedStatus == 'CNF' ? true : false } value={'CNF'} text="Delivered" />
+                <CheckedOption checked={this.props.selectedStatus == 'CAN' ? true : false } value={'CAN'} text="Canceled" />
               </MenuOptions>
             </Menu>
           )}

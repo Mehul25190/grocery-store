@@ -126,6 +126,34 @@ export const fetchSubscriptionCharges = payloads => dispatch => {
     });
 }
 
+export const fetchCardDetails = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchCardDetails,  {queries: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        //dispatch({ type: ActionTypes.DELIVERYCHARGES, data: res.data.data.subscriptionFees ? res.data.data.subscriptionFees : 0 });
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+export const deleteCard = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.deleteCard,  {payloads: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        //dispatch({ type: ActionTypes.DELIVERYCHARGES, data: res.data.data.subscriptionFees ? res.data.data.subscriptionFees : 0 });
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+
+
 
 
 
