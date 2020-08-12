@@ -272,7 +272,7 @@ class SearchProduct extends React.Component {
                             <View style={{ flexDirection: "row" }}>
                               <Text style={styles.proPriceStrike}>
                                 <Text style={(appStyles.currency, { fontSize: 18 })}>
-                                  {"\u20B9"}
+                                  {Colors.CUR}
                                 </Text>{" "}
                                 {item.price}
                               </Text>
@@ -280,7 +280,8 @@ class SearchProduct extends React.Component {
                                 <Text
                                   style={(appStyles.currency, { fontSize: 18 })}
                                 >
-                                  {"\u20B9"}
+                                  {Colors.CUR}
+                                  
                                  </Text>{" "}
                                 {item.discountedPrice}
                               </Text>
@@ -291,7 +292,7 @@ class SearchProduct extends React.Component {
                                 <Text
                                   style={(appStyles.currency, { fontSize: 18 })}
                                 >
-                                  {"\u20B9"}
+                                  {Colors.CUR}
                                 </Text>{" "}
                                 {item.price}
                               </Text>

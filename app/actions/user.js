@@ -198,6 +198,27 @@ export const saveUserProfile = payloads => dispatch => {
       }
     });
 }
+
+/**
+ * get User EthenCity 
+ */
+export const showEthenCityList = payloads => dispatch => {
+  
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchEthnicityList,  {queries: payloads}).then(res => {
+    
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res);
+      if(res.status == 200){
+        //console.log('return');
+        //console.log(res.data);
+        return res.data
+      } else {
+        return res
+      }
+    });
+
+}
 /**
  * get User profile 
  */
