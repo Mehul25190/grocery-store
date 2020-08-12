@@ -41,4 +41,5 @@ export default {
   fetchSubscriptionCharges: 'adminSettings/fetchSubscriptionFees',
   fetchCardDetails: 'userCardDetails/fetchCardDetails',
   deleteCard: 'userCardDetails/deleteCard',
+  orderReturn: 'order/returnOrderItem',
 }

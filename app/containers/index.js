@@ -34,6 +34,7 @@ import MyOffers from "./MyOffers";
 import ModifySubscription from "./Subscription/editSubscription.js";
 import SearchProduct from "./SearchProduct";
 import OrderPayment from "./MyPayments/orderPayment.js"
+import CardOrderPayment from "./MyPayments/cardOrderPayment.js"
 
 export { SignIn, CancelOrder, MyOffers, MyCart, ProductDetail, OrderSuccess, SubscribeSuccess, Checkout, Confirmation, DeleteSubscribe, OrderReturn, OrderReturnDetail, SubscribeOrder, SubscribeDetail, TopupWallet, OrderDetail, Profile, MyAddress, MyNotification, MyRatings,  MyWallet, Subscription, ProductList, SignInEmail, Verification, SignInMobile,
- SignUp, Forgotpassword, Drawer, Home, MyOrder, Settings, MyPayments, ModifySubscription, SearchProduct, OrderPayment};
+ SignUp, Forgotpassword, Drawer, Home, MyOrder, Settings, MyPayments, ModifySubscription, SearchProduct, OrderPayment, CardOrderPayment};

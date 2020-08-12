@@ -44,6 +44,7 @@ class MyPayments extends React.Component {
       CardCheckedId: "",
       radioBtnsData: ['Pay with Card', 'Pay with Cash'],
       cardList: [],  
+      cvv:"",
     };
   }
     componentDidMount() {
@@ -125,22 +126,40 @@ class MyPayments extends React.Component {
     const selectedTimeSlot = navigation.getParam('timeslot');
     const dateslot = navigation.getParam('dateslot');
     const useWallet = this.state.switch1Value ? 'Y' : 'N';
-    const paymentMode = this.state.paywithcash ? 'COD' : this.state.paywithcard ? 'CARD' : '' ;
+    const paymentMode = this.state.paywithcash ? 'COD' : this.state.paywithcard ? 'CARD' : 'WALLET' ;
+    const amount = (this.props.totalAmount + this.props.deliveryCharges).toFixed(2) * 100;
 
     //this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), paymentMode:paymentMode, useWallet:useWallet, deliveryCharges:'', subscriptionFees:''});
+    //this.state.CardCheckedId
+    if(this.state.paywithcard && this.state.showMyCard){
+      this.props.placeOrderWithCard(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet, this.state.CardCheckedId, amount, this.state.cvv).then(res => {
+        if(res.status == 'success'){
+          console.log(res.data.isAutoDebit);
+          if(res.data.isAutoDebit == 'N'){
+            this.props.navigation.navigate(Screens.CardOrderPayment.route, {html: res.data.html});
+          }else{
+            this.props.navigation.navigate(Screens.OrderSuccess.route, {orderNumber: res.data.orderNumber});
+          }
+        }else{
+          if(res.message)
+            showToast(res.message, "danger");
+          else
+            showToast("Some technical issue found, please contact to support.", "danger");
+        }
+      })
+    }else{
+      this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet).then(res => {
+        if(res.status == 'success'){
+          this.props.navigation.navigate(Screens.OrderSuccess.route, {orderNumber: res.data.orderNumber});
+        }else{
+          if(res.message)
+            showToast(res.message, "danger");
+          else
+            showToast("Some technical issue found, please contact to support.", "danger");
+        }
+      })
+    }
     
-    this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet , this.state.CardCheckedId).then(res => {
-      console.log('resrersr', res.data)
-      if(res.status == 'success'){
-        this.props.navigation.navigate(Screens.OrderSuccess.route, {orderNumber: res.data.orderNumber});
-      }else{
-        if(res.message)
-          showToast(res.message, "danger");
-        else
-          showToast("Some technical issue found, please contact to support.", "danger");
-
-      }
-    })
   }
 
   processDeleteCard(id){
@@ -168,6 +187,10 @@ class MyPayments extends React.Component {
     );
   
 
+  }
+
+  selectCard(index, id){
+    this.setState({CardChecked:index, CardCheckedId: id, cvv: ""})
   }
 
   render(){
@@ -286,7 +309,6 @@ class MyPayments extends React.Component {
                       {this.state.paywithcash == true && this.state.paywithcard==false?
                           (<Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />):
                           (<Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />)
-                          
                         }
                     
                     </TouchableOpacity>
@@ -328,7 +350,7 @@ class MyPayments extends React.Component {
                 <Grid style={item.id==2 ? (styles.greenback):(styles.whiteBack)}>
                  <Row>
                      <Col style={{flex:0,justifyContent:'flex-start',width:35}}>
-                        <TouchableOpacity style={{}} onPress={()=>this.setState({CardChecked:index, CardCheckedId: item.id})}>
+                      <TouchableOpacity style={{}} onPress={()=> this.selectCard(index, item.id)}>
                      {/*    <Radio type="radio" selected={item.id==2 && this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />*/}
                      {
                       this.state.CardChecked==index ?
@@ -340,6 +362,8 @@ class MyPayments extends React.Component {
                       </Col>
                       <Col style={{flex:0,justifyContent:'flex-start'}}>
                         <Text style={styles.savedCardText}>{item.cardNumber} ({item.expiry})</Text> 
+                        {(item.isAutoDebit == "N" && item.id == this.state.CardCheckedId) && (<Input placeholderTextColor={Colors.primary} onChangeText={(value) => {this.setState({cvv: value })} }  style={{backgroundColor:'#fff',width:60,height:35,marginTop:5}} placeholder='CVV' />) }
+
                       </Col>
                       <Col style={{justifyContent:'flex-start',alignItems:'center'}}>
                         <Text style={styles.autoDebitText}>{item.autoDebit=='yes'? 'Auto Debit':''}</Text>
@@ -466,7 +490,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
-      placeholder: (user_id, addressId, slotId, deliveryDate, paymentMode, useWallet, cardId) => dispatch(cartActions.placeOrder({ userId:user_id, userAddressDtlsId:addressId, deliverySlot:slotId, deliveryDate:deliveryDate, paymentMode:paymentMode, useWallet:useWallet, cardId: cardId })),
+      placeholder: (user_id, addressId, slotId, deliveryDate, paymentMode, useWallet) => dispatch(cartActions.placeOrder({ userId:user_id, userAddressDtlsId:addressId, deliverySlot:slotId, deliveryDate:deliveryDate, paymentMode:paymentMode, useWallet:useWallet })),
+      placeOrderWithCard: (user_id, addressId, slotId, deliveryDate, paymentMode, useWallet, cardId, amount, cvv) => dispatch(cartActions.placeOrder({ userId:user_id, userAddressDtlsId:addressId, deliverySlot:slotId, deliveryDate:deliveryDate, paymentMode:paymentMode, useWallet:useWallet, cardId: cardId, amount: amount, cvv: cvv })),
       fetchCardDetails: (userId) => dispatch(cartActions.fetchCardDetails({userId: userId})),
       deleteCard: (userId, id) => dispatch(cartActions.deleteCard({userId: userId, id: id})),
    };
