@@ -152,8 +152,18 @@ export const deleteCard = payloads => dispatch => {
     });
 }
 
-
-
+export const orderReturn = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.orderReturn,  {payloads: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        //dispatch({ type: ActionTypes.DELIVERYCHARGES, data: res.data.data.subscriptionFees ? res.data.data.subscriptionFees : 0 });
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
 
 
 

@@ -16,6 +16,7 @@ import {
 import url from "../../config/api";
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
+import * as cartActions from "../../actions/cart";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import { ReturnReason } from '../data/data';
@@ -71,14 +72,16 @@ class OrderReturnDetail extends React.Component {
 
   makeObject = (orderItemId,returnReason,returnQty) => {
     alert("Pending");
-    this.state.returnItems = [
+    const orderReturnItem = 
       {
       "orderItemId": orderItemId,
       "returnReason": returnReason,
       "returnQty": returnQty,
       "image":''
-    }
-  ];
+    };
+    this.props.orderReturn(JSON.stringify(orderReturnItem)).then(res => {
+
+    });
   }
    onPressSubmit = (item) => {
      
@@ -283,6 +286,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(userActions.logoutUser()),
     saveReturnOrder: (returnItems) => dispatch(userActions.saveReturnOrder(returnItems)),
+    orderReturn: (returnItem) => dispatch(cartActions.orderReturn({returnItem})),
   };
 };
 
