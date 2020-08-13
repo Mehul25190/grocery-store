@@ -32,7 +32,8 @@ class OrderReturnDetail extends React.Component {
       date: '',
       time: '',
       selected: 0,
-      returnItems:[]
+      returnItems:[],
+      qty: "",
     };
 
   }
@@ -70,17 +71,17 @@ class OrderReturnDetail extends React.Component {
     });
   }
 
-  makeObject = (orderItemId,returnReason,returnQty) => {
+  makeObject = (orderItemId,returnReason) => {
     alert("Pending");
     const orderReturnItem = 
       {
       "orderItemId": orderItemId,
-      "returnReason": returnReason,
-      "returnQty": returnQty,
+      "returnReason": this.state.selected,
+      "returnQty": this.state.qty,
       "image":''
     };
-    this.props.orderReturn(JSON.stringify(orderReturnItem)).then(res => {
-
+    this.props.orderReturn(JSON.stringify({"orderItemId": orderItemId, "returnReason": this.state.selected, "returnQty": this.state.qty, "image":''})).then(res => {
+      console.log(res)
     });
   }
    onPressSubmit = (item) => {
@@ -146,12 +147,12 @@ class OrderReturnDetail extends React.Component {
         </View>
         <View style={[styles.RigView, styles.qtyCol]}>
           <Text style={styles.qtyText}>Qty</Text>
-          <Input keyboardType='numeric' style={styles.qtyInput} value={item.quantity}  maxLength={2}  /> 
+          <Input keyboardType='numeric' style={styles.qtyInput} value={item.quantity} onChangeText={(value) => {this.setState({qty: value })} } maxLength={2}  /> 
           
         </View>
 
         <Button style={styles.RigView} style={styles.returnBtn}>
-          <TouchableOpacity onPress={() => this.makeObject()} >
+          <TouchableOpacity onPress={() => this.makeObject(item.itemId)} >
             <Text style={styles.btnText}> Return </Text>
           </TouchableOpacity>
         </Button>
@@ -174,7 +175,7 @@ class OrderReturnDetail extends React.Component {
                     {
 
                       ReturnReason.map(data => (
-                        <Picker.Item key={data.key} label={data.reason} value={data.key} />
+                        <Picker.Item key={data.key} label={data.reason} value={data.reason} />
 
                       ))
 
@@ -193,7 +194,7 @@ class OrderReturnDetail extends React.Component {
     const { navigation } = this.props;
     const orderData = navigation.getParam('orderData');
     const getItem = navigation.getParam('orderItem');
-
+console.log(getItem)
     return (
       <Container style={appStyles.container}>
 

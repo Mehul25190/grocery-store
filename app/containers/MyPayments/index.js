@@ -132,11 +132,15 @@ class MyPayments extends React.Component {
     //this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), paymentMode:paymentMode, useWallet:useWallet, deliveryCharges:'', subscriptionFees:''});
     //this.state.CardCheckedId
     if(this.state.paywithcard && this.state.showMyCard){
-      this.props.placeOrderWithCard(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet, this.state.CardCheckedId, amount, this.state.cvv).then(res => {
-        if(res.status == 'success'){
-          console.log(res.data.isAutoDebit);
+      this.props.placeOrderWithCard(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, '2020-08-13', paymentMode, useWallet, this.state.CardCheckedId, amount, this.state.cvv).then(res => {
+        if(res.status == 'success'){  
+          console.log('response', res);
           if(res.data.isAutoDebit == 'N'){
-            this.props.navigation.navigate(Screens.CardOrderPayment.route, {html: res.data.html});
+            const temp_html = res.data.html;
+            const temp = temp_html.replace(/\\/g, "");
+            console.log("------------");
+            console.log(temp);
+            this.props.navigation.navigate(Screens.CardOrderPayment.route, {html:temp});
           }else{
             this.props.navigation.navigate(Screens.OrderSuccess.route, {orderNumber: res.data.orderNumber});
           }
