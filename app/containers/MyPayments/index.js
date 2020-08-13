@@ -45,6 +45,7 @@ class MyPayments extends React.Component {
       radioBtnsData: ['Pay with Card', 'Pay with Cash'],
       cardList: [],  
       cvv:"",
+      cardOption: true,
     };
   }
     componentDidMount() {
@@ -61,9 +62,21 @@ class MyPayments extends React.Component {
     });
   }
    toggleSwitch1= (value) =>{
+      const orderTotal = (this.props.totalAmount + this.props.deliveryCharges).toFixed(2)
+      let cardOption = false;
+      if(value && this.props.walletAmount > orderTotal){
+        cardOption = false;
+        this.setState({paywithcard: false})
+      }else if(value && this.props.walletAmount < orderTotal){
+        cardOption = true;
+      }else{
+        cardOption = true;
+      }
+      
       this.setState({
            switch1Value: value,
-           //paywithcard:false,
+           //paywithcard:cardOption,
+           cardOption: cardOption, 
            //paywithcash:false
       });
   }
@@ -92,8 +105,9 @@ class MyPayments extends React.Component {
     const dateslot = navigation.getParam('dateslot');
     const useWallet = this.state.switch1Value ? 'Y' : 'N';
     const paymentMode = this.state.paywithcash ? 'COD' : this.state.paywithcard ? 'CARD' : '' ;
+    let amount = this.state.switch1Value ? (this.props.totalAmount + this.props.deliveryCharges).toFixed(2) - this.props.walletAmount : (this.props.totalAmount + this.props.deliveryCharges).toFixed(2)  ;
 
-    this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), amount: this.props.totalAmount + this.props.deliveryCharges ,paymentMode:paymentMode, useWallet:useWallet, saveCard:'Y', autoDebit:'Y'});
+    this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), amount: amount ,paymentMode:paymentMode, useWallet:useWallet, saveCard:'Y', autoDebit:'Y'});
 
      this.setState({
       showMyCard:false,
@@ -127,12 +141,12 @@ class MyPayments extends React.Component {
     const dateslot = navigation.getParam('dateslot');
     const useWallet = this.state.switch1Value ? 'Y' : 'N';
     const paymentMode = this.state.paywithcash ? 'COD' : this.state.paywithcard ? 'CARD' : 'WALLET' ;
-    const amount = (this.props.totalAmount + this.props.deliveryCharges).toFixed(2) * 100;
-
+    let amount =     this.state.switch1Value ? (this.props.totalAmount + this.props.deliveryCharges).toFixed(2) - this.props.walletAmount : (this.props.totalAmount + this.props.deliveryCharges).toFixed(2)  ;
+    amount = amount * 100;
     //this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), paymentMode:paymentMode, useWallet:useWallet, deliveryCharges:'', subscriptionFees:''});
     //this.state.CardCheckedId
     if(this.state.paywithcard && this.state.showMyCard){
-      this.props.placeOrderWithCard(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, '2020-08-13', paymentMode, useWallet, this.state.CardCheckedId, amount, this.state.cvv).then(res => {
+      this.props.placeOrderWithCard(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY-MM-DD'), paymentMode, useWallet, this.state.CardCheckedId, amount, this.state.cvv).then(res => {
         if(res.status == 'success'){  
           console.log('response', res);
           if(res.data.isAutoDebit == 'N'){
@@ -275,8 +289,9 @@ class MyPayments extends React.Component {
                       
                       <Image source={imgs.walletIcon2} style={styles.walletIcon} />
                     </TouchableOpacity>
-                </ListItem>   
-                 <ListItem style={styles.PayMethodOther} icon>
+                </ListItem> 
+                {this.state.cardOption == true && (this.props.walletAmount < (totalAmount + deliveryCharges).toFixed(2) || !this.state.switch1Value) ?    
+                  (<ListItem style={styles.PayMethodOther} icon>
                   
                       {/* <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />*/}
                         <TouchableOpacity style={[styles.btn,{}]} onPress={()=>{this.setState({paywithcard:true,paywithcash:false})}}>
@@ -288,9 +303,9 @@ class MyPayments extends React.Component {
                         
                       </TouchableOpacity>
              
-              
+                     
                   <Body style={{flex:0,borderBottomWidth:0, justifyContent:'center',alignItems:'flex-start'}}>
-                    <Text style={styles.payOptionscard}>Pay with Card    </Text>
+                    <Text style={styles.payOptionscard}>Pay with Card {this.state.paywithcard}   </Text>
                    
                   </Body>
 
@@ -304,7 +319,8 @@ class MyPayments extends React.Component {
                       
                        <Image source={imgs.addCardIcon} style={styles.addCardIcon} />
                     </TouchableOpacity>
-                </ListItem>  
+                </ListItem>)
+                  : null } 
                 {viewCartDetail.codEligibiltyAmt <= totalAmount?
                   <ListItem style={[styles.PayMethodOther,{marginTop:10}]} icon>
                     <TouchableOpacity style={styles.btn} onPress={()=>{this.setState({paywithcard: false,paywithcash:true})}}>
