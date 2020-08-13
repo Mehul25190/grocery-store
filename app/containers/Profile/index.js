@@ -38,7 +38,7 @@ class Profile extends React.Component {
       lastName:"",
       gender:"0",
       dob:"",
-      ethnicity:"key0",
+      ethnicity:"",
       promotionalEmail:true,
       ringBell:false,
       mobileNo:"",
@@ -46,6 +46,7 @@ class Profile extends React.Component {
       isLoading: false,
       //USERID:1,
       setUserData:[],
+      ethenicCityData: [],
 
     };
     this.checkBoxtTest = this.checkBoxtTest.bind(this);
@@ -58,12 +59,38 @@ class Profile extends React.Component {
       //delAddress: '123, Block-B, Divyajiavn Aprtment, Bapunagar Aproach, Ahmedabad - 352350.'
     });
     
+    this.getEthenCityList(); 
+
     this.getUserProfile();  
 
    //alert(this.props.user.user.mobile);
   
     
   }
+
+  //get city List  
+  getEthenCityList() {
+    
+    this.props.showEthenCityList().then (res =>{
+       console.log(res.status); 
+
+        if(res.status == "success"){
+          console.log(res.data.ethnicityList);
+              this.setState({ ethenicCityData:res.data.ethnicityList });
+                
+
+        } else {
+              console.log("something wrong with varification call");
+              showToast("Something wrong with Server response","danger");
+        }
+         
+      })
+      .catch(error => {
+          console.log('Error messages returned from server', error);
+          showToast("Error messages returned from server","danger");
+      });
+  }
+
   //get User Profile
   getUserProfile(){
 
@@ -115,7 +142,7 @@ class Profile extends React.Component {
   }
 
   //selected ethencity
-  onValueChange(value: string) {
+  onValueChangeEthenCity(value: string) {
     this.setState({
       ethnicity: value,
       //switch1Value: value
@@ -282,8 +309,6 @@ class Profile extends React.Component {
                       onValueChange={this.onValueChangeGender.bind(this)}
                       textStyle={{ fontFamily: 'Font-Medium' }}
                       style={styles.dorpDownReason}
-
-                      onValueChangeGender={this.onValueChange.bind(this)}
                       placeholderStyle={{ borderWidth: 10, fontFamily: 'Font-Medium' }}
                       placeholderIconColor={{ borderWidth: 2 }}
                     >
@@ -307,26 +332,29 @@ class Profile extends React.Component {
             <View style={{ paddingTop: 10, position: 'relative', marginRight: Layout.indent }}>
              <Label style={[styles.labelText, { paddingLeft: Layout.indent, width: Layout.width }]}  >Ethencity</Label>
               <Item style={{}} >
-                <Picker
-                  note
-                  mode="dropdown"
-                  style={{ flex: 1 }}
-                  //selectedValue={this.state.selected}
-                  //onValueChange={this.onValueChangeGender.bind(this)}
-                  selectedValue={this.state.ethnicity}
-                  onValueChange={this.onValueChange.bind(this)} >
-                  
-                  <Picker.Item label="Select Ethencity" value="key0" />
-                  <Picker.Item label="Asians" value="Asians" />
-                  <Picker.Item label="Bengalis" value="Bengalis" />
-                  <Picker.Item label="Parsis" value="Parsis" />
-                  <Picker.Item label="Panjabis" value="Panjabis" />
-                  <Picker.Item label="Aryan" value="Aryan" />
-                  <Picker.Item label="Brahmin" value="Brahmin" />
-                  <Picker.Item label="Rajput" value="Rajput" />
-                  <Picker.Item label="Tamils" value="Tamils" />
+              <Picker
+                      note
+                      mode="dropdown"
+                      itemStyle={{ fontFamily: 'Font-Medium' }}
+                      itemTextStyle={{ fontFamily: 'Font-Medium' }}
+                      textStyle={{ fontFamily: 'Font-Medium' }}
+                      style={styles.dorpDownReason}
+                      selectedValue={this.state.ethnicity}
+                      onValueChange={this.onValueChangeEthenCity.bind(this)}
+                      placeholderStyle={{ borderWidth: 10, fontFamily: 'Font-Medium' }}
+                      placeholderIconColor={{ borderWidth: 2 }}
+                    >
+                      {
+
+                        this.state.ethenicCityData.map(data => (
+                          <Picker.Item key={data.id} label={data.ethnicity} value={data.ethnicity} />
+                        ))
+                      }
+
 
                 </Picker>
+
+                
                 <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
               </Item>
 
@@ -418,8 +446,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(userActions.logoutUser()),
+    showEthenCityList: () => dispatch(userActions.showEthenCityList()),
     showUserProfile: (userid) => dispatch(userActions.showUserProfile({userId:userid})),
     saveProfile: (formdata) => dispatch(userActions.saveUserProfile(formdata))
+    
   };
 };
 

@@ -15,6 +15,7 @@ export default {
   saveUserAddress:'user/saveUserAddress',
   //showUserDeliveryAddress:'user/fetchUserAddress',
   showUserProfile:'user/fetchUserProfileDetails',
+  fetchEthnicityList:'adminSettings/fetchEthnicityList',
   mySubscriptionList: 'order/fetchMySubscriptions',
   getItemDetail: 'item/getItemById',
   getDeviveryAddress: 'user/fetchUserAddress',

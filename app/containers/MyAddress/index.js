@@ -256,6 +256,7 @@ class MyAddress extends React.Component {
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (
             <View>
+              { /*
           <Card style={[appStyles.addBox, { height: 'auto', marginTop: 15, position: 'relative' }]}>
             <Icon type='MaterialIcons' name='my-location' style={styles.locationIcon} />
             <GooglePlacesAutocomplete
@@ -275,7 +276,8 @@ class MyAddress extends React.Component {
               currentLocation={true}
               currentLocationLabel='Current location'
             />
-          </Card>
+          </Card> 
+            */}
           {/*  <Grid style={{marginTop:20,marginBottom:20}}>  
                <Row>   
                                    <Col style={{ justifyContent:'flex-start'}}>

@@ -31,8 +31,6 @@ const iconSize = moderateScale(28);
 const bigIconSize = moderateScale(40);
 const iconMargin = Platform.OS === 'android' ? 16 : 10;
 
-const CUR = 'AED';
-
 export default {
 	window: {
 		width,
