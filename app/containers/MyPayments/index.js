@@ -116,7 +116,7 @@ class MyPayments extends React.Component {
   }
 
   placeOrder() {
-    if(!this.state.switch1Value && !this.state.paywithcard && !this.state.paywithcard){
+    if(!this.state.switch1Value && !this.state.paywithcard && !this.state.paywithcash){
       showToast('Please select the payment method', "danger");
       return;
     }
@@ -131,7 +131,7 @@ class MyPayments extends React.Component {
       return;
     }
 
-    if(this.props.walletAmount < (this.props.totalAmount + this.props.deliveryCharges)){
+    if(this.props.walletAmount < (this.props.totalAmount + this.props.deliveryCharges) && !this.state.paywithcash ){
       showToast('Your wallet amount is not sufficent to place the order, please select card or cash option.', "danger");
       return;
     }
@@ -222,7 +222,7 @@ class MyPayments extends React.Component {
               IconLeft='arrowleft'
               onPress={() => this.openControlPanel()}
               IconRightF='search'
-              setCart={true}
+              setCart={false}
               bgColor='transparent'
               Title='Payment'
             />
@@ -357,7 +357,8 @@ class MyPayments extends React.Component {
                         </Col>
                        <Col style={{flex:0, width:80}}>
                          <Text style={[styles.testStyles,{color:Colors.primary}]}>
-                         <Text style={[appStyles.currency,{color:Colors.primary}]}>{Colors.CUR}</Text> {(totalAmount + deliveryCharges).toFixed(2)} </Text>
+                         <Text style={[appStyles.currency,{color:Colors.primary}]}>{Colors.CUR} </Text> 
+                         {this.state.switch1Value ? (totalAmount + deliveryCharges).toFixed(2) - walletAmount : (totalAmount + deliveryCharges).toFixed(2)}</Text>
                        </Col>
                       </Row>
                       
