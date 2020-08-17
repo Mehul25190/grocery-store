@@ -27,6 +27,8 @@ class MyWallet extends React.Component {
       //default value of the date time
       date: '',
        time: '',
+       walletData: [], 
+       userWallet:0,
     };
 
   }
@@ -45,10 +47,44 @@ class MyWallet extends React.Component {
       date:   date + ' ' + month + ' ' + year ,
       time:   hours + ':' + min 
     });
+
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.getUserWalletList();
+      
+    });
+
+    
+
   }
     openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
     }
+
+    getUserWalletList() {
+      //alert(this.props.user.user.id);
+      this.props.getWalletList(this.props.user.user.id).then (res =>{
+        
+        //console.log(orderData);
+          if(res.status == "success"){
+            console.log("After sucess nirav");
+            console.log(res);
+                if(res.data.activityList!=null){
+                  this.setState({ walletData:res.data.activityList});
+                  this.setState({ userWallet:res.data.walletBalance});
+                  
+                } 
+          } else {
+                console.log("something wrong with varification call");
+                showToast("Something wrong with Server response","danger");
+          }
+           
+        })
+        .catch(error => {
+            console.log('Error messages returned from server', error);
+            showToast("Error messages returned from server","danger");
+        });
+    }
+
   render(){
     return (
       <Container style={appStyles.container}>
@@ -62,7 +98,12 @@ class MyWallet extends React.Component {
               Title='My Wallet'
              />
       
-          <Content enableOnAndroid>
+      <Content enableOnAndroid style={appStyles.content}>
+          {this.props.isLoading ? (
+            <Spinner color={Colors.secondary} style={appStyles.spinner} />
+          ) : (
+            <View>
+
         <View>
           <Text style={styles.BalanceTitle}>
             Current Balance
@@ -75,7 +116,7 @@ class MyWallet extends React.Component {
                 <Image source={imgs.wallet}  style={styles.walletIcon} />
               </Col>
               <Col style={styles.amountCol}>
-                <Text style={styles.amountRs}>{Colors.CUR}165.00</Text>
+    <Text style={styles.amountRs}>{Colors.CUR}{this.state.userWallet}</Text>
               </Col>
             </Row>
           </Grid>
@@ -96,30 +137,25 @@ class MyWallet extends React.Component {
           </Text>
         </View>
 
-         <View style={styles.dateRow}>
-          <Text style={styles.walletDate}>
-            {this.state.date}
-          </Text>
-        </View>
-
+         
          {
 
-             productList.map((item, index) => {
+             this.state.walletData.map((item, index) => {
                   return (
                   
                        <ListItem style={styles.ListItems} >
                         <Left style={{justifyContent:'flex-start'}}>
                          <View style={styles.prodInfo}>
                            {/* <Text style={styles.proTitle}>{item.proName}</Text>*/}
-                            <Text  style={styles.proTitle}>Charged Succesfully</Text>
-                             <Text style={styles.paidTime}>{this.state.date} {this.state.time}</Text>
+                            <Text  style={styles.proTitle}>{item.orderNumber} {item.activityType}</Text>
+                             <Text style={styles.paidTime}>{item.date}</Text>
                             
                           </View>
                         </Left>
                        
                         <Right style={styles.ListRight}>
                           <View>
-                          <Text style={styles.proPrice}>{Colors.CUR}{item.price}</Text>
+                          <Text style={styles.proPrice}>{Colors.CUR} {item.amount}</Text>
                                                 
                           </View>
                         </Right>
@@ -128,8 +164,11 @@ class MyWallet extends React.Component {
                   );
                 })
            }
-          </Content>
+          
         
+        </View>
+            )}
+          </Content>
       </Container>
      
     );
@@ -144,6 +183,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+      getWalletList: (useId) => dispatch(userActions.getUserWalletList({userId: useId})),
    };
 };
 

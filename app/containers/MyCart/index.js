@@ -158,9 +158,9 @@ class MyCart extends React.Component {
             <Text style={styles.AmuText}>{item.weight} {item.uom}</Text>
             <Text style={styles.AmuText}></Text>
             {item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? (
-              <Text style={styles.AmuText}>MRP:
+              <Text style={styles.AmuText}>
                 <Text style={[styles.proPriceStrike, styles.AmuText]}>
-                  <Text style={{ color: Colors.gray }}>{Colors.CUR}</Text>{" "}
+                  <Text style={{ color: Colors.gray }}>{Colors.CUR} </Text>{" "}
                   {item.itemPrice}
                 </Text>
                 <Text style={styles.AmuText}>
@@ -169,7 +169,7 @@ class MyCart extends React.Component {
                 </Text>
               </Text>
             ) : (
-                <Text style={styles.AmuText}>MRP:
+                <Text style={styles.AmuText}>
                   <Text style={styles.AmuText}>
                     <Text style={{ color: Colors.gray }}>{Colors.CUR}</Text>{" "}
                     {item.itemPrice}
@@ -276,7 +276,7 @@ class MyCart extends React.Component {
                 </Col>
                 <Col style={{ justifyContent: 'center', alignItems: 'flex-end', width: Layout.window.width / 1.8 }}>
                   <View style={styles.totalAmount}>
-                    <Text style={styles.totalText}>Total Amount <Text style={{ fontFamily: 'Roboto', color: Colors.black }}> {Colors.CUR}</Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
+                    <Text style={styles.totalText}>Total Amount <Text style={{ fontFamily: 'Roboto', color: Colors.black }}> {Colors.CUR} </Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
                   </View>
                 </Col>
               </Row>
