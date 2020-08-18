@@ -341,6 +341,24 @@ export const getUserOrderList = payloads => dispatch => {
 }
 
 /**
+ * Get User Wallet List
+ * @param {} payloads 
+ */
+export const getUserWalletList = payloads => dispatch => {
+  //console.log('payloads', payloads);
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.getUserWalletList,  {queries: payloads}).then(res => {
+    console.log("xxxxx"+res.data);
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        console.log("get response"+res.data);
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+/**
  * Get Cancel order
  * @param {} payloads 
  */
@@ -411,6 +429,7 @@ export const fetchSubCategory = payloads => dispatch => {
 }
 /****  Get Sub Category Lisy ****/
 
+<<<<<<< HEAD
 export const fetchUserWallet = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.fetchUserWallet,{queries: payloads}).then(res => {
@@ -423,4 +442,27 @@ export const fetchUserWallet = payloads => dispatch => {
   })
 }
 
+=======
+/**
+ * Save Item Rating 
+ */
+
+export const saveItemRating = payloads => dispatch => {
+  
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.saveItemRatings,  {payloads: payloads}).then(res => {
+    
+    //console.log(payloads);
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res);
+      if(res.status == 200){
+        //console.log('return');
+        //console.log(res.data);
+        return res
+      } else {
+        return res
+      }
+    });
+}
+>>>>>>> 1ce9b0d5b79ff731ee800ac0e938b88f87159ec9
 

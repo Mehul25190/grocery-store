@@ -41,7 +41,7 @@ const transitionConfig = () => ({
 const DrawerStack = createDrawerNavigator({
   [Screens.Home.route]: {screen: Home },
    [Screens.MyOrder.route]: {screen: MyOrder},
-   [Screens.MyRatings.route]: { screen: MyRatings },
+   
    [Screens.MyWallet.route]: { screen: MyWallet },
    [Screens.MyNotification.route]:{ screen: MyNotification },
    [Screens.MyOffers.route]: { screen: MyOffers },
@@ -91,8 +91,12 @@ const DrawerNavigation = createStackNavigator({
   [Screens.SearchProduct.route] : {screen: SearchProduct},
   [Screens.OrderPayment.route] : {screen: OrderPayment},
   [Screens.CardOrderPayment.route] : {screen: CardOrderPayment},
+<<<<<<< HEAD
   [Screens.WalletOrderPayment.route] : {screen: WalletOrderPayment},
   
+=======
+  [Screens.MyRatings.route]: { screen: MyRatings },
+>>>>>>> 1ce9b0d5b79ff731ee800ac0e938b88f87159ec9
 }, {
   headerMode: 'none',
    

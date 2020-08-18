@@ -27,9 +27,15 @@ class MyWallet extends React.Component {
      this.state = {
       //default value of the date time
       date: '',
+<<<<<<< HEAD
       time: '',
       userWallet: {},
       activityList: [],
+=======
+       time: '',
+       walletData: [], 
+       userWallet:0,
+>>>>>>> 1ce9b0d5b79ff731ee800ac0e938b88f87159ec9
     };
 
   }
@@ -54,6 +60,14 @@ class MyWallet extends React.Component {
       date:   date + ' ' + month + ' ' + year ,
       time:   hours + ':' + min 
     });
+
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.getUserWalletList();
+      
+    });
+
+    
+
   }
 
   fetchUserWallet(){
@@ -65,6 +79,32 @@ class MyWallet extends React.Component {
     openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
     }
+
+    getUserWalletList() {
+      //alert(this.props.user.user.id);
+      this.props.getWalletList(this.props.user.user.id).then (res =>{
+        
+        //console.log(orderData);
+          if(res.status == "success"){
+            console.log("After sucess nirav");
+            console.log(res);
+                if(res.data.activityList!=null){
+                  this.setState({ walletData:res.data.activityList});
+                  this.setState({ userWallet:res.data.walletBalance});
+                  
+                } 
+          } else {
+                console.log("something wrong with varification call");
+                showToast("Something wrong with Server response","danger");
+          }
+           
+        })
+        .catch(error => {
+            console.log('Error messages returned from server', error);
+            showToast("Error messages returned from server","danger");
+        });
+    }
+
   render(){
     return (
       <Container style={appStyles.container}>
@@ -78,11 +118,19 @@ class MyWallet extends React.Component {
               Title='My Wallet'
              />
       
+<<<<<<< HEAD
           <Content enableOnAndroid>
+=======
+      <Content enableOnAndroid style={appStyles.content}>
+>>>>>>> 1ce9b0d5b79ff731ee800ac0e938b88f87159ec9
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (
             <View>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1ce9b0d5b79ff731ee800ac0e938b88f87159ec9
         <View>
           <Text style={styles.BalanceTitle}>
             Current Balance
@@ -95,7 +143,11 @@ class MyWallet extends React.Component {
                 <Image source={imgs.wallet}  style={styles.walletIcon} />
               </Col>
               <Col style={styles.amountCol}>
+<<<<<<< HEAD
                 <Text style={styles.amountRs}>{Colors.CUR} {this.state.userWallet.walletBalance}</Text>
+=======
+    <Text style={styles.amountRs}>{Colors.CUR}{this.state.userWallet}</Text>
+>>>>>>> 1ce9b0d5b79ff731ee800ac0e938b88f87159ec9
               </Col>
             </Row>
           </Grid>
@@ -116,6 +168,7 @@ class MyWallet extends React.Component {
           </Text>
         </View>
 
+<<<<<<< HEAD
          <View style={styles.dateRow}>
           <Text style={styles.walletDate}>
             
@@ -123,13 +176,24 @@ class MyWallet extends React.Component {
         </View>
 
          {this.state.activityList.map((item, index) => {
+=======
+         
+         {
+
+             this.state.walletData.map((item, index) => {
+>>>>>>> 1ce9b0d5b79ff731ee800ac0e938b88f87159ec9
                   return (
                        <ListItem style={styles.ListItems} >
                         <Left style={{justifyContent:'flex-start'}}>
                          <View style={styles.prodInfo}>
                            {/* <Text style={styles.proTitle}>{item.proName}</Text>*/}
+<<<<<<< HEAD
                             <Text  style={styles.proTitle}>{item.activityType} {item.status}</Text>
                              <Text style={styles.paidTime}>{moment(item.date).format('DD MMM YYYY HH:mm')}</Text>
+=======
+                            <Text  style={styles.proTitle}>{item.orderNumber} {item.activityType}</Text>
+                             <Text style={styles.paidTime}>{item.date}</Text>
+>>>>>>> 1ce9b0d5b79ff731ee800ac0e938b88f87159ec9
                             
                           </View>
                         </Left>
@@ -143,10 +207,19 @@ class MyWallet extends React.Component {
                       </ListItem>
                   
                   );
+<<<<<<< HEAD
                 })}
            </View>)}
           </Content>
+=======
+                })
+           }
+          
+>>>>>>> 1ce9b0d5b79ff731ee800ac0e938b88f87159ec9
         
+        </View>
+            )}
+          </Content>
       </Container>
      
     );
@@ -162,7 +235,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+<<<<<<< HEAD
       fetchUserWallet: (userId) => dispatch(userActions.fetchUserWallet({userId: userId})),
+=======
+      getWalletList: (useId) => dispatch(userActions.getUserWalletList({userId: useId})),
+>>>>>>> 1ce9b0d5b79ff731ee800ac0e938b88f87159ec9
    };
 };
 

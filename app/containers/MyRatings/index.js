@@ -14,6 +14,8 @@ import {
   Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem
 } from 'native-base';
 import { connect } from "react-redux";
+import { showToast } from '../../utils/common';
+import url from "../../config/api";
 import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
@@ -23,17 +25,68 @@ class MyRatings extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      reviewComment:'',
+      orderItemId:'',
+      itemRating:0,
+     
+    }
   }
   openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
-    }
-    ratingCompleted(rating) {
-    console.log("Rating is: " + rating)
-    }
-    onPressRating = item => {
-    this.props.navigation.navigate('Confirmation', { item });
+  }
+  
+  ratingCompleted(rating) {
+    console.log("Rating is: " + rating);
+    this.setState({itemRating:rating});
+    
+  }
+
+  onPressRating = item => {
+      //rating add
+
+      if(this.state.reviewComment.trim() == ""){
+        this.setState({isLoading: false}, function() {
+          showToast('Please enter review.','danger');
+        });
+      }else {
+        //call api
+        const formdata = { orderItemId:item.itemId,
+                          itemRating:this.state.itemRating,
+                          reviewComment:this.state.reviewComment,
+                         };
+        this.props.saveRating(formdata).then (res =>{
+          
+          if(res.data.status == "success"){
+                showToast("Save Successfully","success");
+                this.props.navigation.navigate('Confirmation', { item:'Confirm' });
+          } else {
+                console.log("something wrong with varification call");
+                showToast("Something wrong with Server response","danger");
+          }
+           
+        })
+        .catch(error => {
+            console.log('Error messages returned from server', error);
+            showToast("Error messages returned from server","danger");
+        });
+  
+      }  
+
+   
    };
   render(){
+    const { navigation } = this.props;
+    const getItem = navigation.getParam('item');
+   //this.setState({orderItemId:getItem.itemId})
+    //console.log(getItem);
+    //this.state.orderItemId = getItem.itemId;
+    //alert(getItem[0].itemName);
+    //alert(getItem.itemId);
+    //alert(getItem.itemName);
+    //alert(getItem.imagePath);
+    //console.log(url.imageURL);
+
     return (
       <Container style={appStyles.container}>
        
@@ -52,15 +105,15 @@ class MyRatings extends React.Component {
           
              <Row style={styles.secondRow}>
               <Col style={styles.amulCol}>
-                <Image source={imgs.amulMoti} style={styles.amulMoti} />
+                
+                <Image style={styles.amulMoti} source={{ uri: url.imageURL + getItem.imagePath }} />
               </Col>
               <Col style={styles.amulInfo}>
                 <View>
-                 <Text style={styles.AmuText}>Amul</Text>
-                 <Text style={[styles.AmuText,styles.AmuTextTitle]}>Amul Moti</Text>
-                 <Text style={styles.AmuText}>500 ml</Text>
-                 <Text style={styles.AmuText}>Qty: 1</Text>
-                 <Text style={styles.AmuText}>MRP: <Text style={{}}>{Colors.CUR}</Text> 28</Text>
+                 
+                  <Text style={[styles.AmuText,styles.AmuTextTitle]}>{getItem.itemName}</Text>
+                 <Text style={styles.AmuText}>Qty: {getItem.quantity}</Text>
+                 <Text style={styles.AmuText}> <Text style={{}}>{Colors.CUR}</Text> {getItem.itemPrice}</Text>
                 </View>
               </Col>
             </Row>
@@ -78,7 +131,7 @@ class MyRatings extends React.Component {
             defaultRating={4}
             size={25}
             showRating={false}
-            onFinishRating={this.ratingCompleted}
+            onFinishRating={this.ratingCompleted.bind(this)}
             starContainerStyle={{alignSelf:'flex-start'}}
             selectedColor="#FFC106"
 
@@ -98,12 +151,14 @@ class MyRatings extends React.Component {
             numberOfLines={4}
              style={styles.textAreaStyle}
            underlineColorAndroid={'transparent'}
+           onChangeText={(value) => {this.setState({reviewComment:value});} } 
+            value={this.state.reviewComment}
            />
         </Card>
         </View>
     </ScrollView>
       <TouchableOpacity style={styles.submitBtnArea} >
-        <Button primary full style={styles.submitBtn} onPress={()=>this.onPressRating("Confirm")}>
+        <Button primary full style={styles.submitBtn} onPress={()=>this.onPressRating(getItem)}>
         <Text style={styles.submitText}>Submit
         </Text>
         </Button>
@@ -123,6 +178,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+      saveRating: (formdata) => dispatch(userActions.saveItemRating(formdata)),
    };
 };
 

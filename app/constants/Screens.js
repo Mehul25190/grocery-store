@@ -151,5 +151,8 @@ export default {
   },
   CardOrderPayment: {
     route: 'CardOrderPayment'
+  },
+  WalletOrderPayment: {
+    route: 'WalletOrderPayment'
   }
 };

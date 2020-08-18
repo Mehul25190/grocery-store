@@ -194,7 +194,7 @@ class SubscribeOrder extends React.Component {
                  <Text style={[styles.AmuText,styles.AmuTextTitle]}>{this.state.subscriptionDtls.itemName}</Text>
                  <Text style={styles.AmuText}>{this.state.subscriptionDtls.weight} {this.state.subscriptionDtls.uom}</Text>
                  {/*<Text style={styles.AmuText}>Qty: {this.state.subscriptionDtls.quantity}</Text>*/}
-                 <Text style={styles.AmuText}>MRP: <Text style={{}}>{Colors.CUR}</Text> {this.state.subscriptionDtls.price}</Text>
+                 <Text style={styles.AmuText}> <Text style={{}}>{Colors.CUR}</Text> {this.state.subscriptionDtls.price}</Text>
                 </View>
               </Col>
             </Row>

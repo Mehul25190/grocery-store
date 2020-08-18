@@ -59,6 +59,14 @@ class OrderDetail extends React.Component {
     this.getOrderDetails(para_orderId);
   }
 
+  onRatingPage = item => {
+    //alert(item);
+    //this.props.navigation.navigate('ProductList', { para_categoryId:item.id, categoryName: item.categoryName});
+      this.props.navigation.navigate('MyRatings', { item:item });
+  
+  };
+
+
   getOrderDetails(para_orderId) {
     //alert(para_orderId);
     this.props.getOrderDetails(para_orderId).then (res =>{
@@ -97,8 +105,10 @@ class OrderDetail extends React.Component {
                 </Left>
               
                 <Body style={styles.bodyText}>
+                  <TouchableOpacity style={styles.prodInfo} onPress={() => this.onRatingPage(item)}>
                     <Text  style={[styles.proTitle,{  fontFamily:'Font-Medium'}]}>{item.itemName} </Text>
   <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
+                  </TouchableOpacity>  
                  </Body>
                  
                 <Right style={styles.ListRight}>
@@ -213,7 +223,7 @@ class OrderDetail extends React.Component {
               <Col style={styles.orderValue}>
                 <Text style={styles.orderValText}>
                   <Text style={{fontFamily:'Roboto',color:'gray'}}>{Colors.CUR}
-                  </Text>{(this.state.orderData.length >0 )? this.state.orderData[0].orderAmt : ""}</Text>
+                  </Text> {(this.state.orderData.length >0 )? this.state.orderData[0].orderAmt : ""}</Text>
               </Col>
             </Row>
           </Grid>
