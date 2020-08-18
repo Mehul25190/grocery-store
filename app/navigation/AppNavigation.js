@@ -3,7 +3,7 @@ import { Text, Animated, Easing } from 'react-native'
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
 
 import { SignIn, SignInEmail, OrderSuccess, ProductDetail, MyOffers, SubscribeSuccess, CancelOrder, Checkout, DeleteSubscribe, Confirmation, OrderReturnDetail, OrderReturn, MyCart, SubscribeDetail, SubscribeOrder, OrderDetail, TopupWallet, MyOrder,Profile, MyWallet, SignInMobile, MyAddress, ProductList, MyNotification, Verification, SignUp, Forgotpassword,
- MyPayments, MyRatings, Subscription, Home, Drawer, Settings, ModifySubscription, SearchProduct, OrderPayment, CardOrderPayment }
+ MyPayments, MyRatings, Subscription, Home, Drawer, Settings, ModifySubscription, SearchProduct, OrderPayment, CardOrderPayment, WalletOrderPayment }
  from "../containers";
 import { Colors, Screens } from "../constants";
 
@@ -91,6 +91,8 @@ const DrawerNavigation = createStackNavigator({
   [Screens.SearchProduct.route] : {screen: SearchProduct},
   [Screens.OrderPayment.route] : {screen: OrderPayment},
   [Screens.CardOrderPayment.route] : {screen: CardOrderPayment},
+  [Screens.WalletOrderPayment.route] : {screen: WalletOrderPayment},
+  
 }, {
   headerMode: 'none',
    
