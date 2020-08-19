@@ -26,7 +26,7 @@ import moment from "moment";
 import { WebView } from 'react-native-webview';
 
 
-class WalletOrderPayment extends React.Component {
+class OrderPayment extends React.Component {
 
   constructor(props) {
     super(props);
@@ -35,30 +35,29 @@ class WalletOrderPayment extends React.Component {
       date: '',
       time: '',
       value: null ,
-       switch1Value: props.user.user.useWallet == "Y" ? true : false,
-       showMyCard:false,
-       showAddCard:false,
-        paywithcard: false,
-        paywithcash: false,
-        CardChecked:null,
-         radioBtnsData: ['Pay with Card', 'Pay with Cash'],
+      paymentIframe: '', 
     };
   }
     componentDidMount() {
-      this.setState({
-      //  checked:true
+
+      this.focusListener = this.props.navigation.addListener("didFocus", () => {
+        const {navigation, totalItem} = this.props;
+        const html = navigation.getParam('html')
+        this.setState({ paymentIframe:html });
       });
+      
+    }
+
+    componentWillUnmount(){
+      this.focusListener.remove();
     }
    
-    openControlPanel(){
-      alert('test');
-    }
   render(){
     const {navigation, totalItem} = this.props;
-    const userId = navigation.getParam('userId')
-    const amount = navigation.getParam('amount')
-    
-   return (
+  
+    //console.log('http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate='+deliveryDate+'&amount='+100+'&paymentMode='+paymentMode+'&useWallet='+useWallet+'&saveCard='+saveCard+'&autoDebit='+autoDebit)
+    //console.log('http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate=%27'+deliveryDate+'%27&amount='+amount+'&paymentMode=%27'+paymentMode+'%27&useWallet=%27'+useWallet+'%27&saveCard=%27'+saveCard+'%27&autoDebit=%27'+autoDebit)
+    return (
       <Container style={appStyles.container}>
            <Header searchBar rounded style={appStyles.headerStyle}>
       
@@ -67,7 +66,7 @@ class WalletOrderPayment extends React.Component {
       </Left>
    
       <Item style={{ width: 60, backgroundColor: "transparent" }}>
-        <Text style={appStyles.headerTitle}>Wallet Payment</Text>
+        <Text style={appStyles.headerTitle}>Order Payment</Text>
       </Item>
      
       <Right style={appStyles.headerRight}>
@@ -87,9 +86,9 @@ class WalletOrderPayment extends React.Component {
 
          <ScrollView style={{marginLeft:Layout.indent, marginRight:Layout.indent}}>
                   <WebView
-                    source={{
-                      uri: 'http://dev.tieskills.com/foodapp/walletRecharge.php?userId='+userId+'&amount='+amount
-                    }}
+                            originWhitelist={['*']}
+
+                    source={{ html: this.state.paymentIframe}}
                     style={{ marginTop: 0, width:Layout.window.width-30, height: Layout.window.height*0.9 }}
                   />
          
@@ -122,4 +121,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(WalletOrderPayment);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderPayment);
