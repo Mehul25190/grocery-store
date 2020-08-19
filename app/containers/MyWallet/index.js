@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
+import moment from "moment";
 import {productList} from '../data/data';
 
 class MyWallet extends React.Component {
@@ -26,13 +27,19 @@ class MyWallet extends React.Component {
      this.state = {
       //default value of the date time
       date: '',
-       time: '',
-       walletData: [], 
-       userWallet:0,
+      time: '',
+      userWallet: {},
+      activityList: [],
     };
 
   }
+  
    componentDidMount() {
+
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.fetchUserWallet(); 
+    });
+
     var that = this;
  var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -47,14 +54,13 @@ class MyWallet extends React.Component {
       date:   date + ' ' + month + ' ' + year ,
       time:   hours + ':' + min 
     });
+  }
 
-    this.focusListener = this.props.navigation.addListener("didFocus", () => {
-      this.getUserWalletList();
-      
-    });
-
-    
-
+  fetchUserWallet(){
+    this.props.fetchUserWallet(this.props.user.user.id).then(res => {
+      console.log(res.data.walletBalance);
+      this.setState({userWallet: res.data, activityList: res.data.activityList})
+    })
   }
     openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
@@ -103,7 +109,6 @@ class MyWallet extends React.Component {
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (
             <View>
-
         <View>
           <Text style={styles.BalanceTitle}>
             Current Balance
@@ -116,7 +121,7 @@ class MyWallet extends React.Component {
                 <Image source={imgs.wallet}  style={styles.walletIcon} />
               </Col>
               <Col style={styles.amountCol}>
-    <Text style={styles.amountRs}>{Colors.CUR}{this.state.userWallet}</Text>
+                <Text style={styles.amountRs}>{Colors.CUR} {this.state.userWallet.walletBalance}</Text>
               </Col>
             </Row>
           </Grid>
@@ -137,18 +142,21 @@ class MyWallet extends React.Component {
           </Text>
         </View>
 
-         
-         {
+         <View style={styles.dateRow}>
+          <Text style={styles.walletDate}>
+            
+          </Text>
+        </View>
 
-             this.state.walletData.map((item, index) => {
+         {this.state.activityList.map((item, index) => {
                   return (
-                  
                        <ListItem style={styles.ListItems} >
                         <Left style={{justifyContent:'flex-start'}}>
                          <View style={styles.prodInfo}>
                            {/* <Text style={styles.proTitle}>{item.proName}</Text>*/}
-                            <Text  style={styles.proTitle}>{item.orderNumber} {item.activityType}</Text>
-                             <Text style={styles.paidTime}>{item.date}</Text>
+                            <Text  style={styles.proTitle}>{item.orderNumber} </Text>
+                            <Text style={styles.paidTime}>status: {item.status} </Text>
+                             <Text style={styles.paidTime}>{moment(item.date).format('DD MMM YYYY HH:mm')}</Text>
                             
                           </View>
                         </Left>
@@ -164,8 +172,6 @@ class MyWallet extends React.Component {
                   );
                 })
            }
-          
-        
         </View>
             )}
           </Content>
@@ -177,13 +183,14 @@ class MyWallet extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    isLoading: state.common.isLoading,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
-      getWalletList: (useId) => dispatch(userActions.getUserWalletList({userId: useId})),
+      fetchUserWallet: (userId) => dispatch(userActions.fetchUserWallet({userId: userId})),
    };
 };
 

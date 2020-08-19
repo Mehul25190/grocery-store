@@ -42,6 +42,6 @@ export default {
   fetchCardDetails: 'userCardDetails/fetchCardDetails',
   deleteCard: 'userCardDetails/deleteCard',
   orderReturn: 'order/returnOrderItem',
-  saveItemRatings:'item/saveItemRatings',
-  getUserWalletList:'userWallet/fetchWalletActivity',
+  fetchUserWallet: 'userWallet/fetchWalletActivity',
+  rechargeWallet: 'Wallet/rechargeWallet',
 }

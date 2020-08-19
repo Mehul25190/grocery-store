@@ -15,10 +15,12 @@ import {
 } from 'native-base';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
+import * as cartActions from "../../actions/cart";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import {productList,CardDetails} from '../data/data';
 import CheckBox from 'react-native-check-box';
+import { showToast } from '../../utils/common';
 
 class TopupWallet extends React.Component {
 
@@ -31,7 +33,9 @@ class TopupWallet extends React.Component {
         isChecked:false,
         showMyCard:false,
         showAddCard:false,
-           CardChecked:null,
+        CardChecked:null,
+        cardList: [],
+        amount: '',
     };
    
   }
@@ -42,14 +46,33 @@ class TopupWallet extends React.Component {
     }
  onPressSubmit = item => {
   console.log(item);
-    this.props.navigation.navigate('MyPayments', { item });
+  this.props.rechargeWithCVV(this.props.user.user.id, 26, 100, 123).then(res => {
+    if(res.data.isAutoDebit == 'N'){
+      const temp_html = res.data.html;
+      const temp = temp_html.replace(/\\/g, "");
+
+      this.props.navigation.navigate(Screens.CardWalletPayment.route, {html:temp});
+    }else{
+      showToast('Wallet updated successfully', "success");
+      this.props.navigation.navigate(Screens.MyWallet.route);
+    }
+  })
+    //this.props.navigation.navigate('MyPayments', { item });
   };
 
+  getCardDetail(){
+    this.props.fetchCardDetails(this.props.user.user.id).then(res => {
+      console.log('card', res.data.cardList);
+      this.setState({cardList: res.data.cardList});
+    });
+  }
  
   openControlPanel = () => {
     this.props.navigation.goBack(); // open drawer
   }
-    ShowCardList(){
+
+  ShowCardList(){
+    this.getCardDetail();
     this.setState({
       showMyCard:true,
       showAddCard:false
@@ -57,6 +80,13 @@ class TopupWallet extends React.Component {
   }
 
   ShowAddCard(){
+    if(this.state.amount == ''){
+      showToast('Please enter the amount', "danger");
+      return;
+    }
+    
+    this.props.navigation.navigate(Screens.WalletOrderPayment.route, {userId:this.props.user.user.id, amount: this.state.amount});
+
      this.setState({
       showMyCard:false,
       showAddCard:true
@@ -82,7 +112,10 @@ class TopupWallet extends React.Component {
          <View style={styles.TopupView}>
              <Item style={{borderColor:Colors.primary,height:70,marginBottom:10}} stackedLabel>
                       <Label style={styles.amountLabel}>Enter Amount</Label>
-                      <Input  />
+                      <Input style={styles.inputStyle}
+                        value={this.state.amount} 
+                        onChangeText={(value) => {this.setState({amount:value});} } 
+                        />
              </Item>
          </View>
 
@@ -112,7 +145,7 @@ class TopupWallet extends React.Component {
             
               { this.state.showMyCard==true && (
                <FlatList
-                data={CardDetails}
+                data={this.state.cardList}
                 renderItem={({ item, index }) => 
                 <Grid style={item.id==2 ? (styles.greenback):(styles.whiteBack)}>
                  <Row>
@@ -249,6 +282,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+      fetchCardDetails: (userId) => dispatch(cartActions.fetchCardDetails({userId: userId})),
+      deleteCard: (userId, id) => dispatch(cartActions.deleteCard({userId: userId, id: id})),
+      rechargeWithCVV: (userId, cardId, amount, cvv) => dispatch(userActions.rechargeWallet({userId: userId, cardId: cardId, amount: amount, cvv: cvv})),
+      recharge: (userId, cardId, amount ) => dispatch(userActions.rechargeWallet({userId: userId, cardId: cardId, amount: amount})),
+
    };
 };
 

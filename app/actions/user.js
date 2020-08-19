@@ -429,6 +429,21 @@ export const fetchSubCategory = payloads => dispatch => {
 }
 /****  Get Sub Category Lisy ****/
 
+/***** Fetch the user wallet detail ******/
+export const fetchUserWallet = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchUserWallet,{queries: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    if(res.status == 200){
+      return res.data;
+    } else {
+      return res;
+    }
+  })
+}
+/***** Fetch the user wallet detail ******/
+
+
 /**
  * Save Item Rating 
  */
@@ -451,3 +466,15 @@ export const saveItemRating = payloads => dispatch => {
     });
 }
 
+
+export const rechargeWallet = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.rechargeWallet,{payloads: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    if(res.status == 200){
+      return res.data;
+    } else {
+      return res;
+    }
+  })
+}

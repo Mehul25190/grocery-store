@@ -5,7 +5,9 @@ export default {
     justifyContent:'flex-start'
   },
   proTitle:{
-    fontFamily:'Font-Medium'
+    fontFamily:'Font-Medium',
+    alignSelf:'flex-start',
+    marginLeft:1,
   },
   paidTime:{
     fontFamily:'Font-Regular',
