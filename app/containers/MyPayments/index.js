@@ -387,7 +387,7 @@ class MyPayments extends React.Component {
 
                       </Col>
                       <Col style={{justifyContent:'flex-start',alignItems:'center'}}>
-                        <Text style={styles.autoDebitText}>{item.autoDebit=='yes'? 'Auto Debit':''}</Text>
+                        <Text style={styles.autoDebitText}>{item.isAutoDebit == "Y" ? 'Auto Debit':''}</Text>
                       </Col>
                       <Col style={{width:40,justifyContent:'flex-start',alignItems:'center'}}>
                         <TouchableOpacity style={{padding:10}} onPress={() => this.deleteCard(item.id)}>
