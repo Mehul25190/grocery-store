@@ -62,7 +62,9 @@ class OrderDetail extends React.Component {
   onRatingPage = item => {
     //alert(item);
     //this.props.navigation.navigate('ProductList', { para_categoryId:item.id, categoryName: item.categoryName});
+    if(this.state.orderData[0].orderStatus == 'CNF') {  
       this.props.navigation.navigate('MyRatings', { item:item });
+    }
   
   };
 
@@ -222,8 +224,7 @@ class OrderDetail extends React.Component {
               </Col>
               <Col style={styles.orderValue}>
                 <Text style={styles.orderValText}>
-                  <Text style={{fontFamily:'Roboto',color:'gray'}}>{Colors.CUR}
-                  </Text> {(this.state.orderData.length >0 )? this.state.orderData[0].orderAmt : ""}</Text>
+                  <Text style={{fontFamily:'Roboto',color:'gray'}}>{Colors.CUR} </Text> {(this.state.orderData.length >0 )? this.state.orderData[0].orderAmt : ""}</Text>
               </Col>
             </Row>
           </Grid>

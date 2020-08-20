@@ -160,7 +160,7 @@ class OrderDetail extends React.Component {
               </Col>
               <Col style={styles.orderValue}>
                 <Text style={styles.orderValText}>
-                  <Text style={{fontFamily:'Roboto',color:'gray'}}>{Colors.CUR}
+                  <Text style={{fontFamily:'Roboto',color:'gray'}}>{Colors.CUR} 
                   </Text>{(this.state.orderData.length >0 )? this.state.orderData[0].orderAmt : ""}</Text>
               </Col>
             </Row>
