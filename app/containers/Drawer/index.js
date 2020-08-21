@@ -88,8 +88,8 @@ class Drawer extends React.Component {
             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
             {this.props.user.user.firstName!="" && (
                <Text style={appStyles.profileName} >
-                {(this.props.user.user.firstName!="") ? this.props.user.user.firstName : ""} 
-                {(this.props.user.user.lastName !="") ? this.props.user.user.lastName : ""}</Text>
+                {(this.props.user.user.firstName!="") ? this.props.user.user.firstName : ""}  
+                 {(this.props.user.user.lastName !="") ? this.props.user.user.lastName : ""}</Text>
               )
 
             }
