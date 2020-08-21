@@ -203,5 +203,8 @@ alignItems:'flex-end'
   fontFamily:'Font-Medium',
   fontSize:20,
   color:Colors.primary
-  }
+  },
+  checkboxStyle:{
+    borderColor:Colors.primary, width:32, borderRadius:5, borderWidth:2
+    },
 };
