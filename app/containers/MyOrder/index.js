@@ -92,7 +92,7 @@ class MyOrder extends React.Component {
   };
 
   onDetailPage = item => {
-    alert(item.orderStatus);
+    //alert(item.orderStatus);
     //this.props.navigation.navigate('ProductList', { para_categoryId:item.id, categoryName: item.categoryName});
   
     if (item.orderStatus == 'PEN') {

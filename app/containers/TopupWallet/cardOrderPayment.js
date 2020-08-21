@@ -26,7 +26,7 @@ import moment from "moment";
 import { WebView } from 'react-native-webview';
 
 
-class OrderPayment extends React.Component {
+class cardOrderPayment extends React.Component {
 
   constructor(props) {
     super(props);
@@ -123,4 +123,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(OrderPayment);
+export default connect(mapStateToProps, mapDispatchToProps)(cardOrderPayment);

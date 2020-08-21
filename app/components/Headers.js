@@ -122,8 +122,9 @@ class Headers extends React.Component {
               </MenuTrigger>
               <MenuOptions style={{ backgroundColor: "#D2EAD2" }}>
                 <CheckedOption  checked={this.props.selectedStatus == 'PEN' ? true : false } value={'PEN'} text="Pending" />
-                <CheckedOption value={2} text="In Process" />
-                <CheckedOption checked={this.props.selectedStatus == 'CNF' ? true : false } value={'CNF'} text="Delivered" />
+                <CheckedOption checked={this.props.selectedStatus == 'INP' ? true : false } value={'INP'} text="In Process" />
+                <CheckedOption checked={this.props.selectedStatus == 'DEL' ? true : false } value={'DEL'} text="Delivered" />
+                <CheckedOption checked={this.props.selectedStatus == 'CNF' ? true : false } value={'CNF'} text="Confirmed" />
                 <CheckedOption checked={this.props.selectedStatus == 'CAN' ? true : false } value={'CAN'} text="Canceled" />
               </MenuOptions>
             </Menu>

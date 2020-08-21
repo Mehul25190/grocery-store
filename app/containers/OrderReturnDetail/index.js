@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, TextInput, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, TextInput, ScrollView, FlatList, Alert } from 'react-native';
 import _ from 'lodash';
 import { Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers } from '../../components';
@@ -21,6 +21,7 @@ import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import { ReturnReason } from '../data/data';
 import { showToast } from '../../utils/common';
+import CheckBox from 'react-native-check-box';
 
 
 class OrderReturnDetail extends React.Component {
@@ -34,6 +35,14 @@ class OrderReturnDetail extends React.Component {
       selected: 0,
       returnItems:[],
       qty: "",
+      slectedProp: [],
+      folder: '',
+      itemid: '',
+      image: '',
+      imageindex: [],
+      checked: true,
+      orderID: '',
+
     };
 
   }
@@ -51,6 +60,12 @@ class OrderReturnDetail extends React.Component {
       //Setting the value of the date time
       date: date + ' ' + month + ' ' + year,
       time: hours + ':' + min
+    });
+
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      const { navigation } = this.props;
+      const orderData = navigation.getParam('orderData');
+      this.setState({orderID: orderData[0].orderNumber})
     });
   }
   openControlPanel = () => {
@@ -71,8 +86,98 @@ class OrderReturnDetail extends React.Component {
     });
   }
 
+  _pickImage = async (clickIndex) => {
+    Alert.alert(
+      'Select Image',
+      'Please select Image mediam for pickup.',
+      [
+        { text: 'Open Camera', onPress: () => this.Camera(clickIndex) },
+        { text: 'Open Gellary', onPress: () => this.Gellary(clickIndex) },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+      ],
+      { cancelable: false }
+    )
+  };
+
+  Camera = async (clickIndex) => {
+    let result = await ImagePicker.launchCameraAsync({
+      //launchImageLibraryAsync
+      //launchCameraAsync
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      base64: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.cancelled) {
+      this.setState({ image: result.base64 });
+    }
+  }
+
+  Gellary = async (clickIndex) => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      base64: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.cancelled) {
+      this.setState({ image: result.base64 });
+    }
+  } 
+
+  agregarFavoritos(clickIndex, val, itemsid, quantity) {
+
+    var array = [...this.state.slectedProp];
+    var folder = [...this.state.folder]
+    var item = [...this.state.itemid]
+
+    var index = array.indexOf(clickIndex)
+    var idindex = folder.indexOf(val)
+    var itemindex = item.indexOf(val)
+
+    if (val > quantity) {
+      array.splice(index, 1);
+      folder.splice(idindex, 1);
+      item.splice(itemindex, 1);
+      return showToast(" please Product Quantity", "danger")
+    }
+
+    if (val == '') {
+      var checkbox = [...this.state.qty];
+      var index = checkbox.indexOf(itemsid)
+      checkbox.splice(index, 1);
+      this.setState({ qty: checkbox, });
+    }
+
+    if (index !== -1) {
+      array.splice(index, 1);
+      folder.splice(idindex, 1);
+      item.splice(itemindex, 1);
+
+      array.push(clickIndex)
+      folder.push(val)
+      item.push(itemsid)
+
+      this.setState({ slectedProp: array, folder: folder, itemid: item, });
+    }
+    else {
+      array.push(clickIndex)
+      folder.push(val)
+      item.push(itemsid)
+
+      this.setState({ slectedProp: array, folder: folder, itemid: item, });
+    }
+
+  }
+
   makeObject = (orderItemId,returnReason) => {
-    alert("Pending");
+   // alert("Pending");
     const orderReturnItem = 
       {
       "orderItemId": orderItemId,
@@ -84,6 +189,45 @@ class OrderReturnDetail extends React.Component {
       console.log(res)
     });
   }
+  
+  checkbox(clickIndex, OrderID, Name) {
+    console.log(OrderID)
+    const { folder, image } = this.state
+    var array = [...this.state.qty];
+    var index = array.indexOf(clickIndex)
+
+    this.data = {
+      'orderId': this.state.orderID,
+      "orderItemId": clickIndex,
+      "returnReason": this.state.selected,
+      "returnQty": this.state.folder[0],
+      "image": JSON.stringify(image),
+    }
+
+    console.log(this.data);
+    if (index !== -1) {
+      array.splice(index, 1);
+      this.setState({ qty: array, });
+    }
+    else {
+      if (folder.length > 0) {
+        array.push(clickIndex)
+        this.setState({ qty: array, });
+        this.props.orderReturn(this.data).then(res => {
+          console.log(res)
+          if (res.status == "success") {
+            this.setState({ image: '' })
+            return showToast(Name + " is Returned", "success")
+          }
+        })
+      } else {
+        showToast("Please Add Qty", "danger")
+      }
+    }
+
+  }
+
+
    onPressSubmit = (item) => {
      
      //start
@@ -142,20 +286,30 @@ class OrderReturnDetail extends React.Component {
      
 
       <Right style={styles.ListRight}>
-        <View style={styles.RigView}>
+        <TouchableOpacity
+          onPress={() => this._pickImage(item.itemId)}
+          style={styles.RigView}>
           <Icon name='camera' type='FontAwesome' style={styles.camera} />
-        </View>
+        </TouchableOpacity>
+
         <View style={[styles.RigView, styles.qtyCol]}>
           <Text style={styles.qtyText}>Qty</Text>
-          <Input keyboardType='numeric' style={styles.qtyInput} value={item.quantity} onChangeText={(value) => {this.setState({qty: value })} } maxLength={2}  /> 
-          
+          <TextInput
+            value={this.state.folder == '' ? '' : this.state.folder}
+            onChangeText={(text) => this.agregarFavoritos(index + 1, text, item.itemId, item.quantity)}
+            style={styles.qtyInput}
+            keyboardType='numeric'
+            maxLength={2} />
         </View>
 
-        <Button style={styles.RigView} style={styles.returnBtn}>
-          <TouchableOpacity onPress={() => this.makeObject(item.itemId)} >
-            <Text style={styles.btnText}> Return </Text>
-          </TouchableOpacity>
-        </Button>
+        <CheckBox
+          style={styles.checkboxStyle}
+          onClick={() => this.checkbox(item.itemId, this.state.orderID, item.itemName)}
+          checkedImage={<Icon name='check' type='AntDesign' style={{ color: Colors.primary, paddingLeft: 5, paddingTop: 1 }} />}
+          unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons'
+            style={{ color: 'transparent' }} />}
+          isChecked={this.state.qty.indexOf(item.itemId) !== -1}
+        />
       </Right>
     </ListItem>
      <View style={{ merginRight: Layout.indent, justifyContent: 'center'}}>
@@ -194,7 +348,7 @@ class OrderReturnDetail extends React.Component {
     const { navigation } = this.props;
     const orderData = navigation.getParam('orderData');
     const getItem = navigation.getParam('orderItem');
-console.log(getItem)
+
     return (
       <Container style={appStyles.container}>
 
@@ -287,7 +441,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(userActions.logoutUser()),
     saveReturnOrder: (returnItems) => dispatch(userActions.saveReturnOrder(returnItems)),
-    orderReturn: (returnItem) => dispatch(cartActions.orderReturn({returnItem})),
+    orderReturn: (returnItem) => dispatch(cartActions.orderReturn(returnItem)),
   };
 };
 
