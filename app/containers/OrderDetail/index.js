@@ -109,7 +109,8 @@ class OrderDetail extends React.Component {
                 <Body style={styles.bodyText}>
                   <TouchableOpacity style={styles.prodInfo} onPress={() => this.onRatingPage(item)}>
                     <Text  style={[styles.proTitle,{  fontFamily:'Font-Medium'}]}>{item.itemName} </Text>
-  <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
+                    <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
+                    
                   </TouchableOpacity>  
                  </Body>
                  

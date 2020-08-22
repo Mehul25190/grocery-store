@@ -106,6 +106,7 @@ class OrderDetail extends React.Component {
                 <Body style={styles.bodyText}>
                     <Text  style={[styles.proTitle,{  fontFamily:'Font-Medium'}]}>{item.itemName} </Text>
   <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
+  <Text style={styles.QtyPro}>{item.itemStatus}</Text>
                  </Body>
                  
                 <Right style={styles.ListRight}>
@@ -161,7 +162,7 @@ class OrderDetail extends React.Component {
               <Col style={styles.orderValue}>
                 <Text style={styles.orderValText}>
                   <Text style={{fontFamily:'Roboto',color:'gray'}}>{Colors.CUR} 
-                  </Text>{(this.state.orderData.length >0 )? this.state.orderData[0].orderAmt : ""}</Text>
+                  </Text>{(this.state.orderData.length >0 )? " " + this.state.orderData[0].orderAmt : ""}</Text>
               </Col>
             </Row>
           </Grid>
