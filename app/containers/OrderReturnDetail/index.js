@@ -89,6 +89,7 @@ class OrderReturnDetail extends React.Component {
     return getDate;
   }
   onValueChange(value: string) {
+    console.log(value)
     this.setState({
       selected: value,
       switch1Value: value
@@ -213,7 +214,7 @@ class OrderReturnDetail extends React.Component {
       "image": JSON.stringify(image),
     }
 
-    console.log(this.data);
+    //console.log(index);
     if (index !== -1) {
       array.splice(index, 1);
       this.setState({ qty: array, });
@@ -330,7 +331,7 @@ class OrderReturnDetail extends React.Component {
       </Right>) : (<View><Text style={styles.qtyText}>{item.isReturnable == 0 ? 'Not Returnable' : 'Returned'}</Text></View> )}
     </ListItem>
      <View style={{ merginRight: Layout.indent, justifyContent: 'center'}}>
-             
+              
               <View style={styles.reasonView} >
                 <Item style={{ borderBottomWidth: 0 }} >
                   <Picker
@@ -346,7 +347,7 @@ class OrderReturnDetail extends React.Component {
                     {
 
                       ReturnReason.map(data => (
-                        <Picker.Item key={data.key} label={data.reason} value={data.reason} />
+                        <Picker.Item key={item.id+''+data.key} label={data.reason} value={data.reason} />
 
                       ))
 
