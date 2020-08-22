@@ -42,11 +42,25 @@ class OrderReturnDetail extends React.Component {
       imageindex: [],
       checked: true,
       orderID: '',
-
+      orderData: [],  
+      orderItem:[],
     };
 
   }
   componentDidMount() {
+
+    this.focusListener = this.props.navigation.addListener("willFocus", () => {
+      const { navigation } = this.props;
+      const orderData = navigation.getParam('orderData');
+      this.setState({orderID: orderData[0].id})
+
+      this.props.getOrderDetails(orderData[0].id).then (res =>{ 
+        console.log(res.data);
+        this.setState({ orderData:res.data.orderDetails});
+        this.setState({ orderItem:res.data.orderItems });
+      });
+    });
+    
     var that = this;
     var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -62,11 +76,6 @@ class OrderReturnDetail extends React.Component {
       time: hours + ':' + min
     });
 
-    this.focusListener = this.props.navigation.addListener("didFocus", () => {
-      const { navigation } = this.props;
-      const orderData = navigation.getParam('orderData');
-      this.setState({orderID: orderData[0].orderNumber})
-    });
   }
   openControlPanel = () => {
     this.props.navigation.goBack(); // open drawer
@@ -145,7 +154,7 @@ class OrderReturnDetail extends React.Component {
       array.splice(index, 1);
       folder.splice(idindex, 1);
       item.splice(itemindex, 1);
-      return showToast(" please Product Quantity", "danger")
+      return showToast("Please verify ordered quantity ", "danger")
     }
 
     if (val == '') {
@@ -216,6 +225,12 @@ class OrderReturnDetail extends React.Component {
         this.props.orderReturn(this.data).then(res => {
           console.log(res)
           if (res.status == "success") {
+              //console.log(this.state.orderData)
+              this.props.getOrderDetails1(this.state.orderData[0].id).then (res =>{ 
+                this.setState({ orderData:res.data.orderDetails});
+                this.setState({ orderItem:res.data.orderItems });
+              });
+             
             this.setState({ image: '' })
             return showToast(Name + " is Returned", "success")
           }
@@ -285,32 +300,34 @@ class OrderReturnDetail extends React.Component {
       </Body>
      
 
-      <Right style={styles.ListRight}>
-        <TouchableOpacity
-          onPress={() => this._pickImage(item.itemId)}
-          style={styles.RigView}>
-          <Icon name='camera' type='FontAwesome' style={styles.camera} />
-        </TouchableOpacity>
+      {item.itemStatus != 'RET' && item.isReturnable == 1 ?
+        (<Right style={styles.ListRight}>
+      
+          <TouchableOpacity
+            onPress={() => this._pickImage(item.itemId)}
+            style={styles.RigView}>
+            <Icon name='camera' type='FontAwesome' style={styles.camera} />
+          </TouchableOpacity>
 
-        <View style={[styles.RigView, styles.qtyCol]}>
-          <Text style={styles.qtyText}>Qty</Text>
-          <TextInput
-            value={this.state.folder == '' ? '' : this.state.folder}
-            onChangeText={(text) => this.agregarFavoritos(index + 1, text, item.itemId, item.quantity)}
-            style={styles.qtyInput}
-            keyboardType='numeric'
-            maxLength={2} />
-        </View>
+          <View style={[styles.RigView, styles.qtyCol]}>
+            <Text style={styles.qtyText}>Qty</Text>
+            <TextInput
+              value={this.state.folder == '' ? '' : this.state.folder}
+              onChangeText={(text) => this.agregarFavoritos(index + 1, text, item.itemId, item.quantity)}
+              style={styles.qtyInput}
+              keyboardType='numeric'
+              maxLength={2} />
+          </View>
 
-        <CheckBox
-          style={styles.checkboxStyle}
-          onClick={() => this.checkbox(item.itemId, this.state.orderID, item.itemName)}
-          checkedImage={<Icon name='check' type='AntDesign' style={{ color: Colors.primary, paddingLeft: 5, paddingTop: 1 }} />}
-          unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons'
-            style={{ color: 'transparent' }} />}
-          isChecked={this.state.qty.indexOf(item.itemId) !== -1}
-        />
-      </Right>
+          <CheckBox
+            style={styles.checkboxStyle}
+            onClick={() => this.checkbox(item.id, this.state.orderID, item.itemName)}
+            checkedImage={<Icon name='check' type='AntDesign' style={{ color: Colors.primary, paddingLeft: 5, paddingTop: 1 }} />}
+            unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons'
+              style={{ color: 'transparent' }} />}
+            isChecked={this.state.qty.indexOf(item.itemId) !== -1}
+          />
+      </Right>) : (<View><Text style={styles.qtyText}>{item.isReturnable == 0 ? 'Not Returnable' : 'Returned'}</Text></View> )}
     </ListItem>
      <View style={{ merginRight: Layout.indent, justifyContent: 'center'}}>
              
@@ -346,8 +363,8 @@ class OrderReturnDetail extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const orderData = navigation.getParam('orderData');
-    const getItem = navigation.getParam('orderItem');
+    const orderData = this.state.orderData;
+    const getItem = this.state.orderItem;
 
     return (
       <Container style={appStyles.container}>
@@ -361,8 +378,11 @@ class OrderReturnDetail extends React.Component {
           Title='Return Order Details'
         />
 
-
+        
         <ScrollView>
+        {this.props.isLoading ? (
+            <Spinner color={Colors.secondary} style={appStyles.spinner} />
+          ) : (
           <Card style={[appStyles.addBox, { height: 'auto', }, styles.orderBox]}>
             <Grid style={{paddingBottom:10,}}>
               <Row style={styles.orderRow}>
@@ -409,7 +429,7 @@ class OrderReturnDetail extends React.Component {
 
 
 
-          </Card>
+          </Card>)}
 
         </ScrollView>
         <View style={styles.doneBtnArea}>
@@ -434,6 +454,7 @@ class OrderReturnDetail extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    isLoading: state.common.isLoading,
   };
 };
 
@@ -442,6 +463,9 @@ const mapDispatchToProps = (dispatch) => {
     logout: () => dispatch(userActions.logoutUser()),
     saveReturnOrder: (returnItems) => dispatch(userActions.saveReturnOrder(returnItems)),
     orderReturn: (returnItem) => dispatch(cartActions.orderReturn(returnItem)),
+    getOrderDetails: (orderId) => dispatch(userActions.getOrderDetailById({id: orderId})),
+    getOrderDetails1: (orderId) => dispatch(userActions.getOrderDetailById1({id: orderId})),
+
   };
 };
 

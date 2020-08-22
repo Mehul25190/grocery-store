@@ -415,6 +415,22 @@ export const getOrderDetailById = payloads => dispatch => {
     });
 }
 
+export const getOrderDetailById1 = payloads => dispatch => {
+  //console.log('payloads', payloads);
+  //dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.getOrderDetailById,  {queries: payloads}).then(res => {
+    console.log("get order details"+res.data);
+    //dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        //console.log("get del add"+res.data);
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+
 /****  Get Sub Category Lisy ****/
 export const fetchSubCategory = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });

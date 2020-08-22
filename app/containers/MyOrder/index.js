@@ -108,6 +108,8 @@ class MyOrder extends React.Component {
       this.props.navigation.navigate('OrderDetail', { orderId:item.id });
     }  
     else {
+      this.props.navigation.navigate('OrderDetail', { orderId:item.id });
+
      // this.props.navigation.navigate('OrderReturn', { orderId:item.id });
     }
 
