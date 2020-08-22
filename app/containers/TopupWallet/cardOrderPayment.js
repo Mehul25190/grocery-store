@@ -26,7 +26,7 @@ import moment from "moment";
 import { WebView } from 'react-native-webview';
 
 
-class cardOrderPayment extends React.Component {
+class cardWalletPayment extends React.Component {
 
   constructor(props) {
     super(props);
@@ -38,16 +38,16 @@ class cardOrderPayment extends React.Component {
       paymentIframe: '', 
     };
   }
-    componentDidMount() {
 
-      this.focusListener = this.props.navigation.addListener("willFocus", () => {
-        console.log('willl focus')
-        const {navigation, totalItem} = this.props;
-        const html = navigation.getParam('html')
-        console.log('html', html);
-        this.setState({ paymentIframe:html });
-      });
-      
+  componentDidMount() {
+    console.log('did focus2222')
+      this.focusListener = this.props.navigation.addListener("didFocus", () => {
+        console.log('did focus111')
+        //const {navigation, totalItem} = this.props;
+        //const html = navigation.getParam('html')
+        //console.log('html', html);
+        //this.setState({ paymentIframe:html });
+      }); 
     }
 
     componentWillUnmount(){
@@ -56,6 +56,7 @@ class cardOrderPayment extends React.Component {
    
   render(){
     const {navigation, totalItem} = this.props;
+    const html = navigation.getParam('html')
     console.log('this.state.paymentIframe', this.state.paymentIframe)
     //console.log('http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate='+deliveryDate+'&amount='+100+'&paymentMode='+paymentMode+'&useWallet='+useWallet+'&saveCard='+saveCard+'&autoDebit='+autoDebit)
     //console.log('http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate=%27'+deliveryDate+'%27&amount='+amount+'&paymentMode=%27'+paymentMode+'%27&useWallet=%27'+useWallet+'%27&saveCard=%27'+saveCard+'%27&autoDebit=%27'+autoDebit)
@@ -68,7 +69,7 @@ class cardOrderPayment extends React.Component {
       </Left>
    
       <Item style={{ width: 60, backgroundColor: "transparent" }}>
-        <Text style={appStyles.headerTitle}>Wallet 111 Payment</Text>
+        <Text style={appStyles.headerTitle}>Wallet Payment</Text>
       </Item>
      
       <Right style={appStyles.headerRight}>
@@ -90,7 +91,7 @@ class cardOrderPayment extends React.Component {
                   <WebView
                             originWhitelist={['*']}
 
-                    source={{ html: this.state.paymentIframe}}
+                    source={{ html: html}}
                     style={{ marginTop: 0, width:Layout.window.width-30, height: Layout.window.height*0.9 }}
                   />
          
@@ -123,4 +124,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(cardOrderPayment);
+export default connect(mapStateToProps, mapDispatchToProps)(cardWalletPayment);
