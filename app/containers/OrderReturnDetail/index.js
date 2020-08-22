@@ -22,7 +22,7 @@ import styles from './styles';
 import { ReturnReason } from '../data/data';
 import { showToast } from '../../utils/common';
 import CheckBox from 'react-native-check-box';
-
+import * as ImagePicker from 'expo-image-picker';
 
 class OrderReturnDetail extends React.Component {
 
