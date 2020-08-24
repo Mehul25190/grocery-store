@@ -301,7 +301,7 @@ class OrderReturnDetail extends React.Component {
       </Body>
      
 
-      {item.itemStatus != 'RET' && item.isReturnable == 1 ?
+      {item.itemStatus != 'RET' && (item.isReturnable == 1 || item.isReturnable == null) ?
         (<Right style={styles.ListRight}>
       
           <TouchableOpacity
@@ -330,7 +330,7 @@ class OrderReturnDetail extends React.Component {
           />
       </Right>) : (<View><Text style={styles.qtyText}>{item.isReturnable == 0 ? 'Not Returnable' : 'Returned'}</Text></View> )}
     </ListItem>
-    {item.itemStatus != 'RET' && item.isReturnable == 1 ?
+    {item.itemStatus != 'RET' && (item.isReturnable == 1 || item.isReturnable == null) ?
       (<View style={{ merginRight: Layout.indent, justifyContent: 'center'}}>    
               <View style={styles.reasonView} >
                 <Item style={{ borderBottomWidth: 0 }} >
