@@ -330,8 +330,8 @@ class OrderReturnDetail extends React.Component {
           />
       </Right>) : (<View><Text style={styles.qtyText}>{item.isReturnable == 0 ? 'Not Returnable' : 'Returned'}</Text></View> )}
     </ListItem>
-     <View style={{ merginRight: Layout.indent, justifyContent: 'center'}}>
-              
+    {item.itemStatus != 'RET' && item.isReturnable == 1 ?
+      (<View style={{ merginRight: Layout.indent, justifyContent: 'center'}}>    
               <View style={styles.reasonView} >
                 <Item style={{ borderBottomWidth: 0 }} >
                   <Picker
@@ -343,22 +343,18 @@ class OrderReturnDetail extends React.Component {
                     placeholderStyle={{ borderWidth: 10 }}
                     placeholderIconColor={{ borderWidth: 2 }}
                   >
-                     {/* <Picker.Item label="Select Reason to Return Order" value={0} key={0} /> */}
+                    {/* <Picker.Item label="Select Reason to Return Order" value={0} key={0} /> */}
                     {
-
                       ReturnReason.map(data => (
                         <Picker.Item key={item.id+''+data.key} label={data.reason} value={data.reason} />
 
                       ))
-
                     }
-
-
                   </Picker>
                   <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
                 </Item>
               </View>
-            </View>   
+            </View>) : null }  
     </View>
   );
 

@@ -30,6 +30,7 @@ import { array } from 'prop-types';
 import Carousel from 'react-native-snap-carousel';
 import * as cartActions from "../../actions/cart";
 import ActionTypes from "../../constants/ActionTypes";
+import moment from "moment";
 const cartCount = 1;
 
 class Home extends React.Component {
@@ -237,6 +238,12 @@ class Home extends React.Component {
     //console.log(this.state.categoryData);
     //console.log("after render");
     const { totalItem } = this.props;
+    var dateofvisit = moment(this.props.user.user.subscriptionEndDate).add(1, 'days');
+    var today = moment();
+    var subscriptionRemainingDays = dateofvisit.diff(today, 'days');
+    if(subscriptionRemainingDays <= 0)
+      subscriptionRemainingDays = 0
+    
     return (
       <Container style={[appStyles.container,{ width: Layout.window.width, height: Layout.window.height}]}>
            <Header searchBar rounded style={appStyles.headerStyle}>
@@ -333,7 +340,7 @@ class Home extends React.Component {
                 <Text style={styles.shopSubTitleText}>My Next Order</Text>
               </TouchableOpacity>  
               <View style={{flex:1,paddingLeft:10, flexDirection:'row', justifyContent:'flex-end'}}>
-                  <Text style={styles.pendingDays}>Your free delivery offer ends in 20 days..!</Text>
+                  <Text style={styles.pendingDays}>Your free delivery offer ends in {subscriptionRemainingDays} days..!</Text>
                   <TouchableOpacity style={{textAlign:'right'}}  onPress={()=>{ this.openFreeDeliveryPopup() }} >
                   <Icon type="AntDesign" name="exclamationcircle" style={styles.infoCircle} />
               </TouchableOpacity>
