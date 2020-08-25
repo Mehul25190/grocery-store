@@ -81,7 +81,7 @@ export default {
     top:18,zIndex:99
   },
 reasonView:{
-  width:100,
+  width:140,
   marginTop: 10,
   marginRight:Layout.indent-5,
   marginLeft:Layout.indent-5,
@@ -269,8 +269,8 @@ buyButton:{
    alignSelf:'center',
    paddingLeft:0,
    paddingRight:0,
-   width:90,
-   height:25,
+   width:99,
+   height:35,
 },
 
 };

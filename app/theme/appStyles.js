@@ -163,14 +163,14 @@ export default StyleSheet.create({
     fontSize: 17, 
     fontFamily:'Font-Medium',
     fontWeight: '600', 
-    color: Colors.lightIcon,
+    color: Colors.primary2,
     paddingLeft: Layout.indent
   },
   drawerItem:{
      margin:0,
     padding:0,
  borderBottomWidth:1,
-     borderColor:Colors.primary,
+     borderColor:Colors.secondary,
      // backgroundColor:'#ddd'
   },
   userIconStyle:{

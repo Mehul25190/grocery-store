@@ -26,9 +26,7 @@ export default {
  },
  bodyText:{
  	textAlign:'left',
- 	borderBottomWidth:1,
- 	borderColor:Colors.primary,
- 	paddingBottom:20,
+ 	paddingBottom:0,
    // backgroundColor:'#ddd'
   
    
@@ -37,6 +35,7 @@ export default {
 
  },
  proPrice:{
+  marginTop:8,
   textAlign:'right'
  },
  statusBtn:{
@@ -79,9 +78,9 @@ export default {
  	paddingBottom:10,
   zIndex:0
  },
-  ListItems:{
-   borderColor:Colors.primary,
-
+  ListItems:{  
+    borderBottomWidth:1,
+    borderColor:Colors.primary,
     paddingTop:5,
     paddingBottom:5,
     marginLeft:Layout.indent,
@@ -117,10 +116,7 @@ marginLeft:1
       // backgroundColor:'#ddd',
      	height:70,
      	justifyContent: 'flex-start',
-      alignItems:'flex-end',
-     	borderBottomWidth:1,
-  	borderColor:Colors.primary,
-   	
+      alignItems:'flex-end',   	
      textAlign:'right'
    },
 };

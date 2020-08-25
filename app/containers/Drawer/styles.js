@@ -15,12 +15,12 @@ export default {
     fontFamily: 'Font-Regular',
   },
   logoutIcon:{
-    color: Colors.lightIcon,
+    color: Colors.primary2,
     fontSize:16,
     padding:2
   },
   logoutText:{
-  color: Colors.lightIcon,
+  color: Colors.primary2,
   fontSize:17,
   paddingLeft:Layout.indent+3,
   textTransform: 'capitalize',

@@ -330,16 +330,16 @@ class SearchProduct extends React.Component {
                               console.log(isMax, msg)
                             }
                             minValue={0}
-                            totalWidth={90}
-                            totalHeight={20}
+                            totalWidth={95}
+                            totalHeight={30}
                             iconSize={30}
                             borderColor={Colors.primary}
-                            inputStyle={{ fontSize: 13 }}
+                            inputStyle={{ fontSize: 15 }}
                             step={1}
                             valueType="real"
                             rounded
                             textColor={Colors.primary}
-                            iconStyle={{ color: Colors.primary, fontSize: 14 }}
+                            iconStyle={{ color: Colors.primary, fontSize: 20 }}
                             rightButtonBackgroundColor="#fff"
                             leftButtonBackgroundColor="#fff"
                           />) : 

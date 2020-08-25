@@ -441,7 +441,7 @@ class MyAddress extends React.Component {
                   />
                 </Item>
                 <Item style={styles.InputView} stackedLabel>
-                 <Label style={styles.labelText}>PostBox No.</Label>
+                 <Label style={styles.labelText}>LandMark</Label>
                   <Input placeholderTextColor="#B9B9B9" placeholder="" style={styles.inputText}
                   value={this.state.zipcode.toString()} 
                   onChangeText={(value) => {this.setState({zipcode:value});} }

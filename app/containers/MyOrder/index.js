@@ -194,7 +194,7 @@ class MyOrder extends React.Component {
                         <Image style={styles.proImage} source={item.image} />
                       </TouchableOpacity>
                 </Left> */}
-
+                  
                     <Body style={styles.bodyText}>
                       <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage(item)}>
                         {/* <Text style={styles.proTitle}>{item.proName}</Text>*/}

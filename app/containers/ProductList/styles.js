@@ -372,8 +372,8 @@ categoryStyles: {
       alignSelf:'center',
       paddingLeft:0,
       paddingRight:0,
-      width:90,
-      height:25,
+      width:99,
+      height:35,
    },
    subscribeBtn:{
     borderWidth:0,

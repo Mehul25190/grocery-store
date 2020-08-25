@@ -189,15 +189,15 @@ class MyCart extends React.Component {
               //value={item.quantity} 
               onChange={(value) => this.updateCartPress(item.id, item.itemId, value)}
               onLimitReached={(isMax, msg) => console.log(isMax, msg)}
-              totalWidth={90}
-              totalHeight={20}
+              totalWidth={99}
+              totalHeight={35}
               iconSize={10}
               borderColor={Colors.primary}
               step={1}
               valueType='real'
               rounded
               textColor={Colors.primary}
-              iconStyle={{ color: Colors.primary, fontSize: 13 }}
+              iconStyle={{ color: Colors.primary, fontSize: 20 }}
               rightButtonBackgroundColor='#fff'
               leftButtonBackgroundColor='#fff'
             />
@@ -272,11 +272,12 @@ class MyCart extends React.Component {
               </Row>
               <Row>
                 <Col>
-                  <Text style={styles.title}>Total items {totalItem}</Text>
+                  <Text style={styles.title}>Total items: {totalItem}</Text>
                 </Col>
                 <Col style={{ justifyContent: 'center', alignItems: 'flex-end', width: Layout.window.width / 1.8 }}>
                   <View style={styles.totalAmount}>
-                    <Text style={styles.totalText}>Total Amount <Text style={{ fontFamily: 'Roboto', color: Colors.black }}> {Colors.CUR} </Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
+                    <Text style={styles.totalText}>Total Amount </Text>
+                    <Text style={styles.totalText}><Text  style={styles.Amount}> {Colors.CUR} </Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
                   </View>
                 </Col>
               </Row>

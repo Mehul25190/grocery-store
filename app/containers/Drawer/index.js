@@ -88,7 +88,7 @@ class Drawer extends React.Component {
             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
             {this.props.user.user.firstName!="" && (
                <Text style={appStyles.profileName} >
-                {(this.props.user.user.firstName!="") ? this.props.user.user.firstName : ""}  
+                {(this.props.user.user.firstName!="") ? this.props.user.user.firstName + " " : ""}  
                  {(this.props.user.user.lastName !="") ? this.props.user.user.lastName : ""}</Text>
               )
 
@@ -109,7 +109,7 @@ class Drawer extends React.Component {
             </Right>
           </ListItem>
           <View>
-            <Text style={{backgroundColor:Colors.primary,height:1}}>
+            <Text style={{backgroundColor:Colors.secondary,height:1}}>
             </Text>
           </View>
            <ListItem avatar noBorder style={{ marginLeft: 10,}}>
@@ -153,7 +153,7 @@ class Drawer extends React.Component {
                 onPress={() => this.props.navigation.navigate(data.route)}>
                   <Svgicon 
                     style={appStyles.drawerIcon} 
-                    color={(data.route==currentRoute) ? Colors.primary:Colors.lightIcon} 
+                    color={(data.route==currentRoute) ? Colors.primary:Colors.primary2} 
                     name={data.icon} 
                     type={data.type}
                     />

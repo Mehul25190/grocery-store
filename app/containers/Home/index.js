@@ -316,7 +316,7 @@ class Home extends React.Component {
                  <Carousel
                     ref={(c) => { this._carousel = c; }}
                     loop={true}
-                    autoplay={false}
+                    autoplay={true}
                     data={this.props.offerData}
                     renderItem={this._renderItem}
                     sliderWidth={Layout.window.width}
@@ -327,19 +327,18 @@ class Home extends React.Component {
                 </Card>
           : null }
 
-        <View style={styles.ItemLayout}>
-            <Grid style={styles.shopSubTitle}>
+            <View style={styles.ItemLayout}>
+              <Grid style={styles.shopSubTitle}>
               <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
-                <Text style={styles.shopSubTitleText}>My Next Order</Text>
+              <Text style={styles.shopSubTitleText}>My Next Order</Text>
               </TouchableOpacity>  
               <View style={{flex:1,paddingLeft:10, flexDirection:'row', justifyContent:'flex-end'}}>
-                  <Text style={styles.pendingDays}>Your free delivery offer ends in 20 days..!</Text>
-                  <TouchableOpacity style={{textAlign:'right'}}  onPress={()=>{ this.openFreeDeliveryPopup() }} >
-                  <Icon type="AntDesign" name="exclamationcircle" style={styles.infoCircle} />
+              <Text style={styles.pendingDays}>Your free delivery offer ends in 20 days..!</Text>
+              <TouchableOpacity style={{textAlign:'right'}}  onPress={()=>{ this.openFreeDeliveryPopup() }} >
+              <Icon type="AntDesign" name="exclamationcircle" style={styles.infoCircle} />
               </TouchableOpacity>
               </View>
-               
-            </Grid>
+              </Grid>
            { <FlatList 
                      vertical
                      showsVerticalScrollIndicator={false}

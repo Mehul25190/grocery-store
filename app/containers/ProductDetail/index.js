@@ -280,16 +280,16 @@ class ProductDetail extends React.Component {
                       console.log(isMax, msg)
                     }
                     minValue={0}
-                    totalWidth={90}
-                    totalHeight={20}
+                    totalWidth={120}
+                    totalHeight={35}
                     iconSize={30}
                     borderColor={Colors.primary}
-                    inputStyle={{ fontSize: 13 }}
+                    inputStyle={{ fontSize: 15 }}
                     step={1}
                     valueType="real"
                     rounded
                     textColor={Colors.primary}
-                    iconStyle={{ color: Colors.primary, fontSize: 14 }}
+                    iconStyle={{ color: Colors.primary, fontSize: 20 }}
                     rightButtonBackgroundColor="#fff"
                     leftButtonBackgroundColor="#fff"
                   />) : 
@@ -335,10 +335,8 @@ class ProductDetail extends React.Component {
         </TouchableOpacity>*/}
 
         <View style={styles.okayBtnArea}>
-          <Button priamary full style={styles.doneBtn}>
-            <TouchableOpacity onPress={()=> this.props.navigation.navigate(Screens.Home.route)}>
+          <Button priamary full style={styles.doneBtn} onPress={()=> this.props.navigation.navigate(Screens.Home.route)}>
              <Text style={styles.btnTextDone}>Continue Shopping</Text>
-            </TouchableOpacity>
           </Button>
         </View>
            
