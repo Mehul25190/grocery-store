@@ -290,7 +290,7 @@ class ProductList extends React.Component {
 
   render() {
 
-    console.log('buyOndeSelected', this.state.buyOndeSelected)
+    //console.log('product', this.state.productData)
     const { navigation } = this.props;
     const getTitle = navigation.getParam("item");
     const categoryName = this.props.navigation.getParam("categoryName");

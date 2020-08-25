@@ -70,21 +70,19 @@ class OrderPayment extends React.Component {
       <Container style={appStyles.container}>
            <Header searchBar rounded style={appStyles.headerStyle}>
       
-      <Left style={appStyles.headerLeft}>
-        
-      </Left>
+
    
-      <Item style={{ width: 60, backgroundColor: "transparent" }}>
+      <Item style={{ width: 60, backgroundColor: "transparent", left:15 }}>
         <Text style={appStyles.headerTitle}>Order Payment</Text>
       </Item>
      
       <Right style={appStyles.headerRight}>
-         <Button transparent>
+         {/*<Button transparent>
          <TouchableOpacity style={appStyles.cartIconArea} onPress={()=> totalItem > 0 ? this.props.navigation.navigate(Screens.MyCart.route) : ''}>
            <Icon style={appStyles.cartIcon} name="cart" />
            { totalItem >0 && (<Text style={appStyles.cartCount}>{totalItem}</Text>) }
           </TouchableOpacity>
-        </Button>
+        </Button>*/}
       </Right>
    
      

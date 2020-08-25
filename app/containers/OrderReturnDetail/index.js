@@ -96,6 +96,15 @@ class OrderReturnDetail extends React.Component {
     });
   }
 
+  getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL, Permissions.CAMERA);
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
+  };
+
   _pickImage = async (clickIndex) => {
     Alert.alert(
       'Select Image',
@@ -124,7 +133,7 @@ class OrderReturnDetail extends React.Component {
       quality: 1,
     });
     if (!result.cancelled) {
-      this.setState({ image: result.base64 });
+      this.ValidateSize(result.base64)
     }
   }
 
@@ -137,9 +146,20 @@ class OrderReturnDetail extends React.Component {
       quality: 1,
     });
     if (!result.cancelled) {
-      this.setState({ image: result.base64 });
+      this.ValidateSize(result.base64)
     }
   } 
+  ValidateSize(file) {
+    const File = file.length
+    const size = Math.round((File / 1024))
+    if (file > 2048) {
+      alert(
+        "File too small, please select a file greater than 2mb");
+    } else {
+      this.setState({ image: file });
+    }
+  }
+
 
   agregarFavoritos(clickIndex, val, itemsid, quantity) {
 
@@ -226,7 +246,6 @@ class OrderReturnDetail extends React.Component {
         this.props.orderReturn(this.data).then(res => {
           console.log(res)
           if (res.status == "success") {
-              //console.log(this.state.orderData)
               this.props.getOrderDetails1(this.state.orderData[0].id).then (res =>{ 
                 this.setState({ orderData:res.data.orderDetails});
                 this.setState({ orderItem:res.data.orderItems });
@@ -326,7 +345,7 @@ class OrderReturnDetail extends React.Component {
             checkedImage={<Icon name='check' type='AntDesign' style={{ color: Colors.primary, paddingLeft: 5, paddingTop: 1 }} />}
             unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons'
               style={{ color: 'transparent' }} />}
-            isChecked={this.state.qty.indexOf(item.itemId) !== -1}
+            isChecked={this.state.qty.indexOf(item.id) !== -1}
           />
       </Right>) : (<View><Text style={styles.qtyText}>{item.isReturnable == 0 ? 'Not Returnable' : 'Returned'}</Text></View> )}
     </ListItem>
@@ -429,13 +448,13 @@ class OrderReturnDetail extends React.Component {
           </Card>)}
 
         </ScrollView>
-        <View style={styles.doneBtnArea}>
+        {/*<View style={styles.doneBtnArea}>
           <Button priamary full style={styles.doneBtn}>
             <TouchableOpacity onPress={() => this.onPressSubmit('OrderReturnDetail')}>
               <Text style={styles.btnTextDone}>Done</Text>
             </TouchableOpacity>
           </Button>
-        </View>
+        </View>*/}
 
 
 
