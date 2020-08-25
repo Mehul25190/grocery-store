@@ -15,12 +15,12 @@ calImage:{
 },
 HoriLine:{
 
-  backgroundColor:Colors.primary,
+  backgroundColor:Colors.secondary,
    marginLeft:Layout.indent,
    marginRight:Layout.indent,
    height:1,
-   marginTop:5,
-   marginBottom:5,
+   marginTop:10,
+   marginBottom:20,
 },
  reasonView:{
       width: Layout.width,
@@ -76,14 +76,14 @@ HoriLine:{
   color:Colors.gray,
   fontFamily:'Font-Medium',
   fontSize:14,
-  lineHeight:16
+  lineHeight:18
  },
  deliveryAddress:{
   padding:10,
   height:'auto',
   marginLeft:Layout.indent,
    marginRight:Layout.indent ,
-   marginBottom:3
+   marginBottom:3,
 },
  AmuTextTitle:{
   fontSize:16,
@@ -191,13 +191,20 @@ bodyText:{
 bodyNote:{
   paddingLeft:15,
   color:Colors.primary,
-  lineHeight:12
+  lineHeight:16
 },
 bodyGreen:{
-  color:Colors.primary,
+  color:Colors.primary, fontSize:15,
 },
 title:{
   marginTop:15,
+  marginLeft:Layout.indent,
+  marginRight:Layout.indent,
+  fontFamily:'Font-Medium',
+
+},
+deliverytitle:{
+  marginTop:25,
   marginLeft:Layout.indent,
   marginRight:Layout.indent,
   fontFamily:'Font-Medium',

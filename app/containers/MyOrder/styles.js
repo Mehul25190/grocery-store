@@ -44,7 +44,7 @@ export default {
     justifyContent: 'center',
     alignItems: 'center',
     textAlign:'center',
-    alignSelf:'center',
+    alignSelf:'flex-end',
     paddingLeft:0,
     paddingRight:0,
     height:20,
@@ -117,6 +117,6 @@ marginLeft:1
      	height:70,
      	justifyContent: 'flex-start',
       alignItems:'flex-end',   	
-     textAlign:'right'
+     textAlign:'flex-end'
    },
 };

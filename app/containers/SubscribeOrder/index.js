@@ -169,15 +169,15 @@ class SubscribeOrder extends React.Component {
                       onChange={value => this.setState({qty: value})} 
                       onLimitReached={(isMax,msg) => console.log(isMax,msg)}
                        minValue={1}
-                      totalWidth={90} 
-                      totalHeight={20} 
+                      totalWidth={95} 
+                      totalHeight={30} 
                       iconSize={10}
                       borderColor={Colors.primary}
                       step={1}
                       valueType='real'
                       rounded 
                       textColor={Colors.primary}
-                      iconStyle={{ color: Colors.primary,fontSize:13 }} 
+                      iconStyle={{ color: Colors.primary,fontSize:20 }} 
                       rightButtonBackgroundColor='#fff' 
                       leftButtonBackgroundColor='#fff'
                     />
@@ -194,7 +194,7 @@ class SubscribeOrder extends React.Component {
                  <Text style={[styles.AmuText,styles.AmuTextTitle]}>{this.state.subscriptionDtls.itemName}</Text>
                  <Text style={styles.AmuText}>{this.state.subscriptionDtls.weight} {this.state.subscriptionDtls.uom}</Text>
                  {/*<Text style={styles.AmuText}>Qty: {this.state.subscriptionDtls.quantity}</Text>*/}
-                 <Text style={styles.AmuText}> <Text style={{}}>{Colors.CUR}</Text> {this.state.subscriptionDtls.price}</Text>
+                 <Text style={styles.AmuText}><Text style={{}}>{Colors.CUR}</Text> {this.state.subscriptionDtls.price}</Text>
                 </View>
               </Col>
             </Row>
@@ -256,7 +256,7 @@ class SubscribeOrder extends React.Component {
          </View>
        
       <Grid>
-          <Row style={{justifyContent:'center',marginBottom:5}}>
+          <Row style={{justifyContent:'center',marginBottom:15,}}>
               <Col style={styles.startDateCol}>
                    <Text style={styles.startDate}>End Date</Text>
               </Col>
@@ -277,7 +277,7 @@ class SubscribeOrder extends React.Component {
               </Col>
             </Row>
         </Grid>
-        <View style={[styles.HoriLine,{marginTop:10}]}>
+        <View style={[styles.HoriLine,{marginTop:15}]}>
           <Text></Text>
         </View>
         <Grid>
@@ -336,7 +336,7 @@ class SubscribeOrder extends React.Component {
         </ListItem>
 
          <View >
-          <Text style={styles.title}>Delivery Address </Text>
+          <Text style={styles.deliverytitle}>Delivery Address </Text>
          </View>
 
         <Card style={[appStyles.addBox,styles.deliveryAddress]}>
@@ -372,7 +372,7 @@ class SubscribeOrder extends React.Component {
           <Row>
             <Col style={{justifyContent:'center'}}>
             <View style={{}}>
-            <Text style={styles.payText}>Subscribe Start Date </Text>
+            <Text style={styles.payText}>Subscription Start Date </Text>
             <Text style={styles.payText}> {this.state.displaystartDate}</Text>
             </View> 
             </Col>

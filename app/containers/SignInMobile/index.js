@@ -97,25 +97,7 @@ class SignInMobile extends React.Component {
                     delay={500}                
                      > 
                    <SignInFormMobile onSubmit={this.signinmobile} />
-                   <Row style={{marginBottom:20}}>
-                     <Col style={{width:100,marginLeft:Layout.indent}}>
-                        <Button transparent full     
-                         style={[{justifyContent:'flex-start'}]} >
-                          <TouchableOpacity style={{paddingVerticle:10}}  onPress={() => this.onSignupButtonPressHandler()}>
-                          <Text style={[styles.linkTextSignup,appStyles.textRight]} >Signup</Text>
-                          </TouchableOpacity>
-                        </Button>
-                      </Col>
-                      {/*<Col style={{marginRight:Layout.indent}}>
-                        <Button transparent full  
-                         style={[{justifyContent:'flex-end'}]} >
-                          <TouchableOpacity  onPress={() => this.onForgotpasswordPressHandler()}>
-                          <Text style={[styles.linkTextEmail,appStyles.textRight]} > Forgot Password?</Text>
-                          </TouchableOpacity>
-                        </Button>
-                      </Col>*/}
-                    </Row>
-                   
+                                      
                   </Animatable.View>
                   <Animatable.View 
                     animation="fadeIn"
@@ -133,11 +115,31 @@ class SignInMobile extends React.Component {
                       </Button>
                        </TouchableOpacity>
                   }
+
                 </Animatable.View>  
                  <Animatable.View 
                     animation="fadeIn"
                      delay={1200} 
                     style={[styles.loginWith,styles.loginWithMob]} >
+
+                    <Row style={{marginBottom:60}}>
+                     <Col>
+                        <Button transparent full     
+                         style={[{justifyContent:'center'}]} >
+                          <TouchableOpacity  onPress={() => this.onSignupButtonPressHandler()}>
+                          <Text  style={styles.loginWithText} >Signup</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>
+                      {/*<Col style={{marginRight:Layout.indent}}>
+                        <Button transparent full  
+                         style={[{justifyContent:'flex-end'}]} >
+                          <TouchableOpacity  onPress={() => this.onForgotpasswordPressHandler()}>
+                          <Text style={[styles.linkTextEmail,appStyles.textRight]} > Forgot Password?</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>*/}
+                    </Row>
                   	<View style={styles.hairlineleft} />
                     	   	<View style={styles.loginButtonBelowText1} >		
                     		<Text style={styles.orText}>or</Text>
@@ -147,7 +149,10 @@ class SignInMobile extends React.Component {
 
                     <Text style={styles.loginWithText}>Login with email</Text>
                     </TouchableOpacity>
+                    
+                    
                  </Animatable.View>
+
               </View>          
         
           

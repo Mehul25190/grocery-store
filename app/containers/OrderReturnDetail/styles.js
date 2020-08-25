@@ -205,6 +205,6 @@ alignItems:'flex-end'
   color:Colors.primary
   },
   checkboxStyle:{
-    borderColor:Colors.primary, width:32, borderRadius:5, borderWidth:2
+    borderColor:Colors.primary, width:35, borderRadius:5, borderWidth:2
     },
 };

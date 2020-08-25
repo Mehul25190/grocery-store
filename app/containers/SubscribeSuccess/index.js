@@ -65,7 +65,7 @@ class SubscribeSuccess extends React.Component {
                />
                <View style={{textAlign:'center'}}>
                   <View style={{marginBottom:5}}>
-                   <Text style={styles.SuccesTittle}>Subscribe Successfull</Text>
+                   <Text style={styles.SuccesTittle}>Subscription Successful</Text>
                   </View>
                    <View style={{marginBottom:5}}>
                    <Text style={styles.SuccessText}>Your subscription will start from</Text>

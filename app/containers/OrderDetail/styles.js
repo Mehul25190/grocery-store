@@ -87,12 +87,12 @@ export default {
  },
  orderTitleText:{
  	color:Colors.black,
- 	fontSize:16,
+ 	fontSize:14,
  	fontFamily:'Font-Medium'
  },
   orderValText:{
  	color:'gray',
- 	fontSize:16,
+ 	fontSize:14,
  	fontFamily:'Font-Medium'
  },
   ListItems:{
@@ -130,4 +130,16 @@ export default {
    	
      textAlign:'right'
    },
+   cancelBtn:{
+  backgroundColor:Colors.secondary,
+  borderRadius:25,
+  marginBottom:10
+},
+cancelBtnTxt:{
+fontFamily:'Font-Medium',
+textTransform:'capitalize',
+fontSize:20,
+color:Colors.primary
+
+}
 };

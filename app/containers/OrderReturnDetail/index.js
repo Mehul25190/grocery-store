@@ -405,7 +405,7 @@ class OrderReturnDetail extends React.Component {
                 <Col style={styles.orderValue}>
                   <Text style={styles.orderValText}>
                     <Text style={{ fontFamily: 'Roboto', color: 'gray' }}>{Colors.CUR}
-                    </Text>{(orderData.length > 0) ? orderData[0].orderAmt : ""}</Text>
+                    </Text> {(orderData.length > 0) ? orderData[0].orderAmt : ""}</Text>
                 </Col>
               </Row>
             </Grid>

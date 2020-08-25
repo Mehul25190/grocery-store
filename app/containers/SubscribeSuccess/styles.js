@@ -55,7 +55,7 @@ borderRadius:25,
 paddingVertical:10,
 marginBottom:10,
 height:35,
-width:200,
+width:220,
 alignSelf:'center'
 
 },
@@ -90,7 +90,7 @@ checkOutText:{
 	color:Colors.primary,
 paddingTop:5,
 fontFamily:'Font-Medium',
-fontSize:16,
+fontSize:15,
 lineHeight:18,
 textTransform:'capitalize'
 },

@@ -495,7 +495,7 @@ class MyAddress extends React.Component {
 
                   <View>
                     
-                    <Text style={{ marginBottom: 10, paddingLeft: 10, paddingRight: 10, fontFamily: 'Font-Medium', fontSize: 14 }}>
+                    <Text style={{ marginBottom: 0, paddingLeft: 10, paddingRight: 10, fontFamily: 'Font-Medium', fontSize: 14 }}>
                       {(this.state.setDeliveryAddress.aptNo!=null ? (this.state.setDeliveryAddress.aptNo + ",") : "" )} 
                       {(this.state.setDeliveryAddress.buildingName!=null ? (this.state.setDeliveryAddress.buildingName + ",") : "")}
                     </Text>

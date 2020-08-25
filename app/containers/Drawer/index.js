@@ -80,11 +80,10 @@ class Drawer extends React.Component {
               <Svgicon name="user-circle" 
                type="FontAwesome"
                 color={Colors.primary} 
-
                 IconStyle={appStyles.userIconStyle}
                 />
             </Left>
-            <Body style={{justifyContent:'center',alignItems:'center',paddingBottom:10,marginLeft:0}}>
+            <Body style={{justifyContent:'flex-start',alignItems:'flex-start',paddingBottom:10,marginLeft:10}}>
             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
             {this.props.user.user.firstName!="" && (
                <Text style={appStyles.profileName} >
@@ -113,15 +112,14 @@ class Drawer extends React.Component {
             </Text>
           </View>
            <ListItem avatar noBorder style={{ marginLeft: 10,}}>
-            <Left style={{paddingLeft:5, width: 30,}}>
+            <Left style={{ flex: 0,  marginLeft: 0,   paddingLeft:0,  }}>
               <Svgicon name="location-on" 
                type="MaterialIcons"
                 color={Colors.primary} 
-
-                IconStyle={[appStyles.IconStyle,{textAlign:'center',justifyContent:'center'}]}
+                IconStyle={appStyles.userIconStyle}
                 />
             </Left>
-            <Body>
+            <Body style={{justifyContent:'flex-start',alignItems:'flex-start',paddingBottom:10,marginLeft:10}}>
              <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
               <Text style={appStyles.userArea} > {(deliveryAddress ? (deliveryAddress.aptNo + ",") : "" )} {deliveryAddress ? deliveryAddress.buildingName + ',' : ''}</Text>
               <Text style={appStyles.userCity} >{deliveryAddress ? deliveryAddress.cityName + ' - ' + deliveryAddress.state : ''} </Text>

@@ -103,12 +103,11 @@ class CancelOrder extends React.Component {
               </Right>
     </ListItem> */}
             <ListItem noBorder>
-              <Left>
-                <Text style={styles.TotalTitle}>Total</Text>
-              </Left>
-              <Right>
-              <Text>{Colors.CUR} {(getItem[0].orderAmt !="" )? getItem[0].orderAmt : ""} </Text>
-              </Right>
+
+              <Body>
+              <Text style={styles.TotalTitle}>Total: {Colors.CUR} {(getItem[0].orderAmt !="" )? getItem[0].orderAmt : ""} </Text> 
+              </Body>
+
             </ListItem>
            <TouchableOpacity>
               <Button style={[styles.cancelBtn,{marginTop:30,marginLeft:Layout.indent,marginRight:Layout.indent}]}

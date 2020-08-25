@@ -92,11 +92,11 @@ fontSize:14
   color:Colors.gray,
   fontFamily:'Font-Medium',
   fontSize:14,
-  lineHeight:16
+  lineHeight:20
  },
 
  AmuTextTitle:{
-  fontSize:16,
+  fontSize:18,
   lineHeight:20,
   color:Colors.black
  },

@@ -274,7 +274,7 @@ class MyCart extends React.Component {
                 <Col>
                   <Text style={styles.title}>Total items: {totalItem}</Text>
                 </Col>
-                <Col style={{ justifyContent: 'center', alignItems: 'flex-end', width: Layout.window.width / 1.8 }}>
+                <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end', width: Layout.window.width / 1.8 }}>
                   <View style={styles.totalAmount}>
                     <Text style={styles.totalText}>Total Amount </Text>
                     <Text style={styles.totalText}><Text  style={styles.Amount}> {Colors.CUR} </Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
@@ -307,12 +307,12 @@ class MyCart extends React.Component {
             <Col style={styles.footerCol}>
               <View><Text style={styles.footerTitle}>Wallet</Text></View>
               <View style={{ textAlign: 'center' }}><Text style={styles.footerAmount}>
-                <Text style={{ fontFamily: 'Roboto', color: Colors.primary }}>{Colors.CUR}</Text> {walletAmount ? walletAmount : 0}</Text></View>
+                <Text style={{ fontFamily: 'Roboto', fontSize:13, color: Colors.primary }}>{Colors.CUR}</Text> {walletAmount ? walletAmount : 0}</Text></View>
             </Col>
             <Col style={styles.footerCol}>
               <View><Text style={styles.footerTitle}>Savings</Text></View>
               <View><Text style={styles.footerAmount}>
-                <Text style={{ fontFamily: 'Roboto', color: Colors.primary }}>{Colors.CUR}</Text> {(actualTotal - totalAmount).toFixed(2)}</Text></View>
+                <Text style={{ fontFamily: 'Roboto', fontSize:13, color: Colors.primary }}>{Colors.CUR}</Text> {(actualTotal - totalAmount).toFixed(2)}</Text></View>
             </Col>
             <Col style={[styles.footerCol, { borderRightWidth: 0 }]}>
               <TouchableOpacity style={styles.orderSummary} onPress={() => this.props.navigation.navigate(Screens.Checkout.route)}>

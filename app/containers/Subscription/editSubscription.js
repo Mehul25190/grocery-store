@@ -184,15 +184,15 @@ class editSubscribe extends React.Component {
                       onLimitReached={(isMax,msg) => console.log(isMax,msg)}
                        minValue={this.state.qty}
                        maxValue={this.state.qty}
-                      totalWidth={90} 
-                      totalHeight={20} 
+                      totalWidth={95} 
+                      totalHeight={30} 
                       iconSize={10}
                       borderColor={Colors.primary}
                       step={1}
                       valueType='real'
                       rounded 
                       textColor={Colors.primary}
-                      iconStyle={{ color: Colors.primary,fontSize:13 }} 
+                      iconStyle={{ color: Colors.primary,fontSize:20 }} 
                       rightButtonBackgroundColor='#fff' 
                       leftButtonBackgroundColor='#fff'
                       editable={false}
@@ -210,7 +210,7 @@ class editSubscribe extends React.Component {
                  <Text style={[styles.AmuText,styles.AmuTextTitle]}>{this.state.subscriptionDtls.itemName}</Text>
                  <Text style={styles.AmuText}>{this.state.subscriptionDtls.weight} {this.state.subscriptionDtls.uom}</Text>
                  {/*<Text style={styles.AmuText}>Qty: {this.state.subscriptionDtls.quantity}</Text>*/}
-                 <Text style={styles.AmuText}> <Text style={{}}>{Colors.CUR}</Text> {this.state.subscriptionDtls.price}</Text>
+                 <Text> <Text style={{}}>{Colors.CUR}</Text> {this.state.subscriptionDtls.price}</Text>
                 </View>
               </Col>
             </Row>

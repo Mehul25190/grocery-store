@@ -128,6 +128,19 @@ borderColor:Colors.primary
   img:{
        color:Colors.primary
   },
+  
+   cancelBtn:{
+  backgroundColor:Colors.secondary,
+  borderRadius:25,
+  marginBottom:10
+},
+cancelBtnTxt:{
+fontFamily:'Font-Medium',
+textTransform:'capitalize',
+fontSize:20,
+color:Colors.primary
+
+}
 
  
 

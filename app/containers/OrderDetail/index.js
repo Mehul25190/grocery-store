@@ -110,16 +110,12 @@ class OrderDetail extends React.Component {
                   <TouchableOpacity style={styles.prodInfo} onPress={() => this.onRatingPage(item)}>
                     <Text  style={[styles.proTitle,{  fontFamily:'Font-Medium'}]}>{item.itemName} </Text>
                     <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
+                    <Text style={styles.proPrice}>{Colors.CUR} {item.itemPrice}</Text>
                     
                   </TouchableOpacity>  
                  </Body>
                  
-                <Right style={styles.ListRight}>
-                  <View>
-  <Text style={styles.proPrice}>{Colors.CUR} {item.itemPrice}</Text>
-                                   
-                  </View>
-                </Right>
+                <Right />
          </ListItem>
   );
 
@@ -150,10 +146,17 @@ class OrderDetail extends React.Component {
     </TouchableOpacity>
   </Card>
    <Card style={[appStyles.addBox,styles.trackBox,{marginTop:-9,borderTopWidth:0,zIndex:-1}]}>
-    <TouchableOpacity onPress={()=> this.onCancelPage(this.state.orderData)}>
-      <Text style={styles.detailTitle2}>Cancel Order</Text>
 
-    </TouchableOpacity>
+
+    <TouchableOpacity>
+              <Button style={[styles.cancelBtn,{marginTop:30,marginLeft:Layout.indent,marginRight:Layout.indent}]}
+               primary full   onPress={()=> this.onCancelPage(this.state.orderData)}>
+               
+                <Text style={styles.cancelBtnTxt}>Cancel Order </Text>
+                
+              </Button>
+              </TouchableOpacity>
+              
   </Card>
   </View>;
 

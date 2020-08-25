@@ -184,7 +184,7 @@ export default StyleSheet.create({
   },
   profileName:{
     color: Colors.black,
-    fontSize: 18,
+    fontSize: 14, fontWeight:'bold',
 
   },
   userCity:{
@@ -328,7 +328,7 @@ fontFamily:'Font-Medium'
   cartIconArea:{
   //  backgroundColor:'#ddd',
     position:'relative',
-    width:30,
+    width:35,
     height:35,
    justifyContent:'center',
    alignItems:'flex-end',
@@ -336,14 +336,14 @@ fontFamily:'Font-Medium'
 
   },
   userIcon:{
-    fontSize:20,
+    fontSize:24,
     paddingLeft:5,
     paddingTop:3,
     color:Colors.primary
   },
   cartIcon:{
    paddingTop:8,
-   fontSize:24,
+   fontSize:28,
    color:Colors.primary
   },
   cartCount:{

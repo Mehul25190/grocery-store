@@ -126,7 +126,7 @@ class Headers extends React.Component {
                 <CheckedOption checked={this.props.selectedStatus == 'DEL' ? true : false } value={'DEL'} text="Delivered" />
                 <CheckedOption checked={this.props.selectedStatus == 'CNF' ? true : false } value={'CNF'} text="Confirmed" />
                 <CheckedOption checked={this.props.selectedStatus == 'RET' ? true : false } value={'RET'} text="Returned" />
-                <CheckedOption checked={this.props.selectedStatus == 'CAN' ? true : false } value={'CAN'} text="Canceled" />
+                <CheckedOption checked={this.props.selectedStatus == 'CAN' ? true : false } value={'CAN'} text="Cancelled" />
               </MenuOptions>
             </Menu>
           )}

@@ -86,19 +86,7 @@ class SignUp extends React.Component {
                     delay={500}                
                      > 
                     <SignUpForm onSubmit={this.signup} />
-                    <Row style={{marginBottom:20}}>
-                     <Col>
-                        <Button transparent full  
-                         style={[{justifyContent:'flex-start'}]} >
-                          <TouchableOpacity  onPress={() => this.onSigninButtonPressHandler()}>
-                          <Text style={[styles.linkTextLogin]} >Login</Text>
-                          </TouchableOpacity>
-                        </Button>
-                      </Col>
-                      <Col>
-                        
-                      </Col>
-                    </Row>
+                   
                   </Animatable.View>
                 <Animatable.View 
                     animation="fadeIn"
@@ -114,6 +102,17 @@ class SignUp extends React.Component {
                         <Text style={styles.SignInbtn}>SignUp </Text>
                       </Button>
                   }
+                   <Row style={{marginBottom:20}}>
+                     <Col>
+                        <Button transparent full  
+                         style={[{justifyContent:'center'}]} >
+                          <TouchableOpacity  onPress={() => this.onSigninButtonPressHandler()}>
+                          <Text  style={styles.loginWithText}  >Login</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>
+                     
+                    </Row>
                 </Animatable.View>  
             </View>    
         </ImageBackground>      

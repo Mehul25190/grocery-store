@@ -92,7 +92,7 @@ class DeleteSubscribe extends React.Component {
                      <Text style={[styles.AmuText,styles.AmuTextTitle]}>{this.state.item.itemName}</Text>
                      <Text style={styles.AmuText}>{this.state.item.weight} {this.state.item.uom}</Text>
                      {/*<Text style={styles.AmuText}>Qty: {this.state.item.quantity}</Text>*/}
-                     <Text style={styles.AmuText}> <Text style={{}}>{Colors.CUR}</Text> {this.state.item.price}</Text>
+                     <Text style={styles.AmuText}><Text style={{}}>{Colors.CUR}</Text> {this.state.item.price}</Text>
                     </View>
                   </Col>
                 </Row>
@@ -133,17 +133,23 @@ class DeleteSubscribe extends React.Component {
        </Row>
         </Grid> 
                   <View style={{paddingLeft:Layout.indent, marginTop:10}}>
-                    <Text style={{color:Colors.primary,fontFamily:'Font-Medium',lineHeight:18}}>Note: Please select  accurate reason for quicker refund process</Text>
+                    <Text style={{color:Colors.primary,fontFamily:'Font-Medium',lineHeight:18}}>Note: Please select accurate reason for serving you better in future.</Text>
                   </View>
                </Card>
               
             </View>
-      <TouchableOpacity style={styles.submitBtnArea} >
-        <Button primary full style={styles.submitBtn} onPress={()=>this.deleteSubscription(this.state.item.id, this.state.reason)}>
-        <Text style={styles.submitText}>Delete Subscription
-        </Text>
-        </Button>
-      </TouchableOpacity>
+
+
+      <TouchableOpacity>
+              <Button style={[styles.cancelBtn,{marginTop:30,marginLeft:Layout.indent,marginRight:Layout.indent}]}
+               primary full   onPress={()=>this.deleteSubscription(this.state.item.id, this.state.reason)}>
+               
+                <Text style={styles.cancelBtnTxt}>Delete Subscription</Text>
+                
+              </Button>
+              </TouchableOpacity>
+
+
       </View>)}
     </ScrollView>
     

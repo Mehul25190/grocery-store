@@ -124,17 +124,36 @@ class SignInEmail extends React.Component {
                       </Button>
                        </TouchableOpacity>
                   }
-                </Animatable.View>  
-                 <Animatable.View 
+                </Animatable.View> 
+
+              <Animatable.View 
                     animation="fadeIn"
                      delay={1200} 
-                    style={styles.loginWith}
-                   
-                    >
-                    <TouchableOpacity  onPress={() =>  this.props.pressSigninMob()}>
+                    style={[styles.loginWith,styles.loginWithMob]} >
+
+                    <Row style={{marginBottom:60}}>
+                     <Col>
+                        <Button transparent full     
+                         style={[{justifyContent:'center'}]} >
+                          <TouchableOpacity  onPress={() => this.onSignupButtonPressHandler()}>
+                          <Text  style={styles.loginWithText} >Signup</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>
+                      <Col style={{marginRight:Layout.indent}}>
+                        <TouchableOpacity  onPress={() =>  this.props.pressSigninMob()}>
+
                     <Text style={styles.loginWithText}>Login with OTP</Text>
                     </TouchableOpacity>
+                      </Col>
+                    </Row>
+              
+                    
+                    
+                    
                  </Animatable.View>
+
+                 
               </View>          
            </ImageBackground>
            </Content>
