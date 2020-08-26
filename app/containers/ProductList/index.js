@@ -282,10 +282,21 @@ class ProductList extends React.Component {
 
   subscribePressHandlder(item){
     showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
-    this.props.navigation.navigate(
-      Screens.SubscribeOrder.route,
-      { item: item , qty: this.state.value}
-    )
+    this.props.checkActiveSubscription(item.id, this.props.user.user.id).then(res => {
+        console.log(res.data);
+        if(res.status == 'success'){
+          if(res.data.isActiveSubscription == 'Y'){
+            showToast('You have already subscribed this product.', "danger")
+          }else{
+            this.props.navigation.navigate(
+              Screens.SubscribeOrder.route,
+              { item: item , qty: this.state.value}
+            )
+          }
+        }else{
+          showToast('Please try again', "danger")
+        }
+    })
   }
 
   render() {
@@ -481,7 +492,7 @@ const mapDispatchToProps = (dispatch) => {
     addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
     updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId:userId })),
-
+    checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId:userId })),
   };
 };
 

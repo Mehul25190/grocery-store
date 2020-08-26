@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, TextInput, ScrollView, FlatList, Alert } from 'react-native';
 import _ from 'lodash';
 import { Screens, Layout, Colors } from '../../constants';
-import { Logo, Statusbar, Headers } from '../../components';
+import { Logo, Statusbar, Headers, ScreenLoader } from '../../components';
 import imgs from '../../assets/images';
 import {
   Container,
@@ -151,10 +151,12 @@ class OrderReturnDetail extends React.Component {
   } 
   ValidateSize(file) {
     const File = file.length
+    console.log(File)
     const size = Math.round((File / 1024))
-    if (file > 2048) {
+    console.log(size)
+    if (size > 2048) {
       alert(
-        "File too small, please select a file greater than 2mb");
+        "Image size should be less than 2mb");
     } else {
       this.setState({ image: file });
     }
@@ -396,9 +398,8 @@ class OrderReturnDetail extends React.Component {
 
         
         <ScrollView>
-        {this.props.isLoading ? (
-            <Spinner color={Colors.secondary} style={appStyles.spinner} />
-          ) : (
+          <ScreenLoader  loading={this.props.Loading} />
+
           <Card style={[appStyles.addBox, { height: 'auto', }, styles.orderBox]}>
             <Grid style={{paddingBottom:10,}}>
               <Row style={styles.orderRow}>
@@ -441,11 +442,7 @@ class OrderReturnDetail extends React.Component {
                 keyExtractor={(item) => `${item.itemName}`}
               />
             </ScrollView>
-
-
-
-
-          </Card>)}
+          </Card>
 
         </ScrollView>
         {/*<View style={styles.doneBtnArea}>
@@ -470,7 +467,7 @@ class OrderReturnDetail extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    isLoading: state.common.isLoading,
+    Loading: state.common.isLoading,
   };
 };
 

@@ -44,4 +44,5 @@ export default {
   orderReturn: 'order/returnOrderItem',
   fetchUserWallet: 'userWallet/fetchWalletActivity',
   rechargeWallet: 'userWallet/rechargeWallet',
+  checkActiveSubscription: 'order/checkActiveSubscription',
 }
