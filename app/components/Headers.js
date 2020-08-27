@@ -62,7 +62,8 @@ class Headers extends React.Component {
 
   onChangeSearchText(text) {
     this.setState({textValue:text});
-    setTimeout(() => {  this.props.searchPage(this.state.textValue) }, 3000)
+    if(text.length > 2)
+      setTimeout(() => {  this.props.searchPage(this.state.textValue) }, 3000)
   }
   render() {
 
@@ -101,7 +102,7 @@ class Headers extends React.Component {
               this.onChangeSearchText(text)
               }}
               value={this.state.textValue}
-              placeholder="Search..."
+              placeholder="Search1..."
             />
           </Item>
         ) : (

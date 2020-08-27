@@ -80,7 +80,7 @@ class ProductDetail extends React.Component {
   }
 
   buyOncePressHnadler(productId, value){
-
+  
     if(value == 0){ 
       this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
         if(res.status == "success"){
@@ -218,7 +218,8 @@ class ProductDetail extends React.Component {
                    <AirbnbRating
                       count={5}
                       reviews={[]}
-                      defaultRating={4}
+                      isDisabled={true}
+                      defaultRating={ProductDetail.item[0].rating}
                       size={15}
                       showRating={false}
                       style={{pointerEvents:'none'}}
@@ -283,6 +284,7 @@ class ProductDetail extends React.Component {
                       console.log(isMax, msg)
                     }
                     minValue={0}
+                    maxValue={ProductDetail.item[0].maxOrderQuantity ? ProductDetail.item[0].maxOrderQuantity : 5}
                     totalWidth={120}
                     totalHeight={35}
                     iconSize={30}

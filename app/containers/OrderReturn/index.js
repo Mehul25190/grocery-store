@@ -208,7 +208,31 @@ class OrderDetail extends React.Component {
 
          
         </Card>
-       
+        <Card style={[appStyles.addBox,styles.trackBox,{borderBottomWidth:3,zIndex:0}]}>
+          <TouchableOpacity onPress={()=> console.log()}>
+            <Text style={styles.detailTitle2}>Track Shipment</Text>
+            <Text style={styles.orderValText}>Your Order assiged to Delivery Boy.</Text>
+            <Row style={styles.orderRow}>
+                <Col style={styles.orderTitle}>
+                  <Text style={styles.orderTitleText}> Delivery Date :</Text>
+                </Col>
+                <Col style={styles.orderValue}>
+                <Text style={styles.orderValText}> {(this.state.orderData.length >0 )? this.state.orderData[0].orderDeliveryDate : ""}</Text>
+                </Col>
+          </Row>
+          <Row style={styles.orderRow}>
+                <Col style={styles.orderTitle}>
+                  <Text style={styles.orderTitleText}> Delivery Time :</Text>
+                </Col>
+                <Col style={styles.orderValue}>
+                <Text style={styles.orderValText}> {(this.state.orderData.length >0 )? this.state.orderData[0].deliveryFromTime + ' : ' + this.state.orderData[0].deliveryToTime : ""} </Text>
+                </Col>
+          </Row>
+          
+          </TouchableOpacity>
+        </Card>
+      
+
          <Card style={[appStyles.addBox,styles.trackBox,{marginTop:-9,borderTopWidth:0,zIndex:-1}]}>
          <TouchableOpacity>
               <Button style={[styles.cancelBtn,{marginTop:30,marginLeft:Layout.indent,marginRight:Layout.indent}]}

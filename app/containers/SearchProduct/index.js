@@ -221,7 +221,8 @@ class SearchProduct extends React.Component {
          <Input style={appStyles.searchInput}  value={this.state.text} onChangeText={text => 
             {
               this.setState({text:text});
-              setTimeout(() => { this.productItemList(this.state.text) }, 3000)
+              if(text.length > 2)
+                setTimeout(() => { this.productItemList(this.state.text) }, 3000)
           }
           } placeholder='Search Product'/>
       </Item>

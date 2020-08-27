@@ -126,7 +126,7 @@ class MyCart extends React.Component {
   }
 
   productDetail(id){
-    this.props.productDetail(id).then(res => {
+    this.props.productDetail(id, this.props.user.user.id).then(res => {
       if(res.status == "success"){
         if(res.data.item.length > 0){
           this.props.navigation.navigate(Screens.ProductDetail.route)
@@ -349,7 +349,7 @@ const mapDispatchToProps = (dispatch) => {
     updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId: userId, itemId: itemId, quantity: quantity })),
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
     getDeviveryAddress: (useId) => dispatch(userActions.getDeviveryAddress({ userId: useId })),
-    productDetail: (id) => dispatch(productActions.productDetail({ itemId: id })),
+    productDetail: (id, userId) => dispatch(productActions.productDetail({ itemId: id, userId: userId })),
 
   };
 };

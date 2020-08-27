@@ -336,10 +336,11 @@ class ProductList extends React.Component {
 
               {this.state.productData.map((item, index) => {
                 // productList.map((item, index) => {
+                var foodType = '#00ff00';
                 return (
                   <ListItem style={styles.ListItems}  key={index}>
 
-                      <View style={{ backgroundColor:'#00ff00', height:9, width:9, borderRadius:10, marginTop: 0,}}></View>
+                      <View style={{ backgroundColor: foodType, height:9, width:9, borderRadius:10, marginTop: 0,}}></View>
                     <Left style={styles.ListLeft}>
                       <Image
                         style={styles.proImage}
@@ -428,12 +429,14 @@ class ProductList extends React.Component {
                          {item.cartQty > 0 ?
                           (<NumericInput
                             initValue={item.cartQty}
+                            //value={this.state.qtyValue} 
                             //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
                             onChange={(value) => this.buyOncePressHnadler(item.id, value)}
                             onLimitReached={(isMax, msg) =>
                               console.log(isMax, msg)
                             }
                             minValue={0}
+                            maxValue={item.maxOrderQuantity ? item.maxOrderQuantity : 5}
                             totalWidth={95}
                             totalHeight={30}
                             iconSize={30}
