@@ -136,6 +136,7 @@ FirstItem:{
     paddingBottom:0,
     
   },
+  
   shopSubTitleText:{
     fontSize:11,
     fontFamily:'Font-Medium',

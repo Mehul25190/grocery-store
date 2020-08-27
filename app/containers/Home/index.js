@@ -168,7 +168,7 @@ class Home extends React.Component {
                        {item.offerName}
                    </Text>
                    <Text style={styles.addsBigTitle}>
-                     {item.value}{item.valueType=='rs' ? <Text style={[appStyles.currency,{  color:'#F8BB1B',fontSize:32,}]}>{Colors.CUR}</Text> : item.valueType} OFF
+                     {item.value}{item.valueType=='rs' ? <Text style={[appStyles.currency,{  color:'#F8BB1B',fontSize:32,}]}>{Colors.CUR}</Text> : item.offerTypeValue}{item.offerTypeCode} OFF
                    </Text>
                    <Text numberOfLines={4} style={styles.addsText}>
                     {item.description}               
@@ -280,7 +280,12 @@ class Home extends React.Component {
        
          
        </Header>
-         
+              <View style={{flexDirection:'row', justifyContent:'flex-start', marginLeft:Layout.indent-5,
+    marginRight:Layout.indent-5,marginTop:10, marginBottom:0}}>
+                <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
+                  <Text style={styles.shopSubTitleText}>My Next Order</Text>
+                  </TouchableOpacity>
+              </View>
               <Modal 
               isVisible={this.state.isModalVisible}
               coverScreen={false}
@@ -293,13 +298,14 @@ class Home extends React.Component {
                     <TouchableOpacity style={styles.closeIcon} onPress = {() => this.setState({isModalVisible:false}) }>
                       <Icon type="AntDesign" name="closecircleo" />
                     </TouchableOpacity>
-                    <Text style = {[styles.Modeltext,{fontSize:16,alignSelf:'center'}]}>Valuable Customer..!</Text>
+                    <Text style = {[styles.Modeltext,{fontSize:16,alignSelf:'center'}]}>Dear Customer,</Text>
                     
                     <Icon type="SimpleLineIcons" name="emotsmile"  style={styles.smileIcon} />
-                    <Text  style = {styles.Modeltext}>
-                    Seems your free subscription period is over, 
-                    Now have your morning deliveries free by paying a small subscription amount <Text style={appStyles.currency}>{Colors.CUR}</Text> 123.</Text>
-                    <Text style={styles.Modeltext}>You can still enjoy our evening slots with nominal delviery charge</Text>
+
+                      <Text style={{ marginTop:10}}>We welcome you in MyAllaadin family..!</Text>
+                      <Text style={{ marginTop:10}}>As a reward of your trust we give you free delivery services at your door with "NO MINIMUM ORDER" for limited period. </Text>
+                      <Text style={{ marginTop:10}}>Post this , Pay small subscription amount monthly and enjoy free Morning delivery for the month. </Text>
+                      <Text style={{ marginTop:10}}>However we also  serve in evening slots with nominal delivery charges.</Text>
                     <TouchableOpacity style={styles.closeOk} onPress = {() => this.setState({isModalVisible:false}) }>
                     <Text style={{color:'#fff',fontSize:16,fontFamily:'Font-Medium'}}>OK</Text>
                     </TouchableOpacity>
@@ -336,9 +342,7 @@ class Home extends React.Component {
 
             <View style={styles.ItemLayout}>
               <Grid style={styles.shopSubTitle}>
-              <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
-              <Text style={styles.shopSubTitleText}>My Next Order</Text>
-              </TouchableOpacity>  
+                
               <View style={{flex:1,paddingLeft:10, flexDirection:'row', justifyContent:'flex-end'}}>
 
                   <Text style={styles.pendingDays}>Your free delivery offer ends in {subscriptionRemainingDays} days..!</Text>

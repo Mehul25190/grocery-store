@@ -250,6 +250,8 @@ class SearchProduct extends React.Component {
                 // productList.map((item, index) => {
                 return (
                   <ListItem style={styles.ListItems}  key={index}>
+                  
+                      <View style={{ backgroundColor:'#00ff00', height:9, width:9, borderRadius:10, marginTop: 0,}}></View>
                     <Left style={styles.ListLeft}>
                       <Image
                         style={styles.proImage}

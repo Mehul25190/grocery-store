@@ -211,7 +211,12 @@ class MyOrder extends React.Component {
                           <TouchableOpacity onPress={() => this.onDetailPage(item)}>
 
                             <Text style={styles.statusText}>
-                              {item.orderStatus}
+                              {(item.orderStatus=="DEL") ? "Delivered" : ""}
+                              {(item.orderStatus=="PEN") ? "Pending" : ""}
+                              {(item.orderStatus=="CAN") ? "Canceled" : ""}
+                              {(item.orderStatus=="CNF") ? "Confirmed" : ""}
+                              {(item.orderStatus=="RET") ? "Returned" : ""}
+                              {(item.orderStatus=="PICKED") ? "Picked" : ""}
                             </Text>
 
                           </TouchableOpacity>

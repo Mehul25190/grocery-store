@@ -265,11 +265,14 @@ class ProductDetail extends React.Component {
         <Grid>
          <Row>
          <Col style={{flex:0}}>
+
           <View style={styles.pricePart}>
+
+          <View style={{ backgroundColor:'#00ff00', height:15, width:15, borderRadius:10, marginLeft: 8,}}></View>
           <Text style={styles.priceText}><Text style={appStyles.currency,{fontSize:23,color:Colors.gray}}> {Colors.CUR}</Text> {ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}</Text>
         </View>
          </Col>
-            <Col>
+            <Col style={{paddingTop:10, width:200, alignItems:'flex-end'}}>
                <View  style={styles.reasonView}>
                 {ProductDetail.item[0].cartQty > 0 ?
                   (<NumericInput

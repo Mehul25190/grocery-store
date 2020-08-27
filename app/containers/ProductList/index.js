@@ -281,13 +281,14 @@ class ProductList extends React.Component {
   }
 
   subscribePressHandlder(item){
-    showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
+    
     this.props.checkActiveSubscription(item.id, this.props.user.user.id).then(res => {
         console.log(res.data);
         if(res.status == 'success'){
           if(res.data.isActiveSubscription == 'Y'){
             showToast('You have already subscribed this product.', "danger")
           }else{
+            showToast('Please ensure the quantity, once subscribed its not recommended to change', 'success');
             this.props.navigation.navigate(
               Screens.SubscribeOrder.route,
               { item: item , qty: this.state.value}
@@ -337,6 +338,8 @@ class ProductList extends React.Component {
                 // productList.map((item, index) => {
                 return (
                   <ListItem style={styles.ListItems}  key={index}>
+
+                      <View style={{ backgroundColor:'#00ff00', height:9, width:9, borderRadius:10, marginTop: 0,}}></View>
                     <Left style={styles.ListLeft}>
                       <Image
                         style={styles.proImage}

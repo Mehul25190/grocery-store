@@ -68,21 +68,30 @@ fontFamily:'Font-Medium',
  },
   ListItems:{
    justifyContent:'flex-start',
-    paddingTop:5,
-    paddingBottom:5,
+    paddingTop:10, borderBottomWidth:1,
+    paddingBottom:10,
     marginLeft:Layout.indent-7,
     marginRight:Layout.indent-7,
     paddingRight:Layout.indent-7,
-    borderColor:Colors.primary
+    borderColor:Colors.secondary
    },
      ListLeft:{
    
     flex: 0,
     paddingLeft:0,
     width: 90,
-    
+   },
+   ListRight: {
+    width:120, alignSelf:'center', justifyContent:'center'
+   },
+   proPrice: {
+     alignSelf:'flex-end', color:'#ff0000'
+   },
+   proPriceGreen: {
+     alignSelf:'flex-end', color:Colors.primary,
    },
      proImage:{
+
     textAlign:'left',
     marginLeft:5,
     width:80,

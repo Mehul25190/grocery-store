@@ -138,36 +138,30 @@ class MyWallet extends React.Component {
        </TouchableOpacity>
          <View>
           <Text style={styles.BalanceTitle}>
-           Wallet Activity
+          Wallet Activity
           </Text>
         </View>
 
-         <View style={styles.dateRow}>
-          <Text style={styles.walletDate}>
-            
-          </Text>
-        </View>
 
          {this.state.activityList.map((item, index) => {
                   return (
-                       <ListItem style={styles.ListItems} >
-                        <Left style={{justifyContent:'flex-start'}}>
-                         <View style={styles.prodInfo}>
+                      
+
+                      <Row style={styles.ListItems}>
+                          <Col style={{justifyContent:'flex-start',}}>
+                            <View style={styles.prodInfo}>
                            {/* <Text style={styles.proTitle}>{item.proName}</Text>*/}
                             <Text  style={styles.proTitle}>{item.orderNumber} </Text>
                             <Text style={styles.paidTime}>status: {item.status} </Text>
                              <Text style={styles.paidTime}>{moment(item.date).format('DD MMM YYYY HH:mm')}</Text>
                             
                           </View>
-                        </Left>
-                       
-                        <Right style={styles.ListRight}>
-                          <View>
-                          <Text style={styles.proPrice}>{Colors.CUR} {item.amount}</Text>
-                                                
-                          </View>
-                        </Right>
-                      </ListItem>
+                          </Col>
+                          <Col style={styles.ListRight}>
+
+                              <Text style={item.activityType == 'PAID' ? styles.proPrice : styles.proPriceGreen}>{Colors.CUR} {item.amount}</Text>
+                          </Col>
+                      </Row>
                   
                   );
                 })

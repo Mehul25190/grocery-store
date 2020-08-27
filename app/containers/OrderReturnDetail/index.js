@@ -311,14 +311,16 @@ class OrderReturnDetail extends React.Component {
 
     <View>
 
-    <ListItem icon style={[styles.ListItems,{borderColor:Colors.primary,borderTopWidth:1,paddingTop:15 }]} noBorder>
+
+
+    <ListItem icon style={[styles.ListItems,{borderColor:Colors.secondary,borderTopWidth:1,paddingTop:15 }]} noBorder>
       <Left>
         <Image style={styles.proImage} source={{ uri: url.imageURL + item.imagePath }} />
       </Left>
       <Body style={styles.bodyText}>
-            <Text  numberOfLines={2}  style={styles.proTitle}>{item.itemName} </Text>
+            <Text style={styles.proTitle}>{item.itemName} </Text>
              <Text style={[styles.proTitle, { fontFamily: 'Font-Medium' }]}>
-             <Text style={{ fontFamily: 'Roboto', color: '#000' }}>{Colors.CUR}</Text> {item.itemPrice} (Qty:{item.quantity})</Text>   
+             <Text style={{ fontFamily: 'Roboto', color: '#000' }}>{Colors.CUR}</Text> {item.itemPrice} (Qty: {item.quantity})</Text>   
       </Body>
      
 
@@ -349,7 +351,7 @@ class OrderReturnDetail extends React.Component {
               style={{ color: 'transparent' }} />}
             isChecked={this.state.qty.indexOf(item.id) !== -1}
           />
-      </Right>) : (<View><Text style={styles.qtyText}>{item.isReturnable == 0 ? 'Not Returnable' : 'Returned'}</Text></View> )}
+      </Right>) : (<Right style={{marginTop:20, width:100}}><Text style={styles.qtyText}>{item.isReturnable == 0 ? 'Not Returnable' : 'Returned'}</Text></Right> )}
     </ListItem>
     {item.itemStatus != 'RET' && (item.isReturnable == 1 || item.isReturnable == null) ?
       (<View style={{ merginRight: Layout.indent, justifyContent: 'center'}}>    
@@ -412,7 +414,7 @@ class OrderReturnDetail extends React.Component {
               </Row>
               <Row style={styles.orderRow}>
                 <Col style={styles.orderTitle}>
-                  <Text style={styles.orderTitleText}>Order#</Text>
+                  <Text style={styles.orderTitleText}>Order #</Text>
                 </Col>
                 <Col style={styles.orderValue}>
                   <Text style={styles.orderValText}>{(orderData.length > 0) ? orderData[0].orderNumber : ""}</Text>

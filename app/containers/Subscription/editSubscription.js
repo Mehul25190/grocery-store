@@ -220,11 +220,13 @@ class editSubscribe extends React.Component {
          
         </Card>
         <Grid>
-          <Row style={{marginTop:20}}>
-           
-           <Item  success style={{ marginLeft:Layout.indent, marginRight:Layout.indent}}>
-            <Label style={styles.datelabel}>Start Date</Label>
-            <DatePicker
+           <Row style={{justifyContent:'center'}}>
+              <Col style={styles.startDateCol}>
+                   <Text style={styles.startDate}>Start Date</Text>
+              </Col>
+              <Col style={styles.amulInfo}>
+                <View>
+                   <DatePicker
             minDate={moment(new Date()).format('MM/DD/YYYY')}
             locale={"en"}
             disabled={moment(this.state.startDate).format('MM/DD/YYYY') > moment(new Date()).format('MM/DD/YYYY') ? false : true }
@@ -236,11 +238,9 @@ class editSubscribe extends React.Component {
             iconSource={imgs.calImg}
             customStyles={{dateInput: { borderWidth:0, marginTop: 10, height:30 }}}
             />
-          </Item>
-       
-          
-          
-          </Row>
+                </View>
+              </Col>
+            </Row>
         </Grid>
            <View style={styles.reasonView} >
             <Item style={{borderBottomWidth:0}} >
@@ -275,12 +275,13 @@ class editSubscribe extends React.Component {
                </View>
        
         <Grid >
-          <Row style={{marginTop:20}}>
-           
-          
-           <Item  success style={{ marginLeft:Layout.indent, marginRight:Layout.indent}}>
-           <Label style={styles.datelabel}>End Date</Label>
-            <DatePicker
+        <Row style={{justifyContent:'center',marginBottom:15,}}>
+              <Col style={styles.startDateCol}>
+                   <Text style={styles.startDate}>End Date</Text>
+              </Col>
+              <Col style={styles.amulInfo}>
+                <View>
+          <DatePicker
             minDate={this.state.endDate}
             locale={"en"}
             format="MM/DD/YYYY"
@@ -291,10 +292,10 @@ class editSubscribe extends React.Component {
             iconSource={imgs.calImg}
             customStyles={{dateInput: { borderWidth:0, marginTop: 10 }}}
             />
-  
-          </Item>
-         
-          </Row>
+                </View>
+              </Col>
+            </Row>
+
         </Grid>
         <View style={[styles.HoriLine,{marginTop:10}]}>
           <Text></Text>
@@ -391,7 +392,7 @@ class editSubscribe extends React.Component {
           <Row>
             <Col style={{justifyContent:'center'}}>
             <View style={{}}>
-            <Text style={styles.payText}>Subscribe Start Date </Text>
+            <Text style={styles.payText}>Subscription Start Date </Text>
             <Text style={styles.payText}> {this.state.displaystartDate}</Text>
             </View> 
             </Col>

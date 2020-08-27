@@ -84,7 +84,7 @@ borderColor:Colors.primary
   color:Colors.gray,
   fontFamily:'Font-Medium',
   fontSize:14,
-  lineHeight:16
+  lineHeight:18
  },
  
  AmuTextTitle:{

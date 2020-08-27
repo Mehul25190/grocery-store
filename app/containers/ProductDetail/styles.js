@@ -85,7 +85,7 @@ reasonView:{
   marginTop: 10,
   marginRight:Layout.indent-5,
   marginLeft:Layout.indent-5,
-  flex:1,
+  flex:1, alignItems:'flex-end',
   borderRadius: 10,
   paddingLeft:10,
   color:Colors.white,

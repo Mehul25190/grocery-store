@@ -198,10 +198,14 @@ class OrderDetail extends React.Component {
         </Card>
        
          <Card style={[appStyles.addBox,styles.trackBox,{marginTop:-9,borderTopWidth:0,zIndex:-1}]}>
-          <TouchableOpacity onPress={()=> this.onReturnDetailPage('OrderReturnDetail')}>
-            <Text style={styles.detailTitle2}>Return Order</Text>
-           
-          </TouchableOpacity>
+         <TouchableOpacity>
+              <Button style={[styles.cancelBtn,{marginTop:30,marginLeft:Layout.indent,marginRight:Layout.indent}]}
+               primary full  onPress={()=> this.onReturnDetailPage('OrderReturnDetail')}>
+               
+                <Text style={styles.cancelBtnTxt}>Return Order </Text>
+                
+              </Button>
+              </TouchableOpacity>
         </Card>
            
         </View> )}

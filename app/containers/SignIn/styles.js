@@ -129,15 +129,15 @@ export default {
   loginWith:{
     marginLeft:Layout.indent,
     marginRight:Layout.indent,
-    marginTop:30
+    marginTop:20
   },
   loginWithMob:{
 
   },
   loginWithText:{
     color:Colors.primary2,
-    padding:5,
-    fontSize:20,
+    padding:0,
+    fontSize:18,
     fontFamily:'Font-Medium',
     textAlign:'center'
   },

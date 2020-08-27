@@ -80,7 +80,7 @@ export default {
  },
   ListItems:{  
     borderBottomWidth:1,
-    borderColor:Colors.primary,
+    borderColor:Colors.secondary,
     paddingTop:5,
     paddingBottom:5,
     marginLeft:Layout.indent,

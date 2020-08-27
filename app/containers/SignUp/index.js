@@ -102,7 +102,7 @@ class SignUp extends React.Component {
                         <Text style={styles.SignInbtn}>SignUp </Text>
                       </Button>
                   }
-                   <Row style={{marginBottom:20}}>
+                   <Row style={{marginBottom:50}}>
                      <Col>
                         <Button transparent full  
                          style={[{justifyContent:'center'}]} >

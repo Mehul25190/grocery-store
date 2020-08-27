@@ -44,6 +44,9 @@ class SignInEmail extends React.Component {
   onSignupButtonPressHandler(){
     this.props.navigation.navigate(Screens.SignUp.route)
   }
+  onSigninotpPressHandler(){
+    this.props.navigation.navigate(Screens.SignInMobile.route)
+  }
 
   onForgotpasswordPressHandler(){
     this.props.navigation.navigate(Screens.ForgotPassword.route)
@@ -131,7 +134,7 @@ class SignInEmail extends React.Component {
                      delay={1200} 
                     style={[styles.loginWith,styles.loginWithMob]} >
 
-                    <Row style={{marginBottom:60}}>
+                    <Row style={{marginBottom:50}}>
                      <Col>
                         <Button transparent full     
                          style={[{justifyContent:'center'}]} >
@@ -141,10 +144,13 @@ class SignInEmail extends React.Component {
                         </Button>
                       </Col>
                       <Col style={{marginRight:Layout.indent}}>
-                        <TouchableOpacity  onPress={() =>  this.props.pressSigninMob()}>
 
-                    <Text style={styles.loginWithText}>Login with OTP</Text>
-                    </TouchableOpacity>
+                        <Button transparent full     
+                         style={[{justifyContent:'center'}]} >
+                        <TouchableOpacity  onPress={() =>  this.onSigninotpPressHandler()}>
+                            <Text style={styles.loginWithText}>Login with OTP</Text>
+                        </TouchableOpacity>
+                        </Button>
                       </Col>
                     </Row>
               

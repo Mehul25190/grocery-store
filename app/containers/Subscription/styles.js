@@ -156,7 +156,7 @@ HoriLine:{
    marginLeft:Layout.indent,
    marginRight:Layout.indent,
    height:1,
-   marginTop:20,
+   marginTop:10,
    marginBottom:20,
 },
  reasonView:{
@@ -311,7 +311,7 @@ orderTitle:{
 },
 bodyText:{
   fontFamily:'Font-Medium',
-  paddingLeft:15
+  paddingLeft:15,
 },
 bodyNote:{
   paddingLeft:15,
@@ -319,7 +319,7 @@ bodyNote:{
   lineHeight:16
 },
 bodyGreen:{
-  color:Colors.primary,
+  color:Colors.primary, fontSize:15,
 },
 title:{
   marginTop:15,
@@ -340,6 +340,17 @@ currency:{
   color:Colors.primary
 },
 
+ startDate:{
+fontFamily:'Font-Medium',
+fontSize:16,
+paddingTop:7
+ },
+ startDateCol:{
+  marginLeft:Layout.indent,
+   justifyContent:'center',
+   flex:0,
+   width:100
+ },
 addressText:{
   fontFamily:'Font-Medium',
   color:Colors.black,

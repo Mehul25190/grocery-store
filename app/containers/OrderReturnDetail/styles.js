@@ -157,7 +157,7 @@ alignItems:'flex-end'
     fontFamily:'Font-Medium',
     justifyContent:'center',
     borderBottomColor:Colors.primary,
-    height:75
+    height:75,
  },
   ListLeft:{
   padding:10
@@ -166,13 +166,12 @@ alignItems:'flex-end'
    ListItems:{
     marginLeft:0,
     flex:1,
-    justifyContent:'center',
+    justifyContent:'flex-start',
     alignItems:'center',
     marginLeft:0,
     
   // backgroundColor:'#ddd',
-   
-    height:65
+   height:100,
   },
   ListRight:{
    alignItems:'center',
