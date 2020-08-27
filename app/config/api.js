@@ -45,4 +45,5 @@ export default {
   fetchUserWallet: 'userWallet/fetchWalletActivity',
   rechargeWallet: 'userWallet/rechargeWallet',
   checkActiveSubscription: 'order/checkActiveSubscription',
+  saveItemRatings:'item/saveItemRatings',
 }

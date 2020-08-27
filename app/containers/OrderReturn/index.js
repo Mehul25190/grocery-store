@@ -59,6 +59,14 @@ class OrderDetail extends React.Component {
     this.getOrderDetails(para_orderId);
   }
 
+  onRatingPage = item => {
+    //alert(item);
+    //this.props.navigation.navigate('ProductList', { para_categoryId:item.id, categoryName: item.categoryName});
+    if(this.state.orderData[0].orderStatus == 'DEL') {
+      this.props.navigation.navigate('MyRatings', { item:item });
+    }
+  };
+
   getOrderDetails(para_orderId) {
     //alert(para_orderId);
     this.props.getOrderDetails(para_orderId).then (res =>{
@@ -102,11 +110,15 @@ class OrderDetail extends React.Component {
                 <Left style={styles.ListLeft}>
                      <Image style={styles.proImage} source={{ uri: url.imageURL + item.imagePath }} />
                 </Left>
-              
+      
+
                 <Body style={styles.bodyText}>
+                <TouchableOpacity style={styles.prodInfo} onPress={() => this.onRatingPage(item)}>
+      
                     <Text  style={[styles.proTitle,{  fontFamily:'Font-Medium'}]}>{item.itemName} </Text>
-  <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
-  <Text style={styles.QtyPro}>{item.itemStatus}</Text>
+                    <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
+                    <Text style={styles.QtyPro}>{item.itemStatus}</Text>
+                </TouchableOpacity>
                  </Body>
                  
                 <Right style={styles.ListRight}>
