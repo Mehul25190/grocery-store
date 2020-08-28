@@ -231,7 +231,7 @@ class MyPayments extends React.Component {
 {/* ---------------------------------Credit / Debit Card----------------------------------*/}
 
          <ScrollView style={{marginLeft:Layout.indent, marginRight:Layout.indent}}>
-            <Grid style={{borderBottomWidth:1,marginTop:15, paddingBottom:5, borderColor:'#ddd'}}>
+            <Grid style={{borderBottomWidth:1,marginTop:15, paddingBottom:15, borderColor:'#ddd'}}>
               <Row>
                 <Col>
                   <Text style={styles.testStyles}>Total Order Value</Text>
@@ -249,7 +249,7 @@ class MyPayments extends React.Component {
                </Col>
               </Row>
             </Grid>
-            <Grid style={{paddingTop:5,marginBottom:10}}>
+            <Grid style={{paddingTop:15,marginBottom:5}}>
               <Row>
                 <Col>
                   <Text style={styles.testStyles}>Total Amount Payable </Text>
@@ -267,6 +267,24 @@ class MyPayments extends React.Component {
                </Col>
               </Row>
             </Grid>
+
+            <View style={{ marginTop:10, marginBottom:10, borderTopWidth:1, borderBottomWidth:1, borderColor:Colors.secondary, paddingBottom:20,}}>
+              <View style={{marginTop:10}}>
+                <Text style={styles.titleText}>Have a promo code? </Text>
+             </View>
+             <Row>
+                <Col>
+                  <Input style={{height:35, borderColor:'#cccccc', borderWidth:1}} />
+                </Col>
+               <Col style={{flex:0, width:120, justifyContent:'center',alignItems:'center'}}>
+                 <TouchableOpacity style={styles.promoBtnArea} >
+              <Button primary full style={styles.promoBtn} onPress={()=> this.placeOrder()}>
+                  <Text style={styles.promoText}> Apply</Text>
+               </Button>
+          </TouchableOpacity>
+               </Col>
+              </Row>
+            </View>
 
           {/* ------------PAYMENT OPTIONS-----------*/}
              <View style={{marginTop:10}}>

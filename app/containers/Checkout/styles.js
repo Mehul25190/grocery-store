@@ -149,7 +149,7 @@ paddingHorizontal:7,
 fontFamily:'Font-Medium'
 },
 ItemList:{
-  borderColor:Colors.primary,
+  borderColor:Colors.secondary,
   marginRight:Layout.indent,
   borderBottomWidth:1.2,
   marginBottom:0,
@@ -160,8 +160,8 @@ TotalList:{
   marginRight:Layout.indent,
   borderBottomWidth:1.2,
   marginBottom:0,
-  paddingBottom:3,
-  paddingTop:3
+  paddingBottom:8,
+  paddingTop:8
 },
 
 TotalBar:{

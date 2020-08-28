@@ -113,7 +113,7 @@ class MyRatings extends React.Component {
                  
                   <Text style={[styles.AmuText,styles.AmuTextTitle]}>{getItem.itemName}</Text>
                  <Text style={styles.AmuText}>Qty: {getItem.quantity}</Text>
-                 <Text style={styles.AmuText}> <Text style={{}}>{Colors.CUR}</Text> {getItem.itemPrice}</Text>
+                 <Text style={styles.AmuText}><Text style={{}}>{Colors.CUR}</Text> {getItem.itemPrice}</Text>
                 </View>
               </Col>
             </Row>
@@ -142,7 +142,7 @@ class MyRatings extends React.Component {
 
         <View style={styles.writeReview}>
           <Text style={styles.rateText}>
-          Add a Written Review
+          Write a review
           </Text>  
           <Card style={styles.textArea}> 
           <TextInput

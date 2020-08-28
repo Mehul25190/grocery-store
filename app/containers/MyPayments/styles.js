@@ -522,7 +522,21 @@ btnText:{
   lineHeight:28,
   textTransform:'capitalize',
   color:Colors.primary
- }
+ },
+
+ 
+ promoBtn:{
+   backgroundColor:Colors.secondary,
+  borderRadius:25
+ 
+},
+ promoText:{
+  fontFamily:'Font-Medium',
+  fontSize:16,
+  lineHeight:22,
+  textTransform:'capitalize',
+  color:Colors.primary
+ },
 
              
 }  

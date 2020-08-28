@@ -74,7 +74,7 @@ borderColor:Colors.primary
   color:Colors.gray,
   fontFamily:'Font-Medium',
   fontSize:14,
-  lineHeight:16
+  lineHeight:20
  },
  
  AmuTextTitle:{
@@ -100,9 +100,10 @@ borderColor:Colors.primary
   
  },
  submitText:{
-  fontFamily:'Font-Bold',
-  fontSize:22,
-  textTransform:'capitalize'
+  fontFamily:'Font-Medium',
+  fontSize:20,
+  textTransform:'capitalize',
+color:Colors.primary
  },
  amulMoti:{
   width:100,
@@ -111,6 +112,13 @@ borderColor:Colors.primary
   resizeMode:'contain'
  },
 
+cancelBtnTxt:{
+fontFamily:'Font-Medium',
+textTransform:'capitalize',
+fontSize:20,
+color:Colors.primary
+
+}
  
 
 };

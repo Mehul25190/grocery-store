@@ -81,12 +81,13 @@ export default {
  },
  orderTitle:{
  	alignItems:'flex-start',
- 	width:120,
+ 	width:135,
  },
   orderValue:{
  	alignItems:'flex-start',
  	
  },
+writereviews: {alignItems:'flex-end', color:Colors.primary, width:120, textAlign:'right',},
  orderTitleText:{
  	color:Colors.black,
  	fontSize:16,

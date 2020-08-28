@@ -126,7 +126,14 @@ class OrderDetail extends React.Component {
   <Text style={styles.proPrice}>{Colors.CUR} {item.itemPrice}</Text>
                                    
                   </View>
+                  
+          <View style={styles.writereviews}>
+            <TouchableOpacity onPress={() => this.onRatingPage(item)}>
+              <Text style={styles.writereviews}>Write a review </Text>
+            </TouchableOpacity>
+          </View>
                 </Right>
+
          </ListItem>
   );
 
@@ -203,9 +210,6 @@ class OrderDetail extends React.Component {
                   keyExtractor={(item) => `${item.itemName}`}
                 />
               </ScrollView>
-
-          
-
          
         </Card>
         <Card style={[appStyles.addBox,styles.trackBox,{borderBottomWidth:3,zIndex:0}]}>
@@ -214,7 +218,7 @@ class OrderDetail extends React.Component {
             <Text style={styles.orderValText}>Your Order assiged to Delivery Boy.</Text>
             <Row style={styles.orderRow}>
                 <Col style={styles.orderTitle}>
-                  <Text style={styles.orderTitleText}> Delivery Date :</Text>
+                  <Text style={styles.orderTitleText}> Delivery Date:</Text>
                 </Col>
                 <Col style={styles.orderValue}>
                 <Text style={styles.orderValText}> {(this.state.orderData.length >0 )? this.state.orderData[0].orderDeliveryDate : ""}</Text>
@@ -222,7 +226,7 @@ class OrderDetail extends React.Component {
           </Row>
           <Row style={styles.orderRow}>
                 <Col style={styles.orderTitle}>
-                  <Text style={styles.orderTitleText}> Delivery Time :</Text>
+                  <Text style={styles.orderTitleText}> Delivery Time:</Text>
                 </Col>
                 <Col style={styles.orderValue}>
                 <Text style={styles.orderValText}> {(this.state.orderData.length >0 )? this.state.orderData[0].deliveryFromTime + ' : ' + this.state.orderData[0].deliveryToTime : ""} </Text>
