@@ -165,6 +165,17 @@ export const orderReturn = payloads => dispatch => {
     });
 }
 
+export const updateDeliverySlot = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.updateDeliverySlot,  {payloads: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
 
 
 

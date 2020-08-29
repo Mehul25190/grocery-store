@@ -47,4 +47,5 @@ export default {
   checkActiveSubscription: 'order/checkActiveSubscription',
   saveItemRatings:'item/saveItemRatings',
   applyUserOffer : 'offer/applyUserOffer',
+  updateDeliverySlot: 'order/updateDeliverySlot',
 }

@@ -23,6 +23,7 @@ import { ReturnReason } from '../data/data';
 import { showToast } from '../../utils/common';
 import CheckBox from 'react-native-check-box';
 import * as ImagePicker from 'expo-image-picker';
+import moment from 'moment';
 
 class OrderReturnDetail extends React.Component {
 
@@ -47,6 +48,8 @@ class OrderReturnDetail extends React.Component {
     };
 
   }
+
+
   componentDidMount() {
 
     this.focusListener = this.props.navigation.addListener("willFocus", () => {
@@ -173,7 +176,7 @@ class OrderReturnDetail extends React.Component {
     var idindex = folder.indexOf(val)
     var itemindex = item.indexOf(val)
 
-    if (val > quantity) {
+    if (val > quantity) { 
       array.splice(index, 1);
       folder.splice(idindex, 1);
       item.splice(itemindex, 1);
@@ -222,8 +225,17 @@ class OrderReturnDetail extends React.Component {
     });
   }
   
-  checkbox(clickIndex, OrderID, Name) {
-    console.log(OrderID)
+  checkbox(clickIndex, OrderID, Name, orderData, returnValidityHours) {
+    console.log(returnValidityHours)
+    var deliveryDateTime = orderData[0].orderDeliveryDate+' '+orderData[0].deliveryToTime;
+    var validReturnDateTime = moment(deliveryDateTime).add(returnValidityHours, 'hours').format('YYYY-MM-DD hh:mm:ss');
+    var currentDateTime = moment(new Date()).add(1, 'days').format('YYYY-MM-DD hh:mm:ss')
+    if(currentDateTime > validReturnDateTime){
+      showToast("Your can't return this item", "danger")
+      return;
+    }
+    // if(validReturnDateTime > )
+
     const { folder, image } = this.state
     var array = [...this.state.qty];
     var index = array.indexOf(clickIndex)
@@ -263,7 +275,7 @@ class OrderReturnDetail extends React.Component {
     }
 
   }
-
+  
 
    onPressSubmit = (item) => {
      
@@ -345,7 +357,7 @@ class OrderReturnDetail extends React.Component {
 
           <CheckBox
             style={styles.checkboxStyle}
-            onClick={() => this.checkbox(item.id, this.state.orderID, item.itemName)}
+            onClick={() => this.checkbox(item.id, this.state.orderID, item.itemName, this.state.orderData, item.returnValidityHours)}
             checkedImage={<Icon name='check' type='AntDesign' style={{ color: Colors.primary, paddingLeft: 5, paddingTop: 1 }} />}
             unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons'
               style={{ color: 'transparent' }} />}
@@ -480,7 +492,6 @@ const mapDispatchToProps = (dispatch) => {
     orderReturn: (returnItem) => dispatch(cartActions.orderReturn(returnItem)),
     getOrderDetails: (orderId) => dispatch(userActions.getOrderDetailById({id: orderId})),
     getOrderDetails1: (orderId) => dispatch(userActions.getOrderDetailById1({id: orderId})),
-
   };
 };
 

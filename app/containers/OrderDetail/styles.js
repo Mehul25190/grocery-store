@@ -141,5 +141,20 @@ textTransform:'capitalize',
 fontSize:20,
 color:Colors.primary
 
-}
+},
+dorpDownReason: {
+    borderRadius:50,zIndex:50,
+   flex:1,
+   height:45,
+   color:Colors.primary,
+   fontFamily:'Font-Medium'
+   },
+
+  DownArrow:{
+    position:'absolute',
+    right:10,
+    width:18,
+    height:15,
+    top:15,zIndex:99
+  },
 };

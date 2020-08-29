@@ -53,6 +53,11 @@ class OrderPayment extends React.Component {
     openControlPanel(){
       alert('test');
     }
+
+    continueShopping(){
+      this.props.viewCart(this.props.user.user.id);
+      this.props.navigation.navigate(Screens.Home.route)
+    }
   render(){
     const {navigation, totalItem} = this.props;
     const userId = navigation.getParam('userId')
@@ -101,7 +106,7 @@ class OrderPayment extends React.Component {
          
              </ScrollView>
              <TouchableOpacity style={styles.continueShoppingBtnArea} >
-            <Button primary full style={styles.checkOutBtn} onPress={()=>this.props.navigation.navigate(Screens.Home.route)}>
+            <Button primary full style={styles.checkOutBtn} onPress={()=> this.continueShopping()}>
                 <Text style={styles.checkOutText}>Continue shopping</Text>
              </Button>
           </TouchableOpacity>
@@ -123,6 +128,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+      //resetCart: () => dispatch({ type: ActionTypes.RESETCARTSTATE }),
+      viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
       placeholder: (user_id, addressId, slotId, deliveryDate, paymentMode, useWallet, deliveryCharges, subscriptionFees) => dispatch(cartActions.placeOrder({ userId:user_id, userAddressDtlsId:addressId, deliverySlot:slotId, deliveryDate:deliveryDate, paymentMode:paymentMode, useWallet:useWallet, deliveryCharges:deliveryCharges, subscriptionFees:subscriptionFees })),
    };
 };

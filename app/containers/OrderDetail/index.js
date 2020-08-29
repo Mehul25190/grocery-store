@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, FlatList} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, FlatList, Alert} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers, DeliveryAddress } from '../../components';
@@ -11,14 +11,16 @@ import {
   Spinner,
   Button,
   Text,
-  Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem
+  Header, Left, Body, Title, Right,Card,Grid,Col,Row,ListItem, Item, Picker
 } from 'native-base';
 import url from "../../config/api";
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
+import * as cartActions from "../../actions/cart";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import {productList} from '../data/data';
+import { showToast } from '../../utils/common';
 
 
 class OrderDetail extends React.Component {
@@ -31,10 +33,34 @@ class OrderDetail extends React.Component {
        time: '',
        orderData: [],  
        orderItem:[],
+       availTimeSlot: [],
     };
     
 
   }
+
+  getAvailableSlots(){
+    this.props.getAvailableTimeSlots(this.props.deliveryAddress.areaId).then(res => {
+      //console.log(JSON.stringify(res.data.availableTimeSlots))     
+      const newArr = Object.keys(res.data.availableTimeSlots).map((key) => res.data.availableTimeSlots[key])
+      const newArr1 = Object.keys(res.data.availableTimeSlots).map((key) => key)
+      newArr.map((data, key) => {
+          data.date = newArr1[key];
+      });
+      let availableSolts = Object.values(res.data.availableTimeSlots);
+      let tempArr = [];
+      availableSolts.map((maindata, key) => {
+        maindata.slots.map((data, key1) => { 
+          console.log('date', maindata)
+          console.log('data', data);
+          tempArr.push({id: maindata.date+' '+data.id, value: maindata.date+' '+data.time});
+        })
+      })
+      //console.log('tempArr', tempArr)
+      this.setState({availTimeSlot: tempArr})
+    })
+  }  
+
    componentDidMount() {
     var that = this;
     var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
@@ -57,6 +83,8 @@ class OrderDetail extends React.Component {
     //alert(para_orderId);
     //get user's order List
     this.getOrderDetails(para_orderId);
+
+    this.getAvailableSlots();
   }
 
   onRatingPage = item => {
@@ -100,6 +128,40 @@ class OrderDetail extends React.Component {
       this.props.navigation.navigate('CancelOrder', { item});
     };
 
+    onValueChange(value: string) {
+      setTimeout(() => {
+        Alert.alert(
+          "Update Time Slot",
+          "Are you sure you want to change time slot?",
+          [
+            {
+              text: "Cancel",
+              onPress: () => this.setState({selected: ''}),
+              style: "cancel"
+            },
+            { text: "Yes", onPress: () => this.updateTimeSlot(value) }
+          ],
+          { cancelable: false }
+        );
+      }, 800)
+    }
+
+    updateTimeSlot(value){
+      var wordsArray = value.split(" ");
+      var slotId = wordsArray[1];
+      var slotDate = wordsArray[0];
+      const { navigation } = this.props;
+      const para_orderId = navigation.getParam('orderId');
+      this.setState({selected: value});
+      this.props.updateDeliverySlot(slotId, para_orderId, slotDate).then(res => {
+        if(res.status == 'success'){
+          showToast(res.message, 'success')
+        }else{
+          showToast(res.message, 'danger')
+        }
+      })
+    }
+  
   renderItems = ({ item, index }) => (
     <ListItem style={styles.ListItems} noBorder>
                 <Left style={styles.ListLeft}>
@@ -138,7 +200,7 @@ class OrderDetail extends React.Component {
             <Text style={styles.orderTitleText}> Delivery Time :</Text>
           </Col>
           <Col style={styles.orderValue}>
-           <Text style={styles.orderValText}> {(this.state.orderData.length >0 )? this.state.orderData[0].deliveryFromTime + ' : ' + this.state.orderData[0].deliveryToTime : ""}</Text>
+           <Text style={styles.orderValText}> {(this.state.orderData.length >0 )? this.state.orderData[0].deliveryFromTime.replace(/:[^:]*$/,'') + ' : ' + this.state.orderData[0].deliveryToTime.replace(/:[^:]*$/,'') : ""}</Text>
           </Col>
     </Row>
     
@@ -147,7 +209,26 @@ class OrderDetail extends React.Component {
   </Card>
    <Card style={[appStyles.addBox,styles.trackBox,{marginTop:-9,borderTopWidth:0,zIndex:-1}]}>
 
-
+   <View style={styles.reasonView} >
+                <Item style={{ borderBottomWidth: 0 }} >
+                  <Picker
+                    note
+                    mode="dropdown"
+                    placeholder="Start Delivery Time Slot" // yipeee, placeholder
+                    style={styles.dorpDownReason}
+                    selectedValue={this.state.selected}
+                    onValueChange={this.onValueChange.bind(this)}
+                  >
+                    
+                    {this.state.availTimeSlot.map((data, key) => {
+                      //console.log(data)
+                      return <Picker.Item key={data.id} label={data.value} value={data.id} />
+                      })
+                    }
+                  </Picker>
+                  <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
+                </Item>
+              </View>
     <TouchableOpacity>
               <Button style={[styles.cancelBtn,{marginTop:30,marginLeft:Layout.indent,marginRight:Layout.indent}]}
                primary full   onPress={()=> this.onCancelPage(this.state.orderData)}>
@@ -287,6 +368,8 @@ const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     isLoading: state.common.isLoading,
+    deliveryAddress: state.subscription.deviveryAddress,
+
   };
 };
 
@@ -294,6 +377,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
       getOrderDetails: (orderId) => dispatch(userActions.getOrderDetailById({id: orderId})),
       logout: () => dispatch(userActions.logoutUser()),
+      getAvailableTimeSlots: (areaId) => dispatch(cartActions.getAvailableTimeSlots({areaId:areaId})),
+      updateDeliverySlot: (deliverySlot, orderId, deliveryDate) => dispatch(cartActions.updateDeliverySlot({deliverySlot:deliverySlot, orderId:orderId, deliveryDate:deliveryDate})),
    };
 };
 
