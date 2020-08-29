@@ -507,3 +507,16 @@ export const checkActiveSubscription = payloads => dispatch => {
   })
 }
 
+
+export const applyUserOffer = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.applyUserOffer,{queries: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    if(res.status == 200){
+      return res.data;
+    } else {
+      return res;
+    }
+  })
+}
+

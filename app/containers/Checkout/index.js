@@ -48,7 +48,7 @@ class Checkout extends React.Component {
       itemData: [],
       selectedDate: '',
       selectedTimeSlot: '',
-      applyDeliveryCharge: false,
+      applyDeliveryCharge: true,
 
     };
 
@@ -357,7 +357,7 @@ class Checkout extends React.Component {
 {/* Deliver Charge */} 
                          <ListItem style={styles.TotalList}>
                           <View>
-                            <Text style={styles.TotalText}>Delivery Charges</Text>
+                            <Text style={styles.TotalText}>{this.state.applyDeliveryCharge ? 'Delivery Charges' : 'Subscription Fees'} </Text>
                           </View>
                          <Body style={styles.TotalBar}>
                           <Text></Text>

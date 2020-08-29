@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, ScrollView,FlatList, Alert} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, ScrollView,FlatList, Alert, ActivityIndicator} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers } from '../../components';
@@ -46,6 +46,9 @@ class MyPayments extends React.Component {
       cardList: [],  
       cvv:"",
       cardOption: true,
+      promo: '',
+      offerValue: 0,
+      offerId: '',
     };
   }
     componentDidMount() {
@@ -105,9 +108,11 @@ class MyPayments extends React.Component {
     const dateslot = navigation.getParam('dateslot');
     const useWallet = this.state.switch1Value ? 'Y' : 'N';
     const paymentMode = this.state.paywithcash ? 'COD' : this.state.paywithcard ? 'CARD' : '' ;
-    let amount = this.state.switch1Value ? (this.props.totalAmount + this.props.deliveryCharges).toFixed(2) - this.props.walletAmount : (this.props.totalAmount + this.props.deliveryCharges).toFixed(2)  ;
-
-    this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), amount: amount ,paymentMode:paymentMode, useWallet:useWallet, saveCard:'Y', autoDebit:'Y'});
+    let amount = this.state.switch1Value ? (this.props.totalAmount + this.props.deliveryCharges - this.state.offerValue).toFixed(2) - this.props.walletAmount : (this.props.totalAmount + this.props.deliveryCharges -this.state.offerValue).toFixed(2)  ;
+    const offerId = this.state.offerId;
+    const offerValue = this.state.offerValue.toFixed(2);
+    
+    this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), amount: amount ,paymentMode:paymentMode, useWallet:useWallet, saveCard:'Y', autoDebit:'Y', offerId: offerId, offerValue: offerValue});
 
      this.setState({
       showMyCard:false,
@@ -143,10 +148,12 @@ class MyPayments extends React.Component {
     const paymentMode = this.state.paywithcash ? 'COD' : this.state.paywithcard ? 'CARD' : 'WALLET' ;
     let amount =     this.state.switch1Value ? (this.props.totalAmount + this.props.deliveryCharges).toFixed(2) - this.props.walletAmount : (this.props.totalAmount + this.props.deliveryCharges).toFixed(2)  ;
     amount = amount * 100;
+    const offerId = this.state.offerId;
+    const offerValue = this.state.offerValue.toFixed(2);
     //this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), paymentMode:paymentMode, useWallet:useWallet, deliveryCharges:'', subscriptionFees:''});
     //this.state.CardCheckedId
     if(this.state.paywithcard && this.state.showMyCard){
-      this.props.placeOrderWithCard(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY-MM-DD'), paymentMode, useWallet, this.state.CardCheckedId, amount, this.state.cvv).then(res => {
+      this.props.placeOrderWithCard(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY-MM-DD'), paymentMode, useWallet, this.state.CardCheckedId, amount, this.state.cvv, offerId, offerValue).then(res => {
         if(res.status == 'success'){  
           console.log('response', res);
           if(res.data.isAutoDebit == 'N'){
@@ -166,7 +173,7 @@ class MyPayments extends React.Component {
         }
       })
     }else{
-      this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet).then(res => {
+      this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet, offerId, offerValue).then(res => {
         if(res.status == 'success'){
           this.props.navigation.navigate(Screens.OrderSuccess.route, {orderNumber: res.data.orderNumber});
         }else{
@@ -211,6 +218,28 @@ class MyPayments extends React.Component {
     this.setState({CardChecked:index, CardCheckedId: id, cvv: ""})
   }
 
+  applyPromo(){
+    this,this.setState({offerId: '' , offerValue: 0})
+    if(this.state.promo == ''){
+      showToast('Please enter promo code', 'danger');
+      return;
+    }else{
+      this.props.applyUserOffer(this.state.promo, this.props.user.user.id).then(res => {
+        console.log(res);
+        if(res.status == 'success'){
+          showToast(res.message, 'success');
+          this,this.setState({offerId: res.data.offerId , offerValue: res.data.offerValue})
+
+        }else if(res.status == 'failure'){
+          showToast(res.message, 'danger');
+        }else{
+          showToast(res.message, 'danger');
+        }
+      })
+
+    }
+  }
+
   render(){
     const {navigation, user, totalAmount, deliveryCharges, actualTotal, viewCartDetail, walletAmount} = this.props;
     const getTab = navigation.getParam('item')
@@ -248,6 +277,15 @@ class MyPayments extends React.Component {
                  <Text style={styles.testStyles}><Text style={appStyles.currency}>{Colors.CUR}</Text> {deliveryCharges.toFixed(2)}</Text>
                </Col>
               </Row>
+              {this.state.offerValue > 0 ?
+               (<Row>
+                <Col style={{}}>
+                    <Text style={styles.testStyles}>Discount</Text>
+                </Col>
+                <Col style={{flex:0, width:100, justifyContent:'flex-end',alignItems:'flex-end'}}>
+                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{Colors.CUR}</Text> {this.state.offerValue.toFixed(2)}</Text>
+               </Col>
+              </Row>) : null }
             </Grid>
             <Grid style={{paddingTop:15,marginBottom:5}}>
               <Row>
@@ -255,7 +293,7 @@ class MyPayments extends React.Component {
                   <Text style={styles.testStyles}>Total Amount Payable </Text>
                 </Col>
                <Col style={{flex:0, width:100, justifyContent:'flex-end',alignItems:'flex-end'}}>
-                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{Colors.CUR}</Text> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
+                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{Colors.CUR}</Text> {(totalAmount + deliveryCharges - this.state.offerValue).toFixed(2)}</Text>
                </Col>
               </Row>
                <Row>
@@ -274,18 +312,17 @@ class MyPayments extends React.Component {
              </View>
              <Row>
                 <Col>
-                  <Input style={{height:35, borderColor:'#cccccc', borderWidth:1}} />
+                  <Input style={{height:35, borderColor:'#cccccc', borderWidth:1}} onChangeText={(value) => {this.setState({promo:value})}} />
                 </Col>
                <Col style={{flex:0, width:120, justifyContent:'center',alignItems:'center'}}>
-                 <TouchableOpacity style={styles.promoBtnArea} >
-              <Button primary full style={styles.promoBtn} onPress={()=> this.placeOrder()}>
-                  <Text style={styles.promoText}> Apply</Text>
-               </Button>
-          </TouchableOpacity>
+                  <TouchableOpacity style={styles.promoBtnArea} >
+                    <Button primary full style={styles.promoBtn} onPress={()=> this.applyPromo()}>
+                      <Text style={styles.promoText}> Apply</Text>
+                    </Button>
+                  </TouchableOpacity>
                </Col>
               </Row>
             </View>
-
           {/* ------------PAYMENT OPTIONS-----------*/}
              <View style={{marginTop:10}}>
                 <Text style={styles.titleText}>Payment Option(s) </Text>
@@ -376,7 +413,7 @@ class MyPayments extends React.Component {
                        <Col style={{flex:0, width:80}}>
                          <Text style={[styles.testStyles,{color:Colors.primary}]}>
                          <Text style={[appStyles.currency,{color:Colors.primary}]}>{Colors.CUR} </Text> 
-                         {this.state.switch1Value ? ((totalAmount + deliveryCharges) - walletAmount).toFixed(2) : (totalAmount + deliveryCharges).toFixed(2)}</Text>
+                         {this.state.switch1Value ? ((totalAmount + deliveryCharges - this.state.offerValue) - walletAmount).toFixed(2) : (totalAmount + deliveryCharges - this.state.offerValue).toFixed(2)}</Text>
                        </Col>
                       </Row>
                       
@@ -529,10 +566,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
-      placeholder: (user_id, addressId, slotId, deliveryDate, paymentMode, useWallet) => dispatch(cartActions.placeOrder({ userId:user_id, userAddressDtlsId:addressId, deliverySlot:slotId, deliveryDate:deliveryDate, paymentMode:paymentMode, useWallet:useWallet })),
-      placeOrderWithCard: (user_id, addressId, slotId, deliveryDate, paymentMode, useWallet, cardId, amount, cvv) => dispatch(cartActions.placeOrder({ userId:user_id, userAddressDtlsId:addressId, deliverySlot:slotId, deliveryDate:deliveryDate, paymentMode:paymentMode, useWallet:useWallet, cardId: cardId, amount: amount, cvv: cvv })),
+      placeholder: (user_id, addressId, slotId, deliveryDate, paymentMode, useWallet, offerId, offerValue) => dispatch(cartActions.placeOrder({ userId:user_id, userAddressDtlsId:addressId, deliverySlot:slotId, deliveryDate:deliveryDate, paymentMode:paymentMode, useWallet:useWallet, offerId: offerId, offerValue: offerValue })),
+      placeOrderWithCard: (user_id, addressId, slotId, deliveryDate, paymentMode, useWallet, cardId, amount, cvv, offerId, offerValue) => dispatch(cartActions.placeOrder({ userId:user_id, userAddressDtlsId:addressId, deliverySlot:slotId, deliveryDate:deliveryDate, paymentMode:paymentMode, useWallet:useWallet, cardId: cardId, amount: amount, cvv: cvv, offerId: offerId, offerValue: offerValue })),
       fetchCardDetails: (userId) => dispatch(cartActions.fetchCardDetails({userId: userId})),
       deleteCard: (userId, id) => dispatch(cartActions.deleteCard({userId: userId, id: id})),
+      applyUserOffer: (promoCode, userId) => dispatch(userActions.applyUserOffer({promoCode: promoCode, userId: userId})),
    };
 };
 

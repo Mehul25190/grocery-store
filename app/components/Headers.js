@@ -102,7 +102,7 @@ class Headers extends React.Component {
               this.onChangeSearchText(text)
               }}
               value={this.state.textValue}
-              placeholder="Search1..."
+              placeholder="Search..."
             />
           </Item>
         ) : (

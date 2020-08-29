@@ -249,10 +249,17 @@ class SearchProduct extends React.Component {
           ) : (<View>
               {this.state.productData.map((item, index) => {
                 // productList.map((item, index) => {
+                  var foodType = '';
+                  if(item.foodType == 'veg')
+                    foodType = '#00ff00';
+                  if(item.foodType == 'nonveg')
+                    foodType == 'red';
+                  if(foodType == 'vegan')
+                  foodType == 'blue';
                 return (
                   <ListItem style={styles.ListItems}  key={index}>
-                  
-                      <View style={{ backgroundColor:'#00ff00', height:9, width:9, borderRadius:10, marginTop: 0,}}></View>
+
+                      <View style={{ backgroundColor: foodType, height:9, width:9, borderRadius:10, marginTop: 0,}}></View>
                     <Left style={styles.ListLeft}>
                       <Image
                         style={styles.proImage}

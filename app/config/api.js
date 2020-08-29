@@ -46,4 +46,5 @@ export default {
   rechargeWallet: 'userWallet/rechargeWallet',
   checkActiveSubscription: 'order/checkActiveSubscription',
   saveItemRatings:'item/saveItemRatings',
+  applyUserOffer : 'offer/applyUserOffer',
 }

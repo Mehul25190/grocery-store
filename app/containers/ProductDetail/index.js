@@ -187,6 +187,15 @@ class ProductDetail extends React.Component {
     const { navigation, ProductDetail } = this.props;
     console.log('ProductDetail', ProductDetail);
     const { selectedIndex } = this.state;
+
+    var foodType = '';
+    if(ProductDetail.item[0].foodType == 'veg')
+      foodType = '#00ff00';
+    if(ProductDetail.item[0].foodType == 'nonveg')
+      foodType == 'red';
+    if(ProductDetail.item[0].foodType == 'vegan')
+    foodType == 'blue';
+
     return (
       <Container style={appStyles.container}>
 
@@ -269,7 +278,7 @@ class ProductDetail extends React.Component {
 
           <View style={styles.pricePart}>
 
-          <View style={{ backgroundColor:'#00ff00', height:15, width:15, borderRadius:10, marginLeft: 8,}}></View>
+          <View style={{ backgroundColor: foodType, height:15, width:15, borderRadius:10, marginLeft: 8,}}></View>
           <Text style={styles.priceText}><Text style={appStyles.currency,{fontSize:23,color:Colors.gray}}> {Colors.CUR}</Text> {ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}</Text>
         </View>
          </Col>

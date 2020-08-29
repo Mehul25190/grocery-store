@@ -336,7 +336,13 @@ class ProductList extends React.Component {
 
               {this.state.productData.map((item, index) => {
                 // productList.map((item, index) => {
-                var foodType = '#00ff00';
+                var foodType = '';
+                if(item.foodType == 'veg')
+                  foodType = '#00ff00';
+                if(item.foodType == 'nonveg')
+                  foodType == 'red';
+                if(foodType == 'vegan')
+                foodType == 'blue';
                 return (
                   <ListItem style={styles.ListItems}  key={index}>
 
