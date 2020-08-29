@@ -60,10 +60,13 @@ class OrderDetail extends React.Component {
   }
 
   onRatingPage = item => {
+
+    const { navigation } = this.props;
+    const para_orderId = navigation.getParam('orderId');
     //alert(item);
     //this.props.navigation.navigate('ProductList', { para_categoryId:item.id, categoryName: item.categoryName});
     if(this.state.orderData[0].orderStatus == 'DEL') {
-      this.props.navigation.navigate('MyRatings', { item:item });
+      this.props.navigation.navigate('MyRatings', { item:item,orderItemId: para_orderId });
     }
   };
 
@@ -212,7 +215,7 @@ class OrderDetail extends React.Component {
               </ScrollView>
          
         </Card>
-        <Card style={[appStyles.addBox,styles.trackBox,{borderBottomWidth:3,zIndex:0}]}>
+       { /* <Card style={[appStyles.addBox,styles.trackBox,{borderBottomWidth:3,zIndex:0}]}>
           <TouchableOpacity onPress={()=> console.log()}>
             <Text style={styles.detailTitle2}>Track Shipment</Text>
             <Text style={styles.orderValText}>Your Order assiged to Delivery Boy.</Text>
@@ -235,6 +238,7 @@ class OrderDetail extends React.Component {
           
           </TouchableOpacity>
         </Card>
+          */}
       
 
          <Card style={[appStyles.addBox,styles.trackBox,{marginTop:-9,borderTopWidth:0,zIndex:-1}]}>

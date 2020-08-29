@@ -160,8 +160,9 @@ class OrderDetail extends React.Component {
   </Card>
   </View>;
 
-
-  const confirmOrderCard = <View><Card style={[appStyles.addBox,styles.trackBox,{borderBottomWidth:3,zIndex:0}]}>
+    
+  const confirmOrderCard = <View>
+    { /*<Card style={[appStyles.addBox,styles.trackBox,{borderBottomWidth:3,zIndex:0}]}>
     <TouchableOpacity onPress={()=> console.log()}>
       <Text style={styles.detailTitle2}>Track Shipment</Text>
       <Text style={styles.orderValText}>Your Order assiged to Delivery Boy.</Text>
@@ -183,7 +184,7 @@ class OrderDetail extends React.Component {
     </Row>
      
     </TouchableOpacity>
-  </Card>
+  </Card> */ }
    
   </View>;
 

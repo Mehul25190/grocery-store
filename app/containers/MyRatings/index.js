@@ -29,8 +29,12 @@ class MyRatings extends React.Component {
       reviewComment:'',
       orderItemId:'',
       itemRating:0,
+      itemId:'',
+
      
     }
+
+    
   }
   openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
@@ -50,8 +54,13 @@ class MyRatings extends React.Component {
           showToast('Please enter review.','danger');
         });
       }else {
+       
+        const { navigation } = this.props;
+        const orderItemId = navigation.getParam('orderItemId');
         //call api
-        const formdata = { orderItemId:item.itemId,
+        const formdata = { orderItemId:orderItemId,
+                          userId:this.props.user.user.id,
+                          itemId:item.itemId, 
                           itemRating:this.state.itemRating,
                           reviewComment:this.state.reviewComment,
                          };
@@ -78,13 +87,14 @@ class MyRatings extends React.Component {
   render(){
     const { navigation } = this.props;
     const getItem = navigation.getParam('item');
+    const orderItemId = navigation.getParam('orderItemId');
    //this.setState({orderItemId:getItem.itemId})
     //console.log(getItem);
     //this.state.orderItemId = getItem.itemId;
     //alert(getItem[0].itemName);
     //alert(getItem.itemId);
-    //alert(getItem.itemName);
-    //alert(getItem.imagePath);
+    console.log(orderItemId);
+    console.log(getItem.itemId);
     //console.log(url.imageURL);
 
     return (
