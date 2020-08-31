@@ -61,10 +61,10 @@ class TopupWallet extends React.Component {
   }else{
     this.props.rechargeWithCVV(this.props.user.user.id, this.state.CardCheckedId, this.state.amount, this.state.cvv).then(res => {
       if(res.data.isAutoDebit == 'N'){
-        console.log(res);
+        //console.log(res);
         const temp_html = res.data.html;
         const temp = temp_html.replace(/\\/g, "");
-        console.log(temp);
+        //console.log(temp);
         this.props.navigation.navigate(Screens.CardWalletPayment.route, {html:temp});
       }else{
         showToast('Wallet updated successfully', "success");

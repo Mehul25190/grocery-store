@@ -159,9 +159,9 @@ class ProductList extends React.Component {
     this.props
       .productItemList(catId, subCatId, this.props.user.user.id)
       .then((res) => {
-        console.log('sucess return', res.data.itemList);
+        //console.log('sucess return', res.data.itemList);
         if (res.status == "success") {
-          console.log(res.data);
+          //console.log(res.data);
           if(res.data.itemList){
             this.setState({ productData: res.data.itemList, selectSubCat: subCatId });
             this.courseFilterArr = res.data.itemList;   
@@ -212,7 +212,7 @@ class ProductList extends React.Component {
 
   productDetail(id){
     this.props.productDetail(id, this.props.user.user.id).then(res => {
-      console.log(res);
+      //console.log(res);
       if(res.status == "success"){
         if(res.data.item.length > 0){
           this.props.navigation.navigate(Screens.ProductDetail.route)
@@ -238,7 +238,7 @@ class ProductList extends React.Component {
     this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id).then(res => {
-          console.log('dddd', res);
+            //console.log('dddd', res);
             showToast('Cart updated successfully.', "success")
         }) 
       }
@@ -339,10 +339,10 @@ class ProductList extends React.Component {
                 var foodType = '';
                 if(item.foodType == 'veg')
                   foodType = '#00ff00';
-                if(item.foodType == 'nonveg')
-                  foodType == 'red';
-                if(foodType == 'vegan')
-                foodType == 'blue';
+                if(item.foodType == 'Nonveg')
+                  foodType = 'red';
+                if(item.foodType == 'vegan')
+                  foodType = 'blue';
                 return (
                   <ListItem style={styles.ListItems}  key={index}>
 

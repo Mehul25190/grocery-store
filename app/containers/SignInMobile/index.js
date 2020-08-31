@@ -57,7 +57,7 @@ class SignInMobile extends React.Component {
     //sending extra parameter
     dispatch(userActions.signinWithMobile(values)).then(res => {
       console.log('back to sign in mobile');
-      console.log(res);
+      //console.log(res);
       if(res.status == "success"){
         showToast(res.message,"success");
         dispatch(NavigationActions.navigate({

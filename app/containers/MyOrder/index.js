@@ -67,17 +67,17 @@ class MyOrder extends React.Component {
       
       //console.log(orderData);
         if(res.status == "success"){
-          console.log(res);
-              if(res.data.orderList!=null){
-                this.setState({ orderData:res.data.orderList});
-                this.courseFilterArr = res.data.orderList; 
-              }else{
-                this.courseFilterArr = [];
-              }
-              
+          //console.log(res);
+          if(res.data.orderList!=null){
+            this.setState({ orderData:res.data.orderList});
+            this.courseFilterArr = res.data.orderList; 
+          }else{
+            this.courseFilterArr = [];
+          }
+          
         } else {
-              console.log("something wrong with varification call");
-              showToast("Something wrong with Server response","danger");
+          //console.log("something wrong with varification call");
+          showToast("Something wrong with Server response","danger");
         }
          
       })

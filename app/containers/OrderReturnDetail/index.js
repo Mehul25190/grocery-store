@@ -58,7 +58,7 @@ class OrderReturnDetail extends React.Component {
       this.setState({orderID: orderData[0].id})
 
       this.props.getOrderDetails(orderData[0].id).then (res =>{ 
-        console.log(res.data);
+        //console.log(res.data);
         this.setState({ orderData:res.data.orderDetails});
         this.setState({ orderItem:res.data.orderItems });
       });
@@ -258,7 +258,7 @@ class OrderReturnDetail extends React.Component {
         array.push(clickIndex)
         this.setState({ qty: array, });
         this.props.orderReturn(this.data).then(res => {
-          console.log(res)
+          //console.log(res)
           if (res.status == "success") {
               this.props.getOrderDetails1(this.state.orderData[0].id).then (res =>{ 
                 this.setState({ orderData:res.data.orderDetails});

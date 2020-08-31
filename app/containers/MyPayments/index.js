@@ -160,7 +160,7 @@ class MyPayments extends React.Component {
             const temp_html = res.data.html;
             const temp = temp_html.replace(/\\/g, "");
             console.log("------------");
-            console.log(temp);
+            //console.log(temp);
             this.props.navigation.navigate(Screens.CardOrderPayment.route, {html:temp});
           }else{
             this.props.navigation.navigate(Screens.OrderSuccess.route, {orderNumber: res.data.orderNumber});
@@ -189,7 +189,7 @@ class MyPayments extends React.Component {
 
   processDeleteCard(id){
     this.props.deleteCard(this.props.user.user.id, id).then(res => {
-      console.log(res);
+      //console.log(res);
       if(res.status == 'success'){
         this.getCardDetail();
         showToast("Card deleted successfully", "success");
@@ -225,7 +225,7 @@ class MyPayments extends React.Component {
       return;
     }else{
       this.props.applyUserOffer(this.state.promo, this.props.user.user.id).then(res => {
-        console.log(res);
+        //console.log(res);
         if(res.status == 'success'){
           showToast(res.message, 'success');
           this,this.setState({offerId: res.data.offerId , offerValue: res.data.offerValue})

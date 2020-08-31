@@ -39,8 +39,8 @@ class OrderDetail extends React.Component {
 
   }
 
-  getAvailableSlots(){
-    this.props.getAvailableTimeSlots(this.props.deliveryAddress.areaId).then(res => {
+  getAvailableSlots(getAvailableSlots){
+    this.props.getAvailableTimeSlots(this.props.deliveryAddress.areaId, getAvailableSlots).then(res => {
       //console.log(JSON.stringify(res.data.availableTimeSlots))     
       const newArr = Object.keys(res.data.availableTimeSlots).map((key) => res.data.availableTimeSlots[key])
       const newArr1 = Object.keys(res.data.availableTimeSlots).map((key) => key)
@@ -51,8 +51,8 @@ class OrderDetail extends React.Component {
       let tempArr = [];
       availableSolts.map((maindata, key) => {
         maindata.slots.map((data, key1) => { 
-          console.log('date', maindata)
-          console.log('data', data);
+          //console.log('date', maindata)
+          //console.log('data', data);
           tempArr.push({id: maindata.date+' '+data.id, value: maindata.date+' '+data.time});
         })
       })
@@ -83,8 +83,6 @@ class OrderDetail extends React.Component {
     //alert(para_orderId);
     //get user's order List
     this.getOrderDetails(para_orderId);
-
-    this.getAvailableSlots();
   }
 
   onRatingPage = item => {
@@ -100,20 +98,16 @@ class OrderDetail extends React.Component {
   getOrderDetails(para_orderId) {
     //alert(para_orderId);
     this.props.getOrderDetails(para_orderId).then (res =>{
-      
-      //console.log(res);
+    
         if(res.status == "success"){
           //console.log(res.data.orderDetails["2020-06-17"]);
               this.setState({ orderData:res.data.orderDetails});
-              this.setState({ orderItem:res.data.orderItems });
-          //console.log(this.state.orderData); 
-          //console.log(this.state.orderData[0].orderNumber);    
-              
+              this.setState({ orderItem:res.data.orderItems });       
         } else {
               console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
         }
-         
+        this.getAvailableSlots(res.data.orderDetails[0].deliverySlotId);
       })
       .catch(error => {
           console.log('Error messages returned from server', error);
@@ -172,12 +166,15 @@ class OrderDetail extends React.Component {
                   <TouchableOpacity style={styles.prodInfo} onPress={() => this.onRatingPage(item)}>
                     <Text  style={[styles.proTitle,{  fontFamily:'Font-Medium'}]}>{item.itemName} </Text>
                     <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
-                    <Text style={styles.proPrice}>{Colors.CUR} {item.itemPrice}</Text>
+                    <Text style={styles.proPrice}>{Colors.CUR} {item.itemPrice} {item.orderStatus}</Text>
                     
                   </TouchableOpacity>  
                  </Body>
-                 
-                <Right />
+                 {item.itemStatus == 'RET' ?
+                 (<Right> 
+                  <Text style={{width:70, marginRight:0}}>Returned</Text>
+                </Right>) : (<Right/>)}
+                
          </ListItem>
   );
 
@@ -214,7 +211,7 @@ class OrderDetail extends React.Component {
                   <Picker
                     note
                     mode="dropdown"
-                    placeholder="Start Delivery Time Slot" // yipeee, placeholder
+                    placeholder="Select Delivery Time Slot" // yipeee, placeholder
                     style={styles.dorpDownReason}
                     selectedValue={this.state.selected}
                     onValueChange={this.onValueChange.bind(this)}
@@ -377,7 +374,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
       getOrderDetails: (orderId) => dispatch(userActions.getOrderDetailById({id: orderId})),
       logout: () => dispatch(userActions.logoutUser()),
-      getAvailableTimeSlots: (areaId) => dispatch(cartActions.getAvailableTimeSlots({areaId:areaId})),
+      getAvailableTimeSlots: (areaId, deliverySlot) => dispatch(cartActions.getAvailableTimeSlots({areaId:areaId, deliverySlot:deliverySlot})),
       updateDeliverySlot: (deliverySlot, orderId, deliveryDate) => dispatch(cartActions.updateDeliverySlot({deliverySlot:deliverySlot, orderId:orderId, deliveryDate:deliveryDate})),
    };
 };

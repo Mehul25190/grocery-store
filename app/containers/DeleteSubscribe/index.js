@@ -32,8 +32,7 @@ class DeleteSubscribe extends React.Component {
         item: item,
         reason: '',
     }
-
-    console.log(this.state.item)
+    //console.log(this.state.item)
   }
 
   componentDidMount() {
@@ -45,7 +44,7 @@ class DeleteSubscribe extends React.Component {
   };
 
   ratingCompleted(rating) {
-  console.log("Rating is: " + rating)
+    //console.log("Rating is: " + rating)
   };
 
   onPressSubmit = item => {
@@ -53,7 +52,7 @@ class DeleteSubscribe extends React.Component {
   };
 
   deleteSubscription(id, reason){
-    console.log(id);
+    //console.log(id);
     this.props.deleteSubscription(id, reason).then(res => {
       if(res.status == 'success'){
         showToast('Subscription deleted successfully', "success");

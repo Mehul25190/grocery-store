@@ -93,8 +93,8 @@ class MyRatings extends React.Component {
     //this.state.orderItemId = getItem.itemId;
     //alert(getItem[0].itemName);
     //alert(getItem.itemId);
-    console.log(orderItemId);
-    console.log(getItem.itemId);
+    //console.log(orderItemId);
+    //console.log(getItem.itemId);
     //console.log(url.imageURL);
 
     return (

@@ -58,7 +58,7 @@ class MyWallet extends React.Component {
 
   fetchUserWallet(){
     this.props.fetchUserWallet(this.props.user.user.id).then(res => {
-      console.log(res.data.walletBalance);
+      //console.log(res.data.walletBalance);
       this.setState({userWallet: res.data, activityList: res.data.activityList})
     })
   }
@@ -72,8 +72,8 @@ class MyWallet extends React.Component {
         
         //console.log(orderData);
           if(res.status == "success"){
-            console.log("After sucess nirav");
-            console.log(res);
+            //console.log("After sucess nirav");
+            //console.log(res);
                 if(res.data.activityList!=null){
                   this.setState({ walletData:res.data.activityList});
                   this.setState({ userWallet:res.data.walletBalance});

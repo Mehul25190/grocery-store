@@ -94,8 +94,8 @@ class ProductDetail extends React.Component {
       this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
         if(res.status == "success"){
           this.props.viewCart(this.props.user.user.id).then(res => {
-            console.log('dddd', res);
-              showToast('Cart updated successfully.', "success")
+            //console.log('dddd', res);
+            showToast('Cart updated successfully.', "success")
           }) 
         }
       })
@@ -120,7 +120,7 @@ class ProductDetail extends React.Component {
       return;
     }
     this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
-      console.log(res);
+      //console.log(res);
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id);
         showToast('Product added successfully.', "success")
@@ -191,10 +191,10 @@ class ProductDetail extends React.Component {
     var foodType = '';
     if(ProductDetail.item[0].foodType == 'veg')
       foodType = '#00ff00';
-    if(ProductDetail.item[0].foodType == 'nonveg')
-      foodType == 'red';
+    if(ProductDetail.item[0].foodType == 'Nonveg')
+      foodType = 'red';
     if(ProductDetail.item[0].foodType == 'vegan')
-    foodType == 'blue';
+      foodType = 'blue';
 
     return (
       <Container style={appStyles.container}>

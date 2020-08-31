@@ -10,7 +10,7 @@ export const viewcart = payloads => dispatch => {
   return axios.get(url.viewCart,  {queries: payloads}).then(res => {
     //dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
-        console.log(res.data.data);
+        //console.log(res.data.data);
         dispatch({ type: ActionTypes.VIEWCARTDETAIL, data: res.data.data });
         dispatch({ type: ActionTypes.CARTDETAIL, data: res.data.data.cartList });  
         dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
@@ -87,7 +87,7 @@ export const getAvailableTimeSlots = payloads => dispatch => {
 export const fetchDeliveryCharges = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.fetchDeliveryCharges,  {queries: payloads}).then(res => {
-    console.log('res', res)
+    //console.log('res', res)
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         dispatch({ type: ActionTypes.DELIVERYCHARGES, data: res.data.data.deliveryCharge });
@@ -101,7 +101,7 @@ export const fetchDeliveryCharges = payloads => dispatch => {
 export const placeOrder = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.placeOrder,  {payloads: payloads}).then(res => {
-    console.log('ssss', res);
+    //console.log('ssss', res);
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         if(res.data.status == 'success')

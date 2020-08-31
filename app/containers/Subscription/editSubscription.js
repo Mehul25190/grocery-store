@@ -79,7 +79,7 @@ class editSubscribe extends React.Component {
    componentDidMount() {
 
     this.props.fetchSubscriptionDtlsById(this.state.itemId).then(res=>{
-      console.log(res)
+      //console.log(res)
       if(res.status == "success"){
           const subScriDet = res.data.subscriptionDtls[0]
           this.setState({ 

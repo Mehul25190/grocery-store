@@ -68,7 +68,7 @@ class MyAddress extends React.Component {
       if(res.status == "success"){
        // console.log(res.data.userAddress);
             if(res.data.userAddressDtls !=null) {
-              console.log('again');
+              //console.log('again');
               this.setState({ setDeliveryAddress:res.data.userAddressDtls});
               this.setState({id:res.data.userAddressDtls.id});
               this.setState({buildingName:res.data.userAddressDtls.buildingName});
@@ -80,7 +80,7 @@ class MyAddress extends React.Component {
               this.setState({selectedCity:res.data.userAddressDtls.cityId});
               this.setState({selectedArea:res.data.userAddressDtls.areaId});
               this.getAreaList(res.data.userAddressDtls.cityId);
-              console.log(res.data.userAddressDtls);
+              //console.log(res.data.userAddressDtls);
             }
 
         } else {

@@ -41,18 +41,18 @@ class CancelOrder extends React.Component {
     //alert(getItem[0].id);
     this.props.myCancelOrder(getItem[0].id).then (res =>{
       
-      console.log(res);
+        //console.log(res);
         if(res.status == "success"){
             
           showToast(res.message,"success");
         } else {
-              console.log("something wrong with varification call");
+              //console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
         }
          
       })
       .catch(error => {
-          console.log('Error messages returned from server', error);
+          //console.log('Error messages returned from server', error);
           showToast("Error messages returned from server","danger");
       });
 

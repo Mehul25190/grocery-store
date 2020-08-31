@@ -61,11 +61,12 @@ class Home extends React.Component {
     //this.props.logout();
 
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.props.viewCart(this.props.user.user.id);
       this.getOfferList(); 
     });
   
     //set array from category list from api to get category list
-    this.props.viewCart(this.props.user.user.id);
+    //this.props.viewCart(this.props.user.user.id);
     //this.getOfferList(); 
     this.props.getDeviveryAddress(this.props.user.user.id);
     this.getCategoryList();  
@@ -80,22 +81,22 @@ class Home extends React.Component {
     this.props.showDeliveryAddress(this.props.user.user.id).then (res => {
       
       if(res.status == "success"){
-        console.log(res.data.userAddressDtls);
-            if(res.data.userAddressDtls ==null) {
-              //console.log("inside");
-              //redirect to address screen
-              showToast("Please enter your delivery address so we serve better experience and products offer","danger");
-              this.props.navigation.navigate('MyAddress');  
-            }
+          //console.log(res.data.userAddressDtls);
+          if(res.data.userAddressDtls ==null) {
+            //console.log("inside");
+            //redirect to address screen
+            showToast("Please enter your delivery address so we serve better experience and products offer","danger");
+            this.props.navigation.navigate('MyAddress');  
+          }
 
         } else {
-              //console.log("something wrong with varification call");
-              showToast("Something wrong with Server response","danger");
+            //console.log("something wrong with varification call");
+            showToast("Something wrong with Server response","danger");
         }
 
     })
     .catch(error => {
-      console.log('Error messages returned from server', error);
+      //console.log('Error messages returned from server', error);
       showToast("Error messages returned from server","danger");
     });
 
@@ -126,13 +127,13 @@ class Home extends React.Component {
               //this.setState({ categoryData:res.data.category });
               this.courseFilterArr = res.data.category;
         } else {
-              console.log("something wrong with varification call");
+              //console.log("something wrong with varification call");
               showToast("Something wrong with Server response","danger");
         }
          
       })
       .catch(error => {
-          console.log('Error messages returned from server', error);
+          //console.log('Error messages returned from server', error);
           showToast("Error messages returned from server","danger");
       });
       this.setState({onRefreshLoading:false});  
@@ -238,9 +239,11 @@ class Home extends React.Component {
     //console.log(this.state.categoryData);
     //console.log("after render");
     const { totalItem } = this.props;
-    var dateofvisit = moment(this.props.user.user.subscriptionEndDate).add(1, 'days');
-    var today = moment();
-    var subscriptionRemainingDays = dateofvisit.diff(today, 'days');
+    if(this.props.user){
+      var dateofvisit = moment(this.props.user.user.subscriptionEndDate).add(1, 'days');
+      var today = moment();
+      var subscriptionRemainingDays = dateofvisit.diff(today, 'days');
+    }
     if(subscriptionRemainingDays <= 0)
       subscriptionRemainingDays = 0
     

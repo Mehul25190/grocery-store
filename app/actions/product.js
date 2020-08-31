@@ -13,7 +13,7 @@ export const searchItem = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.searchItem,{queries: payloads}).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    console.log(res.data);
+    //console.log(res.data);
     if(res.status == 200){
       //console.log('product list return');  
       //console.log(res);

@@ -11,7 +11,7 @@ export const signin = payloads => dispatch => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         if(res.data.status=="success"){
-          console.log(res.data.data)
+          //console.log(res.data.data)
           dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
         }
         return res.data
@@ -26,8 +26,8 @@ export const signinWithMobile = payloads => dispatch => {
   return axios.post(url.signinMobile,  {payloads: payloads}).then(res => {
     
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    console.log("sign in mobile");
-    console.log(res);
+    //console.log("sign in mobile");
+    //console.log(res);
     if(res.status == 200){
       if(res.data.status=="success"){
         dispatch({ type: ActionTypes.MOBILENO, data: payloads.mobileNo });
@@ -58,7 +58,7 @@ export const signupMobileVerification = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.signupVerifyMobile,  {payloads: payloads}).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    console.log(res);
+    //console.log(res);
     if(res.status == 200){
       dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
       return res.data;
@@ -72,7 +72,7 @@ export const signInMobileVerification = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.loginVerifyMobile,  {payloads: payloads}).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    console.log(res);
+    //console.log(res);
     if(res.status == 200){
       dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
       return res.data;
@@ -91,7 +91,7 @@ export const showCategoryList = payloads => dispatch => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     //console.log(res.data);
     if(res.status == 200){
-      console.log("set cat", res.data.data.category);
+      //console.log("set cat", res.data.data.category);
       dispatch({ type: ActionTypes.CATEGORYLIST, data: res.data.data.category });
       return res.data;
     } else {
@@ -348,10 +348,10 @@ export const getUserWalletList = payloads => dispatch => {
   //console.log('payloads', payloads);
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.getUserWalletList,  {queries: payloads}).then(res => {
-    console.log("xxxxx"+res.data);
+    //console.log("xxxxx"+res.data);
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
-        console.log("get response"+res.data);
+        //console.log("get response"+res.data);
         return res.data
       } else {
         return res
@@ -404,7 +404,7 @@ export const getOrderDetailById = payloads => dispatch => {
   //console.log('payloads', payloads);
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.getOrderDetailById,  {queries: payloads}).then(res => {
-    console.log("get order details"+res.data);
+    //console.log("get order details"+res.data);
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         //console.log("get del add"+res.data);
@@ -419,7 +419,7 @@ export const getOrderDetailById1 = payloads => dispatch => {
   //console.log('payloads', payloads);
   //dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.getOrderDetailById,  {queries: payloads}).then(res => {
-    console.log("get order details"+res.data);
+    //console.log("get order details"+res.data);
     //dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         //console.log("get del add"+res.data);
