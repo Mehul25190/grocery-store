@@ -49,4 +49,5 @@ export default {
   applyUserOffer : 'offer/applyUserOffer',
   updateDeliverySlot: 'order/updateDeliverySlot',
   fetchOrderItemsCount:'order/fetchOrderItemsCount',
+  fetchItemsByOffer: 'offer/fetchItemsByOffer',
 }

@@ -52,3 +52,19 @@ export const fetchOffers = payloads => dispatch => {
     });
 }
 
+
+export const fetchItemsByOffer = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchItemsByOffer, {queries: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res.data);
+      if(res.status == 200){
+        dispatch({ type: ActionTypes.CATEGORYOFFER, data: res.data.data.offerList }); 
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+

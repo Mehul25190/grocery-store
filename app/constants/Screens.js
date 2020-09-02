@@ -157,5 +157,8 @@ export default {
   },
   CardWalletPayment: {
     route: 'CardWalletPayment'
+  },
+  SearchOffer: {
+    route: 'SearchOffer'
   }
 };

@@ -187,7 +187,7 @@ class Home extends React.Component {
 
     _renderItem = ({item, index}) => {
         return (
-          
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('SearchOffer', { offer_id: item.id })}>
            <Grid style={styles.slide}>
              <Col style={{}}>
                  <View style={styles.discountBlock}>
@@ -205,8 +205,8 @@ class Home extends React.Component {
              <Col style={{ marginLef:2,width: 120,}}>
                 <Image source={{uri: url.imageURL+item.offerImage}} style={{flex: 1, height: null, width: null,resizeMode:'contain'}} />
              </Col>
-             
             </Grid>
+          </TouchableOpacity>
         );
     }
 

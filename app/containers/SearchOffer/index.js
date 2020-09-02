@@ -57,7 +57,7 @@ import styles from "./styles";
 import NumericInput from "react-native-numeric-input";
 import { ScreenLoader } from '../../components';
 
-class SearchProduct extends React.Component {
+class SearchOffer extends React.Component {
   constructor(props) {
     super(props);
     const categoryId = this.props.navigation.getParam("para_categoryId");
@@ -78,16 +78,16 @@ class SearchProduct extends React.Component {
   }
 
   componentDidMount() {
-    this.productItemList( this.props.navigation.getParam('text'));
+    this.productItemList( this.props.navigation.getParam('offer_id'));
   }
 
 
 
 
-  productItemList(text) {
-    this.setState({text: text})
+  productItemList(offer_id) {
+    //this.setState({text: offer_id})
     this.props
-      .searchItem(text, this.props.user.user.id)
+      .fetchItemsByOffer(offer_id, this.props.user.user.id)
       .then((res) => {
         if (res.status == "success") {
           if(res.data.itemList){
@@ -400,10 +400,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(userActions.logoutUser()),
-    productItemList: (categoryId, subCategoryId) => dispatch(userActions.showProductList({ subCategoryId: subCategoryId, categoryId: categoryId })),
-    fetchSubCategory: (categoryId) => dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
-    searchItem: (searchString, userId) => dispatch(productActions.searchItem({ searchString: searchString, userId:userId })),
-    productDetail: (id) => dispatch(productActions.productDetail({ itemId: id })),
+    productItemList: (categoryId, subCategoryId) =>
+      dispatch(userActions.showProductList({ subCategoryId: subCategoryId, categoryId: categoryId })),
+    fetchSubCategory: (categoryId) =>
+      dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
+      fetchItemsByOffer: (offerId, userId) =>
+      dispatch(productActions.fetchItemsByOffer({ offerId: offerId, userId:userId })),
+    productDetail: (id) => 
+      dispatch(productActions.productDetail({ itemId: id })),
     viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
     addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
     updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
@@ -413,4 +417,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(SearchProduct);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchOffer);

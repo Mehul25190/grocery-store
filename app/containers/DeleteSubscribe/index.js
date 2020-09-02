@@ -53,6 +53,10 @@ class DeleteSubscribe extends React.Component {
 
   deleteSubscription(id, reason){
     //console.log(id);
+    if(this.state.reason == ''){
+      showToast('Please select the reason', 'danger');
+      return;
+    }
     this.props.deleteSubscription(id, reason).then(res => {
       if(res.status == 'success'){
         showToast('Subscription deleted successfully', "success");

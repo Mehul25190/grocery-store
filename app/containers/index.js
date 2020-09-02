@@ -37,7 +37,9 @@ import OrderPayment from "./MyPayments/orderPayment.js"
 import CardOrderPayment from "./MyPayments/cardOrderPayment.js"
 import WalletOrderPayment from "./TopupWallet/walletOrderPayment.js"
 import CardWalletPayment from "./TopupWallet/cardOrderPayment.js"
+import SearchOffer from "./SearchOffer";
+
 
 
 export { SignIn, CancelOrder, MyOffers, MyCart, ProductDetail, OrderSuccess, SubscribeSuccess, Checkout, Confirmation, DeleteSubscribe, OrderReturn, OrderReturnDetail, SubscribeOrder, SubscribeDetail, TopupWallet, OrderDetail, Profile, MyAddress, MyNotification, MyRatings,  MyWallet, Subscription, ProductList, SignInEmail, Verification, SignInMobile,
- SignUp, Forgotpassword, Drawer, Home, MyOrder, Settings, MyPayments, ModifySubscription, SearchProduct, OrderPayment, CardOrderPayment, WalletOrderPayment, CardWalletPayment};
+ SignUp, Forgotpassword, Drawer, Home, MyOrder, Settings, MyPayments, ModifySubscription, SearchProduct, OrderPayment, CardOrderPayment, WalletOrderPayment, CardWalletPayment, SearchOffer};
