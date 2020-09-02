@@ -172,7 +172,7 @@ class OrderDetail extends React.Component {
                  </Body>
                  {item.itemStatus == 'RET' ?
                  (<Right> 
-                  <Text style={{width:70, marginRight:0}}>Returned</Text>
+                  <Text style={{width:85, marginRight:0}}>Returned</Text>
                 </Right>) : (<Right/>)}
                 
          </ListItem>
