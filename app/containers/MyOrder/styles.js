@@ -39,7 +39,7 @@ export default {
   textAlign:'right'
  },
  statusBtn:{
-  width:70,
+  width:90,
   backgroundColor:Colors.secondary,
     justifyContent: 'center',
     alignItems: 'center',
