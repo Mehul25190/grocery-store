@@ -48,4 +48,5 @@ export default {
   saveItemRatings:'item/saveItemRatings',
   applyUserOffer : 'offer/applyUserOffer',
   updateDeliverySlot: 'order/updateDeliverySlot',
+  fetchOrderItemsCount:'order/fetchOrderItemsCount',
 }

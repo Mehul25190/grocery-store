@@ -40,7 +40,8 @@ class Home extends React.Component {
       isModalVisible: false,
       categoryData: [],  
       text: '',
-      onRefreshLoading:false,    
+      onRefreshLoading:false,
+      nextOrderCount:0,    
     };
     this.courseFilterArr = [];
     console.log('Math', Math.floor(100000 + Math.random() * 900000));
@@ -63,14 +64,39 @@ class Home extends React.Component {
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
       this.props.viewCart(this.props.user.user.id);
       this.getOfferList(); 
+     
     });
   
     //set array from category list from api to get category list
     //this.props.viewCart(this.props.user.user.id);
     //this.getOfferList(); 
+    this.getNextOrderCount(this.props.user.user.id);
     this.props.getDeviveryAddress(this.props.user.user.id);
     this.getCategoryList();  
      
+  }
+
+  //get Next order count
+  getNextOrderCount(){
+    console.log(">>>>>>>>>>>");
+    
+    this.props.nextOrderCount(this.props.user.user.id).then (res => {
+      console.log(res);
+      
+      if(res.status == "success"){
+        this.setState({ nextOrderCount:res.data.itemCount });
+
+        } else {
+            //console.log("something wrong with varification call");
+            showToast("Something wrong with Server response","danger");
+        }
+
+    })
+    .catch(error => {
+      console.log('Error messages returned from server', error);
+      showToast("Error messages returned (Next Order) from server"+ error,"danger");
+    });
+
   }
 
   //get Delivery address
@@ -286,7 +312,9 @@ class Home extends React.Component {
               <View style={{flexDirection:'row', justifyContent:'flex-start', marginLeft:Layout.indent-5,
     marginRight:Layout.indent-5,marginTop:10, marginBottom:0}}>
                 <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
-                  <Text style={styles.shopSubTitleText}>My Next Order</Text>
+                  <Text style={styles.shopSubTitleText}>My Next Order 
+                  ({ this.state.nextOrderCount!='' ? this.state.nextOrderCount : this.state.nextOrderCount})
+                  </Text>
                   </TouchableOpacity>
               </View>
               <Modal 
@@ -416,7 +444,9 @@ const mapDispatchToProps = (dispatch) => {
       getOrderList: (useId) => dispatch(userActions.getUserOrderList({userId: useId})),
       resetState: () => dispatch({ type: ActionTypes.RESETSTATE }),
       showDeliveryAddress: (userid) => dispatch(userActions.getDeviveryAddress({userId:userid})),
-   };
+      nextOrderCount: (userid) => dispatch(userActions.nextOrderCount({userId:userid})),
+   
+    };
 };
 
 // Exports

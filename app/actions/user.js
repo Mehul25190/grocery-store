@@ -520,3 +520,17 @@ export const applyUserOffer = payloads => dispatch => {
   })
 }
 
+export const nextOrderCount = payloads => dispatch => {
+  //console.log('payloads>>', payloads);
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchOrderItemsCount,  {queries: payloads}).then(res => {
+    //console.log("get next order"+res);
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      if(res.status == 200){
+        return res.data;
+      } else {
+        return res;
+      }
+    });
+}
+
