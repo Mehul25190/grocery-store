@@ -120,7 +120,7 @@ class OrderDetail extends React.Component {
       
                     <Text  style={[styles.proTitle,{  fontFamily:'Font-Medium'}]}>{item.itemName} </Text>
                     <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
-                    <Text style={styles.QtyPro}>{item.itemStatus}</Text>
+                    <Text style={styles.QtyPro}></Text>
                 </TouchableOpacity>
                  </Body>
                  
@@ -131,9 +131,15 @@ class OrderDetail extends React.Component {
                   </View>
                   
           <View style={styles.writereviews}>
+          { (item.ratings > 0) ?
             <TouchableOpacity onPress={() => this.onRatingPage(item)}>
-              <Text style={styles.writereviews}>Write a review </Text>
+              <Text style={styles.writereviews}>
+                { (item.ratings > 0) ? "Write a review" : "Review Submitted" }
+              </Text>
             </TouchableOpacity>
+            :
+            <Text>Review Submitted</Text> 
+          }
           </View>
                 </Right>
 
