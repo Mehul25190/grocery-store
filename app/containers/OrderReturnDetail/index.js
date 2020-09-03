@@ -226,14 +226,17 @@ class OrderReturnDetail extends React.Component {
   }
   
   checkbox(clickIndex, OrderID, Name, orderData, returnValidityHours) {
-    console.log(returnValidityHours)
-    var deliveryDateTime = orderData[0].orderDeliveryDate+' '+orderData[0].deliveryToTime;
+    //console.log(returnValidityHours)
+
+    /*var deliveryDateTime = orderData[0].orderDeliveryDate+' '+orderData[0].deliveryToTime;
     var validReturnDateTime = moment(deliveryDateTime).add(returnValidityHours, 'hours').format('YYYY-MM-DD hh:mm:ss');
     var currentDateTime = moment(new Date()).add(1, 'days').format('YYYY-MM-DD hh:mm:ss')
     if(currentDateTime > validReturnDateTime){
       showToast("Your can't return this item", "danger")
       return;
     }
+    */
+
     // if(validReturnDateTime > )
 
     const { folder, image } = this.state

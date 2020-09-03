@@ -480,7 +480,7 @@ addAddressStyle: {
     paddingLeft:Layout.indent,
   paddingRight:Layout.indent,
   marginTop:20,
-  marginBottom:10
+  marginBottom:20
 
 },
 continueShoppingBtnArea:{

@@ -49,6 +49,7 @@ class MyPayments extends React.Component {
       promo: '',
       offerValue: 0,
       offerId: '',
+      placeOrderLoading: false,
     };
   }
     componentDidMount() {
@@ -121,6 +122,7 @@ class MyPayments extends React.Component {
   }
 
   placeOrder() {
+  
     if(!this.state.switch1Value && !this.state.paywithcard && !this.state.paywithcash){
       showToast('Please select the payment method', "danger");
       return;
@@ -140,7 +142,7 @@ class MyPayments extends React.Component {
       showToast('Your wallet amount is not sufficent to place the order, please select card or cash option.', "danger");
       return;
     }
-
+    this.setState({placeOrderLoading: true})
     const {navigation} = this.props;
     const selectedTimeSlot = navigation.getParam('timeslot');
     const dateslot = navigation.getParam('dateslot');
@@ -171,6 +173,7 @@ class MyPayments extends React.Component {
           else
             showToast("Some technical issue found, please contact to support.", "danger");
         }
+        this.setState({placeOrderLoading: false})
       })
     }else{
       this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet, offerId, offerValue).then(res => {
@@ -182,9 +185,10 @@ class MyPayments extends React.Component {
           else
             showToast("Some technical issue found, please contact to support.", "danger");
         }
+        this.setState({placeOrderLoading: false})
       })
     }
-    
+    //this.setState({placeOrderLoading: false})
   }
 
   processDeleteCard(id){
@@ -536,7 +540,12 @@ class MyPayments extends React.Component {
 
           <TouchableOpacity style={styles.checkOutBtnArea} >
               <Button primary full style={styles.checkOutBtn} onPress={()=> this.placeOrder()}>
-                  <Text style={styles.checkOutText}> Pay Now</Text>
+                  {this.state.placeOrderLoading ? 
+                    <ActivityIndicator/>
+                  : 
+                    <Text style={styles.checkOutText}> Pay Now</Text>
+                  }
+                  
                </Button>
           </TouchableOpacity>
          
