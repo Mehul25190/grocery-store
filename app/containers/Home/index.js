@@ -64,13 +64,14 @@ class Home extends React.Component {
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
       this.props.viewCart(this.props.user.user.id);
       this.getOfferList(); 
+      this.getNextOrderCount(this.props.user.user.id);
      
     });
   
     //set array from category list from api to get category list
     //this.props.viewCart(this.props.user.user.id);
     //this.getOfferList(); 
-    this.getNextOrderCount(this.props.user.user.id);
+    //this.getNextOrderCount(this.props.user.user.id);
     this.props.getDeviveryAddress(this.props.user.user.id);
     this.getCategoryList();  
      
@@ -78,7 +79,7 @@ class Home extends React.Component {
 
   //get Next order count
   getNextOrderCount(){
-    console.log(">>>>>>>>>>>");
+    //console.log(">>>>>>>>>>>");
     
     this.props.nextOrderCount(this.props.user.user.id).then (res => {
       console.log(res);
@@ -314,6 +315,7 @@ class Home extends React.Component {
                 <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
                   <Text style={styles.shopSubTitleText}>My Next Order 
                   ({ this.state.nextOrderCount!='' ? this.state.nextOrderCount : this.state.nextOrderCount})
+                  items to be delivered.
                   </Text>
                   </TouchableOpacity>
               </View>

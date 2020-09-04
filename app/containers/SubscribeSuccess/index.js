@@ -72,7 +72,7 @@ class SubscribeSuccess extends React.Component {
                     <Text style={{fontWeight:'bold',textAlign:'center'}}> {this.props.navigation.getParam('subscriptionDate')}</Text>
                   </View>
                    <View style={{marginBottom:5}}>
-                    <Text style={styles.SuccessText}>Please recharge your foodapp wallet for uninterprited serivices.</Text>
+                    <Text style={styles.SuccessText}>Please recharge your MyAllaadin wallet for uninterprited serivices.</Text>
                   </View>
                   
                     <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Subscription.route)}>
@@ -103,7 +103,7 @@ class SubscribeSuccess extends React.Component {
                 <Body>
                   <View>
                    <Text style={styles.IconTitle}>
-                  Hang your bag on your door
+                  Hang your bag on your door (Optional)
                   </Text>
                    <Text style={styles.IconText}>
                    Don't forgot to hang a bag on your door everyday.
@@ -122,7 +122,7 @@ class SubscribeSuccess extends React.Component {
                  Prepaid wallet service
                   </Text>
                    <Text style={styles.IconText}>
-                   Maintain a positive balance in your wallat else your subscription might go on hold.
+                   Maintain a positive balance in your wallet else your subscription might go on hold.
                   </Text>
                   
                   </View>
