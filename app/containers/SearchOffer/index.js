@@ -130,11 +130,11 @@ class SearchOffer extends React.Component {
   }
 
   buyOncePressHnadler(productId, value){
-
+  var offer_id = this.props.navigation.getParam('offer_id');
   if(value == 0){
     this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
       if(res.status == "success"){
-        this.props.searchItem(this.state.text, this.props.user.user.id).then((res) => {
+        this.props.fetchItemsByOffer(offer_id, this.props.user.user.id).then((res) => {
           if (res.status == "success" && res.data.itemList) {
               this.setState({ productData: res.data.itemList });  
           }else{
@@ -149,7 +149,7 @@ class SearchOffer extends React.Component {
   }else if(value == 1){
     this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
-        this.props.searchItem(this.state.text, this.props.user.user.id).then((res) => {
+        this.props.fetchItemsByOffer(offer_id, this.props.user.user.id).then((res) => {
           if (res.status == "success" && res.data.itemList) {
               this.setState({ productData: res.data.itemList });  
           }else{
@@ -164,7 +164,7 @@ class SearchOffer extends React.Component {
   }else if(value > 1){
     this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
-        this.props.searchItem(this.state.text, this.props.user.user.id).then((res) => {
+        this.props.fetchItemsByOffer(this.state.text, this.props.user.user.id).then((res) => {
           if (res.status == "success" && res.data.itemList) {
               this.setState({ productData: res.data.itemList });  
           }else{
@@ -244,9 +244,7 @@ class SearchOffer extends React.Component {
      
    </Header>
         <Content enableOnAndroid style={appStyles.content}>
-          {this.props.isLoading ? (
-            <Spinner color={Colors.secondary} style={appStyles.spinner} />
-          ) : (<View>
+          <View>
               {this.state.productData.map((item, index) => {
                 // productList.map((item, index) => {
                   var foodType = '';
@@ -380,7 +378,6 @@ class SearchOffer extends React.Component {
               })}
               {this.state.productData.length == 0 ? <View style={[appStyles.spinner, appStyles.norecordfound]}><Text>No Product Found</Text></View> : null }
             </View>
-            )}
         </Content>
 
         {/*<Catalog {...this.props} />*/}
@@ -391,7 +388,7 @@ class SearchOffer extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    isLoading: state.common.isLoading,
+    //isLoading: state.common.isLoading,
     totalItem: state.cart.totalItem,
 
   };

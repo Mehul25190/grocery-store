@@ -22,6 +22,7 @@ import ReduxNavigation from './app/navigation/ReduxNavigation';
 // Imports: Redux Persist Persister
 import { store, persistor } from './app/store/store';
 
+console.disableYellowBox = true;
 
 function cacheImages(images) {
   return images.map(image => {

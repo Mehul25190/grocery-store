@@ -121,8 +121,9 @@ class OrderDetail extends React.Component {
     onCancelPage = item => {
       this.props.navigation.navigate('CancelOrder', { item});
     };
+   // onPickerValueChange=(value, index)=>{
 
-    onValueChange(value: string) {
+    onValueChange = (value) => {
       setTimeout(() => {
         Alert.alert(
           "Update Time Slot",
@@ -130,7 +131,7 @@ class OrderDetail extends React.Component {
           [
             {
               text: "Cancel",
-              onPress: () => this.setState({selected: ''}),
+              onPress: () => console.log('cancle'),
               style: "cancel"
             },
             { text: "Yes", onPress: () => this.updateTimeSlot(value) }
@@ -150,6 +151,9 @@ class OrderDetail extends React.Component {
       this.props.updateDeliverySlot(slotId, para_orderId, slotDate).then(res => {
         if(res.status == 'success'){
           showToast(res.message, 'success')
+          const { navigation } = this.props;
+          const para_orderId = navigation.getParam('orderId');
+          this.getOrderDetails(para_orderId);
         }else{
           showToast(res.message, 'danger')
         }
@@ -214,14 +218,20 @@ class OrderDetail extends React.Component {
                     placeholder="Select Delivery Time Slot" // yipeee, placeholder
                     style={styles.dorpDownReason}
                     selectedValue={this.state.selected}
-                    onValueChange={this.onValueChange.bind(this)}
+                    onValueChange={this.onValueChange}
                   >
-                    
+                    {<Picker.Item label='Select Delivery Time Slot' />}
+
                     {this.state.availTimeSlot.map((data, key) => {
                       //console.log(data)
-                      return <Picker.Item key={data.id} label={data.value} value={data.id} />
-                      })
-                    }
+                        if(key == 0){
+                          return (
+                              <Picker.Item key={data.id} label={data.value} value={data.id} /> 
+                            );
+                        }else{
+                          return <Picker.Item key={data.id} label={data.value} value={data.id} />
+                        }
+                      })}
                   </Picker>
                   <Image source={imgs.DownArrowColor} style={styles.DownArrow} />
                 </Item>
