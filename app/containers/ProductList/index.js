@@ -9,6 +9,7 @@ import {
   ImageBackground,
   StatusBar,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import _ from "lodash";
 import { Layout, Colors, Screens } from "../../constants";
@@ -68,6 +69,7 @@ class ProductList extends React.Component {
       text: "",
       flalistIndex: 0,
       buyOndeSelected: [],
+      selctedProduct: '',
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
@@ -93,7 +95,7 @@ class ProductList extends React.Component {
   }
 
   SearchFilterFunction(text) {
-    console.log(this.courseFilterArr)
+    //console.log(this.courseFilterArr)
     //passing the inserted text in textinput
     const newData = this.courseFilterArr.filter(function (item) {
       const itemData = item.itemName ? item.itemName.toUpperCase() : "".toUpperCase();
@@ -180,7 +182,7 @@ class ProductList extends React.Component {
 
       //this.refs.flatListRef.scrollToIndex({animated: true,index:5})
 
-    console.log(catId);
+    //console.log(catId);
   }
   //func call when click item category
   _itemChoose(item) {
@@ -224,12 +226,13 @@ class ProductList extends React.Component {
   }
 
   buyOncePressHnadler(productId, value){
-
+  this.setState({selctedProduct: productId})
   if(value == 0){
     this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id).then(res => {
-            showToast('Cart updated successfully.', "success")
+            //showToast('Cart updated successfully.', "success");
+            this.updateProductList(productId, value)
         }) 
       }
       
@@ -239,7 +242,8 @@ class ProductList extends React.Component {
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id).then(res => {
             //console.log('dddd', res);
-            showToast('Cart updated successfully.', "success")
+            //showToast('Cart updated successfully.', "success")
+            this.updateProductList(productId, value)
         }) 
       }
     })
@@ -247,43 +251,52 @@ class ProductList extends React.Component {
     this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id).then(res => {
-            showToast('Cart updated successfully.', "success")
+            //showToast('Cart updated successfully.', "success")
+            this.updateProductList(productId, value)
         }) 
       }
     })
   }
 
-  var array = [...this.state.buyOndeSelected]; // make a separate copy of the array
-  var index = array.indexOf(productId)
-  if (index !== -1 && value == 0) {
-    array.splice(index, 1);
-    this.setState({buyOndeSelected: array});
-  }else{
-    array.push(productId)
-    this.setState({buyOndeSelected: array});
-  }
   
-  this.props.getproductItemList(this.state.categoryId, this.state.selectSubCat, this.props.user.user.id)
-  .then((res) => {
-    console.log('sucess return', res.data.itemList);
-    if (res.status == "success") {
-      if(res.data.itemList.length > 0){
-        this.setState({ productData: res.data.itemList, selectSubCat: this.state.selectSubCat });
-      }else{
-        this.setState({ productData: [], selectSubCat: this.state.selectSubCat });
-      }
-    } else {
-      showToast("Something wrong with Server response", "danger");
-    }
-  })
+  //this.setState({selctedProduct: ''})
 
     //this.setState({value: value})
+  }
+
+  updateProductList(productId, value){
+    var array = [...this.state.buyOndeSelected]; // make a separate copy of the array
+    var index = array.indexOf(productId)
+    if (index !== -1 && value == 0) {
+      array.splice(index, 1);
+      this.setState({buyOndeSelected: array});
+    }else{
+      array.push(productId)
+      this.setState({buyOndeSelected: array});
+    }
+    
+    this.props.getproductItemList(this.state.categoryId, this.state.selectSubCat, this.props.user.user.id)
+    .then((res) => {
+      //console.log('sucess return', res.data.itemList);
+      this.setState({selctedProduct: ''})
+      if (res.status == "success") {
+        if(res.data.itemList.length > 0){
+          this.setState({ productData: res.data.itemList, selectSubCat: this.state.selectSubCat });
+        }else{
+          this.setState({ productData: [], selectSubCat: this.state.selectSubCat });
+        }
+      } else {
+        showToast("Something wrong with Server response", "danger");
+      }
+    }).catch(error => {
+      this.setState({selctedProduct: ''})
+    })
   }
 
   subscribePressHandlder(item){
     
     this.props.checkActiveSubscription(item.id, this.props.user.user.id).then(res => {
-        console.log(res.data);
+        //console.log(res.data);
         if(res.status == 'success'){
           if(res.data.isActiveSubscription == 'Y'){
             showToast('You have already subscribed this product.', "danger")
@@ -432,6 +445,8 @@ class ProductList extends React.Component {
                           <View style={{ padding: 0, margin: 0 }}></View>
                         )}
                         {/*<Text>{this.state.buyOndeSelected.indexOf(item.id)} {item.cartQty}</Text>*/}
+                        {this.state.selctedProduct == item.id ? <ActivityIndicator style={{marginRight: 20}}/> : 
+                        (<View>
                          {item.cartQty > 0 ?
                           (<NumericInput
                             initValue={item.cartQty}
@@ -465,6 +480,7 @@ class ProductList extends React.Component {
                            <Image source={imgs.addPlus} style={styles.buyButton} />
                           </TouchableOpacity>
                         )}
+                        </View>)}
                       </View>
                     </Right>
                   </ListItem>
@@ -483,7 +499,7 @@ class ProductList extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    isLoading: state.common.isLoading,
+    //isLoading: state.common.isLoading,
   };
 };
 

@@ -408,7 +408,7 @@ class MyPayments extends React.Component {
           {/* ------------PAYMENT OPTIONS-----------*/}
 
               
-              { (this.state.showMyCard==true || this.state.showAddCard==true)  && (
+              { (this.state.showMyCard==true)  && (
                     <Grid style={{marginTop:20}}>
                       <Row>
                         <Col>
@@ -460,81 +460,7 @@ class MyPayments extends React.Component {
                 />
                  
                 )}
-           
-      
-              
-             { (this.state.showAddCard==true) && (
-              <View>
-              
-               <Grid style={styles.cardBox}>
-                  <Row style={styles.CardRow}>
-                    <Col >
-                      <Input placeholderTextColor="#B9B9B9"  style={styles.inputStyleCard} placeholder="xxxx-xxxx-xxxx-xxxx" />
-                    </Col>
-                    <Col style={{width:100, justifyContent:'center',alignItems:'flex-end'}}>
-                     <Icon style={styles.CardIcon} name='credit-card' type='EvilIcons' />
-                    </Col>
-                  </Row>
-                 <Row style={styles.CardRow}>
-                    <Col style={styles.ExpiresTitleCol}>
-                     <Text style={{fontSize:16,fontFamily:'Font-Medium', alignItems:'center'}}>Expires:</Text>
-                    </Col>
-                    <Col style={styles.ExpiresCol}>
-                       <Input placeholderTextColor="#B9B9B9" style={styles.ExpiresStyle} placeholder="MM YYYY " />
-                    </Col>
-                    <Col>
-                    <Item style={{borderBottomWidth:0,paddingLeft:10,alignItems:'center'}}>
-                      <Input  placeholderTextColor="#B9B9B9" style={{fontFamily:'Font-Medium',color:'#B9B9B9',fontSize:16}} placeholder="CVV" />
-                      <Icon style={styles.lockStyle} name='lock' type='EvilIcons' />
-                    </Item>
-                      
-                    </Col>
-                  </Row>
-                   <Row style={{ paddingBottom:5, paddingTop:1,height:53.33,justifyContent:'center'}}>
-                    <Input placeholderTextColor="#B9B9B9" style={styles.CardNameStyle} placeholder="Name On Card" />
-                   </Row>
-               </Grid>
-
-           <ListItem noBorder icon style={{marginTop:5,marginLeft:5}}>
-            <Left>  
-               <CheckBox
-               style={styles.checkboxStyle}
-               onClick={()=>{
-                  this.setState({
-                      isChecked:!this.state.isChecked
-                  })
-                }}
-              checkedImage={<Icon name='check' type='AntDesign' style={{color:Colors.primary}} />}
-              unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons' style={{color:'transparent'}} /> }
-              isChecked={this.state.isChecked}
-              />
-
-             </Left>
-             <Body>
-                <Text style={{color:Colors.gray,fontFamily:'Font-Medium',fontSize:13}}>Save card for Faster Checkouts.</Text>
-             </Body>
-           </ListItem>
-            <ListItem noBorder icon style={{marginTop:5,marginLeft:5}}>
-            <Left>  
-               <CheckBox
-               style={styles.checkboxStyle}
-               onClick={()=>{
-                  this.setState({
-                      isChecked2:!this.state.isChecked2
-                  })
-                }}
-              checkedImage={<Icon name='check' type='AntDesign' style={{color:Colors.primary}} />}
-              unCheckedImage={<Icon name='check-box-outline-blank' type=' MaterialIcons' style={{color:'transparent'}} /> }
-              isChecked={this.state.isChecked2}
-              />
-
-             </Left>
-             <Body style={{justifyContent:'flex-start',alignItems:'flex-start'}}>
-                <Text style={{color:Colors.gray,fontFamily:'Font-Medium',fontSize:13}}>You hearbuy authorise to change you automatically every month untill you cancel subscription.</Text>
-             </Body>
-           </ListItem>
-            </View>
-         )}
+          
 
          {/* ---------------------------------Wallet----------------------------------*/}
 

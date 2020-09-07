@@ -9,6 +9,7 @@ import {
   ImageBackground,
   StatusBar,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import _ from "lodash";
 import { Layout, Colors, Screens } from "../../constants";
@@ -71,6 +72,7 @@ class SearchOffer extends React.Component {
       text: "",
       flalistIndex: 0,
       buyOndeSelected: [],
+      selctedProduct: '',
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
@@ -130,6 +132,8 @@ class SearchOffer extends React.Component {
   }
 
   buyOncePressHnadler(productId, value){
+  this.setState({selctedProduct: productId})
+
   var offer_id = this.props.navigation.getParam('offer_id');
   if(value == 0){
     this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
@@ -142,7 +146,8 @@ class SearchOffer extends React.Component {
           } 
         })
         this.props.viewCart(this.props.user.user.id).then(res => {
-          showToast('Cart updated successfully.', "success")
+          //showToast('Cart updated successfully.', "success")
+          this.setState({selctedProduct: ''})
         }) 
       }
     })
@@ -157,7 +162,8 @@ class SearchOffer extends React.Component {
           } 
         })
         this.props.viewCart(this.props.user.user.id).then(res => {
-          showToast('Cart updated successfully.', "success")
+          //showToast('Cart updated successfully.', "success")
+          this.setState({selctedProduct: ''})
         }) 
       }
     })
@@ -172,7 +178,8 @@ class SearchOffer extends React.Component {
           } 
         })
         this.props.viewCart(this.props.user.user.id).then(res => {
-          showToast('Cart updated successfully.', "success")
+          //showToast('Cart updated successfully.', "success")
+          this.setState({selctedProduct: ''})
         }) 
       }
     })
@@ -340,6 +347,9 @@ class SearchOffer extends React.Component {
                         ) : (
                           <View style={{ padding: 0, margin: 0 }}></View>
                         )}
+
+                        {this.state.selctedProduct == item.id ? <ActivityIndicator style={{marginRight: 20}}/> : 
+                        (<View>
                         {item.cartQty > 0 ?
                           (<NumericInput
                             initValue={item.cartQty}
@@ -371,6 +381,7 @@ class SearchOffer extends React.Component {
                            <Image source={imgs.addPlus} style={styles.buyButton} />
                           </TouchableOpacity>
                         )}
+                        </View>)}
                       </View>
                     </Right>
                   </ListItem>

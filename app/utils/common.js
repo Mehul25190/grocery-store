@@ -6,7 +6,7 @@ const showToast = (msg,type) => {
 	if(msg=='') return;
 	Toast.show({
 	    text: msg,
-	    buttonText: "Okay",
+	    buttonText: "Ok",
 	    type: type || 'default',
 	    duration:2000,
 	    position: "top",

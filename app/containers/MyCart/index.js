@@ -36,6 +36,7 @@ class MyCart extends React.Component {
       cartItem: [],
       userAddressDtls: {},
       loading: false,
+      selctedProduct: '',
     };
 
   }
@@ -101,13 +102,15 @@ class MyCart extends React.Component {
   }
 
   updateCartPress(id, itemId, value) {
+    this.setState({selctedProduct: id})
 
     //this.setState({loading: true}); 
     if (value == 0) {
       this.props.deleteCartItem(itemId, this.props.user.user.id).then(res => {
         if (res.status == "success") {
           this.props.viewCart(this.props.user.user.id).then(res => {
-            showToast('Cart updated successfully.', "success")
+            //showToast('Cart updated successfully.', "success")
+            this.setState({selctedProduct: ''})
           })
         }
 
@@ -116,8 +119,9 @@ class MyCart extends React.Component {
       this.props.updateCartItem(this.props.user.user.id, itemId, value).then(res => {
         if (res.status == "success") {
           this.props.viewCart(this.props.user.user.id).then(res => {
-            showToast('Cart updated successfully.', "success");
+            //showToast('Cart updated successfully.', "success");
             //this.setState({loading: false});
+            this.setState({selctedProduct: ''})
           })
         }
 
@@ -182,7 +186,8 @@ class MyCart extends React.Component {
         <Col style={styles.QtyBox}>
           <View style={{ bottom: 10 }}><TouchableOpacity onPress={() => this.deleteCartPress(item.itemId)}>
           <Icon type="Ionicons" name="trash" style={{color:'red'}} /></TouchableOpacity></View>
-          <View>
+          {this.state.selctedProduct == item.id ? <ActivityIndicator style={{marginRight: 20}}/> : 
+          (<View>
             <NumericInput
               inputStyle={{ fontSize: 13 }}
               initValue={item.quantity}
@@ -201,7 +206,7 @@ class MyCart extends React.Component {
               rightButtonBackgroundColor='#fff'
               leftButtonBackgroundColor='#fff'
             />
-          </View>
+          </View>)}
         </Col>
       </Row>);
   }
