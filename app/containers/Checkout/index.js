@@ -228,7 +228,7 @@ class Checkout extends React.Component {
                        <Icon type="SimpleLineIcons" name="emotsmile"  style={styles.smileIcon} />
                     <Text  style = {styles.Modeltext}>
                     Seems your free subscription period is over, 
-                    Now have your morning deliveries free by paying a small subscription amount <Text style={appStyles.currency}>{Colors.CUR}</Text> 123.</Text>
+                    Now have your morning deliveries free by paying a small subscription amount.</Text>
                     <Text style={styles.Modeltext}>You can still enjoy our evening slots with nominal delviery charge</Text>
                     <TouchableOpacity style={styles.closeOk} onPress = {() => this.setState({isModalVisible:false}) }>
                     <Text style={{color:'#fff',fontSize:16,fontFamily:'Font-Medium'}}>OK</Text>
@@ -255,7 +255,7 @@ class Checkout extends React.Component {
                     <Text  style = {styles.Modeltext}>
                     Seems your free delivery period is over , 
                     You can still enjoy our evening slots with nominal delivery charge
-                    Now have your morning deliveries free by paying a small subscription amount (Just <Text style={appStyles.currency}>{Colors.CUR}</Text> 123)
+                    Now have your morning deliveries free by paying a small subscription amount.
                    </Text>
                     <TouchableOpacity style={styles.closeOk} onPress = {() => this.setState({isEveningModalVisible:false}) }>
                     <Text style={{color:'#fff',fontSize:16,fontFamily:'Font-Medium'}}>OK</Text>
@@ -329,13 +329,12 @@ class Checkout extends React.Component {
                         return(
                           <ListItem style={styles.ItemList}>
                             <Left>
-                              <Text style={styles.orderName}>{item.itemName}</Text>
+                              <Text style={styles.orderName}>{item.itemName} <Text style={styles.orderQty}> - {item.quantity}</Text></Text>
                             </Left>
                             <Body style={{flexDirection: 'row',flex:0,justifyContent:'center',alignItems:'center'}}>
-                              <Text style={styles.orderQty}>{item.quantity}<Text style={{fontSize: 10, lineHeight: 20}}> X</Text></Text>
                             </Body>
                             <View>
-                              <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{Colors.CUR}</Text> {item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? item.discountedPrice.toFixed(2) : item.itemPrice.toFixed(2)}</Text>
+                              <Text style={styles.OrderPrice}>{item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? item.discountedPrice.toFixed(2) : item.itemPrice.toFixed(2)}</Text>
                             </View>
                           </ListItem>
                         );

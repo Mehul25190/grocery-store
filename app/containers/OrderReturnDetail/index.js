@@ -446,10 +446,20 @@ class OrderReturnDetail extends React.Component {
                 </Col>
               </Row>
             </Grid>
+          </Card>
 
-           
+
 
             <ScrollView>
+
+            <Card style={[appStyles.addBox, { height: 'auto', backgroundColor:'#D7ECDD' }, styles.orderBox]}>
+                <Text style={{ fontSize: 14, color:'#00545F'}}>We have made returns easy for you. Now you can return through app. To know more about return policies, kindly visit myallaadin.com</Text>
+              </Card>
+            </ScrollView>
+
+            <ScrollView>
+
+            <Card style={[appStyles.addBox, { height: 'auto', }, styles.orderBox]}>
               <FlatList
 
                 initialScrollIndex={this.currentIndex}
@@ -458,10 +468,11 @@ class OrderReturnDetail extends React.Component {
                 renderItem={this.renderItems}
                 keyExtractor={(item) => `${item.itemName}`}
               />
+              </Card>
             </ScrollView>
-          </Card>
 
         </ScrollView>
+
         {/*<View style={styles.doneBtnArea}>
           <Button priamary full style={styles.doneBtn}>
             <TouchableOpacity onPress={() => this.onPressSubmit('OrderReturnDetail')}>

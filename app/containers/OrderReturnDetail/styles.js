@@ -108,7 +108,7 @@ alignItems:'flex-end'
 
  proTitle:{
  lineHeight:20,
- 	fontSize:16,
+ 	fontSize:14,
  	fontFamily:'Font-Medium'
  },
   proTime:{

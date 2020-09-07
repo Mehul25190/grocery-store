@@ -83,8 +83,7 @@ footerTitle:{
     height:70,
     borderTopWidth:1,
     borderColor:'#DCDCDC',
-   paddingTop:10,
-   paddingBottom:10,
+
    justifyContent:'center'
    
 },
@@ -199,7 +198,7 @@ QtyBox:{
   marginTop:10,
   marginBottom:5,
   borderBottomWidth:1,
-  borderColor:Colors.primary,
+  borderColor:Colors.secondary,
   
  },
   amulCol:{

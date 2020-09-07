@@ -311,11 +311,10 @@ class Home extends React.Component {
          
        </Header>
               <View style={{flexDirection:'row', justifyContent:'flex-start', marginLeft:Layout.indent-5,
-    marginRight:Layout.indent-5,marginTop:10, marginBottom:0}}>
+    marginRight:Layout.indent-5,marginTop:10, marginBottom:0, backgroundColor:'#D7ECDD', paddingTop:5, paddingBottom:5, paddingLeft:10,}}>
                 <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
-                  <Text style={styles.shopSubTitleText}>My Next Order 
-                  ({ this.state.nextOrderCount!='' ? this.state.nextOrderCount : this.state.nextOrderCount})
-                  items to be delivered.
+                  <Text style={styles.shopSubTitleText}>My Next Order - 
+                  { this.state.nextOrderCount!='' ? this.state.nextOrderCount : this.state.nextOrderCount} items to be delivered tomorrow.
                   </Text>
                   </TouchableOpacity>
               </View>
@@ -376,7 +375,7 @@ class Home extends React.Component {
             <View style={styles.ItemLayout}>
               <Grid style={styles.shopSubTitle}>
                 
-              <View style={{flex:1,paddingLeft:10, flexDirection:'row', justifyContent:'flex-end'}}>
+              <View style={{flex:1,paddingLeft:10, flexDirection:'row', backgroundColor:'#D7ECDD', paddingTop:5, paddingBottom:5, paddingRight:10, justifyContent:'flex-end'}}>
 
                   <Text style={styles.pendingDays}>Your free delivery offer ends in {subscriptionRemainingDays} days..!</Text>
                   <TouchableOpacity style={{textAlign:'right'}}  onPress={()=>{ this.openFreeDeliveryPopup() }} >

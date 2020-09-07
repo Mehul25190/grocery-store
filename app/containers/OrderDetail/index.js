@@ -215,12 +215,12 @@ class OrderDetail extends React.Component {
                   <Picker
                     note
                     mode="dropdown"
-                    placeholder="Select Delivery Time Slot" // yipeee, placeholder
+                    placeholder="Want to Change Delivery Time Slot ?" // yipeee, placeholder
                     style={styles.dorpDownReason}
                     selectedValue={this.state.selected}
                     onValueChange={this.onValueChange}
                   >
-                    {<Picker.Item label='Select Delivery Time Slot' />}
+                    {<Picker.Item label='Want to Change Delivery Time Slot ?' />}
 
                     {this.state.availTimeSlot.map((data, key) => {
                       //console.log(data)

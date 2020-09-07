@@ -314,7 +314,7 @@ class MyCart extends React.Component {
               <View><Text style={styles.footerAmount}>
                 <Text style={{ fontFamily: 'Roboto', fontSize:13, color: Colors.primary }}>{Colors.CUR}</Text> {(actualTotal - totalAmount).toFixed(2)}</Text></View>
             </Col>
-            <Col style={[styles.footerCol, { borderRightWidth: 0 }]}>
+            <Col style={[styles.footerCol, { borderRightWidth: 0, backgroundColor:'#D7ECDD' }]}>
               <TouchableOpacity style={styles.orderSummary} onPress={() => this.props.navigation.navigate(Screens.Checkout.route)}>
                 <Text style={styles.textSummary}>Checkout now </Text>
               </TouchableOpacity>

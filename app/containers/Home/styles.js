@@ -46,7 +46,7 @@ export default {
     alignItems:'flex-end'
    },
   pendingDays:{
-    fontSize:11,
+    fontSize:11, fontWeight:'bold',
     color:Colors.primary,
     lineHeight:22,
     fontFamily:'Font-Medium',

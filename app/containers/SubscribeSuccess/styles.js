@@ -24,8 +24,8 @@ fontSize:18
 },
 listIcons:{
 borderBottomWidth:1,
-borderColor:Colors.primary,
-height:73,
+borderColor:Colors.secondary,
+height:120,
 marginLeft:Layout.indent-5,
 marginRight:Layout.indent
 },
@@ -39,8 +39,8 @@ flex:1,
 alignSelf:'center',
 margin:10,
 //backgroundColor:'#ddd',
-width:130,
-height:130,
+width:100,
+height:100,
 resizeMode:'contain'
 },
 IconImg:{

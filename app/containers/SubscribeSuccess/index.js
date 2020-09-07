@@ -60,6 +60,14 @@ class SubscribeSuccess extends React.Component {
 
           <Content enableOnAndroid>
              <Card style={[appStyles.addBox,{height:'auto',marginTop:15, position:'relative', }]}>
+
+             <View style={{textAlign:'center'}}>
+                  <View style={{margin:10,}}>
+                   <Text style={styles.SuccesTittle}>Hurray, We will take care of your quality time.</Text>
+                  </View>
+                  
+                 </View>
+
               <Image source={imgs.SubscribeSuccess}
                 style={styles.succesImg}
                />
@@ -102,6 +110,9 @@ class SubscribeSuccess extends React.Component {
                 </Left>
                 <Body>
                   <View>
+                  <Text style={styles.IconTitle}>
+                    Be Contactless!
+                  </Text>
                    <Text style={styles.IconTitle}>
                   Hang your bag on your door (Optional)
                   </Text>
@@ -128,22 +139,7 @@ class SubscribeSuccess extends React.Component {
                   </View>
                 </Body>
               </ListItem>
-               <ListItem icon noBorder style={[styles.listIcons,{borderBottomWidth:0}]}>
-                <Left>
-                 <Image source={imgs.refreshIcon} style={styles.IconImg} />
-                </Left>
-                <Body>
-                  <View>
-                  <Text style={styles.IconTitle}>
-                  Simple and easy modification
-                  </Text>
-                   <Text style={styles.IconText}>
-                   You can modify your orders by 10:00PM to change the delivery for the next day.
-                  </Text>
-                  
-                  </View>
-                </Body>
-              </ListItem>
+               
 
              </Card>
 

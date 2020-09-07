@@ -81,7 +81,7 @@ class CancelOrder extends React.Component {
                 Are You Sure?
                 </Text>
             <Text style={styles.msgText}>
-               Your order has been canceled once you click "Cancel Order" & your payment will be deposited in your wallet..
+               Your order will be cancelled once you click "Cancel Order" & your payment will be deposited in your wallet.
             </Text>
             </View>
             <View style={styles.borderTop}>

@@ -70,7 +70,7 @@ export default {
  },
  proTitle:{
  	
- 	fontSize:16,
+ 	fontSize:15,
  	fontFamily:'Font-Regular'
  },
   QtyPro:{

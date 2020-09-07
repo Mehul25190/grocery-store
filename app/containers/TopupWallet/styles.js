@@ -264,5 +264,18 @@ color:Colors.primary
   alignItems:'flex-end',
 	justifyContent:'center'
  },
+ 
+   cancelBtn:{
+  backgroundColor:Colors.secondary,
+  borderRadius:25,
+  marginBottom:10
+},
+cancelBtnTxt:{
+fontFamily:'Font-Medium',
+textTransform:'capitalize',
+fontSize:20,
+color:Colors.primary
+
+},
 
 };

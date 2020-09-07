@@ -97,9 +97,12 @@ class cardWalletPayment extends React.Component {
          
              </ScrollView>
              <TouchableOpacity style={styles.continueShoppingBtnArea} >
-            <Button primary full style={styles.checkOutBtn} onPress={()=>this.props.navigation.navigate(Screens.Home.route)}>
-                <Text style={styles.checkOutText}>Continue shopping</Text>
-             </Button>
+             <Button style={[styles.cancelBtn,{marginTop:30,marginLeft:Layout.indent,marginRight:Layout.indent}]}
+               primary full onPress={()=>this.props.navigation.navigate(Screens.Home.route)}>
+               
+                <Text style={styles.cancelBtnTxt}>Continue shopping</Text>
+                
+              </Button>
           </TouchableOpacity>
           </Content>
       </Container>
