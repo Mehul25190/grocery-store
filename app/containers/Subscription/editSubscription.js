@@ -180,7 +180,7 @@ class editSubscribe extends React.Component {
                   <NumericInput 
                    inputStyle={{fontSize:13}}
                       value={this.state.qty} 
-                      onChange={value => this.setState({qty: value})} 
+                      //onChange={value => this.setState({qty: value})} 
                       onLimitReached={(isMax,msg) => console.log(isMax,msg)}
                        minValue={this.state.qty}
                        maxValue={this.state.qty}

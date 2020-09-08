@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, ActivityIndicator} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers, } from '../../components';
@@ -53,7 +53,8 @@ class ProductDetail extends React.Component {
       time: '',
       selected: "1",
        selectedIndex: 0,
-       productImages:''
+       productImages:'',
+       selctedProduct: '',
     };
     
   }
@@ -76,16 +77,19 @@ class ProductDetail extends React.Component {
   }
 
   productDetail(id){
-    this.props.productDetail(id, this.props.user.user.id);
+    this.props.productDetail(id, this.props.user.user.id).then(res => {
+      this.setState({selctedProduct: ''})
+    })
+    
   }
 
   buyOncePressHnadler(productId, value){
-  
+    this.setState({selctedProduct: productId})
     if(value == 0){ 
       this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
         if(res.status == "success"){
           this.props.viewCart(this.props.user.user.id).then(res => {
-              showToast('Cart updated successfully.', "success")
+              //showToast('Cart updated successfully.', "success")
           }) 
         }
         
@@ -95,7 +99,7 @@ class ProductDetail extends React.Component {
         if(res.status == "success"){
           this.props.viewCart(this.props.user.user.id).then(res => {
             //console.log('dddd', res);
-            showToast('Cart updated successfully.', "success")
+            //showToast('Cart updated successfully.', "success")
           }) 
         }
       })
@@ -103,7 +107,7 @@ class ProductDetail extends React.Component {
       this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
         if(res.status == "success"){
           this.props.viewCart(this.props.user.user.id).then(res => {
-              showToast('Cart updated successfully.', "success")
+              //showToast('Cart updated successfully.', "success")
           }) 
         }
       })
@@ -283,7 +287,8 @@ class ProductDetail extends React.Component {
         </View>
          </Col>
             <Col style={{paddingTop:10, width:200, alignItems:'flex-end'}}>
-               <View  style={styles.reasonView}>
+            {this.state.selctedProduct == ProductDetail.item[0].id ? <ActivityIndicator style={{marginRight: 20}}/> : 
+              (<View  style={styles.reasonView}>
                 {ProductDetail.item[0].cartQty > 0 ?
                   (<NumericInput
                     initValue={ProductDetail.item[0].cartQty}
@@ -316,7 +321,7 @@ class ProductDetail extends React.Component {
                     <Image source={imgs.addPlus} style={styles.buyButton} />
                   </TouchableOpacity>
                 )}
-              </View>
+              </View>)}
             </Col>
           <Col style={styles.cartPart}>
           {/*  <Icon name='shopping-cart' type='MaterialIcons' style={styles.bottomCart} /> */}

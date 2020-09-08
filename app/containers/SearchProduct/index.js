@@ -119,7 +119,7 @@ class SearchProduct extends React.Component {
   };
 
   productDetail(id){
-    this.props.productDetail(id).then(res => {
+    this.props.productDetail(id, this.props.user.user.id).then(res => {
       //console.log(res);
       if(res.status == "success"){
         if(res.data.item.length > 0){
@@ -137,7 +137,7 @@ class SearchProduct extends React.Component {
   if(value == 0){
     this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
       if(res.status == "success"){
-        this.props.searchItem(this.state.text, this.props.user.user.id).then((res) => {
+        this.props.searchItemWithoutLoader(this.state.text, this.props.user.user.id).then((res) => {
           if (res.status == "success" && res.data.itemList) {
               this.setState({ productData: res.data.itemList });  
           }else{
@@ -154,7 +154,7 @@ class SearchProduct extends React.Component {
   }else if(value == 1){
     this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
-        this.props.searchItem(this.state.text, this.props.user.user.id).then((res) => {
+        this.props.searchItemWithoutLoader(this.state.text, this.props.user.user.id).then((res) => {
           if (res.status == "success" && res.data.itemList) {
               this.setState({ productData: res.data.itemList });  
           }else{
@@ -170,7 +170,7 @@ class SearchProduct extends React.Component {
   }else if(value > 1){
     this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
-        this.props.searchItem(this.state.text, this.props.user.user.id).then((res) => {
+        this.props.searchItemWithoutLoader(this.state.text, this.props.user.user.id).then((res) => {
           if (res.status == "success" && res.data.itemList) {
               this.setState({ productData: res.data.itemList });  
           }else{
@@ -189,13 +189,13 @@ class SearchProduct extends React.Component {
     //this.setState({value: value})
   }
   subscribePressHandlder(item){
-    showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
     this.props.checkActiveSubscription(item.id, this.props.user.user.id).then(res => {
         //console.log(res.data);
         if(res.status == 'success'){
           if(res.data.isActiveSubscription == 'Y'){
             showToast('You have already subscribed this product.', "danger")
           }else{
+            showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
             this.props.navigation.navigate(
               Screens.SubscribeOrder.route,
               { item: item , qty: this.state.value}
@@ -335,17 +335,18 @@ class SearchProduct extends React.Component {
                       </View>
                       <View>
                         {item.isSubscribable ? (
-                          <ImageBackground source={imgs.AEDpng}  style={[styles.subscribeBtn,{}]}>
-                            <TouchableOpacity
+                          <TouchableOpacity
                               onPress={() =>
                                 this.subscribePressHandlder(item)
                               }
                             >
+                          <ImageBackground source={imgs.AEDpng}  style={[styles.subscribeBtn,{}]}>
+                            
                               <Text style={styles.subText}>
                                 {item.price}
                               </Text>
-                            </TouchableOpacity>
                           </ImageBackground>
+                          </TouchableOpacity>
                         ) : (
                           <View style={{ padding: 0, margin: 0 }}></View>
                         )}
@@ -402,7 +403,7 @@ class SearchProduct extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    //isLoading: state.common.isLoading,
+    isLoading: state.common.isLoading,
     totalItem: state.cart.totalItem,
 
   };
@@ -414,8 +415,8 @@ const mapDispatchToProps = (dispatch) => {
     productItemList: (categoryId, subCategoryId) => dispatch(userActions.showProductList({ subCategoryId: subCategoryId, categoryId: categoryId })),
     fetchSubCategory: (categoryId) => dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
     searchItem: (searchString, userId) => dispatch(productActions.searchItem({ searchString: searchString, userId:userId })),
-    productDetail: (id) => dispatch(productActions.productDetail({ itemId: id })),
-    viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
+    searchItemWithoutLoader: (searchString, userId) => dispatch(productActions.searchItemWithoutLoader({ searchString: searchString, userId:userId })),
+    productDetail: (id, userId) => dispatch(productActions.productDetail({ itemId: id, userId: userId })),    viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
     addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
     updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId:userId })),

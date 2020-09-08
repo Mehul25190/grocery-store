@@ -24,6 +24,21 @@ export const searchItem = payloads => dispatch => {
   })
 }
 
+export const searchItemWithoutLoader = payloads => dispatch => {
+  //dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.searchItem,{queries: payloads}).then(res => {
+    //dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log(res.data);
+    if(res.status == 200){
+      //console.log('product list return');  
+      //console.log(res);
+      return res.data;
+    } else {
+      return res;
+    }
+  })
+}
+
 
 export const productDetail = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
@@ -42,7 +57,7 @@ export const fetchOffers = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.fetchOffersOnLandingPage).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    //console.log(res.data);
+      console.log(res.data);
       if(res.status == 200){
         dispatch({ type: ActionTypes.CATEGORYOFFER, data: res.data.data.offerList }); 
         return res.data
@@ -57,7 +72,21 @@ export const fetchItemsByOffer = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.fetchItemsByOffer, {queries: payloads}).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    //console.log(res.data);
+      console.log(res.data);
+      if(res.status == 200){
+        dispatch({ type: ActionTypes.CATEGORYOFFER, data: res.data.data.offerList }); 
+        return res.data
+      } else {
+        return res
+      }
+    });
+}
+
+export const fetchItemsByOfferWithoutLoader = payloads => dispatch => {
+  //dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchItemsByOffer, {queries: payloads}).then(res => {
+    //dispatch({ type: ActionTypes.LOADING, isLoading: false });
+      console.log(res.data);
       if(res.status == 200){
         dispatch({ type: ActionTypes.CATEGORYOFFER, data: res.data.data.offerList }); 
         return res.data
