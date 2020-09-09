@@ -48,7 +48,7 @@ class MyRatings extends React.Component {
 
   onPressRating = item => {
       //rating add
-
+    
       if(this.state.reviewComment.trim() == ""){
         this.setState({isLoading: false}, function() {
           showToast('Please enter review.','danger');
@@ -58,14 +58,14 @@ class MyRatings extends React.Component {
         const { navigation } = this.props;
         const orderItemId = navigation.getParam('orderItemId');
         //call api
-        const formdata = { orderItemId:orderItemId,
+        const formdata = { orderItemId:item.id,
                           userId:this.props.user.user.id,
                           itemId:item.itemId, 
                           itemRating:this.state.itemRating,
                           reviewComment:this.state.reviewComment,
                          };
         this.props.saveRating(formdata).then (res =>{
-          
+          //console.log('res', res);
           if(res.data.status == "success"){
                 showToast("Save Successfully","success");
                 this.props.navigation.navigate('Confirmation', { item:'Confirm' });
@@ -138,7 +138,7 @@ class MyRatings extends React.Component {
            <AirbnbRating
             count={5}
             reviews={[]}
-            defaultRating={4}
+            defaultRating={0}
             size={25}
             showRating={false}
             onFinishRating={this.ratingCompleted.bind(this)}

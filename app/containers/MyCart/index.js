@@ -62,6 +62,7 @@ class MyCart extends React.Component {
   getCartDetail() {
 
     this.props.viewCart(this.props.user.user.id).then(res => {
+      console.log(res)
       if (res.status == 'success') {
         this.setState({ userAddressDtls: res.data.userAddressDtls })
       } else {
