@@ -83,7 +83,26 @@ class SearchOffer extends React.Component {
     this.productItemList( this.props.navigation.getParam('offer_id'));
   }
 
+  searchProductItemList(text) {
+    this.setState({text: text})
+    this.props
+      .searchItem(text, this.props.user.user.id)
+      .then((res) => {
+        if (res.status == "success") {
+          if(res.data.itemList){
+            this.setState({ productData: res.data.itemList });
+            this.courseFilterArr = res.data.itemList;  
+          } 
+        } else {
+          showToast("Something wrong with Server response", "danger");
+        }
+      })
+      .catch((error) => {
+        showToast("Error messages returned from server", "danger");
+      });
 
+      //this.refs.flatListRef.scrollToIndex({animated: true,index:5})
+  }
 
 
   productItemList(offer_id) {
@@ -119,7 +138,7 @@ class SearchOffer extends React.Component {
   };
 
   productDetail(id){
-    this.props.productDetail(id).then(res => {
+    this.props.productDetail(id, this.props.user.user.id).then(res => {
       //console.log(res);
       if(res.status == "success"){
         if(res.data.item.length > 0){
@@ -138,7 +157,7 @@ class SearchOffer extends React.Component {
   if(value == 0){
     this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
       if(res.status == "success"){
-        this.props.fetchItemsByOffer(offer_id, this.props.user.user.id).then((res) => {
+        this.props.fetchItemsByOfferWithoutLoader(offer_id, this.props.user.user.id).then((res) => {
           if (res.status == "success" && res.data.itemList) {
               this.setState({ productData: res.data.itemList });  
           }else{
@@ -154,7 +173,7 @@ class SearchOffer extends React.Component {
   }else if(value == 1){
     this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
-        this.props.fetchItemsByOffer(offer_id, this.props.user.user.id).then((res) => {
+        this.props.fetchItemsByOfferWithoutLoader(offer_id, this.props.user.user.id).then((res) => {
           if (res.status == "success" && res.data.itemList) {
               this.setState({ productData: res.data.itemList });  
           }else{
@@ -170,7 +189,7 @@ class SearchOffer extends React.Component {
   }else if(value > 1){
     this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
-        this.props.fetchItemsByOffer(this.state.text, this.props.user.user.id).then((res) => {
+        this.props.fetchItemsByOfferWithoutLoader(offer_id, this.props.user.user.id).then((res) => {
           if (res.status == "success" && res.data.itemList) {
               this.setState({ productData: res.data.itemList });  
           }else{
@@ -189,13 +208,14 @@ class SearchOffer extends React.Component {
     //this.setState({value: value})
   }
   subscribePressHandlder(item){
-    showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
+    
     this.props.checkActiveSubscription(item.id, this.props.user.user.id).then(res => {
         //console.log(res.data);
         if(res.status == 'success'){
           if(res.data.isActiveSubscription == 'Y'){
             showToast('You have already subscribed this product.', "danger")
           }else{
+            showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
             this.props.navigation.navigate(
               Screens.SubscribeOrder.route,
               { item: item , qty: this.state.value}
@@ -229,7 +249,7 @@ class SearchOffer extends React.Component {
             {
               this.setState({text:text});
               if(text.length > 2)
-                setTimeout(() => { this.productItemList(this.state.text) }, 3000)
+                setTimeout(() => { this.searchProductItemList(this.state.text) }, 3000)
           }
           } placeholder='Search Product'/>
       </Item>
@@ -251,6 +271,9 @@ class SearchOffer extends React.Component {
      
    </Header>
         <Content enableOnAndroid style={appStyles.content}>
+        {this.props.isLoading ? (
+            <Spinner color={Colors.secondary} style={appStyles.spinner} />
+          ) : (
           <View>
               {this.state.productData.map((item, index) => {
                 // productList.map((item, index) => {
@@ -388,7 +411,7 @@ class SearchOffer extends React.Component {
                 );
               })}
               {this.state.productData.length == 0 ? <View style={[appStyles.spinner, appStyles.norecordfound]}><Text>No Product Found</Text></View> : null }
-            </View>
+            </View>)}
         </Content>
 
         {/*<Catalog {...this.props} />*/}
@@ -399,7 +422,7 @@ class SearchOffer extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    //isLoading: state.common.isLoading,
+    isLoading: state.common.isLoading,
     totalItem: state.cart.totalItem,
 
   };
@@ -414,13 +437,17 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
       fetchItemsByOffer: (offerId, userId) =>
       dispatch(productActions.fetchItemsByOffer({ offerId: offerId, userId:userId })),
-    productDetail: (id) => 
-      dispatch(productActions.productDetail({ itemId: id })),
+      fetchItemsByOfferWithoutLoader: (offerId, userId) =>
+      dispatch(productActions.fetchItemsByOfferWithoutLoader({ offerId: offerId, userId:userId })),
+    productDetail: (id, userId) => 
+      dispatch(productActions.productDetail({ itemId: id, userId: userId })),
     viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
     addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
     updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId:userId })),
     checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId:userId })),
+    searchItem: (searchString, userId) => dispatch(productActions.searchItem({ searchString: searchString, userId:userId })),
+  
   };
 };
 

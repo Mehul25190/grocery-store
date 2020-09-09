@@ -50,6 +50,7 @@ class MyPayments extends React.Component {
       offerValue: 0,
       offerId: '',
       placeOrderLoading: false,
+      isAutoDebit: '',
     };
   }
     componentDidMount() {
@@ -138,6 +139,11 @@ class MyPayments extends React.Component {
       return;
     }
 
+    if(this.state.paywithcard && this.state.showMyCard && this.state.CardCheckedId != "" && this.state.isAutoDebit == "N" && this.state.cvv == ""){
+      showToast('Please enter CVV', "danger");
+      return;
+    }
+
     if(this.props.walletAmount < (this.props.totalAmount + this.props.deliveryCharges) && !this.state.paywithcard && !this.state.paywithcash){
       showToast('Your wallet amount is not sufficent to place the order, please select card or cash option.', "danger");
       return;
@@ -218,8 +224,8 @@ class MyPayments extends React.Component {
 
   }
 
-  selectCard(index, id){
-    this.setState({CardChecked:index, CardCheckedId: id, cvv: ""})
+  selectCard(index, id, autoDebit){
+    this.setState({CardChecked:index, CardCheckedId: id, cvv: "", isAutoDebit: autoDebit})
   }
 
   applyPromo(){
@@ -430,7 +436,7 @@ class MyPayments extends React.Component {
                 <Grid style={item.id==2 ? (styles.greenback):(styles.whiteBack)}>
                  <Row>
                      <Col style={{flex:0,justifyContent:'flex-start',width:35}}>
-                      <TouchableOpacity style={{}} onPress={()=> this.selectCard(index, item.id)}>
+                      <TouchableOpacity style={{}} onPress={()=> this.selectCard(index, item.id, item.isAutoDebit)}>
                      {/*    <Radio type="radio" selected={item.id==2 && this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />*/}
                      {
                       this.state.CardChecked==index ?
