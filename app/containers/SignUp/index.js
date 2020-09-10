@@ -91,7 +91,7 @@ class SignUp extends React.Component {
                 <Animatable.View 
                     animation="fadeIn"
                     delay={1200} 
-                    style={{marginTop:20}}> 
+                    style={{marginTop:0}}> 
                   { this.props.isLoading ? 
                      <Spinner color={Colors.secondary} /> : 
                       <Button

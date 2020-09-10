@@ -330,7 +330,7 @@ class Profile extends React.Component {
 
 
             <View style={{ paddingTop: 10, position: 'relative', marginRight: Layout.indent }}>
-             <Label style={[styles.labelText, { paddingLeft: Layout.indent, width: Layout.width }]}  >Ethencity</Label>
+             <Label style={[styles.labelText, { paddingLeft: Layout.indent, width: Layout.width }]}  >Ethnicity</Label>
               <Item style={{}} >
               <Picker
                       note

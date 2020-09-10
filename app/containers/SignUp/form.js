@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Field, reduxForm } from 'redux-form';
 import { View } from "react-native";
 import { connect } from "react-redux";
-import { Form, Item, Input, Title, Button, Text } from 'native-base';
+import { Form, Item, Input, Title, Button, Text, Row, Col } from 'native-base';
 import { required, email, length, confirmation } from 'redux-form-validators'
 import { InputBox } from '../../components';
 import styles from '../SignIn/styles';
@@ -20,7 +20,31 @@ class SignUpForm extends React.Component {
     const { handleSubmit, onSubmit, language } = this.props;
     return (
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm,styles.signFormBox}>
-      
+
+      <Row>
+        <Col><Field 
+         styles={{marginBottom:20}}
+          name="lname" 
+          component={InputBox}
+          placeholder='First Name'
+          keyboardType={'email-address'}
+          validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
+        /></Col>
+        <Col><Field 
+         styles={{marginBottom:20}}
+          name="lname" 
+          component={InputBox}
+          placeholder='Last Name'
+          keyboardType={'email-address'}
+          validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
+        /></Col>
+      </Row>
+
+       
+        <View style={{}}><Text></Text></View>
+        <View style={{}}><Text></Text></View>
+        
+        <View style={{}}><Text></Text></View>
          <Field 
           placeholder='Mobile Number'
           name="mobileNo" 

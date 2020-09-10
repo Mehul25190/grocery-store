@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Field, reduxForm } from 'redux-form';
 import { View } from "react-native";
 import { connect } from "react-redux";
-import { Form, Item, Input, Title, Button, Text } from 'native-base';
+import { Form, Item, Input, Title, Button, Text, Row, Col } from 'native-base';
 import { required, email } from 'redux-form-validators'
 import { InputBox } from '../../components';
 import styles from '../SignIn/styles';
@@ -16,6 +16,7 @@ class SignInFormEmail extends React.Component {
     const { handleSubmit, onSubmit, language } = this.props;
     return (
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
+
         <Field 
          styles={{marginBottom:10}}
           name="email" 

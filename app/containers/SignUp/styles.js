@@ -12,5 +12,5 @@ export default {
   },
   loginForm:{
     paddingRight:Layout.indent
-  }
+  },
 };

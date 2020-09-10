@@ -250,9 +250,9 @@ export default StyleSheet.create({
   },
   // Input
   itemInput:{
-   height:'auto',
+   height:45,
     backgroundColor:'#f8f8f8',
-    borderRadius:20,
+    borderRadius:15,
     borderLeftWidth:1,
     borderRightWidth:1,
     borderTopWidth:1,
