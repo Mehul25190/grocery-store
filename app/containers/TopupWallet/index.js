@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date,ScrollView,FlatList, Alert } from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date,ScrollView,FlatList, Alert, ActivityIndicator } from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers } from '../../components';
@@ -40,6 +40,7 @@ class TopupWallet extends React.Component {
         CardCheckedId: "",
         cvv:"",
         autodebit: '',
+        topupWalletLoader: false,
     };
    
   }
@@ -47,16 +48,43 @@ class TopupWallet extends React.Component {
       this.setState({
       // showAddCard:true
       });
-    }
+      this.focusListener = this.props.navigation.addListener("didFocus", () => {
+        this.setState({amount: '', showMyCard: false, showAddCard: false, CardChecked: null, CardCheckedId: "", cvv: "", autodebit: "" })
+      });
+  }
+
+  componentWillUnmount(){
+    this.focusListener.remove();
+  }
+ 
  onPressSubmit = item => {
   if(this.state.amount == ''){
     showToast('Please enter the amount', "danger");
     return;
   }
+
+  if(this.state.showMyCard == false && this.state.showAddCard == false){
+    showToast('Please select the payment method', "danger");
+    return;
+  }
+  console.log(this.state.showMyCard);
+  console.log('ss', this.state.CardChecked)
+  if(this.state.showMyCard == true && this.state.CardChecked == null){
+    showToast('Please select the card option', "danger");
+    return;
+  }
+
+  if(this.state.autodebit == 'N' && this.state.cvv == ""){
+    showToast('Please enter the cvv', "danger");
+    return;
+  }
+
+  this.setState({topupWalletLoader : true})
   if(this.state.autodebit == 'Y'){
     this.props.recharge(this.props.user.user.id, this.state.CardCheckedId, this.state.amount).then(res => {
       showToast('Wallet updated successfully', "success");
       this.props.navigation.navigate(Screens.MyWallet.route);
+      this.setState({topupWalletLoader : false})
     })
   }else{
     this.props.rechargeWithCVV(this.props.user.user.id, this.state.CardCheckedId, this.state.amount, this.state.cvv).then(res => {
@@ -70,6 +98,7 @@ class TopupWallet extends React.Component {
         showToast('Wallet updated successfully', "success");
         this.props.navigation.navigate(Screens.MyWallet.route);
       }
+      this.setState({topupWalletLoader : false})
     })
   }
   
@@ -237,7 +266,11 @@ class TopupWallet extends React.Component {
  
       <TouchableOpacity style={{marginBottom:50}}>
               <Button full primary style={[appStyles.btnSecontary]} onPress={()=>this.onPressSubmit('TopupWallet')}>
-                <Text style={[styles.redButton]}>Submit</Text>
+                {this.state.topupWalletLoader ? 
+                  <ActivityIndicator/>
+                  : 
+                  <Text style={[styles.redButton]}>Submit</Text>
+                }
               </Button>
           </TouchableOpacity>
 

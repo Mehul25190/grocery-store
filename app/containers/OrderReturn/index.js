@@ -147,7 +147,7 @@ class OrderDetail extends React.Component {
   );
 
   render(){
-    
+    console.log(this.state.orderData[0]);
     return (
       <Container style={appStyles.container}>
 
@@ -191,6 +191,39 @@ class OrderDetail extends React.Component {
                 <Text style={styles.orderValText}>
                   <Text style={{fontFamily:'Roboto',color:'gray'}}>{Colors.CUR} 
                   </Text>{(this.state.orderData.length >0 )? " " + this.state.orderData[0].orderAmt : ""}</Text>
+              </Col>
+            </Row>
+            <Row style={styles.orderRow}>
+              <Col style={styles.orderTitle}>
+                <Text style={styles.orderTitleText}>Delivery Date</Text>
+              </Col>
+              <Col style={styles.orderValue}>
+                <Text style={styles.orderValText}>
+                  <Text style={{fontFamily:'Roboto',color:'gray'}}> 
+                  </Text>{(this.state.orderData.length >0 )? " " + this.state.orderData[0].orderDeliveryDate : ""}</Text>
+              </Col>
+            </Row>
+            <Row style={styles.orderRow}>
+              <Col style={styles.orderTitle}>
+                <Text style={styles.orderTitleText}>Delivery Status</Text>
+              </Col>
+              <Col style={styles.orderValue}>
+                  <Text style={styles.orderValText}>
+                    {(this.state.orderData.length >0 )? 
+                      <Text style={{fontFamily:'Roboto',color:'gray'}}>
+                      {(this.state.orderData[0].orderStatus=="DEL") ? "Delivered" : ""}
+                              {(this.state.orderData[0].orderStatus=="PEN") ? "Pending" : ""}
+                              {(this.state.orderData[0].orderStatus=="CAN") ? "Canceled" : ""}
+                              {(this.state.orderData[0].orderStatus=="CNF") ? "Confirmed" : ""}
+                              {(this.state.orderData[0].orderStatus=="RET") ? "Returned" : ""}
+                              {(this.state.orderData[0].orderStatus=="PICKED") ? "Picked" : ""}
+
+                      </Text>
+                    
+                    
+                     : ""}
+                    
+                  </Text>
               </Col>
             </Row>
           </Grid>

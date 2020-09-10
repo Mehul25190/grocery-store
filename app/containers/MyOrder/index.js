@@ -60,6 +60,10 @@ class MyOrder extends React.Component {
       this.setState({selectedStatus: ""})
     });
   }
+  componentWillUnmount(){
+    this.focusListener.remove();
+  }
+ 
 
   getOrderList() {
     //alert(this.props.user.user.id);

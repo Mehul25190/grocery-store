@@ -51,6 +51,7 @@ class MyPayments extends React.Component {
       offerId: '',
       placeOrderLoading: false,
       isAutoDebit: '',
+      applyPromoLoader: false,
     };
   }
     componentDidMount() {
@@ -234,6 +235,7 @@ class MyPayments extends React.Component {
       showToast('Please enter promo code', 'danger');
       return;
     }else{
+      this.setState({applyPromoLoader: true})
       this.props.applyUserOffer(this.state.promo, this.props.user.user.id).then(res => {
         //console.log(res);
         if(res.status == 'success'){
@@ -245,6 +247,8 @@ class MyPayments extends React.Component {
         }else{
           showToast(res.message, 'danger');
         }
+        this.setState({applyPromoLoader: false})
+
       })
 
     }
@@ -327,7 +331,11 @@ class MyPayments extends React.Component {
                <Col style={{flex:0, width:120, justifyContent:'center',alignItems:'center'}}>
                   <TouchableOpacity style={styles.promoBtnArea} >
                     <Button primary full style={styles.promoBtn} onPress={()=> this.applyPromo()}>
+                    {this.state.applyPromoLoader ? 
+                      <Text style={styles.promoText}><ActivityIndicator style={{paddingLeft:30, paddingTop:5}}/></Text>
+                      :
                       <Text style={styles.promoText}> Apply</Text>
+                    }
                     </Button>
                   </TouchableOpacity>
                </Col>
