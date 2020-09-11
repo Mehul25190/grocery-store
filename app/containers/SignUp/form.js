@@ -21,7 +21,7 @@ class SignUpForm extends React.Component {
     return (
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm,styles.signFormBox}>
 
-      <Row>
+      <Row style={{height:60}}>
         <Col><Field 
          styles={{marginBottom:20}}
           name="firstName" 
@@ -29,7 +29,8 @@ class SignUpForm extends React.Component {
           placeholder='First Name'
           keyboardType={'email-address'}
          validate={[required({msg: 'First Name is required'})]} 
-        /></Col>
+        />
+        <View style={{}}><Text></Text></View></Col>
         <Col><Field 
          styles={{marginBottom:20}}
           name="lastName" 
@@ -37,14 +38,10 @@ class SignUpForm extends React.Component {
           placeholder='Last Name'
           keyboardType={'email-address'}
          validate={[required({msg: 'Last Name is required'})]} 
-        /></Col>
+        />
+        <View style={{}}><Text></Text></View></Col>
       </Row>
 
-       
-        <View style={{}}><Text></Text></View>
-        <View style={{}}><Text></Text></View>
-        
-        <View style={{}}><Text></Text></View>
          <Field 
           placeholder='Mobile Number'
           name="mobileNo" 
