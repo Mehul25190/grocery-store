@@ -7,6 +7,8 @@ export default[
 		signinTitle: 'Signin to Get Started!',
 		email: 'Email',
 		name: 'Name',
+		fname: 'First Name',
+		lname: 'Last Name',
 		password: 'Password',
 		confirmPassword: 'Confirm Password',
 		createAcc: 'Create Account',

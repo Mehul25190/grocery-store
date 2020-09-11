@@ -24,19 +24,19 @@ class SignUpForm extends React.Component {
       <Row>
         <Col><Field 
          styles={{marginBottom:20}}
-          name="lname" 
+          name="firstName" 
           component={InputBox}
           placeholder='First Name'
           keyboardType={'email-address'}
-          validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
+         validate={[required({msg: 'First Name is required'})]} 
         /></Col>
         <Col><Field 
          styles={{marginBottom:20}}
-          name="lname" 
+          name="lastName" 
           component={InputBox}
           placeholder='Last Name'
           keyboardType={'email-address'}
-          validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
+         validate={[required({msg: 'Last Name is required'})]} 
         /></Col>
       </Row>
 
