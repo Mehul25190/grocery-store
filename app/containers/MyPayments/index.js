@@ -230,7 +230,7 @@ class MyPayments extends React.Component {
   }
 
   applyPromo(){
-    this,this.setState({offerId: '' , offerValue: 0})
+    this.setState({offerId: '' , offerValue: 0})
     if(this.state.promo == ''){
       showToast('Please enter promo code', 'danger');
       return;
@@ -240,7 +240,7 @@ class MyPayments extends React.Component {
         //console.log(res);
         if(res.status == 'success'){
           showToast(res.message, 'success');
-          this,this.setState({offerId: res.data.offerId , offerValue: res.data.offerValue})
+          this.setState({offerId: res.data.offerId , offerValue: res.data.offerValue})
 
         }else if(res.status == 'failure'){
           showToast(res.message, 'danger');
@@ -332,7 +332,7 @@ class MyPayments extends React.Component {
                   <TouchableOpacity style={styles.promoBtnArea} >
                     <Button primary full style={styles.promoBtn} onPress={()=> this.applyPromo()}>
                     {this.state.applyPromoLoader ? 
-                      <Text style={styles.promoText}><ActivityIndicator style={{paddingLeft:30, paddingTop:5}}/></Text>
+                      <View style={{width:80}}><ActivityIndicator/></View> 
                       :
                       <Text style={styles.promoText}> Apply</Text>
                     }

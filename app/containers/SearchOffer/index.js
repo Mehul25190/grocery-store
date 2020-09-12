@@ -85,6 +85,10 @@ class SearchOffer extends React.Component {
 
   searchProductItemList(text) {
     this.setState({text: text})
+
+    this.props.navigation.navigate('SearchProduct', {text: text});
+    
+
     this.props
       .searchItem(text, this.props.user.user.id)
       .then((res) => {

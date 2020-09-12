@@ -17,6 +17,9 @@ import {
 import { connect } from "react-redux";
 import { submit } from 'redux-form';
 import * as Animatable from 'react-native-animatable';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants'
 
 import { Layout, Colors, Screens, ActionTypes } from '../../constants';
 import { Logo, LoginBackIcon, Statusbar, ModalBox, SetLanguage, SelectLanguage, Loader, AppIntro } from '../../components';
@@ -26,20 +29,61 @@ import { showToast } from '../../utils/common';
 import appStyles from '../../theme/appStyles';
 import styles from '../SignIn/styles';
 import SignInFormEmail from './form';
+import { Platform } from 'react-native';
 
 class SignInEmail extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
       visibleModal: false,
+      expoPushToken: '',
+      notification: {},
     };
   }
 
   componentDidMount() {
+    this.registerForPushNotificationsAsync();
+    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+
     if(this.props.user!=null){
       this.props.navigation.navigate(Screens.SignInStack.route);
     }
   }
+
+  registerForPushNotificationsAsync = async () => {
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      token = await Notifications.getExpoPushTokenAsync();
+      console.log("HERE IS TOKEN",token);
+      this.setState({ expoPushToken: token });
+      this.token = token
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+    if (Platform.OS === 'android') {
+      Notifications.createChannelAndroidAsync('default', {
+        name: 'default',
+        sound: true,
+        priority: 'max',
+        vibrate: [0, 250, 250, 250],
+      });
+    }
+  };
+
+  _handleNotification = notification => {
+    Vibration.vibrate();
+    this.setState({ notification: notification });
+    console.log(notification);
+  };
 
   onSignupButtonPressHandler(){
     this.props.navigation.navigate(Screens.SignUp.route)
@@ -54,6 +98,10 @@ class SignInEmail extends React.Component {
 
   signin(values, dispatch, props){
     values.isEmail = 1; //sending extra parameter
+    values.deviceType = Platform.OS
+    values.deviceToken = this.token
+
+    console.log("TOKEN WITH VAL",values)
     dispatch(userActions.signin(values)).then(res => {
       if(res.status == "success"){  
         showToast(res.message,"success");

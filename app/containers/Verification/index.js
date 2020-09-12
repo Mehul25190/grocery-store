@@ -30,6 +30,11 @@ import OTPInputView from '@twotalltotems/react-native-otp-input';
 //import SignInVerification from './form';
 import axios from '../../utils/api';
 import url from '../../config/api';
+import { Platform } from 'react-native';
+
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants'
 
 class Verification extends React.Component {
   constructor(props) {
@@ -37,6 +42,8 @@ class Verification extends React.Component {
     this.state = {
       visibleModal: false,
       code:'',
+      expoPushToken: '',
+      notification: {},
     };
     const { navigation } = this.props;
     const para_email = navigation.getParam('para_email');
@@ -45,6 +52,9 @@ class Verification extends React.Component {
 
   componentDidMount() {
     //console.log(this.props.mobileno);
+    this.registerForPushNotificationsAsync();
+    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+
     if (this.props.user != null) {
       this.props.navigation.navigate(Screens.SignInStack.route);
     }
@@ -62,10 +72,45 @@ class Verification extends React.Component {
   onForgotpasswordPressHandler() {
     this.props.navigation.navigate(Screens.ForgotPassword.route)
   }
+  registerForPushNotificationsAsync = async () => {
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      token = await Notifications.getExpoPushTokenAsync();
+      console.log("HERE IS TOKEN",token);
+      this.setState({ expoPushToken: token });
+      this.token = token
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+    if (Platform.OS === 'android') {
+      Notifications.createChannelAndroidAsync('default', {
+        name: 'default',
+        sound: true,
+        priority: 'max',
+        vibrate: [0, 250, 250, 250],
+      });
+    }
+  };
 
+  _handleNotification = notification => {
+    Vibration.vibrate();
+    this.setState({ notification: notification });
+    console.log(notification);
+  };
 
  signinverification(code) {
   var mobileno = this.props.mobileno; 
+  var deviceType = Platform.OS
+  var deviceToken = this.token
 
   //get value for para
   const { navigation } = this.props;
@@ -76,7 +121,7 @@ class Verification extends React.Component {
   if(para_email=="") {
   
         //checking varification with login -> OTP -verification  
-        this.props.loginMobileVerification(mobileno,code).then (res =>{
+        this.props.loginMobileVerification(mobileno,code,deviceToken,deviceType).then (res =>{
 
           console.log("response from loginMobileVerification")  
           console.log(res);
