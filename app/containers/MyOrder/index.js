@@ -221,6 +221,7 @@ class MyOrder extends React.Component {
                               {(item.orderStatus=="CNF") ? "Confirmed" : ""}
                               {(item.orderStatus=="RET") ? "Returned" : ""}
                               {(item.orderStatus=="PICKED") ? "Picked" : ""}
+                              {(item.orderStatus!=="") ? item.orderStatus : ""}
                             </Text>
 
                           </TouchableOpacity>
