@@ -50,4 +50,5 @@ export default {
   updateDeliverySlot: 'order/updateDeliverySlot',
   fetchOrderItemsCount:'order/fetchOrderItemsCount',
   fetchItemsByOffer: 'offer/fetchItemsByOffer',
+  fetchUserOffer:'offer/fetchOffersOnLandingPage',
 }

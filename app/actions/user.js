@@ -459,6 +459,20 @@ export const fetchUserWallet = payloads => dispatch => {
 }
 /***** Fetch the user wallet detail ******/
 
+/***** Fetch the user Offer detail ******/
+export const fetchUserOffer = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchUserOffer,{queries: payloads}).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    if(res.status == 200){
+      return res.data;
+    } else {
+      return res;
+    }
+  })
+}
+/***** Fetch the user Offer detail ******/
+
 
 /**
  * Save Item Rating 

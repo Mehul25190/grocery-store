@@ -18,6 +18,7 @@ import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import {orderList} from '../data/data';
+import url from "../../config/api";
 
 class MyOffers extends React.Component {
 
@@ -27,12 +28,19 @@ class MyOffers extends React.Component {
       //default value of the date time
       date: '',
        time: '',
-       status:''
+       status:'',
+       offerList: [],
     };
 
   }
    componentDidMount() {
+
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.fetchUserOffer(); 
+    });
  
+
+  
 
     var that = this;
   var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
@@ -53,20 +61,20 @@ class MyOffers extends React.Component {
 
 
   }
+
+  fetchUserOffer(){
+
+      this.props.fetchUserOffer().then(res => {
+        console.log("Adfad");
+      console.log(res.data.offerList);
+      this.setState({offerList: res.data.offerList})
+    })
+  }
     openControlPanel = () => {
       this.props.navigation.goBack(); // open drawer
     };
 
-    onDetailPage = (item,index) => {
-     
-      if(item.status == 'Pending'){
-        this.props.navigation.navigate('OrderDetail', { item });    
-      }
-      else{
-        this.props.navigation.navigate('OrderReturn', { item });
-      }
     
-  };
 
   dateFormate(date){
     var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
@@ -103,39 +111,29 @@ class MyOffers extends React.Component {
           </Text>
         </View>
 
-         <View style={styles.dateRow}>
-          <Text style={styles.walletDate}>
-          Valid till  {this.state.date}
-          </Text>
-        </View>
-
          {
 
-             orderList.map((item, index) => {
+          this.state.offerList.map((item, index) => {
                   return (
                   
                         <ListItem style={styles.ListItems} noBorder>
                           <Left style={styles.ListLeft}>
                             <TouchableOpacity style={styles.prodInfo}  >
-                            <Icon style={styles.proImage} name='gift' type='AntDesign' />
+                            
+                            <Image style={styles.proImage} source={{ uri: url.imageURL + item.offerImage }} />
                             </TouchableOpacity>
                           </Left>
 
                         <Body style={styles.bodyText}>
                             <TouchableOpacity style={styles.prodInfo} >
                      
-                            <Text numberOfLines={1} style={styles.proTitle}>Get offers in Grocery</Text>
-                            <Text style={styles.paidTime}>{this.dateFormate(item.date)} {item.time}</Text>
+                            <Text numberOfLines={1} style={styles.proTitle}>{item.offerName}</Text>
+                            <Text style={styles.paidTime}>{item.description}</Text>
 
                             </TouchableOpacity>
                         </Body>
 
-                        <Right style={styles.ListRight}>
-                            <View>
-                              <Text style={styles.proPrice}>{Colors.CUR}  {item.price}</Text>
-                                                 
-                            </View>
-                        </Right>
+                        
                         </ListItem> 
                      
                  
@@ -158,6 +156,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       logout: () => dispatch(userActions.logoutUser()),
+      fetchUserOffer: (userId) => dispatch(userActions.fetchUserOffer()),
    };
 };
 

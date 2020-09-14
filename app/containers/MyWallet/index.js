@@ -66,30 +66,7 @@ class MyWallet extends React.Component {
       this.props.navigation.goBack(); // open drawer
     }
 
-    getUserWalletList() {
-      //alert(this.props.user.user.id);
-      this.props.getWalletList(this.props.user.user.id).then (res =>{
-        
-        //console.log(orderData);
-          if(res.status == "success"){
-            //console.log("After sucess nirav");
-            //console.log(res);
-                if(res.data.activityList!=null){
-                  this.setState({ walletData:res.data.activityList});
-                  this.setState({ userWallet:res.data.walletBalance});
-                  
-                } 
-          } else {
-                console.log("something wrong with varification call");
-                showToast("Something wrong with Server response","danger");
-          }
-           
-        })
-        .catch(error => {
-            console.log('Error messages returned from server', error);
-            showToast("Error messages returned from server","danger");
-        });
-    }
+    
 
   render(){
     return (
