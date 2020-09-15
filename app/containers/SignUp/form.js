@@ -9,8 +9,8 @@ import { InputBox } from '../../components';
 import styles from '../SignIn/styles';
 export const phoneNumber = value =>
  // value && !/^(0|[1-9][0-9]{9})$/i.test(value)
- value && !/^(\+\d{1,3}[- ]?)?\d{10}$/i.test(value)
-    ? 'Must be 10 digits'
+ value && !/^(05)(\+\d{1,3}[- ]?)?\d{8}$/i.test(value)
+    ? 'Please enter valid mobile number'
     : undefined
 
 class SignUpForm extends React.Component {

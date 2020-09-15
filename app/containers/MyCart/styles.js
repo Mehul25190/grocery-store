@@ -250,6 +250,65 @@ QtyBox:{
     // backgroundColor:'#333',
     fontSize:14,
     textDecorationLine:'line-through'
-   }
+   },
+   container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+   photo: {
+    flex:1,
+    width: null,
+    height: null,
+    resizeMode: 'contain',
+    justifyContent: 'flex-end',
+    flexDirection:'column',
+    marginTop:50,
+    marginLeft:Layout.indent
+     
+  },
+   Modeltext: {
+     color:'#000',
+     fontSize:14,
+     fontFamily:'Font-Regular',
+     textAlign:'center',
+     paddingHorizontal:5
+   },
+   closeOk:{
+    marginTop:10,
+    paddingVertical:10,
+    backgroundColor:Colors.primary,
+    justifyContent:'center',
+    alignItems:'center'
+   },
+   closeIcon:{
+  position:'absolute',
+  top:15,
+  right:15,
+    justifyContent:'flex-end',
+    alignItems:'flex-end'
+   },
+  pendingDays:{
+    fontSize:11, fontWeight:'bold',
+    color:Colors.primary,
+    lineHeight:22,
+    fontFamily:'Font-Medium',
+  },
+  smileIcon:{
+    color:'#CCCC00',
+    justifyContent:'center',
+    alignItems:'center',
+    width:50,
+    fontSize:30,
+    padding:10,
+    alignSelf:'center'
+  },
+  infoCircle:{
+    color:Colors.primary,
+    fontSize:20,
+    paddingLeft:5
+  },
 
 };

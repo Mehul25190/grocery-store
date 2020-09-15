@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, FlatList, ActivityIndicator, Modal, TouchableHighlight } from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, FlatList, ActivityIndicator, TouchableHighlight } from 'react-native'
 import _ from 'lodash';
 import { Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers } from '../../components';
@@ -13,6 +13,7 @@ import {
   Text,
   Header, Left, Body, Footer, Title, Right, Card, Grid, Col, Row, ListItem, FooterTab
 } from 'native-base';
+import Modal from 'react-native-modal';
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 import * as cartActions from "../../actions/cart";
@@ -37,12 +38,15 @@ class MyCart extends React.Component {
       userAddressDtls: {},
       loading: false,
       selctedProduct: '',
+      isModalVisible: false,
     };
 
   }
   componentDidMount() {
-    this.getCartDetail();
-
+    
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.getCartDetail();
+    });
     var that = this;
     var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -59,10 +63,19 @@ class MyCart extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    this.focusListener.remove();
+  }
+
+
   getCartDetail() {
 
     this.props.viewCart(this.props.user.user.id).then(res => {
-      console.log(res)
+      //console.log('rerrer', res.data.itemsRemoved)
+      if(res.data.itemsRemoved == 'Y'){
+        this.setState({isModalVisible: true})
+      }
+      
       if (res.status == 'success') {
         this.setState({ userAddressDtls: res.data.userAddressDtls })
       } else {
@@ -226,7 +239,31 @@ class MyCart extends React.Component {
           bgColor='transparent'
           Title='My Cart'
         />
-
+            <Modal 
+              isVisible={this.state.isModalVisible}
+              coverScreen={false}
+              backdropColor={'#fff'}
+              backdropOpacity={0.6}
+              animationIn={'slideInDown'}
+              style={{flex:1}}
+              >
+                  <View style={{backgroundColor:'#fff',padding:10,borderWidth:1, borderColor:Colors.gray, borderRadius:5}}>
+                    <TouchableOpacity style={styles.closeIcon} onPress = {() => this.setState({isModalVisible:false}) }>
+                      <Icon type="AntDesign" name="closecircleo" />
+                    </TouchableOpacity>
+                    <Text style = {[styles.Modeltext,{fontSize:16,alignSelf:'center'}]}>Valuable Customer..!</Text>
+                       <Icon type="SimpleLineIcons" name="emotsmile"  style={styles.smileIcon} />
+                    <Text  style = {styles.Modeltext}>
+                    OOPS..!
+                    One or more items added to your Shopping Cart are moved out as they are no longer available in stock...please proceed with pending items..!</Text>
+                    <Text style={styles.Modeltext}>You can still enjoy our evening slots with nominal delviery charge</Text>
+                    <TouchableOpacity style={styles.closeOk} onPress = {() => this.setState({isModalVisible:false}) }>
+                    <Text style={{color:'#fff',fontSize:16,fontFamily:'Font-Medium'}}>OK</Text>
+                    </TouchableOpacity>
+                  
+                  </View>
+                  
+              </Modal>
         <ScrollView>
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
@@ -328,7 +365,7 @@ class MyCart extends React.Component {
           </Grid>
         </Footer>
 
-
+       
 
       </Container>
 
