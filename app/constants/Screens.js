@@ -33,7 +33,7 @@ export default {
     route:'MyOffers',
     icon: 'gift',
     type:'AntDesign',
-    label: 'My Offers',
+    label: 'Offers',
   },
   MyPayments:{
     route:'MyPayments',

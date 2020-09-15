@@ -273,8 +273,8 @@ export default StyleSheet.create({
   },
   inputError:{
     color: Colors.red,
-    top:15,
-    paddingRight:10,
+    top:28, position:'absolute',
+    paddingRight:10, right:0,
     fontSize:12
   },
   searchBar:{

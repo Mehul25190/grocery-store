@@ -32,6 +32,7 @@ class SignUpForm extends React.Component {
          validate={[required({msg: 'First Name is required'})]} 
         />
         <View style={{}}><Text></Text></View></Col>
+        
         <Col><Field 
          styles={{marginBottom:20}}
           name="lastName" 

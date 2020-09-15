@@ -93,7 +93,7 @@ backgroundColor:'transparent',
     borderRadius: 8
 
   },
-  outofstock: { fontSize:11, color:'#ff0000', textAlign:'right', paddingTop:5},
+  outofstock: { fontSize:14, color:'#ff0000', textAlign:'right', paddingTop:5},
   ItemLayout:{
   
    flex: 2.5,

@@ -358,6 +358,7 @@ class OrderReturnDetail extends React.Component {
               maxLength={2} />
           </View>
 
+          <View>
           <CheckBox
             style={styles.checkboxStyle}
             onClick={() => this.checkbox(item.id, this.state.orderID, item.itemName, this.state.orderData, item.returnValidityHours)}
@@ -366,6 +367,7 @@ class OrderReturnDetail extends React.Component {
               style={{ color: 'transparent' }} />}
             isChecked={this.state.qty.indexOf(item.id) !== -1}
           />
+          </View>
       </Right>) : (<Right style={{marginTop:20, width:100}}><Text style={styles.qtyText}>{item.isReturnable == 0 ? 'Not Returnable' : 'Returned'}</Text></Right> )}
     </ListItem>
     {item.itemStatus != 'RET' && (item.isReturnable == 1 || item.isReturnable == null) ?
@@ -454,6 +456,7 @@ class OrderReturnDetail extends React.Component {
 
             <Card style={[appStyles.addBox, { height: 'auto', backgroundColor:'#D7ECDD' }, styles.orderBox]}>
                 <Text style={{ fontSize: 14, color:'#00545F'}}>We have made returns easy for you. Now you can return through app. To know more about return policies, kindly visit myallaadin.com</Text>
+                <Text style={{ fontSize: 14, color:'#00545F', fontWeight:'bold'}}>(To return, press checkbox after putting quantity)</Text>
               </Card>
             </ScrollView>
 
