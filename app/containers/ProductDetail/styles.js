@@ -135,6 +135,7 @@ reasonView:{
   lineHeight:20,
   color:Colors.black
  },
+ outofstock: { fontSize:14, color:'#ff0000', textAlign:'right', paddingTop:5},
  amulInfo:{
   // backgroundColor:'#ddd'
  },

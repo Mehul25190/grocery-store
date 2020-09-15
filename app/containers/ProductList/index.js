@@ -428,7 +428,9 @@ class ProductList extends React.Component {
                       <View>
                       
                       </View>
-                      <View>
+                      {item.outOfStock == 'Y' ? 
+                        <Text style={styles.outofstock}>Out of Stock</Text> : 
+                      ( <View>
                         {item.isSubscribable ? (
                           <ImageBackground source={imgs.AEDpng}  style={[styles.subscribeBtn,{}]}>
                             <TouchableOpacity
@@ -441,6 +443,7 @@ class ProductList extends React.Component {
                               </Text>
                             </TouchableOpacity>
                           </ImageBackground>
+
                         ) : (
                           <View style={{ padding: 0, margin: 0 }}></View>
                         )}
@@ -481,7 +484,7 @@ class ProductList extends React.Component {
                           </TouchableOpacity>
                         )}
                         </View>)}
-                      </View>
+                      </View>)}
                     </Right>
                   </ListItem>
                 );

@@ -358,7 +358,9 @@ class SearchOffer extends React.Component {
                       <View>
                         
                       </View>
-                      <View>
+                      {item.outOfStock == 'Y' ? 
+                        <Text style={styles.outofstock}>Out of Stock</Text> : 
+                      ( <View>
                         {item.isSubscribable ? (
                           <ImageBackground source={imgs.AEDpng}  style={[styles.subscribeBtn,{}]}>
                             <TouchableOpacity
@@ -409,7 +411,7 @@ class SearchOffer extends React.Component {
                           </TouchableOpacity>
                         )}
                         </View>)}
-                      </View>
+                      </View>)}
                     </Right>
                   </ListItem>
                 );
