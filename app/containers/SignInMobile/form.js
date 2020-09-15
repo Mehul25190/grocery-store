@@ -8,7 +8,8 @@ import { required, email } from 'redux-form-validators'
 import { InputBox } from '../../components';
 import styles from '../SignIn/styles';
 export const phoneNumber = value =>
-  value && !/^(0|[1-9][0-9]{9})$/i.test(value)
+  //value && !/^(0|[1-9][0-9]{9})$/i.test(value)
+  value && !/^(\+\d{1,3}[- ]?)?\d{10}$/i.test(value)
     ? 'Must be 10 digits'
     : undefined
 
