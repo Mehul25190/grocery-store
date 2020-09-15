@@ -79,7 +79,7 @@ export default {
  	paddingBottom:10
  },
   ListItems:{
-   borderColor:Colors.primary,
+   borderColor:Colors.secondary,
 
     paddingTop:5,
     paddingBottom:5,
@@ -87,12 +87,11 @@ export default {
     marginRight:Layout.indent-7,
     paddingRight:Layout.indent-7
    },
-     ListLeft:{
-   justifyContent:'center',
-    alignItems:'center',
-    flex: 0,
+  ListLeft:{
+    alignItems:'flex-start',
+    flex: 0, borderRadius:50,
     paddingLeft:0,
-    width: 75,
+    width: 100,
     
    },
 proTitle:{

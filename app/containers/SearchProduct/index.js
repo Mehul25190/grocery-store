@@ -333,7 +333,9 @@ class SearchProduct extends React.Component {
                       <View>
                         
                       </View>
-                      <View>
+                      {item.outOfStock == 'N' ? 
+                        <Text style={styles.outofstock}>Out of Stock</Text> : 
+                      (<View>
                         {item.isSubscribable ? (
                           <TouchableOpacity
                               onPress={() =>
@@ -385,7 +387,7 @@ class SearchProduct extends React.Component {
                           </TouchableOpacity>
                         )}
                         </View>)}
-                      </View>
+                      </View>)}
                     </Right>
                   </ListItem>
                 );

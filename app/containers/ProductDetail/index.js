@@ -286,7 +286,9 @@ class ProductDetail extends React.Component {
           <Text style={styles.priceText}><Text style={appStyles.currency,{fontSize:23,color:Colors.gray}}> {Colors.CUR}</Text> {ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}</Text>
         </View>
          </Col>
-            <Col style={{paddingTop:10, width:200, alignItems:'flex-end'}}>
+                      {ProductDetail.item[0].outOfStock == 'Y' ? 
+                         (<Col style={{paddingTop:10, width:200, alignItems:'flex-end'}}><Text style={styles.outofstock}>Out of Stock</Text></Col>) : 
+                      ( <Col style={{paddingTop:10, width:200, alignItems:'flex-end'}}>
             {this.state.selctedProduct == ProductDetail.item[0].id ? <ActivityIndicator style={{marginRight: 20}}/> : 
               (<View  style={styles.reasonView}>
                 {ProductDetail.item[0].cartQty > 0 ?
@@ -322,7 +324,7 @@ class ProductDetail extends React.Component {
                   </TouchableOpacity>
                 )}
               </View>)}
-            </Col>
+            </Col>)}
           <Col style={styles.cartPart}>
           {/*  <Icon name='shopping-cart' type='MaterialIcons' style={styles.bottomCart} /> */}
           </Col>
