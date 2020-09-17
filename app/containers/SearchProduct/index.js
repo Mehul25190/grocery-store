@@ -333,7 +333,7 @@ class SearchProduct extends React.Component {
                       <View>
                         
                       </View>
-                      {item.outOfStock == 'N' ? 
+                      {item.outOfStock == 'Y' ? 
                         <Text style={styles.outofstock}>Out of Stock</Text> : 
                       (<View>
                         {item.isSubscribable ? (
