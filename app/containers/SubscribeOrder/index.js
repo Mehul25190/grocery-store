@@ -163,6 +163,7 @@ class SubscribeOrder extends React.Component {
   render(){
     const { navigation, deliveryAddress } = this.props;
     const getItem = navigation.getParam('item');
+    console.log(deliveryAddress);
     return (
       <Container style={appStyles.container}>
 
@@ -176,7 +177,7 @@ class SubscribeOrder extends React.Component {
              />
       
           <Content enableOnAndroid>
-        { this.props.isLoading ?
+        { this.props.isLoading && deliveryAddress == null ?
             <Spinner color={Colors.secondary} style={appStyles.spinner} /> :
             (<View>
         <Card style={[appStyles.addBox,{height:'auto'},styles.paddingBox]}>
@@ -374,7 +375,7 @@ class SubscribeOrder extends React.Component {
                     />
                 </Left>
                 <Body>
-                  <Text style={[appStyles.userArea,styles.addressText]} >{(deliveryAddress.aptNo!=null ? (deliveryAddress.aptNo + ",") : "" )} {deliveryAddress ? deliveryAddress.buildingName + ',' : ''}</Text>
+                  <Text style={[appStyles.userArea,styles.addressText]} >{(deliveryAddress != null ? (deliveryAddress.aptNo + ",") : "" )} {deliveryAddress ? deliveryAddress.buildingName + ',' : ''}</Text>
                   <Text style={[appStyles.userCity,styles.addressText]} >{deliveryAddress ? deliveryAddress.cityName + ' - ' + deliveryAddress.state : ''} </Text>
                  
                 </Body>
