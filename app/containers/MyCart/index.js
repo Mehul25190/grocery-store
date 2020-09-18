@@ -70,20 +70,6 @@ class MyCart extends React.Component {
 
   getCartDetail() {
 
-    this.props.viewCart(this.props.user.user.id).then(res => {
-      //console.log('rerrer', res.data.itemsRemoved)
-      if(res.data.itemsRemoved == 'Y'){
-        this.setState({isModalVisible: true})
-      }
-      
-      if (res.status == 'success') {
-        this.setState({ userAddressDtls: res.data.userAddressDtls })
-      } else {
-        showToast("No cart detail found", "danger");
-        this.props.navigation.navigate(Screens.Home.route)
-      }
-    })
-
     //check user addredd is available or not
     this.props.getDeviveryAddress(this.props.user.user.id).then(res => {
       if (res.status == "success") {
@@ -98,6 +84,21 @@ class MyCart extends React.Component {
         showToast("Something wrong with Server response", "danger");
       }
 
+    })
+
+
+    this.props.viewCart(this.props.user.user.id).then(res => {
+      //console.log('rerrer', res.data.itemsRemoved)
+      if(res.data.itemsRemoved == 'Y'){
+        this.setState({isModalVisible: true})
+      }
+      
+      if (res.status == 'success') {
+        this.setState({ userAddressDtls: res.data.userAddressDtls })
+      } else {
+        showToast("No cart detail found", "danger");
+        this.props.navigation.navigate(Screens.Home.route)
+      }
     })
 
   }

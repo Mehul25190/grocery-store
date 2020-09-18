@@ -84,7 +84,31 @@ class SubscribeOrder extends React.Component {
   }
 
   componentDidMount() {
-  
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.checkAddress();
+    });
+  }
+
+  checkAddress(){
+    //check user addredd is available or not
+    this.props.getDeviveryAddress(this.props.user.user.id).then(res => {
+      if (res.status == "success") {
+        //console.log(res.data.userAddressDtls);
+        if (res.data.userAddressDtls == null) {
+          //redirect to address screen
+          showToast("Please enter your delivery address so we serve better experience and products offer", "danger");
+          this.props.navigation.navigate('MyAddress');
+        }
+
+      } else {
+        showToast("Something wrong with Server response", "danger");
+      }
+
+    })
+  }
+
+  componentWillUnmount() {
+    this.focusListener.remove();
   }
 
   openControlPanel = () => {
@@ -407,6 +431,8 @@ const mapDispatchToProps = (dispatch) => {
       logout: () => dispatch(userActions.logoutUser()),
       getItemDetail: (id) => dispatch(subscriptionAction.getItemDetail({itemId: id})),
       saveSubscribeOrderDetails: (data) => dispatch(subscriptionAction.saveSubscribeOrderDetails(data)),
+      getDeviveryAddress: (useId) => dispatch(userActions.getDeviveryAddress({ userId: useId })),
+
    };
 };
 
