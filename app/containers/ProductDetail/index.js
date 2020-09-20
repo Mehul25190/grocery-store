@@ -83,7 +83,7 @@ class ProductDetail extends React.Component {
     
   }
 
-  buyOncePressHnadler(productId, value){
+  buyOncePressHnadler(productId, value, action){
     this.setState({selctedProduct: productId})
     if(value == 0){ 
       this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
@@ -94,7 +94,7 @@ class ProductDetail extends React.Component {
         }
         
       })
-    }else if(value == 1){
+    }else if(value == 1 && action == 'add'){
       this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
         if(res.status == "success"){
           this.props.viewCart(this.props.user.user.id).then(res => {
@@ -103,7 +103,7 @@ class ProductDetail extends React.Component {
           }) 
         }
       })
-    }else if(value > 1){
+    }else if(value >= 1){
       this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
         if(res.status == "success"){
           this.props.viewCart(this.props.user.user.id).then(res => {
@@ -295,7 +295,7 @@ class ProductDetail extends React.Component {
                   (<NumericInput
                     initValue={ProductDetail.item[0].cartQty}
                     //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
-                    onChange={(value) => this.buyOncePressHnadler(ProductDetail.item[0].id, value)}
+                    onChange={(value) => this.buyOncePressHnadler(ProductDetail.item[0].id, value, 'update')}
                     onLimitReached={(isMax, msg) =>
                       console.log(isMax, msg)
                     }
@@ -317,7 +317,7 @@ class ProductDetail extends React.Component {
                   (
                   <TouchableOpacity
                     onPress={() =>
-                      this.buyOncePressHnadler(ProductDetail.item[0].id, 1)
+                      this.buyOncePressHnadler(ProductDetail.item[0].id, 1, 'add')
                     }
                   >
                     <Image source={imgs.addPlus} style={styles.buyButton} />
