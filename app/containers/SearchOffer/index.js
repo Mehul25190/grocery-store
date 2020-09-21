@@ -154,7 +154,7 @@ class SearchOffer extends React.Component {
     });
   }
 
-  buyOncePressHnadler(productId, value){
+  buyOncePressHnadler(productId, value, action){
   this.setState({selctedProduct: productId})
 
   var offer_id = this.props.navigation.getParam('offer_id');
@@ -174,7 +174,7 @@ class SearchOffer extends React.Component {
         }) 
       }
     })
-  }else if(value == 1){
+  }else if(value == 1 && action == 'add'){
     this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
         this.props.fetchItemsByOfferWithoutLoader(offer_id, this.props.user.user.id).then((res) => {
@@ -190,7 +190,7 @@ class SearchOffer extends React.Component {
         }) 
       }
     })
-  }else if(value > 1){
+  }else if(value >= 1){
     this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
         this.props.fetchItemsByOfferWithoutLoader(offer_id, this.props.user.user.id).then((res) => {
@@ -383,7 +383,7 @@ class SearchOffer extends React.Component {
                           (<NumericInput
                             initValue={item.cartQty}
                             //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
-                            onChange={(value) => this.buyOncePressHnadler(item.id, value)}
+                            onChange={(value) => this.buyOncePressHnadler(item.id, value, 'update')}
                             onLimitReached={(isMax, msg) =>
                               console.log(isMax, msg)
                             }
@@ -404,7 +404,7 @@ class SearchOffer extends React.Component {
                           (
                           <TouchableOpacity
                             onPress={() =>
-                              this.buyOncePressHnadler(item.id, 1)
+                              this.buyOncePressHnadler(item.id, 1, 'add')
                             }
                           >
                            <Image source={imgs.addPlus} style={styles.buyButton} />
