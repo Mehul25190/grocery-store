@@ -225,7 +225,7 @@ class ProductList extends React.Component {
     });
   }
 
-  buyOncePressHnadler(productId, value){
+  buyOncePressHnadler(productId, value, action){
   this.setState({selctedProduct: productId})
   if(value == 0){
     this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
@@ -237,7 +237,7 @@ class ProductList extends React.Component {
       }
       
     })
-  }else if(value == 1){
+  }else if(value == 1 && action == 'add'){
     this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id).then(res => {
@@ -247,7 +247,7 @@ class ProductList extends React.Component {
         }) 
       }
     })
-  }else if(value > 1){
+  }else if(value >= 1){
     this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
         this.props.viewCart(this.props.user.user.id).then(res => {
@@ -356,6 +356,7 @@ class ProductList extends React.Component {
                   foodType = 'red';
                 if(item.foodType == 'vegan')
                   foodType = 'blue';
+                
                 return (
                   <ListItem style={styles.ListItems}  key={index}>
 
@@ -455,7 +456,7 @@ class ProductList extends React.Component {
                             initValue={item.cartQty}
                             //value={this.state.qtyValue} 
                             //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
-                            onChange={(value) => this.buyOncePressHnadler(item.id, value)}
+                            onChange={(value) => this.buyOncePressHnadler(item.id, value, 'update')}
                             onLimitReached={(isMax, msg) =>
                               console.log(isMax, msg)
                             }
@@ -477,7 +478,7 @@ class ProductList extends React.Component {
                           (
                           <TouchableOpacity
                             onPress={() =>
-                              this.buyOncePressHnadler(item.id, 1)
+                              this.buyOncePressHnadler(item.id, 1, 'add')
                             }
                           >
                            <Image source={imgs.addPlus} style={styles.buyButton} />
@@ -502,7 +503,7 @@ class ProductList extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    //isLoading: state.common.isLoading,
+    isLoading: state.common.isLoading,
   };
 };
 

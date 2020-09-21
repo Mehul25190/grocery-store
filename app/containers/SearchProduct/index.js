@@ -131,7 +131,7 @@ class SearchProduct extends React.Component {
     });
   }
 
-  buyOncePressHnadler(productId, value){
+  buyOncePressHnadler(productId, value, action){
   this.setState({selctedProduct: productId})
 
   if(value == 0){
@@ -151,7 +151,7 @@ class SearchProduct extends React.Component {
         }) 
       }
     })
-  }else if(value == 1){
+  }else if(value == 1 && action == 'add'){
     this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
         this.props.searchItemWithoutLoader(this.state.text, this.props.user.user.id).then((res) => {
@@ -167,7 +167,7 @@ class SearchProduct extends React.Component {
         }) 
       }
     })
-  }else if(value > 1){
+  }else if(value >= 1){
     this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
       if(res.status == "success"){
         this.props.searchItemWithoutLoader(this.state.text, this.props.user.user.id).then((res) => {
@@ -361,7 +361,7 @@ class SearchProduct extends React.Component {
                           (<NumericInput
                             initValue={item.cartQty}
                             //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
-                            onChange={(value) => this.buyOncePressHnadler(item.id, value)}
+                            onChange={(value) => this.buyOncePressHnadler(item.id, value, 'update')}
                             onLimitReached={(isMax, msg) =>
                               console.log(isMax, msg)
                             }
@@ -382,7 +382,7 @@ class SearchProduct extends React.Component {
                           (
                           <TouchableOpacity
                             onPress={() =>
-                              this.buyOncePressHnadler(item.id, 1)
+                              this.buyOncePressHnadler(item.id, 1, 'add')
                             }
                           >
                            <Image source={imgs.addPlus} style={styles.buyButton} />
