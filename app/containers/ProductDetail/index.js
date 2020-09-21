@@ -69,6 +69,7 @@ class ProductDetail extends React.Component {
       productImages:this.props.ProductDetail.itemImages,
     });
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      this.productDetail(this.props.ProductDetail.item[0].id);
       this.setState({
         productImages:this.props.ProductDetail.itemImages,
       });

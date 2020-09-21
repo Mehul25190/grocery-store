@@ -503,7 +503,7 @@ class ProductList extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    //isLoading: state.common.isLoading,
+    isLoading: state.common.isLoading,
   };
 };
 

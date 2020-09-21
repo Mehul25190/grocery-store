@@ -146,7 +146,7 @@ class OrderReturnDetail extends React.Component {
       allowsEditing: true,
       base64: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.1,
     });
     if (!result.cancelled) {
       this.ValidateSize(result.base64)
