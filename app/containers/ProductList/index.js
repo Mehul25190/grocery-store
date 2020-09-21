@@ -356,6 +356,7 @@ class ProductList extends React.Component {
                   foodType = 'red';
                 if(item.foodType == 'vegan')
                   foodType = 'blue';
+                
                 return (
                   <ListItem style={styles.ListItems}  key={index}>
 
