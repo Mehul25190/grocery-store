@@ -305,6 +305,8 @@ class SearchOffer extends React.Component {
                           this.productDetail(item.id)
                         }
                       >
+                        <Text style={styles.proBrand}>{item.brandName}</Text>
+
                         <Text style={styles.proTitle}>{item.itemName}</Text>
 
                         <Text style={styles.proQuanitty} note>

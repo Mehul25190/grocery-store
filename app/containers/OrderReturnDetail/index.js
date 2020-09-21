@@ -426,7 +426,7 @@ class OrderReturnDetail extends React.Component {
                   <Text style={styles.orderTitleText}>Order Date</Text>
                 </Col>
                 <Col style={styles.orderValue}>
-                  <Text style={styles.orderValText}>{(orderData.length > 0) ? orderData[0].orderDate : ""}</Text>
+                  <Text style={styles.orderValText}>{(orderData.length > 0) ? moment(orderData[0].orderDate).format('DD/MM/YYYY') : ""}</Text>
                 </Col>
               </Row>
               <Row style={styles.orderRow}>
