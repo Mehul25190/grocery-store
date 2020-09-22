@@ -95,7 +95,11 @@ class MyPayments extends React.Component {
     });
   }
   ShowCardList(){
-   this.getCardDetail();
+    this.getCardDetail();
+    if(!this.state.paywithcard){
+      showToast('Please select the payment method', "danger");
+      return;
+    }
     this.setState({
       showMyCard:true,
       showAddCard:false

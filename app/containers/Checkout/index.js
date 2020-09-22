@@ -76,6 +76,10 @@ class Checkout extends React.Component {
      this.getCartDetail();
     
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      console.log('this.props.totalItem', this.props.totalItem)
+      if(this.props.totalItem == 0){
+        this.props.navigation.navigate(Screens.Home.route)
+      }
       this.props.freeDeliveryCharge();
     });
 

@@ -20,6 +20,7 @@ import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import {productList} from '../data/data';
 import moment from "moment";
+import * as productActions from "../../actions/product";
 
 class OrderDetail extends React.Component {
 
@@ -69,6 +70,18 @@ class OrderDetail extends React.Component {
       this.props.navigation.navigate('MyRatings', { item:item,orderItemId: para_orderId });
     }
   };
+  productDetail(itemId){
+    this.props.productDetail(itemId, this.props.user.user.id).then(res => {
+      //console.log(res);
+      if(res.status == "success"){
+        if(res.data.item.length > 0){
+          this.props.navigation.navigate(Screens.ProductDetail.route)
+        }else{
+          showToast('Product detail not found', 'danger');
+        }
+      }
+    });
+  }
 
   getOrderDetails(para_orderId) {
     //alert(para_orderId);
@@ -116,7 +129,7 @@ class OrderDetail extends React.Component {
       
 
                 <Body style={styles.bodyText}>
-                <TouchableOpacity style={styles.prodInfo}>
+                <TouchableOpacity style={styles.prodInfo} onPress={() => this.productDetail(item.itemId)}>
       
                     <Text  style={[styles.proTitle,{  fontFamily:'Font-Medium'}]}>{item.itemName} </Text>
                     <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
@@ -310,6 +323,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
       getOrderDetails: (orderId) => dispatch(userActions.getOrderDetailById({id: orderId})),
       logout: () => dispatch(userActions.logoutUser()),
+      productDetail: (id, userId) => 
+      dispatch(productActions.productDetail({ itemId: id, userId: userId })),
    };
 };
 
