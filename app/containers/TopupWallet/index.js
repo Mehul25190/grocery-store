@@ -171,7 +171,7 @@ class TopupWallet extends React.Component {
   }
   topupValueChange(text){
     //console.log(text);
-    if(text < 250)
+    if(text <= 250)
       this.setState({amount: text})
     else
       showToast('You can add maximium AED 250', 'danger')

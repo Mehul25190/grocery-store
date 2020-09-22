@@ -187,7 +187,7 @@ export const saveUserProfile = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.saveUserProfile,  {payloads: payloads}).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    //console.log(res);
+    console.log(payloads);
       if(res.status == 200){
         dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
         //console.log(res.data.userProfile);

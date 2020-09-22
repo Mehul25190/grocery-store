@@ -313,9 +313,11 @@ class Home extends React.Component {
               <View style={{flexDirection:'row', justifyContent:'flex-start', marginLeft:Layout.indent-5,
     marginRight:Layout.indent-5,marginTop:10, marginBottom:0, backgroundColor:'#D7ECDD', paddingTop:5, paddingBottom:5, paddingLeft:10,}}>
                 <TouchableOpacity style={styles.prodInfo} onPress={() => this.onDetailPage()}>
-                  <Text style={styles.shopSubTitleText}>My Next Order - 
-                  { this.state.nextOrderCount!='' ? this.state.nextOrderCount : this.state.nextOrderCount} items to be delivered tomorrow.
-                  </Text>
+                  
+                  
+                  <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+                  <Text style={[styles.shopSubTitleText, {fontWeight:'bold', fontSize:15}]}> { this.state.nextOrderCount!='' ? this.state.nextOrderCount : this.state.nextOrderCount}</Text><Text style={styles.shopSubTitleText}> items to be delivered tomorrow.</Text>
+                  </View>
                   </TouchableOpacity>
               </View>
               <Modal 

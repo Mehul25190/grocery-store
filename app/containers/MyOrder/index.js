@@ -222,6 +222,9 @@ class MyOrder extends React.Component {
                               {(item.orderStatus=="RET") ? "Returned" : ""}
                               {(item.orderStatus=="PICKED") ? "Picked" : ""}
                               {(item.orderStatus=="ASGNBACK") ? "Pending" : ""}
+                              {(item.orderStatus=="FAIL") ? "Fail" : ""}
+                              {(item.orderStatus=="NOTDEL") ? "Failed" : ""}
+                              
                             </Text>
 
                           </TouchableOpacity>

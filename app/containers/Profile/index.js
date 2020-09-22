@@ -188,10 +188,12 @@ class Profile extends React.Component {
                         gender:this.state.gender,
                         ethnicity:this.state.ethnicity,
                         promotionalEmail:this.state.promotionalEmail,
-                        ringBell:this.state.ringBell,
+
+                        ringBell:this.state.ringBell ? 1 : 0,
 
                       };
-      //alert(formdata);
+                      //console.log("check");
+      //console.log(formdata);
       this.props.saveProfile(formdata).then (res =>{
       
         if(res.status == "success"){

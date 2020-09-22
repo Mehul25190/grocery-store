@@ -113,7 +113,8 @@ class OrderReturnDetail extends React.Component {
       'Select Image',
       'Please select Image mediam for pickup.',
       [
-        { text: 'Open Camera', onPress: () => this.Camera(clickIndex) },
+
+        //{ text: 'Open Camera', onPress: () => this.Camera(clickIndex) },
         { text: 'Open Gellary', onPress: () => this.Gellary(clickIndex) },
         {
           text: 'Cancel',
