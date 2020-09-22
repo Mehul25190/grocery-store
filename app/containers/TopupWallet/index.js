@@ -169,7 +169,13 @@ class TopupWallet extends React.Component {
   
 
   }
-
+  topupValueChange(text){
+    //console.log(text);
+    if(text < 250)
+      this.setState({amount: text})
+    else
+      showToast('You can add maximium AED 250', 'danger')
+  }
 
   render(){
     return (
@@ -193,7 +199,8 @@ class TopupWallet extends React.Component {
                       <Label style={styles.amountLabel}>Enter Amount</Label>
                       <Input style={styles.inputStyle}
                         value={this.state.amount} 
-                        onChangeText={(value) => {this.setState({amount:value});} } 
+                        keyboardType='numeric'
+                        onChangeText={(value) => this.topupValueChange(value)}
                         />
              </Item>
          </View>

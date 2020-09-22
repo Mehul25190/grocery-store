@@ -156,13 +156,13 @@ class OrderReturnDetail extends React.Component {
     const File = file.length
     console.log(File)
     const size = Math.round((File / 1024))
-    console.log(size)
-    if (size > 2048) {
+    this.setState({ image: file });
+    /*if (size > 2048) {
       alert(
         "Image size should be less than 2mb");
     } else {
       this.setState({ image: file });
-    }
+    }*/
   }
 
 

@@ -96,8 +96,8 @@ class SubscribeDetail extends React.Component {
                  <Text style={[styles.AmuText,styles.AmuTextTitle]}>{item.itemName}</Text>
                  <Text style={styles.AmuText}>{item.weight} {item.uom}</Text>
                  {/*<Text style={styles.AmuText}>Qty: {item.quantity}</Text>*/}
-                 <Text style={styles.AmuText}>Start Date: {moment(item.startDate).format('DD-MM-YYYY')}</Text>
-                 <Text style={styles.AmuText}>End Date: {moment(item.endDate).format('DD-MM-YYYY')}</Text>
+                 <Text style={styles.AmuText}>Start Date: {moment(item.startDate).format('DD/MM/YYYY')}</Text>
+                 <Text style={styles.AmuText}>End Date: {moment(item.endDate).format('DD/MM/YYYY')}</Text>
                  <Text> <Text style={{}}>{Colors.CUR}</Text> {item.price}</Text>
                 </View>
               </Col>

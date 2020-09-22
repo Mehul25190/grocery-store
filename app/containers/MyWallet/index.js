@@ -129,6 +129,7 @@ class MyWallet extends React.Component {
                             <View style={styles.prodInfo}>
                            {/* <Text style={styles.proTitle}>{item.proName}</Text>*/}
                             <Text  style={styles.proTitle}>{item.orderNumber} </Text>
+                            <Text style={styles.paidTime}>Type: {item.activityType} </Text>
                             <Text style={styles.paidTime}>status: {item.status} </Text>
                              <Text style={styles.paidTime}>{moment(item.date).format('DD MMM YYYY HH:mm')}</Text>
                             

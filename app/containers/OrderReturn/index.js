@@ -19,7 +19,7 @@ import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import {productList} from '../data/data';
-
+import moment from "moment";
 
 class OrderDetail extends React.Component {
 
@@ -172,7 +172,7 @@ class OrderDetail extends React.Component {
                 <Text style={styles.orderTitleText}>Order Date</Text>
               </Col>
               <Col style={styles.orderValue}>
-               <Text style={styles.orderValText}>{(this.state.orderData.length >0 )? this.state.orderData[0].orderDate : ""}</Text>
+               <Text style={styles.orderValText}>{(this.state.orderData.length >0 )? moment(this.state.orderData[0].orderDate).format('DD/MM/YYYY') : ""}</Text>
               </Col>
             </Row>
              <Row style={styles.orderRow}>
@@ -200,7 +200,7 @@ class OrderDetail extends React.Component {
               <Col style={styles.orderValue}>
                 <Text style={styles.orderValText}>
                   <Text style={{fontFamily:'Roboto',color:'gray'}}> 
-                  </Text>{(this.state.orderData.length >0 )? " " + this.state.orderData[0].orderDeliveryDate : ""}</Text>
+                  </Text>{(this.state.orderData.length >0 )? " " + moment(this.state.orderData[0].orderDeliveryDate).format('DD/MM/YYYY') : ""}</Text>
               </Col>
             </Row>
             <Row style={styles.orderRow}>

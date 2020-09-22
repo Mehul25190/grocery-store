@@ -84,8 +84,8 @@ class editSubscribe extends React.Component {
           const subScriDet = res.data.subscriptionDtls[0]
           this.setState({ 
               subscriptionDtls: res.data.subscriptionDtls[0],
-              startDate: moment(subScriDet.startDate).format('MM/DD/YYYY'),
-              endDate: moment(subScriDet.endDate).format('MM/DD/YYYY'),
+              startDate: moment(subScriDet.startDate).format('DD/MM/YYYY'),
+              endDate: moment(subScriDet.endDate).format('DD/MM/YYYY'),
               duration: subScriDet.duration,
               checked: subScriDet.frequency == 'daily' ? 0 : 1,
               excludeWeekend: subScriDet.excludeWeekend,
@@ -105,16 +105,19 @@ class editSubscribe extends React.Component {
    onDurationValueChange(value) {
     this.setState({
       duration: value,
-      endDate: moment(this.state.startDate).add(value, 'days').format('MM/DD/YYYY')
+      endDate: moment(this.state.startDate).add(value, 'days').format('DD/MM/YYYY')
     });
   }
 
   setStartDate(value){
-    this.setState({startDate: value, displaystartDate: moment(value).format('DD MMM YYYY'),  endDate: moment(value).add(this.state.duration, 'days').format('MM/DD/YYYY')})
+    console.log(value)
+    var value = moment(value, 'DD/MM/YYYY')
+    this.setState({startDate: value, displaystartDate: moment(new Date(value)).format('DD MMM YYYY'),  endDate: moment(new Date(value)).add(this.state.duration, 'days').format('DD/MM/YYYY')})
   }
 
   setEndDate(value){
-    this.setState({endDate: moment(value).format('MM/DD/YYYY')})
+    var value = moment(value, 'DD/MM/YYYY')
+    this.setState({endDate: moment(value).format('DD/MM/YYYY')})
   }
 
 
@@ -227,10 +230,10 @@ class editSubscribe extends React.Component {
               <Col style={styles.amulInfo}>
                 <View>
                    <DatePicker
-            minDate={moment(new Date()).format('MM/DD/YYYY')}
+            minDate={moment(new Date()).format('DD/MM/YYYY')}
             locale={"en"}
-            disabled={moment(this.state.startDate).format('MM/DD/YYYY') > moment(new Date()).format('MM/DD/YYYY') ? false : true }
-            format="MM/DD/YYYY"
+            disabled={moment(this.state.startDate).format('DD/MM/YYYY') > moment(new Date()).format('DD/MM/YYYY') ? false : true }
+            format="DD/MM/YYYY"
             onDateChange={this.setStartDate}
             date={this.state.startDate}
             confirmBtnText="Done"
@@ -284,7 +287,7 @@ class editSubscribe extends React.Component {
           <DatePicker
             minDate={this.state.endDate}
             locale={"en"}
-            format="MM/DD/YYYY"
+            format="DD/MM/YYYY"
             onDateChange={this.setEndDate}
             date={this.state.endDate}
             confirmBtnText="Done"

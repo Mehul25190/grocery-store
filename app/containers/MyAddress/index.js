@@ -194,7 +194,11 @@ class MyAddress extends React.Component {
       this.setState({isLoading: false}, function() {
         showToast('Please enter Building Name.','danger');
       });
-    }else {
+    }else if(this.state.buildingType == "0"){
+      this.setState({isLoading: false}, function() {
+        showToast('Please select the Building Type.','danger');
+      });
+    }else{
       //call api
       const formdata = { userId:this.props.user.user.id,
                         cityId:this.state.selectedCity,

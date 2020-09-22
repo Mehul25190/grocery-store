@@ -91,6 +91,7 @@ class ProductDetail extends React.Component {
         if(res.status == "success"){
           this.props.viewCart(this.props.user.user.id).then(res => {
               //showToast('Cart updated successfully.', "success")
+              this.productDetail(productId, this.props.user.user.id);
           }) 
         }
         
@@ -101,6 +102,7 @@ class ProductDetail extends React.Component {
           this.props.viewCart(this.props.user.user.id).then(res => {
             //console.log('dddd', res);
             //showToast('Cart updated successfully.', "success")
+            this.productDetail(productId, this.props.user.user.id);
           }) 
         }
       })
@@ -109,13 +111,11 @@ class ProductDetail extends React.Component {
         if(res.status == "success"){
           this.props.viewCart(this.props.user.user.id).then(res => {
               //showToast('Cart updated successfully.', "success")
+              this.productDetail(productId, this.props.user.user.id);
           }) 
         }
       })
     }
-
-
-    this.productDetail(productId, this.props.user.user.id);
       //this.setState({value: value})
     }
 

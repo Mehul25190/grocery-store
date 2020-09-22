@@ -30,12 +30,13 @@ class MyPayments extends React.Component {
 
   constructor(props) {
     super(props);
+    //console.log(props.user.user);
       this.state = {
       //default value of the date time
       date: '',
       time: '',
       value: null ,
-      switch1Value: props.user.user.useWallet == "Y" ? true : false,
+      switch1Value: (props.user.user.useWallet == "Y" && props.user.user.walletAmount > 0) ? true : false,
       showMyCard:false,
       showAddCard:false,
       paywithcard: false,

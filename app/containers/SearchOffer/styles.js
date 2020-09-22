@@ -332,6 +332,12 @@ categoryStyles: {
    prodInfo:{
     textAlign:'left',
    },
+   proBrand:{
+    fontSize:13,
+     textAlign:'left',
+    marginLeft:1,
+    lineHeight:15
+   },
    proTitle:{
     textAlign:'left',
     marginLeft:1

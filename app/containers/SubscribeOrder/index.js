@@ -73,8 +73,8 @@ class SubscribeOrder extends React.Component {
       itemId: item.id,
       subscriptionDtls: item, 
       subscriptionDtlsImg: {},
-      startDate: moment(new Date()).add(2, 'days').format('MM/DD/YYYY'),
-      endDate: moment(new Date(), "MM/DD/YYYY").add(15, 'days').format('MM/DD/YYYY'), 
+      startDate: moment(new Date()).add(2, 'days').format('DD/MM/YYYY'),
+      endDate: moment(new Date(), "DD/MM/YYYY").add(15, 'days').format('DD/MM/YYYY'), 
       displaystartDate: moment(new Date()).add(2, 'days').format('DD MMM YYYY'),
       excludeWeekend: 0,
     };
@@ -118,16 +118,18 @@ class SubscribeOrder extends React.Component {
   onDurationValueChange(value) {
     this.setState({
       duration: value,
-      endDate: moment(this.startDate).add(value, 'days').format('MM/DD/YYYY')
+      endDate: moment(this.startDate).add(value, 'days').format('DD/MM/YYYY')
     });
   }
 
   setStartDate(value){
-    this.setState({startDate: value, displaystartDate: moment(value).format('DD MMM YYYY'), endDate: moment(value).add(this.state.duration, 'days').format('MM/DD/YYYY')})
+    var value = moment(value, 'DD/MM/YYYY')
+    this.setState({startDate: value, displaystartDate: moment(value).format('DD MMM YYYY'), endDate: moment(value).add(this.state.duration, 'days').format('DD/MM/YYYY')})
   }
 
   setEndDate(value){
-    this.setState({endDate: moment(value).format('MM/DD/YYYY')})
+    var value = moment(value, 'DD/MM/YYYY')
+    this.setState({endDate: moment(value).format('DD/MM/YYYY')})
   }
 
   subscribeSubmitHandler(){
@@ -236,9 +238,9 @@ class SubscribeOrder extends React.Component {
               <Col style={styles.amulInfo}>
                 <View>
                    <DatePicker
-                    minDate={moment(new Date()).add(2, 'days').format('MM/DD/YYYY')}
+                    minDate={moment(new Date()).add(2, 'days').format('DD/MM/YYYY')}
                     locale={"en"}
-                    format="MM/DD/YYYY"
+                    format="DD/MM/YYYY"
                     onDateChange={this.setStartDate}
                     date={this.state.startDate}
                     confirmBtnText="Done"
@@ -290,7 +292,7 @@ class SubscribeOrder extends React.Component {
           <DatePicker
             minDate={this.state.endDate}
             locale={"en"}
-            format="MM/DD/YYYY"
+            format="DD/MM/YYYY"
             onDateChange={this.setEndDate}
             date={this.state.endDate}
             confirmBtnText="Done"

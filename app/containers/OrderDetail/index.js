@@ -21,7 +21,8 @@ import appStyles from '../../theme/appStyles';
 import styles from './styles';
 import {productList} from '../data/data';
 import { showToast } from '../../utils/common';
-
+import moment from "moment";
+import * as productActions from "../../actions/product";
 
 class OrderDetail extends React.Component {
 
@@ -90,6 +91,18 @@ class OrderDetail extends React.Component {
     //this.props.navigation.navigate('ProductList', { para_categoryId:item.id, categoryName: item.categoryName});
     if(this.state.orderData[0].orderStatus == 'CNF') {  
       this.props.navigation.navigate('MyRatings', { item:item });
+    }else{
+      //console.log(item);
+      this.props.productDetail(item.itemId, this.props.user.user.id).then(res => {
+        //console.log(res);
+        if(res.status == "success"){
+          if(res.data.item.length > 0){
+            this.props.navigation.navigate(Screens.ProductDetail.route)
+          }else{
+            showToast('Product detail not found', 'danger');
+          }
+        }
+      });
     }
   
   };
@@ -193,7 +206,7 @@ class OrderDetail extends React.Component {
             <Text style={styles.orderTitleText}> Delivery Date :</Text>
           </Col>
           <Col style={styles.orderValue}>
-           <Text style={styles.orderValText}> {(this.state.orderData.length >0 )? this.state.orderData[0].orderDeliveryDate : ""}</Text>
+           <Text style={styles.orderValText}> {(this.state.orderData.length >0 )? moment(this.state.orderData[0].orderDeliveryDate).format('DD/MM/YYYY') : ""}</Text>
           </Col>
     </Row>
      <Row style={styles.orderRow}>
@@ -300,7 +313,7 @@ class OrderDetail extends React.Component {
                 <Text style={styles.orderTitleText}>Order Date</Text>
               </Col>
               <Col style={styles.orderValue}>
-               <Text style={styles.orderValText}>{(this.state.orderData.length >0 )? this.state.orderData[0].orderDate : ""}</Text>
+               <Text style={styles.orderValText}>{(this.state.orderData.length >0 )? moment(this.state.orderData[0].orderDate).format('DD/MM/YYYY') : ""}</Text>
               </Col>
             </Row>
              <Row style={styles.orderRow}>
@@ -384,6 +397,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
       getOrderDetails: (orderId) => dispatch(userActions.getOrderDetailById({id: orderId})),
       logout: () => dispatch(userActions.logoutUser()),
+      productDetail: (id, userId) => 
+      dispatch(productActions.productDetail({ itemId: id, userId: userId })),
       getAvailableTimeSlots: (areaId, deliverySlot) => dispatch(cartActions.getAvailableTimeSlots({areaId:areaId, deliverySlot:deliverySlot})),
       updateDeliverySlot: (deliverySlot, orderId, deliveryDate) => dispatch(cartActions.updateDeliverySlot({deliverySlot:deliverySlot, orderId:orderId, deliveryDate:deliveryDate})),
    };
