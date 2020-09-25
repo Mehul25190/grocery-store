@@ -111,7 +111,7 @@ class OrderReturnDetail extends React.Component {
   _pickImage = async (clickIndex) => {
     Alert.alert(
       'Select Image',
-      'Please select Image mediam for pickup.',
+      'Please add image of the product(s) you want to return.',
       [
 
         //{ text: 'Open Camera', onPress: () => this.Camera(clickIndex) },

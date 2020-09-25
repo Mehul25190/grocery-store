@@ -252,7 +252,6 @@ class OrderDetail extends React.Component {
           
           <View>
             <Text style={styles.deliveryTitle}>Delivered Item: </Text>
-            <Text style={styles.deliveryDate}>Monday {this.state.date} </Text>
           </View>
         
           <ScrollView>

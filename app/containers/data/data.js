@@ -217,11 +217,11 @@ export const ReturnReason = [
   },
   {
       key:3,
-    reason:'Product is getting smell.'
+    reason:'Product is damaged.'
   },
   {
       key:4,
-    reason:'Product is out of dated.'
+    reason:'Product is out dated.'
   }
 ];
 export const orderList = [

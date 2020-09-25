@@ -316,7 +316,7 @@ class Home extends React.Component {
                   
                   
                   <View style={{flexDirection:'row', flexWrap:'wrap'}}>
-                  <Text style={[styles.shopSubTitleText, {fontWeight:'bold', fontSize:15}]}> { this.state.nextOrderCount!='' ? this.state.nextOrderCount : this.state.nextOrderCount}</Text><Text style={styles.shopSubTitleText}> items to be delivered tomorrow.</Text>
+                  <Text style={[styles.shopSubTitleText, {fontWeight:'bold', fontSize:15}]}> { this.state.nextOrderCount!='' ? this.state.nextOrderCount : this.state.nextOrderCount}</Text><Text style={styles.shopSubTitleText}> item (s) to be delivered tomorrow.</Text>
                   </View>
                   </TouchableOpacity>
               </View>

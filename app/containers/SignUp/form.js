@@ -13,6 +13,12 @@ export const phoneNumber = value =>
     ? 'Please enter valid mobile number'
     : undefined
 
+export const passwordLength = value =>
+ value.length < 8
+ //value && !/^(05)(\+\d{1,3}[- ]?)?\d{8}$/i.test(value)
+    ? 'Password should be 8 characters'
+    : undefined
+
 class SignUpForm extends React.Component {
   constructor(props){
     super(props);
@@ -62,10 +68,10 @@ class SignUpForm extends React.Component {
       <View><Text style={{height:15}}></Text></View>
         <Field 
           name="password" 
-          component={InputBox} 
+          component={InputBox}
            placeholder='Password'
           secureTextEntry={true}
-          validate={[required({msg: `${language.password} ${language.required}`})]}
+          validate={[required({msg: `${language.password} ${language.required}`}), passwordLength]}
         />
       </Form>
     )
