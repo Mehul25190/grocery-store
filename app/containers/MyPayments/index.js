@@ -365,9 +365,8 @@ class MyPayments extends React.Component {
                     </Left>
                     <View style={{borderBottomWidth:0}}>
                       <Text style={styles.payOptions}>Use My Wallet Balance</Text>
-                      <Text style={styles.payOptions}>Current Balance: <Text style={[appStyles.currency,{fontSize:14}]}>{Colors.CUR}</Text> {walletAmount ? walletAmount.toFixed(2) : 0 }</Text>
-                      <Text style={[styles.payCashText,{color:Colors.gray}]}>Turn wallet off to use</Text>
-                      <Text style={[styles.payCashText,{color:Colors.gray}]}>other payment options</Text>
+                      <Text style={styles.payOptions}>Balance: <Text style={[appStyles.currency,{fontSize:14}]}>{Colors.CUR}</Text> {walletAmount ? walletAmount.toFixed(2) : 0 }</Text>
+                      <Text style={[styles.payCashText,{color:Colors.gray, fontSize:8}]}>(Turn wallet off to use other payment options)</Text>
                     </View>
 
                     <TouchableOpacity style={styles.walletBtn} onPress={()=>this.props.navigation.navigate(Screens.TopupWallet.route)}>
