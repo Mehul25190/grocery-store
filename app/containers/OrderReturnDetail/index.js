@@ -181,6 +181,7 @@ class OrderReturnDetail extends React.Component {
       array.splice(index, 1);
       folder.splice(idindex, 1);
       item.splice(itemindex, 1);
+      this.setState({ folder: '', qty: '' });
       return showToast("Please verify ordered quantity ", "danger")
     }
 
@@ -237,7 +238,9 @@ class OrderReturnDetail extends React.Component {
       return;
     }
     */
-
+    if(this.state.folder[0] == '' || this.state.folder[0] == undefined){
+      return showToast('Please enter the qty.', 'danger')
+    }
     // if(validReturnDateTime > )
 
     const { folder, image } = this.state
