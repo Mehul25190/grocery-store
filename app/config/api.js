@@ -4,6 +4,7 @@ export default {
   imageURL: 'http://dev.tieskills.com/foodapp',
   signin: 'user/login',
   signup: 'user/register',
+  forgetPassword: 'user/forgotPassword',
   signupVerifyMobile: 'user/verifyMobile',
   loginVerifyMobile: 'user/verifyOTP',
   signinMobile:'user/login',

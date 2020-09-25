@@ -291,7 +291,7 @@ export const logoutUser = () => dispatch => {
 
 export const forgotpassword = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
-  return axios.post(url.signup,  {payloads: payloads}).then(res => {
+  return axios.get(url.forgetPassword,  {queries: payloads}).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     if(res.status == 200){
       return res.data;

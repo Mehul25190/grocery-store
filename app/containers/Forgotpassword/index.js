@@ -14,6 +14,7 @@ import {
   Input,
   Spinner, Row, Col
 } from 'native-base';
+
 import { connect } from "react-redux";
 import { submit } from 'redux-form';
 import * as Animatable from 'react-native-animatable';
@@ -25,6 +26,7 @@ import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from '../SignIn/styles';
 import ForgotForm from './form';
+import { showToast } from '../../utils/common';
 
 class Forgotpassword extends React.Component {
   constructor(props) {
@@ -32,25 +34,23 @@ class Forgotpassword extends React.Component {
   }
 
   reset(values, dispatch, props){
-    dispatch(userActions.forgotpassword(values))
-      .then(res => {
-        if(res.status == 200){
-          showToast(res.msg,"success");
-          dispatch(NavigationActions.navigate({ routeName: Screens.SignInStack.route }));
-          // this.props.navigation.navigate(Screens.SignInStack.route)
-        }else{
-          showToast(res.msg,"danger");
-        }
+        dispatch(userActions.forgotpassword(values))
+          .then(res => {
+            if(res.status == "success"){
+              showToast("Please check your inbox.","success");
+              dispatch(NavigationActions.back());
+              
+            } else {
+              //console.log("something wrong with varification call");
+              showToast("Something wrong with Server response","danger");
+          }
+
       })
       .catch(error => {
-        const messages = _.get(error, 'response.data.error')
-        message = (_.values(messages) || []).join(',')
-        if (message){
-         showToast(message,"danger");
-       }
-       console.log(`
-          Error messages returned from server:`, messages )
+        console.log('Error messages returned from server', error);
+        showToast("Error messages returned (Next Order) from server"+ error,"danger");
       });
+
   }
 
   render(){

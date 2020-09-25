@@ -78,10 +78,16 @@ class MyPayments extends React.Component {
         cardOption = true;
       }else{
         cardOption = true;
+
+      }
+
+      if(!value){
+        this.setState({paywithcard: true});
       }
       
       this.setState({
            switch1Value: value,
+           showMyCard:cardOption,
            //paywithcard:cardOption,
            cardOption: cardOption, 
            //paywithcash:false
