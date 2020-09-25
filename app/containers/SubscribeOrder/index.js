@@ -186,14 +186,15 @@ class SubscribeOrder extends React.Component {
           <Grid >
             <Row style={styles.firstRow}>
               <Col style={styles.orderTitle}>
-                <Text style={styles.orderTitleText}>Subscribe</Text>
+                <Text style={styles.orderTitleText}>Subscribe </Text>
               </Col>
               <Col style={styles.QtyBox}>
                 <View>
                   <NumericInput 
                    inputStyle={{fontSize:13}}
                       value={this.state.qty} 
-                      onChange={value => this.setState({qty: value})} 
+                      onChange={value => this.setState({qty: value})}
+                      maxValue={this.state.subscriptionDtls.maxOrderQuantity ? this.state.subscriptionDtls.maxOrderQuantity : 5}
                       onLimitReached={(isMax,msg) => console.log(isMax,msg)}
                        minValue={1}
                       totalWidth={95} 
