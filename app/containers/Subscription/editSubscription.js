@@ -30,22 +30,22 @@ import url from '../../config/api';
 const DurationList =[
   {
     key:1,
-    value:15,
+    value:14,
     duration:'15 Days'
   },
   {
     key:2,
-    value:30,
+    value:29,
     duration:'30 Days'
   },
   {
     key:3,
-    value:60,
+    value:59,
     duration:'60 Days'
   },
   {
     key:4,
-    value:180,
+    value:179,
     duration:'180 Days'
   },
  

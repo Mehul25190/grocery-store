@@ -408,7 +408,7 @@ class MyPayments extends React.Component {
                   : null } 
                 {viewCartDetail.codEligibiltyAmt <= totalAmount?
                   <ListItem style={[styles.PayMethodOther,{marginTop:10}]} icon>
-                    <TouchableOpacity style={styles.btn} onPress={()=>{this.setState({paywithcard: false,paywithcash:true})}}>
+                    <TouchableOpacity style={styles.btn} onPress={()=>{this.setState({paywithcard: false,paywithcash:true, showMyCard:false})}}>
                       {/* <Radio type="radio" selected={this.state.selected} color={Colors.primary} selectedColor={Colors.primary}  />*/}
                      
                       {this.state.paywithcash == true && this.state.paywithcard==false?
