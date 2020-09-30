@@ -42,7 +42,7 @@ class Forgotpassword extends React.Component {
               
             } else {
               //console.log("something wrong with varification call");
-              showToast("Something wrong with Server response","danger");
+              showToast("Email is not valid. Please re-enter.","danger");
           }
 
       })

@@ -55,6 +55,7 @@ class Drawer extends React.Component {
   }
   render() {
     const { navigation, user, language, state, deliveryAddress } = this.props;
+    console.log(deliveryAddress);
     const currentRoute = getCurrentRoute(state);
     const userName = this.props.user == null ? '' : this.props.user.name;
     const userEmail = this.props.user == null ? '' : this.props.user.email;
@@ -122,7 +123,7 @@ class Drawer extends React.Component {
             <Body style={{justifyContent:'flex-start',alignItems:'flex-start',paddingBottom:10,marginLeft:10}}>
              <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
               <Text style={appStyles.userArea} > {(deliveryAddress ? (deliveryAddress.aptNo + ",") : "" )} {deliveryAddress ? deliveryAddress.buildingName + ',' : ''}</Text>
-              <Text style={appStyles.userCity} >{deliveryAddress ? deliveryAddress.cityName + ' - ' + deliveryAddress.state : ''} </Text>
+              <Text style={appStyles.userCity} >{deliveryAddress ? deliveryAddress.areaName + ' - ' + deliveryAddress.cityName : ''} </Text>
              </TouchableOpacity>  
             </Body>
 

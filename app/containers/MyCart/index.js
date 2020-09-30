@@ -288,7 +288,7 @@ class MyCart extends React.Component {
                     {(this.state.userAddressDtls ? (this.state.userAddressDtls.aptNo + ",") : "" )} {(this.state.userAddressDtls ? (this.state.userAddressDtls.buildingName + ",") : "")} 
                   </Text>
                   <Text style={[appStyles.userCity, styles.addressText]} >
-                    {this.state.userAddressDtls ? this.state.userAddressDtls.city + ' - ' + this.state.userAddressDtls.state : ''}
+                    {this.state.userAddressDtls ? this.state.userAddressDtls.area + ' - ' + this.state.userAddressDtls.city  : ''}
                   </Text>
 
                 </Body>

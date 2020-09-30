@@ -24,6 +24,7 @@ import {BankList,CardDetails,BankOptions} from '../data/data';
 import { showToast } from '../../utils/common';
 import moment from "moment";
 import { WebView } from 'react-native-webview';
+import url from '../../config/api';
 
 
 class OrderPayment extends React.Component {
@@ -69,8 +70,8 @@ class OrderPayment extends React.Component {
     const useWallet = navigation.getParam('useWallet')
     const saveCard = navigation.getParam('saveCard')
     const autoDebit = navigation.getParam('autoDebit')
-    console.log('http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate='+deliveryDate+'&amount='+100+'&paymentMode='+paymentMode+'&useWallet='+useWallet+'&saveCard='+saveCard+'&autoDebit='+autoDebit)
-    console.log('http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate=%27'+deliveryDate+'%27&amount='+amount+'&paymentMode=%27'+paymentMode+'%27&useWallet=%27'+useWallet+'%27&saveCard=%27'+saveCard+'%27&autoDebit=%27'+autoDebit)
+    console.log(url.paymentURL+'/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate='+deliveryDate+'&amount='+100+'&paymentMode='+paymentMode+'&useWallet='+useWallet+'&saveCard='+saveCard+'&autoDebit='+autoDebit)
+    console.log(url.paymentURL+'/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate=%27'+deliveryDate+'%27&amount='+amount+'&paymentMode=%27'+paymentMode+'%27&useWallet=%27'+useWallet+'%27&saveCard=%27'+saveCard+'%27&autoDebit=%27'+autoDebit)
     return (
       <Container style={appStyles.container}>
            <Header searchBar rounded style={appStyles.headerStyle}>
@@ -99,7 +100,7 @@ class OrderPayment extends React.Component {
          <ScrollView style={{marginLeft:Layout.indent, marginRight:Layout.indent}}>
                   <WebView
                     source={{
-                      uri: 'http://dev.tieskills.com/foodapp/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate=%27'+deliveryDate+'%27&amount='+amount+'&paymentMode=%27'+paymentMode+'%27&useWallet=%27'+useWallet+'%27&saveCard=%27'+saveCard+'%27&autoDebit=%27'+autoDebit
+                      uri: url.paymentURL + '/payment.php?userId='+userId+'&userAddressDtlsId='+userAddressDtlsId+'&deliverySlot='+deliverySlot+'&deliveryDate=%27'+deliveryDate+'%27&amount='+amount+'&paymentMode=%27'+paymentMode+'%27&useWallet=%27'+useWallet+'%27&saveCard=%27'+saveCard+'%27&autoDebit=%27'+autoDebit
                     }}
                     style={{ marginTop: 0, width:Layout.window.width-30, height: Layout.window.height*0.9 }}
                   />

@@ -24,7 +24,7 @@ import {BankList,CardDetails,BankOptions} from '../data/data';
 import { showToast } from '../../utils/common';
 import moment from "moment";
 import { WebView } from 'react-native-webview';
-
+import url from '../../config/api';
 
 class WalletOrderPayment extends React.Component {
 
@@ -88,7 +88,7 @@ class WalletOrderPayment extends React.Component {
          <ScrollView style={{marginLeft:Layout.indent, marginRight:Layout.indent}}>
                   <WebView
                     source={{
-                      uri: 'http://dev.tieskills.com/foodapp/walletRecharge.php?userId='+userId+'&amount='+amount
+                      uri: url.paymentURL + '/walletRecharge.php?userId='+userId+'&amount='+amount
                     }}
                     style={{ marginTop: 0, width:Layout.window.width-30, height: Layout.window.height*0.9 }}
                   />
