@@ -89,7 +89,7 @@ class Forgotpassword extends React.Component {
                            <Button
                             full
                             primary
-                            style={appStyles.btnSecontary}
+                            style={styles.btnSecontary}
                             onPress={() =>  this.props.pressReset()} 
                               >
                             <Text style={styles.SignInbtn}>Reset </Text>

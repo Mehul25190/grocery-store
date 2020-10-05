@@ -251,11 +251,11 @@ export default StyleSheet.create({
   // Input
   itemInput:{
    height:45,
-    backgroundColor:'#f8f8f8',
-    borderRadius:15,
-    borderLeftWidth:1,
-    borderRightWidth:1,
-    borderTopWidth:1,
+    backgroundColor:'transparent',
+    borderRadius:0,
+    borderLeftWidth:0,
+    borderRightWidth:0,
+    borderTopWidth:0,
      borderBottomWidth:1,
     borderColor:'#DADADA',
       

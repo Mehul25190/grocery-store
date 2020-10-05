@@ -169,7 +169,7 @@ class SignInEmail extends React.Component {
                        <Button
                         full
                         primary
-                        style={appStyles.btnSecontary}
+                        style={styles.btnSecontary}
                          onPress={() =>  this.props.pressSignin()}  >
                         <Text style={styles.SignInbtn}>Login </Text>
                       </Button>

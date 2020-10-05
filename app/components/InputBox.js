@@ -25,7 +25,7 @@ const InputBox = ({
   iconStyle={},
 }) => {
   let hasError= false;
-  let iconImg = getFontIcon(icon,iconStyle)||<Icon/>;
+  let iconImg = getFontIcon(icon,iconStyle)||<Icon />;
   if(touched && error){
     hasError= true;
   }

@@ -13,4 +13,17 @@ export default {
   loginForm:{
     paddingRight:Layout.indent
   },
+  
+  btnSecontary:{
+    backgroundColor:'#333333',
+    fontFamily: 'Font-Regular',
+    borderRadius:20,
+    marginLeft: Layout.indent,
+    marginRight: Layout.indent,
+    marginTop:20,
+    fontSize:30,
+    fontWeight:'bold',
+    marginBottom:10
+
+  },
 };

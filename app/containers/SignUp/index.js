@@ -97,7 +97,7 @@ class SignUp extends React.Component {
                       <Button
                         full
                         primary
-                        style={appStyles.btnSecontary}
+                        style={styles.btnSecontary}
                         onPress={() => this.props.pressSignup()}  >
                         <Text style={styles.SignInbtn}>SignUp </Text>
                       </Button>

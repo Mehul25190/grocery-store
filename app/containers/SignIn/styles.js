@@ -70,7 +70,7 @@ export default {
   },
   linkTextEmail:{
     textTransform:'capitalize',
-    color:Colors.primary2,
+    color:'#333333',
     fontSize:14,
     lineHeight:20,
     paddingVertacal:10,
@@ -119,12 +119,26 @@ export default {
     // backgroundColor:'#333'
   },
   SignInbtn:{
-    fontSize:22,
+    fontSize:18,
     lineHeight:33,
     textTransform:'capitalize',
-    color:Colors.primary2,
+    color:'#ffffff',
     fontFamily:'Font-Regular'
    },
+
+
+  btnSecontary:{
+    backgroundColor:'#333333',
+    fontFamily: 'Font-Regular',
+    borderRadius:20,
+    marginLeft: Layout.indent,
+    marginRight: Layout.indent,
+    marginTop:20,
+    fontSize:30,
+    fontWeight:'bold',
+    marginBottom:10
+
+  },
      
   loginWith:{
     marginLeft:Layout.indent,
@@ -135,7 +149,7 @@ export default {
 
   },
   loginWithText:{
-    color:Colors.primary2,
+    color:'#333333',
     padding:0,
     fontSize:18,
     fontFamily:'Font-Medium',

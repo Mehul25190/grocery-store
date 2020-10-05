@@ -22,6 +22,8 @@ class SignInFormEmail extends React.Component {
           name="email" 
           component={InputBox}
           placeholder='Email'
+          icon='user'
+          iconStyle={{paddingLeft:15, color:'#333333'}}
           keyboardType={'email-address'}
           validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
         />
@@ -31,6 +33,8 @@ class SignInFormEmail extends React.Component {
           component={InputBox} 
           placeholder='Password'
           secureTextEntry={true}
+          icon='lock'
+          iconStyle={{paddingLeft:15, color:'#333333'}}
           validate={[required({msg: `${language.password} ${language.required}`})]}
         />
       </Form>

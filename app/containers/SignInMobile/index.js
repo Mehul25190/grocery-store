@@ -109,9 +109,9 @@ class SignInMobile extends React.Component {
                        <Button
                         full
                         primary
-                        style={appStyles.btnSecontary}
+                        style={styles.btnSecontary}
                          onPress={() =>  this.props.pressSigninVerify()}  >
-                        <Text style={styles.SignInbtn}>Login<Text style={{  textTransform:'none',fontSize:22,  lineHeight:33, fontFamily:'Font-Regular',  color:'#00545F',}}> using OTP</Text> </Text>
+                        <Text style={styles.SignInbtn}>Login<Text style={{  textTransform:'none',fontSize:18,  lineHeight:33, fontFamily:'Font-Regular',  color:'#ffffff',}}> using OTP</Text> </Text>
                       </Button>
                        </TouchableOpacity>
                   }
