@@ -380,9 +380,10 @@ class Home extends React.Component {
               <View style={{flex:1,paddingLeft:10, flexDirection:'row', backgroundColor:'#D7ECDD', paddingTop:5, paddingBottom:5, paddingRight:10, justifyContent:'flex-end'}}>
 
                   <Text style={styles.pendingDays}>Your free delivery offer ends in {subscriptionRemainingDays} days..!</Text>
-                  <TouchableOpacity style={{textAlign:'right'}}  onPress={()=>{ this.openFreeDeliveryPopup() }} >
+                 { /* <TouchableOpacity style={{textAlign:'right'}}  onPress={()=>{ this.openFreeDeliveryPopup() }} > 
                   <Icon type="AntDesign" name="exclamationcircle" style={styles.infoCircle} />
               </TouchableOpacity>
+              */ }
               </View>
               </Grid>
            { <FlatList 

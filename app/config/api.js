@@ -5,7 +5,7 @@ export default {
   //liveURL: 'https://dev.myallaadin.com/services/',
   //liveImgURL: 'https://dev.myallaadin.com',
 
-  paymentURL:'http://portal.tieskills.com/foodapp/',
+  paymentURL:'http://dev.tieskills.com/foodapp',
   apiBaseUrl:'http://portal.tieskills.com/foodapp/services/',
   imageURL: 'http://portal.tieskills.com/foodapp/',
   signin: 'user/login',
