@@ -56,7 +56,8 @@ class WalletOrderPayment extends React.Component {
   render(){
     const {navigation, totalItem} = this.props;
     const userId = navigation.getParam('userId')
-    const amount = navigation.getParam('amount')
+    const amount = navigation.getParam('amount')*100;
+    console.log(amount);
     
    return (
       <Container style={appStyles.container}>
@@ -90,6 +91,7 @@ class WalletOrderPayment extends React.Component {
                     source={{
                       uri: url.paymentURL + '/walletRecharge.php?userId='+userId+'&amount='+amount
                     }}
+                    //style={{ marginTop: 0, width:Layout.window.width-30, height: Layout.window.height*0.9 }}
                     style={{ marginTop: 0, width:Layout.window.width-30, height: Layout.window.height*0.9 }}
                   />
          
