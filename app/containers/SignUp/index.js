@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image,TouchableOpacity} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image,TouchableOpacity, Alert} from 'react-native'
 import _ from 'lodash';
 import { NavigationActions } from 'react-navigation';
 import {
@@ -68,6 +68,30 @@ class SignUp extends React.Component {
       console.log(`Error messages returned from server:`, messages )
     });
   }
+  
+  signinGuestUser(){
+    Alert.alert(
+      "Explore App",
+      "Welcome to MyAllaadin. Kindly explore the app, however no transaction will be placed or saved until you register with your original & verified  details .",
+      [
+        
+        {
+          text: "No",
+        },
+        { text: "Yes", onPress: () => this.signinGuestExplore()}
+      ],
+      { cancelable: false }
+    );
+  }
+
+  signinGuestExplore(){
+    this.props.signinExplore().then(res => {
+      console.log('ssss', res);
+      if(res.status == 'success'){
+        this.props.navigation.navigate(Screens.SignInStack.route);
+      }
+    });
+  }
 
   render(){
     const { language } = this.props;
@@ -102,7 +126,7 @@ class SignUp extends React.Component {
                         <Text style={styles.SignInbtn}>SignUp </Text>
                       </Button>
                   }
-                   <Row style={{marginBottom:50}}>
+                   <Row style={{marginBottom:40}}>
                      <Col>
                         <Button transparent full  
                          style={[{justifyContent:'center'}]} >
@@ -113,6 +137,16 @@ class SignUp extends React.Component {
                       </Col>
                      
                     </Row>
+                    <Row style={{marginBottom:60}}>
+                     <Col>
+                        <Button transparent full     
+                         style={[{justifyContent:'center'}]} >
+                          <TouchableOpacity  onPress={() => this.signinGuestUser()}>
+                          <Text  style={styles.loginWithText} >I just want to explore</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>
+                    </Row>  
                 </Animatable.View>  
             </View>    
         </ImageBackground>      
@@ -134,6 +168,7 @@ const mapDispatchToProps = (dispatch) => {
   // Action
     return {
       pressSignup: () => dispatch(submit('signupForm')),
+      signinExplore: () => dispatch(userActions.signinExplore()),
    };
 };
 
