@@ -548,3 +548,23 @@ export const nextOrderCount = payloads => dispatch => {
     });
 }
 
+export const signinExplore = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.signinExplore,  {queries: payloads}).then(res => {
+    
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //console.log("sign in mobile");
+    //console.log(res);
+    if(res.status == 200){
+      if(res.data.status=="success"){
+        dispatch({ type: ActionTypes.MOBILENO, data: payloads.mobileNo });
+        //dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
+        //dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
+      }
+      return res.data
+    } else {
+      return res
+    }
+  });
+}
+

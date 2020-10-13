@@ -58,4 +58,6 @@ export default {
   fetchOrderItemsCount:'order/fetchOrderItemsCount',
   fetchItemsByOffer: 'offer/fetchItemsByOffer',
   fetchUserOffer:'offer/fetchOffersOnLandingPage',
+  signinExplore:'user/explore',
+
 }

@@ -50,6 +50,32 @@ class SignInMobile extends React.Component {
     this.props.navigation.navigate(Screens.ForgotPassword.route)
   }
 
+
+  signinExplore(){
+    
+    
+    dispatch(userActions.signinExplore()).then(res => {
+      console.log('expore signin');
+      //console.log(res);
+      if(res.status == "success"){
+        showToast(res.message,"success");
+        dispatch(NavigationActions.navigate({
+            routeName: Screens.Verification.route,params:{para_email: ''} 
+          }
+          ));
+
+      }else{
+        showToast(res.message,"danger");
+      }
+    }).catch(error => {
+      const messages = _.get(error, 'response.data.error')
+      message = (_.values(messages) || []).join(',')
+      if (message){
+       showToast(message,"danger");
+      }
+      console.log(`Error messages returned from server:`, messages )});
+  }
+
   signinmobile(values, dispatch, props){
     
     values.isEmail = "0";
@@ -121,6 +147,18 @@ class SignInMobile extends React.Component {
                     animation="fadeIn"
                      delay={1200} 
                     style={[styles.loginWith,styles.loginWithMob]} >
+
+                    <Row style={{marginBottom:60}}>
+                     <Col>
+                        <Button transparent full     
+                         style={[{justifyContent:'center'}]} >
+                          <TouchableOpacity  onPress={() => this.onSignupButtonPressHandler()}>
+                          <Text  style={styles.loginWithText} >I just want to explore</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>
+                      
+                    </Row>  
 
                     <Row style={{marginBottom:60}}>
                      <Col>
