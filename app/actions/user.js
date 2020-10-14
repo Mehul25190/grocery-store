@@ -553,12 +553,12 @@ export const signinExplore = payloads => dispatch => {
   return axios.get(url.signinExplore,  {queries: payloads}).then(res => {
     
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    //console.log("sign in mobile");
-    //console.log(res);
+    console.log("sign in mobile");
+    console.log(res.data.data.user);
     if(res.status == 200){
       if(res.data.status=="success"){
-        dispatch({ type: ActionTypes.MOBILENO, data: payloads.mobileNo });
-        //dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
+        //dispatch({ type: ActionTypes.MOBILENO, data: payloads.mobileNo });
+        dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
         //dispatch({ type: ActionTypes.SIGNIN, data: res.data.data });
       }
       return res.data

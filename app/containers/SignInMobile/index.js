@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image, TouchableWithoutFeedback, TouchableOpacity} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableWithoutFeedback, TouchableOpacity, Alert} from 'react-native'
 import _ from 'lodash'; 
 import { NavigationActions } from 'react-navigation';
 import {
@@ -74,6 +74,30 @@ class SignInMobile extends React.Component {
        showToast(message,"danger");
       }
       console.log(`Error messages returned from server:`, messages )});
+  }
+
+  signinGuestUser(){
+    Alert.alert(
+      "Explore App",
+      "Welcome to MyAllaadin. Kindly explore the app, however no transaction will be placed or saved until you register with your original & verified  details .",
+      [
+        
+        {
+          text: "No",
+        },
+        { text: "Yes", onPress: () => this.signinGuestExplore()}
+      ],
+      { cancelable: false }
+    );
+  }
+
+  signinGuestExplore(){
+    this.props.signinExplore().then(res => {
+      console.log('ssss', res);
+      if(res.status == 'success'){
+        this.props.navigation.navigate(Screens.SignInStack.route);
+      }
+    });
   }
 
   signinmobile(values, dispatch, props){
@@ -152,7 +176,7 @@ class SignInMobile extends React.Component {
                      <Col>
                         <Button transparent full     
                          style={[{justifyContent:'center'}]} >
-                          <TouchableOpacity  onPress={() => this.onSignupButtonPressHandler()}>
+                          <TouchableOpacity  onPress={() => this.signinGuestUser()}>
                           <Text  style={styles.loginWithText} >I just want to explore</Text>
                           </TouchableOpacity>
                         </Button>
@@ -223,6 +247,8 @@ const mapDispatchToProps = (dispatch) => {
       pressSigninVerify: () => dispatch(submit('signinFormMobile')),
       pressSigninEmail: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInEmail.route })),
       setLanguage: () => dispatch(userActions.setLanguage({id:1,set:1})),
+      signinExplore: () => dispatch(userActions.signinExplore()),
+      
    };
 };
 
