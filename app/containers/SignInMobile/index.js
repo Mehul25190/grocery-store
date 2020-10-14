@@ -60,7 +60,7 @@ class SignInMobile extends React.Component {
       if(res.status == "success"){
         showToast(res.message,"success");
         dispatch(NavigationActions.navigate({
-            routeName: Screens.Verification.route,params:{para_email: ''} 
+           // routeName: Screens.Verification.route,params:{para_email: ''} 
           }
           ));
 
