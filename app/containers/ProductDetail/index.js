@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, ActivityIndicator} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, ActivityIndicator, Dimensions} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers, } from '../../components';
@@ -24,6 +24,7 @@ import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
 import { AirbnbRating } from 'react-native-ratings';
 import Carousel,{Pagination } from 'react-native-snap-carousel';
+import ImageModal from 'react-native-image-modal';
 import { showToast } from '../../utils/common';
 
 import url from '../../config/api';
@@ -155,10 +156,9 @@ class ProductDetail extends React.Component {
   _renderItem = ({item, index}) => {
     //console.log('item', item)
         return (
-           <View>
-            <Image source={{ uri: url.imageURL + item.imagePath }} style={styles.amulMoti} />
-          </View>
-          
+           <View style={{flex:1, flexDirection:'row', justifyContent:'center'}}>
+            <ImageModal resizeMode="contain" source={{ uri: url.imageURL + item.imagePath }} style={styles.amulMoti}/>
+          </View> 
         );
     }
      get pagination () {
