@@ -103,9 +103,11 @@ class editSubscribe extends React.Component {
     };
 
    onDurationValueChange(value) {
+    // alert(value);
+     var s_Date = moment(this.state.startDate, 'DD/MM/YYYY')
     this.setState({
       duration: value,
-      endDate: moment(this.state.startDate).add(value, 'days').format('DD/MM/YYYY')
+      endDate: moment(s_Date).add(value, 'days').format('DD/MM/YYYY')
     });
   }
 
@@ -130,12 +132,19 @@ class editSubscribe extends React.Component {
       showToast("Please select end date","danger");
       return;
     }
+
+    var sd = moment(this.state.startDate, 'DD/MM/YYYY');
+    var start_date = moment(sd).format('MM/DD/YYYY');
+
+    var ed = moment(this.state.endDate, 'DD/MM/YYYY');
+    var end_date = moment(ed).format('MM/DD/YYYY');
+
     const data = {
       id: this.state.itemId,
       userAddressDtlsId: this.props.deliveryAddress.id,
       itemId: this.state.itemId,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate,
+      startDate: start_date,
+      endDate: end_date,
       duration: this.state.duration,
       frequency: this.state.checked == 0  ? 'daily' : 'alternate',
       excludeWeekend: this.state.excludeWeekend,
