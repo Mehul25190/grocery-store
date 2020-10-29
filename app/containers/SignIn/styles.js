@@ -145,20 +145,20 @@ export default {
   backgroundColor: '#B3B3B3',
   height: 2,
   width: Layout.width,
- marginTop:10,
+ marginTop:20,
 },
 
 loginButtonBelowText1: {
-  bottom:18,
+  bottom:30,
   fontSize: 14,
-  margin:10,
+  margin:10, marginBottom:0, marginTop:3,
   zIndex: 1,
   color: '#787878',
 
  textAlign:'center',
   width:Layout.width,
    justifyContent:'center',
-  height:8,
+  height:40,
   alignItems:'center'
   
 },

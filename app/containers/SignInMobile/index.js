@@ -172,24 +172,17 @@ class SignInMobile extends React.Component {
                      delay={1200} 
                     style={[styles.loginWith,styles.loginWithMob]} >
 
-                    <Row style={{marginBottom:60}}>
-                     <Col>
-                        <Button transparent full     
-                         style={[{justifyContent:'center'}]} >
-                          <TouchableOpacity  onPress={() => this.signinGuestUser()}>
-                          <Text  style={styles.loginWithText} >I just want to explore</Text>
-                          </TouchableOpacity>
-                        </Button>
-                      </Col>
-                      
-                    </Row>  
+                     
 
                     <Row style={{marginBottom:60}}>
                      <Col>
                         <Button transparent full     
                          style={[{justifyContent:'center'}]} >
+                           
                           <TouchableOpacity  onPress={() => this.onSignupButtonPressHandler()}>
-                          <Text  style={styles.loginWithText} >Signup</Text>
+                          <Text  style={{Color:'#cccccc',fontSize:17}} >( Don't have an account? ) - 
+                            <Text style={styles.loginWithText} > Signup</Text>
+                          </Text>
                           </TouchableOpacity>
                         </Button>
                       </Col>
@@ -211,6 +204,18 @@ class SignInMobile extends React.Component {
 
                     <Text style={styles.loginWithText}>Login with email</Text>
                     </TouchableOpacity>
+
+                    <Row style={{marginBottom:60, marginTop:10}}>
+                     <Col>
+                        <Button transparent full     
+                         style={[{justifyContent:'center'}]} >
+                          <TouchableOpacity  onPress={() => this.signinGuestUser()}>
+                          <Text  style={[styles.loginWithText,{textDecorationLine:'underline'}]} >I just want to explore</Text>
+                          </TouchableOpacity>
+                        </Button>
+                      </Col>
+                      
+                    </Row> 
                     
                     
                  </Animatable.View>

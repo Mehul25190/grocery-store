@@ -131,18 +131,21 @@ class SignUp extends React.Component {
                         <Button transparent full  
                          style={[{justifyContent:'center'}]} >
                           <TouchableOpacity  onPress={() => this.onSigninButtonPressHandler()}>
-                          <Text  style={styles.loginWithText}  >Login</Text>
+                          <Text  style={{Color:'#cccccc',fontSize:17}} >( Already have an account? ) - 
+                            <Text style={styles.loginWithText} > Login</Text>
+                          </Text>
+                          
                           </TouchableOpacity>
                         </Button>
                       </Col>
                      
                     </Row>
-                    <Row style={{marginBottom:60}}>
+                    <Row style={{marginBottom:60,marginTop:10}}>
                      <Col>
                         <Button transparent full     
                          style={[{justifyContent:'center'}]} >
                           <TouchableOpacity  onPress={() => this.signinGuestUser()}>
-                          <Text  style={styles.loginWithText} >I just want to explore</Text>
+                          <Text  style={[styles.loginWithText,{textDecorationLine:'underline'}]} >I just want to explore</Text>
                           </TouchableOpacity>
                         </Button>
                       </Col>

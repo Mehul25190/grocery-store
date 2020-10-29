@@ -220,17 +220,17 @@ class SignInEmail extends React.Component {
                         <Button transparent full     
                          style={[{justifyContent:'center'}]} >
                         <TouchableOpacity  onPress={() =>  this.onSigninotpPressHandler()}>
-                            <Text style={styles.loginWithText}>Login with OTP</Text>
+                            <Text style={styles.loginWithText}>Login with Mobile</Text>
                         </TouchableOpacity>
                         </Button>
                       </Col>
                     </Row>
-                    <Row style={{marginBottom:60}}>
+                    <Row style={{marginBottom:50, marginTop:10,}}>
                      <Col>
                         <Button transparent full     
                          style={[{justifyContent:'center'}]} >
                           <TouchableOpacity  onPress={() => this.signinGuestUser()}>
-                          <Text  style={styles.loginWithText} >I just want to explore</Text>
+                          <Text  style={[styles.loginWithText,{textDecorationLine:'underline'}]} >I just want to explore</Text>
                           </TouchableOpacity>
                         </Button>
                       </Col>
