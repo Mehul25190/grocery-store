@@ -364,7 +364,7 @@ class MyPayments extends React.Component {
                        value = {this.state.switch1Value}/>
                     </Left>
                     <View style={{borderBottomWidth:0}}>
-                      <Text style={styles.payOptions}>Use My Wallet Balance</Text>
+                      <Text style={styles.payOptionswalletb}>Use My Wallet Balance</Text>
                       <Text style={styles.payOptions}>Balance: <Text style={[appStyles.currency,{fontSize:14}]}>{Colors.CUR}</Text> {walletAmount ? walletAmount.toFixed(2) : 0 }</Text>
                       <Text style={[styles.payCashText,{color:Colors.gray, fontSize:8}]}>(Turn wallet off to use other payment options)</Text>
                     </View>

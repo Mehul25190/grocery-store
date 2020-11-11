@@ -51,7 +51,7 @@ class SignUpForm extends React.Component {
       </Row>
 
          <Field 
-          placeholder='Mobile Number'
+          placeholder='Enter mobile starting 05'
           name="mobileNo" 
           component={InputBox} 
           keyboardType={'numeric'}

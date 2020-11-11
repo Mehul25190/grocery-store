@@ -149,14 +149,14 @@ paddingHorizontal:7,
 fontFamily:'Font-Medium'
 },
 ItemList:{
-  borderColor:Colors.secondary,
+  borderColor:Colors.white,
   marginRight:Layout.indent,
   borderBottomWidth:1.2,
   marginBottom:0,
   paddingBottom:5
 },
 TotalList:{
-  borderColor:Colors.primary,
+  borderColor:Colors.secondary,
   marginRight:Layout.indent,
   borderBottomWidth:1.2,
   marginBottom:0,

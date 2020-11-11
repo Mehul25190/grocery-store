@@ -111,7 +111,7 @@ const LoginStack = createStackNavigator({
   [Screens.ForgotPassword.route]: { screen: Forgotpassword },
 }, {
   headerMode: 'none',
-  initialRouteName: Screens.SignInMobile.route,
+  initialRouteName: Screens.SignUp.route,
   transitionConfig: transitionConfig
 });
 

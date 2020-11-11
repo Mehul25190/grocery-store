@@ -241,9 +241,7 @@ class SearchProduct extends React.Component {
            { totalItem >0 && (<Text style={appStyles.cartCount}>{totalItem}</Text>) }
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
-           <Icon style={appStyles.userIcon} name="user-circle"  type="FontAwesome" />      
-          </TouchableOpacity> 
+         
           
         </Button>
       </Right>

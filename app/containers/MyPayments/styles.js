@@ -85,7 +85,12 @@ walletBtnText:{
 	fontFamily:'Font-Medium'
 },
 payOptions:{
-	fontSize:14,
+	fontSize:13,
+	fontFamily:'Font-Medium',
+	lineHeight:18
+},
+payOptionswalletb:{
+	fontSize:12,
 	fontFamily:'Font-Medium',
 	lineHeight:18
 },

@@ -23,7 +23,7 @@ class SignInFormMobile extends React.Component {
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
         <Field 
           type="number"
-          placeholder="Mobile Number"
+          placeholder="Enter mobile starting 05"
           name="mobileNo" 
           component={InputBox} 
           keyboardType={'numeric'}
