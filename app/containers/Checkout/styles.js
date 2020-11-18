@@ -156,7 +156,7 @@ ItemList:{
   paddingBottom:5
 },
 TotalList:{
-  borderColor:Colors.secondary,
+  borderColor:Colors.white,
   marginRight:Layout.indent,
   borderBottomWidth:1.2,
   marginBottom:0,

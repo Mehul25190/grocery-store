@@ -34,16 +34,15 @@ clickBtn:{
     //backgroundColor:Colors.primary,
     borderRadius:25,
     paddingLeft:Layout.indent,
-    paddingRight:Layout.indent
   },
   totalText:{
     color:Colors.black,
     fontFamily:'Font-Medium',
-    fontSize:16
+    fontSize:15
   },
 Amount:{
-  fontSize:18,
-  color:Colors.black,
+  fontSize:15,
+  color:Colors.black, fontWeight:'bold',
   fontFamily:'Font-Medium'
 },
 subscibed:{
@@ -109,7 +108,7 @@ orderSummary:{
   
   marginLeft:Layout.indent,
   marginRight:Layout.indent,
-  fontFamily:'Font-Medium',
+  fontFamily:'Font-Medium', fontSize:15,
 
 },
  deliveryAddress:{

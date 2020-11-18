@@ -315,13 +315,12 @@ class MyCart extends React.Component {
                   </Col>*/}
               </Row>
               <Row>
-                <Col>
+                <Col style={{ width:'39%'}}>
                   <Text style={styles.title}>Total items: {totalItem}</Text>
                 </Col>
-                <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end', width: Layout.window.width / 1.8 }}>
+                <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end', alignSelf:'flex-end', width:'60%'}}>
                   <View style={styles.totalAmount}>
-                    <Text style={styles.totalText}>Total Amount </Text>
-                    <Text style={styles.totalText}><Text  style={styles.Amount}> {Colors.CUR} </Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
+                    <Text style={styles.totalText}>Total Amount <Text  style={styles.Amount}> {Colors.CUR} </Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
                   </View>
                 </Col>
               </Row>

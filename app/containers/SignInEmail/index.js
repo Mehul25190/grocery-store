@@ -225,12 +225,12 @@ class SignInEmail extends React.Component {
                         </Button>
                       </Col>
                     </Row>
-                    <Row style={{marginBottom:50, marginTop:10,}}>
+                    <Row style={{marginBottom:50,}}>
                      <Col>
                         <Button transparent full     
                          style={[{justifyContent:'center'}]} >
                           <TouchableOpacity  onPress={() => this.signinGuestUser()}>
-                          <Text  style={[styles.loginWithText,{textDecorationLine:'underline'}]} >I just want to explore</Text>
+                          <Text  style={[styles.loginWithText,{textDecorationLine:'underline', fontSize:14}]} >I just want to explore</Text>
                           </TouchableOpacity>
                         </Button>
                       </Col>

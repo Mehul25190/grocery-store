@@ -266,10 +266,17 @@ class SearchProduct extends React.Component {
 
                       <View style={{ backgroundColor: foodType, height:9, width:9, borderRadius:10, marginTop: 0,}}></View>
                     <Left style={styles.ListLeft}>
+                    <TouchableOpacity
+                        style={styles.prodInfo}
+                        onPress={() =>
+                          this.productDetail(item.id)
+                        }
+                      >
                       <Image
                         style={styles.proImage}
                         source={{ uri: url.imageURL + item.imagePath }}
                       />
+                      </TouchableOpacity>
                     </Left>
                     <Body>
                       <TouchableOpacity
@@ -364,8 +371,8 @@ class SearchProduct extends React.Component {
                               console.log(isMax, msg)
                             }
                             minValue={0}
-                            totalWidth={95}
-                            totalHeight={30}
+                            totalWidth={100}
+                            totalHeight={35}
                             iconSize={30}
                             borderColor={Colors.primary}
                             inputStyle={{ fontSize: 15 }}
@@ -373,7 +380,7 @@ class SearchProduct extends React.Component {
                             valueType="real"
                             rounded
                             textColor={Colors.primary}
-                            iconStyle={{ color: Colors.primary, fontSize: 20 }}
+                            iconStyle={{ color: Colors.primary, fontSize: 25 }}
                             rightButtonBackgroundColor="#fff"
                             leftButtonBackgroundColor="#fff"
                           />) : 

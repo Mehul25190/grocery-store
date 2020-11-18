@@ -279,7 +279,7 @@ class ProductDetail extends React.Component {
 
         <Grid>
          <Row>
-         <Col style={{flex:0}}>
+         <Col style={{flex:0, width:'50%'}}>
 
           <View style={styles.pricePart}>
 
@@ -289,7 +289,7 @@ class ProductDetail extends React.Component {
          </Col>
                       {ProductDetail.item[0].outOfStock == 'Y' ? 
                          (<Col style={{paddingTop:10, width:200, alignItems:'flex-end'}}><Text style={styles.outofstock}>Out of Stock</Text></Col>) : 
-                      ( <Col style={{paddingTop:10, width:200, alignItems:'flex-end'}}>
+                      ( <Col style={{paddingTop:10, width:'50%', alignItems:'flex-end',}}>
             {this.state.selctedProduct == ProductDetail.item[0].id ? <ActivityIndicator style={{marginRight: 20}}/> : 
               (<View  style={styles.reasonView}>
                 {ProductDetail.item[0].cartQty > 0 ?
@@ -302,16 +302,16 @@ class ProductDetail extends React.Component {
                     }
                     minValue={0}
                     maxValue={ProductDetail.item[0].maxOrderQuantity ? ProductDetail.item[0].maxOrderQuantity : 5}
-                    totalWidth={120}
-                    totalHeight={35}
-                    iconSize={30}
+                    totalWidth={130}
+                    totalHeight={40}
+                    iconSize={35}
                     borderColor={Colors.primary}
-                    inputStyle={{ fontSize: 15 }}
+                    inputStyle={{ fontSize: 16 }}
                     step={1}
                     valueType="real"
                     rounded
                     textColor={Colors.primary}
-                    iconStyle={{ color: Colors.primary, fontSize: 20 }}
+                    iconStyle={{ color: Colors.primary, fontSize: 25 }}
                     rightButtonBackgroundColor="#fff"
                     leftButtonBackgroundColor="#fff"
                   />) : 
@@ -356,11 +356,18 @@ class ProductDetail extends React.Component {
           </Button>
         </TouchableOpacity>*/}
 
-        <View style={styles.okayBtnArea}>
-          <Button priamary full style={styles.doneBtn} onPress={()=> this.props.navigation.navigate(Screens.Home.route)}>
-             <Text style={styles.btnTextDone}>Continue Shopping</Text>
-          </Button>
-        </View>
+        <Row style={styles.okayBtnArea}>
+          <Col>
+            <Button priamary full style={styles.doneBtn} onPress={()=> this.props.navigation.navigate(Screens.Home.route)}>
+               <Text style={[styles.btnTextDone,{fontSize:12, fontWeight:'bold'}]}>Continue Shopping</Text>
+            </Button>
+          </Col>
+          <Col>
+            <Button priamary full style={styles.doneBtn} onPress={()=> this.props.navigation.navigate(Screens.Home.route)}>
+               <Text style={[styles.btnTextDone,{fontSize:12, fontWeight:'bold'}]}>View Cart</Text>
+            </Button>
+          </Col>
+        </Row>
            
         </Content>
       
