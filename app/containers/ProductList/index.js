@@ -38,6 +38,7 @@ import {
   Right,
   Thumbnail,
   Spinner,
+   Icon,
 } from "native-base";
 import url from "../../config/api";
 import { ItemList } from "../data/data";
@@ -373,6 +374,9 @@ class ProductList extends React.Component {
                         source={{ uri: url.imageURL + item.imagePath }}
                       />
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.heartoSection}>
+                      <Icon name='hearto' type='AntDesign' style={styles.hearto} /> 
+                      </TouchableOpacity>
                     </Left>
                     <Body>
                       <TouchableOpacity

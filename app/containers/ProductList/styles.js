@@ -308,6 +308,10 @@ categoryStyles: {
      flex: 0,
     paddingLeft:0,
     width: 90,
+    position:'relative'
+   },
+   heartoSection:{
+    position:'absolute'
    },
 
    ListRight:{
