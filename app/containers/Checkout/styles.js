@@ -160,8 +160,8 @@ TotalList:{
   marginRight:Layout.indent,
   borderBottomWidth:1.2,
   marginBottom:0,
-  paddingBottom:8,
-  paddingTop:8
+  paddingBottom:0,
+  paddingTop:0
 },
 
 TotalBar:{
@@ -210,13 +210,11 @@ orderQty:{
 },
 OrderPrice:{
   fontFamily:'Font-Medium',
-  fontSize:16
+  fontSize:16, alignSelf:'flex-end',
 },
 checkOutBtnArea:{
-  marginLeft:Layout.indent,
-  marginRight:Layout.indent,
-    paddingLeft:Layout.indent,
-  paddingRight:Layout.indent,
+  marginLeft:10,
+  marginRight:10,
   marginTop:10,
   marginBottom:10
 
@@ -229,10 +227,18 @@ checkOutBtnArea:{
  },
  checkOutText:{
   fontFamily:'Font-Medium',
-  fontSize:20,
+  fontSize:13, fontWeight:'bold',
   lineHeight:28,
   color:Colors.primary,
   textTransform:'capitalize'
- }
+ },
+ checkOutTextpay:{
+  fontFamily:'Font-Medium',
+  fontSize:18, fontWeight:'bold',
+  lineHeight:28,
+  color:Colors.primary,
+  textTransform:'capitalize'
+ },
+ cartcurrency: { borderColor:'#ff0000', borderBottomWidth:1, backgroundColor:'#ff0000', width:30},
 
 };

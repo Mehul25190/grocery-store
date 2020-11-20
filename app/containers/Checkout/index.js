@@ -345,53 +345,70 @@ class Checkout extends React.Component {
                       })}
    {/* Sub Total */} 
                         <ListItem style={[styles.TotalList,{marginTop:10}]}>
-                          <Left>
-                              <Text style={styles.TotalText}>Subtotal</Text>
-                          </Left>
-                         
-                          <Body style={styles.TotalBar}>
-                              <Text></Text>   
-                          </Body>
 
-                          <View>
-                           <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{Colors.CUR}</Text> {totalAmount.toFixed(2)}</Text>
+                          <View style={{flex: 1, flexDirection: 'row'}}>
+                            <View style={{width: 210,}}>
+                              <Text style={[styles.TotalText, {alignSelf:'flex-start'}]}>Subtotal</Text>
+                            </View>
+                            <View style={{width: 55,}}>
+                              <Text style={[appStyles.currency, {alignSelf:'flex-end'}]}>{Colors.CUR}</Text>
+                            </View>
+                            <View style={{width: 75,}}>
+                              <Text style={styles.OrderPrice}> {totalAmount.toFixed(2)}</Text>
+                            </View>
                           </View>
                         </ListItem>   
 {/* Deliver Charge */} 
                          <ListItem style={styles.TotalList}>
-                          <View>
-                            <Text style={styles.TotalText}>{this.state.applyDeliveryCharge ? 'Delivery Charges' : 'Subscription Fees'} </Text>
-                          </View>
-                         <Body style={styles.TotalBar}>
-                          <Text></Text>
-                          </Body>
 
-                          <View>
-                          <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{Colors.CUR}</Text> {deliveryCharges}</Text>
+                          <View style={{flex: 1, flexDirection: 'row'}}>
+                            <View style={{width: 210,}}>
+                              <Text style={[styles.TotalText, {alignSelf:'flex-start'}]}>{this.state.applyDeliveryCharge ? 'Delivery Charges' : 'Subscription Fees'} </Text>
+                            </View>
+                            <View style={{width: 55,}}>
+                              <Text style={[appStyles.currency, {alignSelf:'flex-end'}]}>{Colors.CUR}</Text>
+                            </View>
+                            <View style={{width: 75,}}>
+                              <Text style={styles.OrderPrice}> {deliveryCharges}</Text>
+                            </View>
                           </View>
                         </ListItem>   
 {/* Sub Total */}                         
                          <ListItem style={[styles.TotalList]}>
-                          <View>
-                            <Text style={styles.TotalText}> Total</Text>
-                          </View>
-                         <Body style={styles.TotalBar}>
-                                <Text></Text>
-                          </Body>
 
-                          <View>
-                           <Text style={styles.OrderPrice}><Text style={appStyles.currency}>{Colors.CUR}</Text> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
+
+                          <View style={{flex: 1, flexDirection: 'row'}}>
+                            <View style={{width: 210,}}>
+                              <Text style={[styles.TotalText, {alignSelf:'flex-start'}]}>Total</Text>
+                            </View>
+                            <View style={{width: 55,}}>
+                              <Text style={[appStyles.currency, {alignSelf:'flex-end'}]}>{Colors.CUR}</Text>
+                            </View>
+                            <View style={{width: 75,}}>
+                              <Text style={styles.OrderPrice}> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
+                            </View>
                           </View>
                         </ListItem>   
            
                 
                </List>
                <DeliveryAddress/>
-            <TouchableOpacity style={styles.checkOutBtnArea} >
-              <Button primary full style={styles.checkOutBtn} onPress={()=>this.onPressSubmit('Checkout')}>
-                           <Text style={styles.checkOutText}> Pay Now</Text>
-                         </Button>
-            </TouchableOpacity>       
+               <Row>
+                <Col>
+                  <TouchableOpacity style={styles.checkOutBtnArea} >
+                    <Button primary full style={styles.checkOutBtn}>
+                       <Text style={styles.checkOutText}> Continue Shopping</Text>
+                     </Button>
+                  </TouchableOpacity>  
+                </Col>
+                <Col>
+                  <TouchableOpacity style={styles.checkOutBtnArea} >
+                    <Button primary full style={styles.checkOutBtn} onPress={()=>this.onPressSubmit('Checkout')}>
+                       <Text style={styles.checkOutTextpay}> Pay Now</Text>
+                     </Button>
+                  </TouchableOpacity>  
+                </Col>
+               </Row>     
         </ScrollView>   
       </Container>
      
