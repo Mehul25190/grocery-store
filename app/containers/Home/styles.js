@@ -405,5 +405,15 @@ categoryStyles: {
     textAlign:'center',
     fontSize:12,
     color:Colors.secondary
-   }
+   },
+  shopbybrandbg: {backgroundColor:'#da9e76', marginTop:10},
+  shopbybrandtitle: {backgroundColor:'#80583d', paddingLeft:25, paddingRight:25, paddingTop:5, paddingBottom:5, alignSelf:'center',},
+  shopbybrandtitletext: {color:Colors.white, fontSize:15, fontWeight:'bold'},
+  brandimagearea: {margin:10, marginBottom:15, justifyContent:'center', textAlign:'center', alignSelf:'center'},
+  brandnametitle:{fontSize:14, color:Colors.white, alignSelf:'center',textTransform: 'capitalize', fontWeight:'bold'},
+
+
+  shopbyethnibg: {backgroundColor:'#e7aaaa', marginTop:10},
+  shopbyethnititle: {backgroundColor:'#ad6060', paddingLeft:25, paddingRight:25, paddingTop:5, paddingBottom:5, alignSelf:'center',},
+
 };
