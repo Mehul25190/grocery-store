@@ -320,7 +320,7 @@ class MyCart extends React.Component {
                 </Col>
                 <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end', alignSelf:'flex-end', width:'60%'}}>
                   <View style={styles.totalAmount}>
-                    <Text style={styles.totalText}>Total Amount <Text  style={styles.Amount}> {Colors.CUR} </Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
+                    <Text style={styles.totalText}>Total <Text  style={styles.Amount}> {Colors.CUR} </Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
                   </View>
                 </Col>
               </Row>

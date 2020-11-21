@@ -11,8 +11,7 @@ import {
   Icon,
   Spinner,
   Button,
-  Text,
-  Header,Item, Left,Input, Body, Title, Right,Grid,Col,Card, Thumbnail
+  Text, Row, Header,Item, Left,Input, Body, Title, Right,Grid,Col,Card, Thumbnail
 
 } from 'native-base';
 import { showToast } from '../../utils/common';
@@ -30,6 +29,7 @@ import { array } from 'prop-types';
 import Carousel from 'react-native-snap-carousel';
 import * as cartActions from "../../actions/cart";
 import ActionTypes from "../../constants/ActionTypes";
+import {Mybrands}  from './Data.js';
 import moment from "moment";
 const cartCount = 1;
 
@@ -382,6 +382,69 @@ class Home extends React.Component {
               </TouchableOpacity>
               </View>
               </Grid>
+
+
+                   <View style={styles.shopbybrandbg}>
+                    <View style={styles.shopbybrandtitle}>
+                      <Text style={styles.shopbybrandtitletext}>Shop By Brand</Text>
+                    </View>
+
+                    
+                    <FlatList
+                      data={Mybrands}
+                      contentContainerStyle={styles.scrollViewStyle}
+                      horizontal={true}
+                      showsHorizontalScrollIndicator={false}
+                      automaticallyAdjustContentInsets={true}
+                      removeClippedSubviews={true}
+                      enableEmptySections={true}
+                      showsHorizontalScrollIndicator={false}
+                      style={styles.contentsection}
+                      legacyImplementation={false}
+                      keyExtractor={(item, index) => index}
+                      renderItem={({ item, index }) => 
+                      <TouchableOpacity onPress={() => this.ViewRoute()} style={styles.brandimagearea}>  
+                             <View>
+                              <Image source={require('../../assets/images/amulMoti.png')} style={{flex: 1, height: 120, width: 120,resizeMode:'contain'}} />
+                              <Text style={styles.brandnametitle}>{item.brandName}</Text>
+                             </View>
+                      </TouchableOpacity> 
+                    }
+                    keyExtractor={item => item.id}
+                  />       
+                </View>
+
+
+                   <View style={styles.shopbyethnibg}>
+                    <View style={styles.shopbyethnititle}>
+                      <Text style={styles.shopbybrandtitletext}>Shop By Ethnicities</Text>
+                    </View>
+
+                    
+                    <FlatList
+                      data={Mybrands}
+                      contentContainerStyle={styles.scrollViewStyle}
+                      horizontal={true}
+                      showsHorizontalScrollIndicator={false}
+                      automaticallyAdjustContentInsets={true}
+                      removeClippedSubviews={true}
+                      enableEmptySections={true}
+                      showsHorizontalScrollIndicator={false}
+                      style={styles.contentsection}
+                      legacyImplementation={false}
+                      keyExtractor={(item, index) => index}
+                      renderItem={({ item, index }) => 
+                      <TouchableOpacity onPress={() => this.ViewRoute()} style={styles.brandimagearea}>  
+                             <View>
+                              <Image source={require('../../assets/images/pomog.png')} style={{flex: 1, height: 120, width: 120,resizeMode:'contain'}} />
+                              <Text style={styles.brandnametitle}>{item.brandName}</Text>
+                             </View>
+                      </TouchableOpacity> 
+                    }
+                    keyExtractor={item => item.id}
+                  />       
+                </View>
+
            { <FlatList 
                      vertical
                      showsVerticalScrollIndicator={false}
@@ -408,7 +471,7 @@ class Home extends React.Component {
                     }
 
                    </View>
-                   
+
           </View>
           </View> )}
             {/* <MasonryList sorted onPressImage={this.onPressImage} images={data}  />*/}
