@@ -14,6 +14,34 @@ const subscription = (state = initialState.product, action) => {
         productDetail: action.data,
       }
     }
+
+    case ActionTypes.FETCHBRAND: {
+      return {
+        ...state,
+        brand: action.data,
+      }
+    }
+
+    case ActionTypes.FETCHBRANDDETAILS: {
+      return {
+        ...state,
+        brandlisting: action.data,
+      }
+    }
+
+    case ActionTypes.FETHETHNICITIES: {
+      return {
+        ...state,
+        ethnicities: action.data,
+      }
+    }
+
+    case ActionTypes.FETHETHNICITIESDETAILS: {
+      return {
+        ...state,
+        ethnicitieslisting: action.data,
+      }
+    }
     // Default
     default: {
       return state;
