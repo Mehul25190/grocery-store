@@ -1,5 +1,24 @@
 import imgs from '../../assets/images';
-
+export const ProductVariant =[
+ 
+    {
+    key:1,
+    variant:'200gm'
+  },
+  {
+      key:2,
+    variant:'300gm'
+  },
+  {
+      key:3,
+    variant:'400gm'
+  },
+  {
+      key:4,
+    variant:'500gm'
+  }
+ 
+];
 export const CardDetails =[
   {
     id:1,

@@ -18,6 +18,19 @@ export default {
    flexDirection: 'column',
 
   },
+  hidePassSection:{
+    position:'absolute',
+    right:10,
+    flex:1,
+  
+    top:3,
+    // backgroundColor:'#ddd'
+  },
+  hidePass:{
+  fontSize:18,
+  padding:10,
+ 
+  },
   itemStyle:{
     marginLeft:0
   },

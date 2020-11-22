@@ -35,6 +35,9 @@ const images = {
 	addPlus:require('./by_once_pls.png'),
 	AEDpng:require('./aed3.png'),
 	subscribe:require('./subscribe.png'),
+	smallVeg:require('./small-veg.png'),
+	smallNonVeg:require('./small-nonveg.png'),
+
 };
 
 export default images;

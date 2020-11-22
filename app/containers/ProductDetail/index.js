@@ -26,7 +26,7 @@ import { AirbnbRating } from 'react-native-ratings';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import ImageModal from 'react-native-image-modal';
 import { showToast } from '../../utils/common';
-
+import { ProductVariant } from '../data/data';
 import url from '../../config/api';
 
 
@@ -56,6 +56,8 @@ class ProductDetail extends React.Component {
       selectedIndex: 0,
       productImages: '',
       selctedProduct: '',
+      variant:'',
+       wished:false,
     };
 
   }
@@ -279,16 +281,33 @@ class ProductDetail extends React.Component {
 
           <Grid>
             <Row>
-              <Col style={{ flex: 0, width: '50%' }}>
+              <Col style={{ flex: 0, marginLeft:20, width: '15%',justyfyContent:'center', alignItems:'center',flexDirection:'row'}}>
+                <TouchableOpacity   onPress={() => this.setState({ wished: !this.state.wished })} style={styles.heartoSection}  >
+                          {this.state.wished ?
+                            (<Icon name='heart' type='AntDesign' style={styles.hearto} /> ):
+                            (<Icon name='hearto' type='AntDesign' style={styles.hearto} /> )
+                          }
+                     
+                    </TouchableOpacity>
+              </Col>
+                <Col style={{ flex: 0, width: '20%',justyfyContent:'center', alignItems:'center',flexDirection:'row'}}>
+               
+                    <TouchableOpacity style={styles.vegImageSection}>
+                        <Image style={styles.vegImage} source={ProductDetail.item[0].foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
+                       
+                    </TouchableOpacity>
 
+              </Col>
+              </Row>
+              <Row>
+              <Col style={{ flex: 0, width: '40%' }}>
                 <View style={styles.pricePart}>
-
-                  <View style={{ backgroundColor: foodType, height: 15, width: 15, borderRadius: 10, marginLeft: 8, }}></View>
-                  <Text style={styles.priceText}><Text style={appStyles.currency, { fontSize: 23, color: Colors.gray }}> {Colors.CUR}</Text> {ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}</Text>
+                <Text style={styles.priceText}><Text style={appStyles.currency, { fontSize: 23, color: Colors.gray }}> {Colors.CUR}</Text> {ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}</Text>
                 </View>
               </Col>
+
               {ProductDetail.item[0].outOfStock == 'Y' ?
-                (<Col style={{ paddingTop: 10, width: 200, alignItems: 'flex-end' }}><Text style={styles.outofstock}>Out of Stock</Text></Col>) :
+                (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end' }}><Text style={styles.outofstock}>Out of Stock</Text></Col>) :
                 (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}>
                   {this.state.selctedProduct == ProductDetail.item[0].id ? <ActivityIndicator style={{ marginRight: 20 }} /> :
                     (<View style={styles.reasonView}>
@@ -332,7 +351,32 @@ class ProductDetail extends React.Component {
             </Row>
 
           </Grid>
+            <Grid>
+          <Row style={{ flex: 1, marginLeft:Layout.indent, marginRight:15, flexDirection: 'row'}}>
+        
+        {ProductVariant.map((data, key) => {
+          return (  <View key={key}>       
+                  {this.state.variant  == data.variant ?
+                  
+                      <Col style={[styles.variantBtnActive,{}]}>
+                          {/*<Icon style={styles.variantImg} name='rectangle' type='MaterialCommunityIcons' />*/}
+                          <Text style={styles.variantTextActive}>{data.variant}</Text>
+                      </Col>
+                   
+                      :
+                    
+                      <Col onPress={()=>{this.setState({variant: data.variant})}} style={[styles.variantBtnDeactive,{}]}>
+                          {/*<Icon style={styles.variantImg} name='rectangle-outline' type='MaterialCommunityIcons' />*/}
+                          <Text style={styles.variantTextDeactive}>{data.variant}</Text>
+                      </Col>
+                    
 
+                  }
+                </View>  
+          )
+      })}
+       </Row>
+        </Grid> 
           {
             ProductDetail.item[0].description1 != null && (
               <View>

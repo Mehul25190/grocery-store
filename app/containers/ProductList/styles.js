@@ -1,10 +1,42 @@
 import {Colors,Layout} from '../../constants/';
 export default {
+   scrollContainer: {
+    flex: 1
+  },
+  sliderContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    top: 80,
+    alignSelf: 'center'
+  },
+  sliderBtn: {
+    height: 13,
+    width: 13,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10
+  },
+  sliderBtnSelected: {
+    height: 12,
+    width: 12,
+    borderRadius: 6,
+    backgroundColor: 'white',
+  },
+  sliderBtnContainer: {
+    flexDirection: 'row', marginBottom: 24
+  },
+
+
+
+
   cateContainer:{
     flex: 1,
-      height:50,
+    height:50,
     width:Layout.width,
-      paddingTop:7,
+    paddingTop:7,
     paddingBottom:5,
     justifyContent: 'center',
     alignItems: 'center',
@@ -18,11 +50,12 @@ export default {
     justifyContent: 'center',
     flexDirection: 'column',
   },
+
    photo: {
-     flex:1,
-    width: null,
-    height: null,
-    resizeMode: 'contain',
+      flex:1,
+      width: null,
+      height: null,
+      resizeMode: 'contain',
       justifyContent: 'flex-end',
       flexDirection:'column',
       marginTop:50,
@@ -30,37 +63,37 @@ export default {
      
   },
   productTitle:{
-     paddingTop:6,
-    paddingBottom:5,
+      paddingTop:6,
+      paddingBottom:5,
 
-    paddingLeft: 20,
-    paddingRight: 20,
-    borderRadius: 25,
-  marginRight:0
+      paddingLeft: 20,
+      paddingRight: 20,
+      borderRadius: 25,
+      marginRight:0
   },
   titleBackground:{
-backgroundColor:Colors.primary,
-  paddingTop:3,
+    backgroundColor:Colors.primary,
+    paddingTop:3,
     paddingBottom:5,
     color:Colors.white,
     paddingLeft: 20,
-   
+
     paddingRight: 20,
     borderRadius: 25,
-     overflow: 'hidden',
-  marginRight:0,
+    overflow: 'hidden',
+    marginRight:0,
 
   },
   whiteBackground:{
-backgroundColor:'transparent',
-  paddingTop:6,
+    backgroundColor:'transparent',
+    paddingTop:6,
     paddingBottom:5,
 
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 25,
-     overflow: 'hidden',
-  marginRight:0
+    overflow: 'hidden',
+    marginRight:0
   },
   AlignLeft:{
     justifyContent:'flex-start'
@@ -149,11 +182,11 @@ backgroundColor:'transparent',
     paddingTop: 10
   },
   outofstock: { fontSize:14, color:'#ff0000', textAlign:'right', paddingTop:5},
-addsSubTitle:{
-  color:'#F8BB1B',
-  textAlign:'right',
-  fontSize:16,
-  padding:0
+    addsSubTitle:{
+    color:'#F8BB1B',
+    textAlign:'right',
+    fontSize:16,
+    padding:0
 },
 addsBigTitle:{
   fontFamily:'Raleway-Bold',
@@ -185,8 +218,7 @@ textTransform:'uppercase',
 },
 
 btnBlock:{
-   top:-15,
-
+  top:-15,
   width: '100%',
   justifyContent: 'flex-end',
   alignItems: 'flex-end'
@@ -308,12 +340,29 @@ categoryStyles: {
      flex: 0,
     paddingLeft:0,
     width: 90,
-    position:'relative'
+    position:'relative',
+    // backgroundColor:'#ddd'
+   },
+   vegImageSection:{
+    position:'absolute',
+    
+    zIndex:99,
+    bottom:-5,
+
+   },
+   vegImage:{
+   width:20,
+   height:20,
+   resizeMode:'contain',
    },
    heartoSection:{
-    position:'absolute'
+    position:'absolute',
+   top:-5,
+  zIndex:99,
    },
-
+hearto:{
+color:'red'
+},
    ListRight:{
     // backgroundColor:'#ddd',
     flex: 0,

@@ -55,6 +55,7 @@ import appStyles from "../../theme/appStyles";
 import styles from "./styles";
 import NumericInput from "react-native-numeric-input";
 import { ScreenLoader } from '../../components';
+import Carousel from 'react-native-snap-carousel';
 
 class ProductList extends React.Component {
   constructor(props) {
@@ -71,6 +72,7 @@ class ProductList extends React.Component {
       flalistIndex: 0,
       buyOndeSelected: [],
       selctedProduct: '',
+      wished:false,
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
@@ -338,31 +340,50 @@ class ProductList extends React.Component {
           ) : (<View>
               <ScrollView>
                 <FlatList
-                  horizontal
-                  initialScrollIndex={this.state.flalistIndex}
-                  onScrollToIndexFailed={()=>{}}
-                  showsHorizontalScrollIndicator={false}
-                  data={this.state.subCategory}
-                  renderItem={this.renderItems}
-                  keyExtractor={(item) => `${item.id}`}
+                 // horizontal
+                  // initialScrollIndex={this.state.flalistIndex}
+                  // onScrollToIndexFailed={()=>{}}
+                  // showsHorizontalScrollIndicator={false}
+                 // data={this.state.subCategory}
+                //  renderItem={this.renderItems}
+                //  keyExtractor={(item) => `${item.id}`}
                 />
               </ScrollView>
-
+                  <Carousel
+                    ref={(c) => { this._carousel = c; }}
+                    loop={true}
+                    autoplay={true}
+                     data={this.state.subCategory}
+                    renderItem={this.renderItems}
+                    sliderWidth={Layout.window.width}
+                    itemWidth={140}
+                    autoplayInterval={2000}
+                    autoplayDelay={2000}
+                  />
               {this.state.productData.map((item, index) => {
                 // productList.map((item, index) => {
                 var foodType = '';
-                if(item.foodType == 'veg')
-                  foodType = '#00ff00';
-                if(item.foodType == 'Nonveg')
-                  foodType = 'red';
-                if(item.foodType == 'vegan')
-                  foodType = 'blue';
+                // if(item.foodType == 'veg')
+                //   foodType = '#00ff00';
+                // if(item.foodType == 'Nonveg')
+                //   foodType = 'red';
+                // if(item.foodType == 'vegan')
+                //   foodType = 'blue';
                 
                 return (
                   <ListItem style={styles.ListItems}  key={index}>
-
-                      <View style={{ backgroundColor: foodType, height:9, width:9, borderRadius:10, marginTop: 0,}}></View>
+                  
+                  
                     <Left style={styles.ListLeft}>
+                     <TouchableOpacity   onPress={() => this.setState({ wished: !this.state.wished })} style={styles.heartoSection}  >
+                        {this.state.wished ?
+                          (   <Icon name='heart' type='AntDesign' style={styles.hearto} /> ):
+                          (<Icon name='hearto' type='AntDesign' style={styles.hearto} /> )
+                        }
+                   
+                     
+                      </TouchableOpacity>
+                   
                     <TouchableOpacity
                         style={styles.prodInfo}
                         onPress={() =>
@@ -374,8 +395,11 @@ class ProductList extends React.Component {
                         source={{ uri: url.imageURL + item.imagePath }}
                       />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.heartoSection}>
-                      <Icon name='hearto' type='AntDesign' style={styles.hearto} /> 
+
+                     <TouchableOpacity style={styles.vegImageSection}>
+
+                      <Image style={styles.vegImage} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
+                     
                       </TouchableOpacity>
                     </Left>
                     <Body>
