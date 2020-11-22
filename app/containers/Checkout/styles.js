@@ -99,8 +99,7 @@ export default {
        marginBottom:8
   },
   OrderTitleText:{
-     marginTop:10,
- 
+     marginTop:10, fontSize:14,
   marginRight:Layout.indent,
   fontFamily:'Font-Medium',
   },
@@ -158,10 +157,19 @@ ItemList:{
 TotalList:{
   borderColor:Colors.white,
   marginRight:Layout.indent,
-  borderBottomWidth:1.2,
+  borderBottomWidth:0,
   marginBottom:0,
   paddingBottom:0,
   paddingTop:0
+},
+TotalListtop:{
+  borderColor:Colors.secondary,
+  marginRight:Layout.indent,
+  borderTopWidth:1.2,
+  borderBottomWidth:0,
+  marginBottom:0,
+  paddingBottom:0,
+  paddingTop:5
 },
 
 TotalBar:{
@@ -171,8 +179,8 @@ TotalBar:{
  },
  
  TotalText:{
-  textAlign:'right',
-  fontFamily:'Font-Medium'
+  textAlign:'right', fontSize:14,
+  fontFamily:'Font-Medium', fontWeight:'bold',
  },
  title:{
   marginTop:10,
@@ -201,7 +209,7 @@ TotalBar:{
  },
  
  orderName:{
-  fontSize:14,
+  fontSize:14, alignSelf:'flex-start',
 fontFamily:'Font-Medium'
 },
 orderQty:{
@@ -209,8 +217,8 @@ orderQty:{
   fontFamily:'Font-Medium',
 },
 OrderPrice:{
-  fontFamily:'Font-Medium',
-  fontSize:16, alignSelf:'flex-end',
+  fontFamily:'Font-Medium', fontWeight:'bold',
+  fontSize:15, alignSelf:'flex-end',
 },
 checkOutBtnArea:{
   marginLeft:10,

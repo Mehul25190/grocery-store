@@ -431,29 +431,35 @@ class ProductList extends React.Component {
                           {item.discountedPrice > 0 && item.discountedPrice < item.price  ? (
                             <View style={{ flexDirection: "row" }}>
                               <Text style={styles.proPriceStrike}>
-                                <Text style={(appStyles.currency, { fontSize: 18 })}>
+                                <Text style={appStyles.currencysmall}>
                                   {Colors.CUR}
                                 </Text>{" "}
-                                {item.price}
+                                <Text
+                                  style={appStyles.amountmedium}
+                                >{item.price}</Text>
                               </Text>
                               <Text style={styles.proPrice}>
                                 <Text
-                                  style={[appStyles.currency,{fontSize: 18,color:Colors.primary}]}
+                                  style={appStyles.currencysmall}
                                 >
                                   {Colors.CUR}
                                  </Text>{" "}
-                                {item.discountedPrice}
+                                <Text
+                                  style={appStyles.amountmedium}
+                                >{item.discountedPrice}</Text>
                               </Text>
                             </View>
                           ) : (
                             <View>
                               <Text style={[styles.proPrice,{color:'#000'}]}>
                                 <Text
-                                  style={(appStyles.currency, { fontSize: 18 })}
+                                  style={appStyles.currencysmall}
                                 >
                                   {Colors.CUR}
                                 </Text>{" "}
-                                {item.price}
+                                <Text
+                                  style={appStyles.amountmedium}
+                                >{item.price}</Text>
                               </Text>
                             </View>
                           )}
