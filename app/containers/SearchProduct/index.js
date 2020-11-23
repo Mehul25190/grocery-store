@@ -241,9 +241,7 @@ class SearchProduct extends React.Component {
            { totalItem >0 && (<Text style={appStyles.cartCount}>{totalItem}</Text>) }
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
-           <Icon style={appStyles.userIcon} name="user-circle"  type="FontAwesome" />      
-          </TouchableOpacity> 
+         
           
         </Button>
       </Right>
@@ -268,10 +266,17 @@ class SearchProduct extends React.Component {
 
                       <View style={{ backgroundColor: foodType, height:9, width:9, borderRadius:10, marginTop: 0,}}></View>
                     <Left style={styles.ListLeft}>
+                    <TouchableOpacity
+                        style={styles.prodInfo}
+                        onPress={() =>
+                          this.productDetail(item.id)
+                        }
+                      >
                       <Image
                         style={styles.proImage}
                         source={{ uri: url.imageURL + item.imagePath }}
                       />
+                      </TouchableOpacity>
                     </Left>
                     <Body>
                       <TouchableOpacity
@@ -301,30 +306,36 @@ class SearchProduct extends React.Component {
                           {item.discountedPrice > 0 && item.discountedPrice < item.price  ? (
                             <View style={{ flexDirection: "row" }}>
                               <Text style={styles.proPriceStrike}>
-                                <Text style={(appStyles.currency, { fontSize: 18 })}>
+                                <Text style={appStyles.currencysmall}>
                                   {Colors.CUR}
                                 </Text>{" "}
-                                {item.price}
+                                <Text
+                                  style={appStyles.amountmedium}
+                                >{item.price}</Text>
                               </Text>
                               <Text style={styles.proPrice}>
                                 <Text
-                                  style={(appStyles.currency, { fontSize: 18 })}
+                                  style={appStyles.currencysmall}
                                 >
                                   {Colors.CUR}
                                   
                                  </Text>{" "}
-                                {item.discountedPrice}
+                                <Text
+                                  style={appStyles.amountmedium}
+                                >{item.discountedPrice}</Text>
                               </Text>
                             </View>
                           ) : (
                             <View>
                               <Text style={styles.proPrice}>
                                 <Text
-                                  style={(appStyles.currency, { fontSize: 18 })}
+                                  style={appStyles.currencysmall}
                                 >
                                   {Colors.CUR}
                                 </Text>{" "}
-                                {item.price}
+                                <Text
+                                  style={appStyles.amountmedium}
+                                >{item.price}</Text>
                               </Text>
                             </View>
                           )}
@@ -366,8 +377,8 @@ class SearchProduct extends React.Component {
                               console.log(isMax, msg)
                             }
                             minValue={0}
-                            totalWidth={95}
-                            totalHeight={30}
+                            totalWidth={100}
+                            totalHeight={35}
                             iconSize={30}
                             borderColor={Colors.primary}
                             inputStyle={{ fontSize: 15 }}
@@ -375,7 +386,7 @@ class SearchProduct extends React.Component {
                             valueType="real"
                             rounded
                             textColor={Colors.primary}
-                            iconStyle={{ color: Colors.primary, fontSize: 20 }}
+                            iconStyle={{ color: Colors.primary, fontSize: 25 }}
                             rightButtonBackgroundColor="#fff"
                             leftButtonBackgroundColor="#fff"
                           />) : 

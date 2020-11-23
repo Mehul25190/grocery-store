@@ -38,6 +38,7 @@ import {
   Right,
   Thumbnail,
   Spinner,
+   Icon,
 } from "native-base";
 import url from "../../config/api";
 import { ItemList } from "../data/data";
@@ -54,6 +55,7 @@ import appStyles from "../../theme/appStyles";
 import styles from "./styles";
 import NumericInput from "react-native-numeric-input";
 import { ScreenLoader } from '../../components';
+import Carousel from 'react-native-snap-carousel';
 
 class ProductList extends React.Component {
   constructor(props) {
@@ -70,6 +72,7 @@ class ProductList extends React.Component {
       flalistIndex: 0,
       buyOndeSelected: [],
       selctedProduct: '',
+      wished:false,
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
@@ -337,35 +340,67 @@ class ProductList extends React.Component {
           ) : (<View>
               <ScrollView>
                 <FlatList
-                  horizontal
-                  initialScrollIndex={this.state.flalistIndex}
-                  onScrollToIndexFailed={()=>{}}
-                  showsHorizontalScrollIndicator={false}
-                  data={this.state.subCategory}
-                  renderItem={this.renderItems}
-                  keyExtractor={(item) => `${item.id}`}
+                 // horizontal
+                  // initialScrollIndex={this.state.flalistIndex}
+                  // onScrollToIndexFailed={()=>{}}
+                  // showsHorizontalScrollIndicator={false}
+                 // data={this.state.subCategory}
+                //  renderItem={this.renderItems}
+                //  keyExtractor={(item) => `${item.id}`}
                 />
               </ScrollView>
-
+                  <Carousel
+                    ref={(c) => { this._carousel = c; }}
+                    loop={true}
+                    autoplay={true}
+                     data={this.state.subCategory}
+                    renderItem={this.renderItems}
+                    sliderWidth={Layout.window.width}
+                    itemWidth={140}
+                    autoplayInterval={2000}
+                    autoplayDelay={2000}
+                  />
               {this.state.productData.map((item, index) => {
                 // productList.map((item, index) => {
                 var foodType = '';
-                if(item.foodType == 'veg')
-                  foodType = '#00ff00';
-                if(item.foodType == 'Nonveg')
-                  foodType = 'red';
-                if(item.foodType == 'vegan')
-                  foodType = 'blue';
+                // if(item.foodType == 'veg')
+                //   foodType = '#00ff00';
+                // if(item.foodType == 'Nonveg')
+                //   foodType = 'red';
+                // if(item.foodType == 'vegan')
+                //   foodType = 'blue';
                 
                 return (
                   <ListItem style={styles.ListItems}  key={index}>
-
-                      <View style={{ backgroundColor: foodType, height:9, width:9, borderRadius:10, marginTop: 0,}}></View>
+                  
+                  
                     <Left style={styles.ListLeft}>
+                     <TouchableOpacity   onPress={() => this.setState({ wished: !this.state.wished })} style={styles.heartoSection}  >
+                        {this.state.wished ?
+                          (   <Icon name='heart' type='AntDesign' style={styles.hearto} /> ):
+                          (<Icon name='hearto' type='AntDesign' style={styles.hearto} /> )
+                        }
+                   
+                     
+                      </TouchableOpacity>
+                   
+                    <TouchableOpacity
+                        style={styles.prodInfo}
+                        onPress={() =>
+                          this.productDetail(item.id)
+                        }
+                      >
                       <Image
                         style={styles.proImage}
                         source={{ uri: url.imageURL + item.imagePath }}
                       />
+                    </TouchableOpacity>
+
+                     <TouchableOpacity style={styles.vegImageSection}>
+
+                      <Image style={styles.vegImage} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
+                     
+                      </TouchableOpacity>
                     </Left>
                     <Body>
                       <TouchableOpacity
@@ -396,29 +431,35 @@ class ProductList extends React.Component {
                           {item.discountedPrice > 0 && item.discountedPrice < item.price  ? (
                             <View style={{ flexDirection: "row" }}>
                               <Text style={styles.proPriceStrike}>
-                                <Text style={(appStyles.currency, { fontSize: 18 })}>
+                                <Text style={appStyles.currencysmall}>
                                   {Colors.CUR}
                                 </Text>{" "}
-                                {item.price}
+                                <Text
+                                  style={appStyles.amountmedium}
+                                >{item.price}</Text>
                               </Text>
                               <Text style={styles.proPrice}>
                                 <Text
-                                  style={[appStyles.currency,{fontSize: 18,color:Colors.primary}]}
+                                  style={appStyles.currencysmall}
                                 >
                                   {Colors.CUR}
                                  </Text>{" "}
-                                {item.discountedPrice}
+                                <Text
+                                  style={appStyles.amountmedium}
+                                >{item.discountedPrice}</Text>
                               </Text>
                             </View>
                           ) : (
                             <View>
                               <Text style={[styles.proPrice,{color:'#000'}]}>
                                 <Text
-                                  style={(appStyles.currency, { fontSize: 18 })}
+                                  style={appStyles.currencysmall}
                                 >
                                   {Colors.CUR}
                                 </Text>{" "}
-                                {item.price}
+                                <Text
+                                  style={appStyles.amountmedium}
+                                >{item.price}</Text>
                               </Text>
                             </View>
                           )}
@@ -462,8 +503,8 @@ class ProductList extends React.Component {
                             }
                             minValue={0}
                             maxValue={item.maxOrderQuantity ? item.maxOrderQuantity : 5}
-                            totalWidth={95}
-                            totalHeight={30}
+                            totalWidth={100}
+                            totalHeight={35}
                             iconSize={30}
                             borderColor={Colors.primary}
                             inputStyle={{ fontSize: 15 }}
@@ -471,7 +512,7 @@ class ProductList extends React.Component {
                             valueType="real"
                             rounded
                             textColor={Colors.primary}
-                            iconStyle={{ color: Colors.primary, fontSize: 20 }}
+                            iconStyle={{ color: Colors.primary, fontSize: 25 }}
                             rightButtonBackgroundColor="#fff"
                             leftButtonBackgroundColor="#fff"
                           />) : 

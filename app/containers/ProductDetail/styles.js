@@ -1,7 +1,49 @@
 import {Colors,Layout} from '../../constants/';
 export default {
   
-   okayBtnArea:{
+  heartoSection:{
+alignItems:'center',
+textAlign:'center',
+justyfyContent:'center'
+  },
+  hearto:{
+color:'red',
+fontSize:18
+},
+ vegImage:{
+   width:20,
+   height:20,
+   resizeMode:'contain',
+   },
+  variantImg:{
+     fontSize:50,
+  },
+variantBtnActive:{
+  width:70,
+  flex:1,
+  justyfyContent:'center',
+  alignItems:'center',
+    borderRadius:8,
+   backgroundColor:Colors.primary,
+   borderColor:Colors.secondary,
+   margin:5
+},
+variantTextActive:{
+color:Colors.secondary,
+marginTop:5,
+
+},
+variantBtnDeactive:{
+  width:70,
+  flex:1,
+  borderRadius:8,
+  justyfyContent:'center',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+  alignItems:'center',
+  backgroundColor:Colors.secondary,
+  borderColor:Colors.secondary,
+  margin:5
+},
+ okayBtnArea:{
   marginTop:3,
   marginBottom:5,
   paddingTop:20

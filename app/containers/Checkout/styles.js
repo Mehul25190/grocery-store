@@ -99,8 +99,7 @@ export default {
        marginBottom:8
   },
   OrderTitleText:{
-     marginTop:10,
- 
+     marginTop:10, fontSize:14,
   marginRight:Layout.indent,
   fontFamily:'Font-Medium',
   },
@@ -149,19 +148,28 @@ paddingHorizontal:7,
 fontFamily:'Font-Medium'
 },
 ItemList:{
-  borderColor:Colors.secondary,
+  borderColor:Colors.white,
   marginRight:Layout.indent,
   borderBottomWidth:1.2,
   marginBottom:0,
   paddingBottom:5
 },
 TotalList:{
-  borderColor:Colors.primary,
+  borderColor:Colors.white,
   marginRight:Layout.indent,
-  borderBottomWidth:1.2,
+  borderBottomWidth:0,
   marginBottom:0,
-  paddingBottom:8,
-  paddingTop:8
+  paddingBottom:0,
+  paddingTop:0
+},
+TotalListtop:{
+  borderColor:Colors.secondary,
+  marginRight:Layout.indent,
+  borderTopWidth:1.2,
+  borderBottomWidth:0,
+  marginBottom:0,
+  paddingBottom:0,
+  paddingTop:5
 },
 
 TotalBar:{
@@ -171,8 +179,8 @@ TotalBar:{
  },
  
  TotalText:{
-  textAlign:'right',
-  fontFamily:'Font-Medium'
+  textAlign:'right', fontSize:14,
+  fontFamily:'Font-Medium', fontWeight:'bold',
  },
  title:{
   marginTop:10,
@@ -201,7 +209,7 @@ TotalBar:{
  },
  
  orderName:{
-  fontSize:14,
+  fontSize:14, alignSelf:'flex-start',
 fontFamily:'Font-Medium'
 },
 orderQty:{
@@ -209,14 +217,12 @@ orderQty:{
   fontFamily:'Font-Medium',
 },
 OrderPrice:{
-  fontFamily:'Font-Medium',
-  fontSize:16
+  fontFamily:'Font-Medium', fontWeight:'bold',
+  fontSize:15, alignSelf:'flex-end',
 },
 checkOutBtnArea:{
-  marginLeft:Layout.indent,
-  marginRight:Layout.indent,
-    paddingLeft:Layout.indent,
-  paddingRight:Layout.indent,
+  marginLeft:10,
+  marginRight:10,
   marginTop:10,
   marginBottom:10
 
@@ -229,10 +235,18 @@ checkOutBtnArea:{
  },
  checkOutText:{
   fontFamily:'Font-Medium',
-  fontSize:20,
+  fontSize:13, fontWeight:'bold',
   lineHeight:28,
   color:Colors.primary,
   textTransform:'capitalize'
- }
+ },
+ checkOutTextpay:{
+  fontFamily:'Font-Medium',
+  fontSize:18, fontWeight:'bold',
+  lineHeight:28,
+  color:Colors.primary,
+  textTransform:'capitalize'
+ },
+ cartcurrency: { borderColor:'#ff0000', borderBottomWidth:1, backgroundColor:'#ff0000', width:30},
 
 };

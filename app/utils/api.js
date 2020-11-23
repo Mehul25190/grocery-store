@@ -6,6 +6,9 @@ import apiConfig from '../config/api';
 
 import pathToRegExp from 'path-to-regexp';
 import { Platform } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
+import { showToast } from './common';
+
 
 axios.interceptors.request.use((config) => {
   //console.log(`Request [${ config.method }] ${ config.url }`, config);
@@ -13,6 +16,12 @@ axios.interceptors.request.use((config) => {
 });
 
 const execute = async (path, method = 'GET', { params = {} , queries = {}, payloads = {}, headers = {} } = {}) => {
+  NetInfo.fetch().then(state => {
+    if(state.isConnected == false){
+      showToast("No internet connection","danger");
+    }
+  });
+  
   const token = await storage.get('token');
   const compiler = pathToRegExp.compile(path);
   // SEND LOGIN TOKEN if LOGIN

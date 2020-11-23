@@ -78,13 +78,17 @@ class Drawer extends React.Component {
           (<Card style={[appStyles.addBox,{height:'auto',}]}>
           <ListItem avatar noBorder style={{ marginLeft: 10, paddingBottom:2}}>
             <Left style={{ flex: 0,  marginLeft: 0,   paddingLeft:0,  }}>
+              <View>
+                <TouchableOpacity style={{padding:5}} onPress= {()=> this.props.navigation.navigate(Screens.Profile.route)}>
               <Svgicon name="user-circle" 
                type="FontAwesome"
                 color={Colors.primary} 
                 IconStyle={appStyles.userIconStyle}
                 />
+            </TouchableOpacity>
+            </View>
             </Left>
-            <Body style={{justifyContent:'flex-start',alignItems:'flex-start',paddingBottom:10,marginLeft:10}}>
+            <Body style={{justifyContent:'flex-start',alignItems:'flex-start',paddingBottom:10,marginLeft:5}}>
             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.Profile.route)}>
             {this.props.user.user.firstName!="" && (
                <Text style={appStyles.profileName} >
@@ -98,15 +102,6 @@ class Drawer extends React.Component {
               <Text style={appStyles.profileEmail}>{(this.props.user.user.mobile!="") ? this.props.user.user.mobile : ""}</Text>
               </TouchableOpacity>
             </Body>
-
-            <Right>
-             <TouchableOpacity style={{padding:5}} onPress= {()=> this.props.navigation.navigate(Screens.Profile.route)}>
-              <Svgicon name="edit" type="MaterialIcons"
-               color={Colors.primary} 
-               IconStyle={[appStyles.IconStyle,{fontSize:23}]}
-                />
-            </TouchableOpacity>
-            </Right>
           </ListItem>
           <View>
             <Text style={{backgroundColor:Colors.secondary,height:1}}>
@@ -114,27 +109,22 @@ class Drawer extends React.Component {
           </View>
            <ListItem avatar noBorder style={{ marginLeft: 10,}}>
             <Left style={{ flex: 0,  marginLeft: 0,   paddingLeft:0,  }}>
+
+              <TouchableOpacity style={{padding:5}} onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
               <Svgicon name="location-on" 
                type="MaterialIcons"
                 color={Colors.primary} 
                 IconStyle={appStyles.userIconStyle}
                 />
+            </TouchableOpacity>
             </Left>
-            <Body style={{justifyContent:'flex-start',alignItems:'flex-start',paddingBottom:10,marginLeft:10}}>
+            <Body style={{justifyContent:'flex-start',alignItems:'flex-start',paddingBottom:15,marginLeft:5}}>
              <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
               <Text style={appStyles.userArea} > {(deliveryAddress ? (deliveryAddress.aptNo + ",") : "" )} {deliveryAddress ? deliveryAddress.buildingName + ',' : ''}</Text>
               <Text style={appStyles.userCity} >{deliveryAddress ? deliveryAddress.areaName + ' - ' + deliveryAddress.cityName : ''} </Text>
              </TouchableOpacity>  
             </Body>
 
-            <Right>
-              <TouchableOpacity style={{padding:5}} onPress={()=>this.props.navigation.navigate(Screens.MyAddress.route)}>
-              <Svgicon name="edit" type="MaterialIcons"
-                color={Colors.primary} 
-                IconStyle={[appStyles.IconStyle,{fontSize:23}]}
-                />
-            </TouchableOpacity>
-            </Right>
           </ListItem>
         </Card>) : null }
         <Content style={{borderTopWidth:1,borderColor:Colors.primary,marginTop:5}}>

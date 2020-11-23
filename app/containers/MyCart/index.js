@@ -240,6 +240,16 @@ class MyCart extends React.Component {
           bgColor='transparent'
           Title='My Cart'
         />
+
+        <View style={{
+          flexDirection: 'row', justifyContent: 'flex-start', marginLeft: Layout.indent - 5,
+          marginRight: Layout.indent - 5, marginTop: 10, marginBottom: 0, backgroundColor: '#D7ECDD', paddingTop: 5, paddingBottom: 5, paddingLeft: 10,
+        }}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          <Text style={styles.shopSubTitleText}>Your item in cart is available till stock out</Text>
+        </View>
+        </View>
+
             <Modal 
               isVisible={this.state.isModalVisible}
               coverScreen={false}
@@ -315,13 +325,12 @@ class MyCart extends React.Component {
                   </Col>*/}
               </Row>
               <Row>
-                <Col>
+                <Col style={{ width:'39%'}}>
                   <Text style={styles.title}>Total items: {totalItem}</Text>
                 </Col>
-                <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end', width: Layout.window.width / 1.8 }}>
+                <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end', alignSelf:'flex-end', width:'60%'}}>
                   <View style={styles.totalAmount}>
-                    <Text style={styles.totalText}>Total Amount </Text>
-                    <Text style={styles.totalText}><Text  style={styles.Amount}> {Colors.CUR} </Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
+                    <Text style={styles.totalText}>Total <Text  style={styles.Amount}> {Colors.CUR} </Text><Text style={styles.Amount}>{totalAmount.toFixed(2)}</Text></Text>
                   </View>
                 </Col>
               </Row>

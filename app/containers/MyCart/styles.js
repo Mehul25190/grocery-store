@@ -34,16 +34,15 @@ clickBtn:{
     //backgroundColor:Colors.primary,
     borderRadius:25,
     paddingLeft:Layout.indent,
-    paddingRight:Layout.indent
   },
   totalText:{
     color:Colors.black,
     fontFamily:'Font-Medium',
-    fontSize:16
+    fontSize:15
   },
 Amount:{
-  fontSize:18,
-  color:Colors.black,
+  fontSize:15,
+  color:Colors.black, fontWeight:'bold',
   fontFamily:'Font-Medium'
 },
 subscibed:{
@@ -109,7 +108,7 @@ orderSummary:{
   
   marginLeft:Layout.indent,
   marginRight:Layout.indent,
-  fontFamily:'Font-Medium',
+  fontFamily:'Font-Medium', fontSize:15,
 
 },
  deliveryAddress:{
@@ -309,6 +308,19 @@ QtyBox:{
     color:Colors.primary,
     fontSize:20,
     paddingLeft:5
+  },
+
+  
+  shopSubTitleText:{
+    fontSize:11,
+    fontFamily:'Font-Medium',
+    color:'#f05e1b',
+    lineHeight:22,
+    paddingBottom:0,
+    justifyContent:'center',
+    alignSelf:'center',
+    alignItems:'center',
+    marginBottom:0
   },
 
 };

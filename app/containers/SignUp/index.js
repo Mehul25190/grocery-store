@@ -140,12 +140,12 @@ class SignUp extends React.Component {
                       </Col>
                      
                     </Row>
-                    <Row style={{marginBottom:60,marginTop:10}}>
+                    <Row style={{marginBottom:60,marginTop:0}}>
                      <Col>
                         <Button transparent full     
                          style={[{justifyContent:'center'}]} >
                           <TouchableOpacity  onPress={() => this.signinGuestUser()}>
-                          <Text  style={[styles.loginWithText,{textDecorationLine:'underline'}]} >I just want to explore</Text>
+                          <Text  style={[styles.loginWithText,{textDecorationLine:'underline', fontSize:14}]} >I just want to explore</Text>
                           </TouchableOpacity>
                         </Button>
                       </Col>

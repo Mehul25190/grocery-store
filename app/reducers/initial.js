@@ -1,19 +1,19 @@
 import { getLanguage } from '../utils/common';
 export const initialState = {
-	common:{
+	common: {
 		isLoading: false,
 		showModal: false,
-		categoryData:{},
-		categoryOffer:{},
-		
+		categoryData: {},
+		categoryOffer: {},
+
 	},
-	auth:{
+	auth: {
 		user: null,
 		showIntro: true,
-		language:getLanguage(0),
-		languageId:0,
-		languageSet:0,
-		mobileno:null,
+		language: getLanguage(0),
+		languageId: 0,
+		languageSet: 0,
+		mobileno: null,
 		deviveryAddress: {}
 	},
 	subscription: {
@@ -22,6 +22,10 @@ export const initialState = {
 	},
 	product: {
 		productDetail: {},
+		ethnicities: [],
+		ethnicitieslisting: [],
+		brand: [],
+		brandlisting: [],
 	},
 	cart: {
 		viewCartDetail: {},
