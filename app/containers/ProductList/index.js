@@ -38,13 +38,14 @@ import {
   Right,
   Thumbnail,
   Spinner,
-   Icon,
+   Icon,Row
 } from "native-base";
 import url from "../../config/api";
 import { ItemList } from "../data/data";
 import { categoryList } from "../data/data";
 import { filterList } from "../data/data";
 import { productList } from "../data/data";
+import { ProductSorting } from '../data/data';
 //import MasonryList from "react-native-masonry-list";
 import { showToast } from '../../utils/common';
 import { connect } from "react-redux";
@@ -56,6 +57,7 @@ import styles from "./styles";
 import NumericInput from "react-native-numeric-input";
 import { ScreenLoader } from '../../components';
 import Carousel from 'react-native-snap-carousel';
+import Modal from 'react-native-modal';
 
 class ProductList extends React.Component {
   constructor(props) {
@@ -73,6 +75,9 @@ class ProductList extends React.Component {
       buyOndeSelected: [],
       selctedProduct: '',
       wished:false,
+       isModalVisible: false,
+       isFilterVisible: false,
+       type:''
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
@@ -316,6 +321,12 @@ class ProductList extends React.Component {
     })
   }
 
+ SortShowFunction(){
+    this.setState({isModalVisible: !this.state.isModalVisible});
+  }
+FilterShowFunction(){
+ this.setState({isFilterVisible: !this.state.isFilterVisible});
+}
   render() {
 
     //console.log('product', this.state.productData)
@@ -332,6 +343,10 @@ class ProductList extends React.Component {
           IconRightF="search"
           setCart={true}
           bgColor="transparent"
+          setSort={true}
+          SortShow={this.SortShowFunction.bind(this)}
+          setProFilter={true}
+          FilterShow={this.FilterShowFunction.bind(this)}
           Title={categoryName}
         />
         <Content enableOnAndroid style={appStyles.content}>
@@ -528,8 +543,63 @@ class ProductList extends React.Component {
               {this.state.productData.length == 0 ? <View style={[appStyles.spinner, appStyles.norecordfound]}><Text>No Product Found</Text></View> : null }
             </View>
             )}
-        </Content>
 
+
+        </Content>
+       <Modal isVisible={this.state.isModalVisible} backdropColor={'white'} backdropOpacity={0.8} coverScreen={false} style={{height:250}}>
+         
+       <View
+          style={{
+             backgroundColor:'transparent',
+             flex:1,
+             justifyContent:'flex-end'
+                 }}>  
+             <Grid
+               style={{
+                   backgroundColor:'green',
+                   height:'20%'
+                 }}>  
+     
+        
+        {ProductSorting.map((data, key) => {
+          return (  <Row key={key}>       
+                  {this.state.type == data.type ?
+                  
+                      <Col style={[styles.btn,{}]}>
+                          <Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />
+                          <Text style={styles.reasonText}>{data.type}</Text>
+                      </Col>
+                   
+                      :
+                    
+                      <Col onPress={()=>{this.setState({reason: data.type})}} style={[styles.btn,{}]}>
+                          <Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />
+                          <Text style={styles.reasonText}>{data.type}</Text>
+                      </Col>
+                    
+
+                  }
+                </Row>  
+          )
+      })}
+    
+       <Row>
+        <Button title="Hide modal"  onPress={() =>this.SortShowFunction()} />
+       </Row>
+
+
+        </Grid> 
+           
+          </View>
+        </Modal>
+         <Modal isVisible={this.state.isFilterVisible} backdropColor={'white'} backdropOpacity={0} >
+         
+          <View style={{ flex: 1 ,flexDirection: 'column', justifyContent: 'flex-end'}}>
+          <View style={{ height: "50%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center"}}>
+            <Text>Testing a modal with transparent background</Text>
+          </View>
+         </View>
+        </Modal>
         {/*<Catalog {...this.props} />*/}
       </Container>
     );

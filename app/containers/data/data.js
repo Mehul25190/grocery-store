@@ -1,4 +1,23 @@
 import imgs from '../../assets/images';
+export const ProductSorting =[
+ 
+  {
+    key:1,
+    type:'Popurality'
+  },
+  {
+      key:2,
+    type:'Price : High to Low'
+  },
+  {
+      key:3,
+    type:'Price : Low to High'
+  },
+ 
+ 
+];
+
+
 export const ProductVariant =[
  
     {
