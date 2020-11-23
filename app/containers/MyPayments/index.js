@@ -291,7 +291,7 @@ class MyPayments extends React.Component {
                   <Text style={styles.testStyles}>Total Order Value</Text>
                 </Col>
                <Col style={{flex:0, width:100, justifyContent:'flex-end',alignItems:'flex-end'}}>
-                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{Colors.CUR}</Text> {totalAmount.toFixed(2)}</Text>
+                 <Text style={styles.testStyles}><Text style={appStyles.currencysmall}>{Colors.CUR}</Text> <Text style={appStyles.amountsmall}>{totalAmount.toFixed(2)}</Text></Text>
                </Col>
               </Row>
                <Row>
@@ -299,7 +299,7 @@ class MyPayments extends React.Component {
                     <Text style={styles.testStyles}>{applyDeliveryCharge ? 'Delivery Charges' : 'Subscription Fees' }</Text>
                 </Col>
                 <Col style={{flex:0, width:100, justifyContent:'flex-end',alignItems:'flex-end'}}>
-                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{Colors.CUR}</Text> {deliveryCharges.toFixed(2)}</Text>
+                 <Text style={styles.testStyles}><Text style={appStyles.currencysmall}>{Colors.CUR}</Text> <Text style={appStyles.amountsmall}>{deliveryCharges.toFixed(2)}</Text></Text>
                </Col>
               </Row>
               {this.state.offerValue > 0 ?
@@ -308,7 +308,7 @@ class MyPayments extends React.Component {
                     <Text style={styles.testStyles}>Discount</Text>
                 </Col>
                 <Col style={{flex:0, width:100, justifyContent:'flex-end',alignItems:'flex-end'}}>
-                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{Colors.CUR}</Text> {this.state.offerValue.toFixed(2)}</Text>
+                 <Text style={styles.testStyles}><Text style={appStyles.currencysmall}>{Colors.CUR}</Text> <Text style={appStyles.amountsmall}>{this.state.offerValue.toFixed(2)}</Text></Text>
                </Col>
               </Row>) : null }
             </Grid>
@@ -318,7 +318,7 @@ class MyPayments extends React.Component {
                   <Text style={styles.testStyles}>Total Amount Payable </Text>
                 </Col>
                <Col style={{flex:0, width:100, justifyContent:'flex-end',alignItems:'flex-end'}}>
-                 <Text style={styles.testStyles}><Text style={appStyles.currency}>{Colors.CUR}</Text> {(totalAmount + deliveryCharges - this.state.offerValue).toFixed(2)}</Text>
+                 <Text style={styles.testStyles}><Text style={appStyles.currencysmall}>{Colors.CUR}</Text> <Text style={appStyles.amountsmall}>{(totalAmount + deliveryCharges - this.state.offerValue).toFixed(2)}</Text></Text>
                </Col>
               </Row>
                <Row>
@@ -326,7 +326,7 @@ class MyPayments extends React.Component {
                   <Text style={[styles.testStyles,{color:Colors.primary}]}>Your Savings with this order</Text>
                 </Col>
                 <Col style={{flex:0, width:100, justifyContent:'flex-end',alignItems:'flex-end'}}>
-                 <Text style={[styles.testStyles,{color:Colors.primary}]}><Text style={[appStyles.currency,{color:Colors.primary}]}>{Colors.CUR}</Text> {(actualTotal - totalAmount).toFixed(2)}</Text>
+                 <Text style={[styles.testStyles,{color:Colors.primary}]}><Text style={[appStyles.currencysmall,{color:Colors.primary}]}>{Colors.CUR}</Text> <Text style={appStyles.amountsmall}>{(actualTotal - totalAmount).toFixed(2)}</Text></Text>
                </Col>
               </Row>
             </Grid>
@@ -364,8 +364,8 @@ class MyPayments extends React.Component {
                        value = {this.state.switch1Value}/>
                     </Left>
                     <View style={{borderBottomWidth:0}}>
-                      <Text style={styles.payOptionswalletb}>Use My Wallet Balance</Text>
-                      <Text style={styles.payOptions}><Text style={[appStyles.currency,{fontSize:14}]}>{Colors.CUR}</Text> {walletAmount ? walletAmount.toFixed(2) : 0 }</Text>
+                      <Text style={styles.payOptionswalletb}>Use My Wallet Balance <Text style={appStyles.currencysmall}>{Colors.CUR} </Text> 
+                      <Text style={appStyles.amountsmall}>{walletAmount ? walletAmount.toFixed(2) : 0 }</Text></Text>
                       <Text style={[styles.payCashText,{color:Colors.gray, fontSize:8}]}>(Turn wallet off to use other payment options)</Text>
                     </View>
 
@@ -490,7 +490,16 @@ class MyPayments extends React.Component {
 
          {/* ---------------------------------Wallet----------------------------------*/}
 
-          <TouchableOpacity style={styles.checkOutBtnArea} >
+          <Row>
+            <Col>
+              <TouchableOpacity style={styles.checkOutBtnArea} >
+                <Button primary full style={styles.checkOutBtn} onPress={() => this.openControlPanel()}>
+                  <Text style={styles.checkOutText}> View Cart</Text>
+                </Button>
+              </TouchableOpacity>
+            </Col>
+            <Col>
+               <TouchableOpacity style={styles.checkOutBtnArea} >
               <Button primary full style={styles.checkOutBtn} onPress={()=> this.placeOrder()}>
                   {this.state.placeOrderLoading ? 
                     <ActivityIndicator/>
@@ -500,6 +509,9 @@ class MyPayments extends React.Component {
                   
                </Button>
           </TouchableOpacity>
+            </Col>
+          </Row>
+         
          
              </ScrollView>
             
