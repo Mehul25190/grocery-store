@@ -59,7 +59,7 @@ import { ScreenLoader } from '../../components';
 import Carousel from 'react-native-snap-carousel';
 import Modal from 'react-native-modal';
 
-class ProductList extends React.Component {
+class MyWishlist extends React.Component {
   constructor(props) {
     super(props);
     const categoryId = this.props.navigation.getParam("para_categoryId");
@@ -77,7 +77,7 @@ class ProductList extends React.Component {
       wished:false,
        isModalVisible: false,
        isFilterVisible: false,
-       SortinType:''
+       type:''
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
@@ -347,7 +347,7 @@ FilterShowFunction(){
           SortShow={this.SortShowFunction.bind(this)}
           setProFilter={true}
           FilterShow={this.FilterShowFunction.bind(this)}
-          Title={categoryName}
+          Title="My Wishlist"
         />
         <Content enableOnAndroid style={appStyles.content}>
           {this.props.isLoading ? (
@@ -552,41 +552,40 @@ FilterShowFunction(){
 
 
         </Content>
-       <Modal isVisible={this.state.isModalVisible} backdropColor={'white'} backdropColor={'white'} backdropOpacity={0}>
+       <Modal isVisible={this.state.isModalVisible} backdropColor={'white'} backdropOpacity={0.8} coverScreen={false} style={{height:250}}>
          
        <View
-         style={{ flex: 1 ,flexDirection: 'column', justifyContent: 'flex-end'}}>  
-             <View
-               style={{ height: "50%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center"}}>  
+          style={{
+             backgroundColor:'transparent',
+             flex:1,
+             justifyContent:'flex-end'
+                 }}>  
+             <Grid
+               style={{
+                   backgroundColor:'green',
+                   height:'20%'
+                 }}>  
      
         
         {ProductSorting.map((data, key) => {
-          return (  <Grid key={key}>       
-                  {this.state.SortinType == data.SortinType ?
+          return (  <Row key={key}>       
+                  {this.state.type == data.type ?
                   
-                     <Row style={{flex:0,justifyContent:'flex-start'}}>
                       <Col style={[styles.btn,{}]}>
-                          <Text style={styles.reasonText}>{data.SortinType}</Text>
-                      </Col>
-                       <Col style={[styles.btn,{}]}>
                           <Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />
-                       </Col>
-                      </Row>
+                          <Text style={styles.reasonText}>{data.type}</Text>
+                      </Col>
                    
                       :
                     
-                    <Row>
-                      <Col onPress={()=>{this.setState({SortinType: data.SortinType})}} style={[styles.btn,{}]}>
-                          <Text style={styles.reasonText}>{data.SortinType}</Text>
-                      </Col>
-                       <Col onPress={()=>{this.setState({SortinType: data.SortinType})}} style={[styles.btn,{}]}>
+                      <Col onPress={()=>{this.setState({reason: data.type})}} style={[styles.btn,{}]}>
                           <Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />
+                          <Text style={styles.reasonText}>{data.type}</Text>
                       </Col>
-                    </Row>
                     
 
                   }
-                </Grid>  
+                </Row>  
           )
       })}
     
@@ -595,7 +594,7 @@ FilterShowFunction(){
        </Row>
 
 
-        </View> 
+        </Grid> 
            
           </View>
         </Modal>
@@ -641,4 +640,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
+export default connect(mapStateToProps, mapDispatchToProps)(MyWishlist);

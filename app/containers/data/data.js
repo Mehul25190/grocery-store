@@ -3,15 +3,15 @@ export const ProductSorting =[
  
   {
     key:1,
-    type:'Popurality'
+    SortinType:'Popurality'
   },
   {
       key:2,
-    type:'Price : High to Low'
+    SortinType:'Price : High to Low'
   },
   {
       key:3,
-    type:'Price : Low to High'
+    SortinType:'Price : Low to High'
   },
  
  
