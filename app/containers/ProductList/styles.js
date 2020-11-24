@@ -28,10 +28,42 @@ export default {
   sliderBtnContainer: {
     flexDirection: 'row', marginBottom: 24
   },
-
-
-
-
+  bottomSortInner:{
+   height: "30%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
+   borderWidth: 1,
+    borderColor: '#333',
+ },
+ SortingText:{
+   textAlign: 'left',
+  fontFamily:'Font-Medium',
+   fontSize:16,
+  
+ },
+ bottomFilterInner:{
+   height: "80%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
+   borderWidth: 1,
+    borderColor: '#333',
+ },
+SortModal:{
+  margin:0,
+  padding:0
+},
+closeBtn:{
+position:'absolute',
+top:-15,
+right:30,
+color:'#333',
+backgroundColor:'#fff',
+borderRadius:50
+},
+bottmSortMain:{
+  flex: 1,  padding:0,margin:0,flexDirection: 'column', justifyContent: 'flex-end', 
+  position:'relative'
+},
+bottmFilterMain:{
+  flex: 1,  padding:0,margin:0,flexDirection: 'column', justifyContent: 'flex-end', 
+  position:'relative'
+},
   cateContainer:{
     flex: 1,
     height:50,

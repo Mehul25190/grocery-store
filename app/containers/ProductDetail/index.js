@@ -399,7 +399,33 @@ class ProductDetail extends React.Component {
             <Text style={styles.payTextNow}>Add to cart</Text>
           </Button>
         </TouchableOpacity>*/}
+                  <View>
+                  <Text style={styles.title}>Relative Products </Text>
+                </View>
 
+
+            <Row style={styles.secondRow}>
+
+              <Col style={{ justyfyContent: 'center', alignItems: 'center', marginLeft: Layout.indent, marginRight: Layout.indent }}>
+                <Carousel
+                  ref={(c) => { this._carousel = c; }}
+                  loop={true}
+                  autoplay={true}
+                  data={ProductDetail.itemImages}
+                  renderItem={this._renderItem}
+                  sliderWidth={Layout.window.width}
+                  itemWidth={Layout.window.width}
+                  autoplayInterval={3000}
+                  autoplayDelay={3000}
+                  onSnapToItem={(index) => this.setState({ activeSlide: index })}
+                />
+                {this.pagination}
+              </Col>
+
+
+              {/* <Image source={{uri: url.imageURL+ProductDetail.itemImages[0].imagePath}} style={styles.amulMoti} />*/}
+
+            </Row>
           <Row style={styles.okayBtnArea}>
             <Col>
               <Button priamary full style={styles.doneBtn} onPress={() => this.props.navigation.navigate(Screens.Home.route)}>

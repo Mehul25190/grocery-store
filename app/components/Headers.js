@@ -164,7 +164,7 @@ class Headers extends React.Component {
               style={appStyles.filterArea}
               onPress={() =>this.props.FilterShow() }
             >
-              <Icon style={appStyles.filteroutline} name="filter-outline" type="MaterialCommunityIcons" />
+              <Icon style={appStyles.filteroutline} name="filter" type="Feather" />
              
             </TouchableOpacity>
           )}

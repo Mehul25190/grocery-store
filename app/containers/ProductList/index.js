@@ -38,7 +38,7 @@ import {
   Right,
   Thumbnail,
   Spinner,
-   Icon,Row
+   Icon,Row,CardItem
 } from "native-base";
 import url from "../../config/api";
 import { ItemList } from "../data/data";
@@ -46,6 +46,7 @@ import { categoryList } from "../data/data";
 import { filterList } from "../data/data";
 import { productList } from "../data/data";
 import { ProductSorting } from '../data/data';
+import { FilterCat } from '../data/data';
 //import MasonryList from "react-native-masonry-list";
 import { showToast } from '../../utils/common';
 import { connect } from "react-redux";
@@ -327,6 +328,9 @@ class ProductList extends React.Component {
 FilterShowFunction(){
  this.setState({isFilterVisible: !this.state.isFilterVisible});
 }
+onBackdropPress(){
+
+}
   render() {
 
     //console.log('product', this.state.productData)
@@ -343,9 +347,9 @@ FilterShowFunction(){
           IconRightF="search"
           setCart={true}
           bgColor="transparent"
-          setSort={true}
-          SortShow={this.SortShowFunction.bind(this)}
           setProFilter={true}
+          SortShow={this.SortShowFunction.bind(this)}
+          setSort={true}
           FilterShow={this.FilterShowFunction.bind(this)}
           Title={categoryName}
         />
@@ -552,23 +556,27 @@ FilterShowFunction(){
 
 
         </Content>
-       <Modal isVisible={this.state.isModalVisible} backdropColor={'white'} backdropColor={'white'} backdropOpacity={0}>
+       <Modal style={styles.SortModal} isVisible={this.state.isModalVisible} hasBackdrop={true} 
+     backdropColor={'#333'} backdropOpacity={0.3}>
          
        <View
-         style={{ flex: 1 ,flexDirection: 'column', justifyContent: 'flex-end'}}>  
+         style={styles.bottmSortMain}>  
+        
+       
+      
              <View
-               style={{ height: "50%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center"}}>  
-     
+               style={styles.bottomSortInner}>  
+      <Icon name="closecircleo" type="AntDesign" style={styles.closeBtn} onPress={() =>this.SortShowFunction()} />
         
         {ProductSorting.map((data, key) => {
-          return (  <Grid key={key}>       
+          return (  <Grid key={key} style={{flex:1,justifyContent:'center',alignItems:'center'}}>       
                   {this.state.SortinType == data.SortinType ?
                   
-                     <Row style={{flex:0,justifyContent:'flex-start'}}>
-                      <Col style={[styles.btn,{}]}>
-                          <Text style={styles.reasonText}>{data.SortinType}</Text>
+                     <Row style={{flex:0,justifyContent:'center'}}>
+                      <Col style={{flex:1,justifyContent:'center',marginLeft:25}}>
+                          <Text style={styles.SortingText}>{data.SortinType}</Text>
                       </Col>
-                       <Col style={[styles.btn,{}]}>
+                       <Col style={[styles.btn,{flex:0,justifyContent:'center',width:50}]}>
                           <Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />
                        </Col>
                       </Row>
@@ -576,10 +584,10 @@ FilterShowFunction(){
                       :
                     
                     <Row>
-                      <Col onPress={()=>{this.setState({SortinType: data.SortinType})}} style={[styles.btn,{}]}>
-                          <Text style={styles.reasonText}>{data.SortinType}</Text>
+                      <Col onPress={()=>{this.setState({SortinType: data.SortinType})}}  style={{flex:1,justifyContent:'center',marginLeft:25}}>
+                          <Text style={styles.SortingText}>{data.SortinType}</Text>
                       </Col>
-                       <Col onPress={()=>{this.setState({SortinType: data.SortinType})}} style={[styles.btn,{}]}>
+                       <Col onPress={()=>{this.setState({SortinType: data.SortinType})}} style={[styles.btn,{flex:0,justifyContent:'center',width:50}]}>
                           <Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />
                       </Col>
                     </Row>
@@ -590,20 +598,36 @@ FilterShowFunction(){
           )
       })}
     
-       <Row>
-        <Button title="Hide modal"  onPress={() =>this.SortShowFunction()} />
-       </Row>
+      
 
 
         </View> 
            
           </View>
         </Modal>
-         <Modal isVisible={this.state.isFilterVisible} backdropColor={'white'} backdropOpacity={0} >
+         <Modal style={styles.SortModal} isVisible={this.state.isFilterVisible}  hasBackdrop={true} 
+     backdropColor={'#333'} backdropOpacity={0.3} >
+          <View
+         style={styles.bottmFilterMain}>  
+        
+           <View
+               style={styles.bottomFilterInner}>  
+      <Icon name="closecircleo" type="AntDesign" style={styles.closeBtn} onPress={() =>this.FilterShowFunction()} />
+      <Card>
+      {FilterCat.map((data, key) => {
+        
+           <CardItem key={key}>
+              <Icon active name="logo-googleplus" />
+              <Text>Google Plus</Text>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+             </CardItem>
+           
+      })}
+            
+        </Card>  
          
-          <View style={{ flex: 1 ,flexDirection: 'column', justifyContent: 'flex-end'}}>
-          <View style={{ height: "50%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center"}}>
-            <Text>Testing a modal with transparent background</Text>
           </View>
          </View>
         </Modal>

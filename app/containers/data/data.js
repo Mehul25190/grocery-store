@@ -16,6 +16,28 @@ export const ProductSorting =[
  
  
 ];
+export const FilterCat =[
+ 
+  {
+    key:1,
+    FilterType:'Category'
+  },
+  {
+      key:2,
+    FilterType:'Brand'
+  },
+  {
+      key:3,
+    FilterType:'Price'
+  },
+   {
+      key:4,
+    FilterType:'Seller'
+  },
+ 
+ 
+ 
+];
 
 
 export const ProductVariant =[
