@@ -276,10 +276,6 @@ class SearchOffer extends React.Component {
                 {totalItem > 0 && (<Text style={appStyles.cartCount}>{totalItem}</Text>)}
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => this.props.navigation.navigate(Screens.Profile.route)}>
-                <Icon style={appStyles.userIcon} name="user-circle" type="FontAwesome" />
-              </TouchableOpacity>
-
             </Button>
           </Right>
 
@@ -347,30 +343,36 @@ class SearchOffer extends React.Component {
                             {item.discountedPrice > 0 && item.discountedPrice < item.price ? (
                               <View style={{ flexDirection: "row" }}>
                                 <Text style={styles.proPriceStrike}>
-                                  <Text style={(appStyles.currency, { fontSize: 18 })}>
+                                  <Text style={appStyles.currencysmall}>
                                     {Colors.CUR}
                                   </Text>{" "}
-                                  {item.price}
+                                   <Text
+                                      style={appStyles.amountmedium}
+                                    >{item.price}</Text>
                                 </Text>
                                 <Text style={styles.proPrice}>
                                   <Text
-                                    style={(appStyles.currency, { fontSize: 18 })}
+                                    style={appStyles.currencysmall}
                                   >
                                     {Colors.CUR}
 
                                   </Text>{" "}
-                                  {item.discountedPrice}
+                                   <Text
+                                      style={appStyles.amountmedium}
+                                    >{item.discountedPrice}</Text>
                                 </Text>
                               </View>
                             ) : (
                                 <View>
                                   <Text style={styles.proPrice}>
                                     <Text
-                                      style={(appStyles.currency, { fontSize: 18 })}
+                                      style={appStyles.currencysmall}
                                     >
                                       {Colors.CUR}
                                     </Text>{" "}
-                                    {item.price}
+                                     <Text
+                                      style={appStyles.amountmedium}
+                                    >{item.price}</Text>
                                   </Text>
                                 </View>
                               )}

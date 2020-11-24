@@ -343,7 +343,7 @@ fontFamily:'Font-Medium'
   },
   cartIcon:{
    paddingTop:8,
-   fontSize:28,
+   fontSize:30,
    color:Colors.primary
   },
   cartCount:{
@@ -521,7 +521,13 @@ fontFamily:'Font-Medium'
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-around'
-    }
+    },
+    currencysmall: {fontSize:13, fontWeight:'normal'},
+    currencymedium: {fontSize:15,},
+    currencybig: {fontSize:16,},
+    amountsmall: {fontSize:14, fontWeight:'bold'},
+    amountmedium: {fontSize:16, fontWeight:'bold'},
+    amountbig: {fontSize:17, fontWeight:'bold'},
 
 
     /* Slideshow*/

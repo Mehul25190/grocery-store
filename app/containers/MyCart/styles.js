@@ -310,4 +310,17 @@ QtyBox:{
     paddingLeft:5
   },
 
+  
+  shopSubTitleText:{
+    fontSize:11,
+    fontFamily:'Font-Medium',
+    color:'#f05e1b',
+    lineHeight:22,
+    paddingBottom:0,
+    justifyContent:'center',
+    alignSelf:'center',
+    alignItems:'center',
+    marginBottom:0
+  },
+
 };

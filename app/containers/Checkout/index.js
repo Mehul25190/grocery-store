@@ -319,11 +319,14 @@ class Checkout extends React.Component {
             })}
           </Grid>
           <Grid style={styles.OrderTitle}>
-            <Col>
-              <Text style={styles.OrderTitleText}>Order Item List </Text>
+            <Col style={{width:210, alignSelf:'flex-start'}}>
+              <Text style={styles.OrderTitleText}>Items </Text>
             </Col>
             <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-              <Text style={styles.OrderTitleText}>Total Items {totalItem}</Text>
+              <Text style={styles.OrderTitleText}>Qty </Text>
+            </Col>
+            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <Text style={styles.OrderTitleText}>Items {totalItem}</Text>
             </Col>
           </Grid>
           <List style={{ paddingBottom: 10 }}>
@@ -331,11 +334,12 @@ class Checkout extends React.Component {
             {cartDetail.map((item, index) => {
               return (
                 <ListItem style={styles.ItemList}>
-                  <Left>
-                    <Text style={styles.orderName}>{item.itemName} <Text style={styles.orderQty}> - {item.quantity}</Text></Text>
-                  </Left>
-                  <Body style={{ flexDirection: 'row', flex: 0, justifyContent: 'center', alignItems: 'center' }}>
-                  </Body>
+                  <View style={{width:200, alignSelf:'flex-start'}}>
+                    <Text style={styles.orderName}>{item.itemName}</Text>
+                  </View>
+                  <View style={{justifyContent: 'flex-start', alignItems: 'flex-start',  width:50, flex:1 }}>
+                     <Text style={styles.orderQty}>{item.quantity}</Text>
+                  </View>
                   <View>
                     <Text style={styles.OrderPrice}>{item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? item.discountedPrice.toFixed(2) : item.itemPrice.toFixed(2)}</Text>
                   </View>
@@ -343,51 +347,45 @@ class Checkout extends React.Component {
               );
             })}
             {/* Sub Total */}
-            <ListItem style={[styles.TotalList, { marginTop: 10 }]}>
+             <ListItem style={[styles.TotalListtop,{marginTop:10}]}>
+                          <Left>
+                              <Text style={styles.TotalText}>Subtotal</Text>
+                          </Left>
+                         
+                          <Body style={styles.TotalBar}>
+                              <Text></Text>   
+                          </Body>
 
-              <View style={{ flex: 1, flexDirection: 'row' }}>
-                <View style={{ width: 210, }}>
-                  <Text style={[styles.TotalText, { alignSelf: 'flex-start' }]}>Subtotal</Text>
-                </View>
-                <View style={{ width: 55, }}>
-                  <Text style={[appStyles.currency, { alignSelf: 'flex-end' }]}>{Colors.CUR}</Text>
-                </View>
-                <View style={{ width: 75, }}>
-                  <Text style={styles.OrderPrice}> {totalAmount.toFixed(2)}</Text>
-                </View>
-              </View>
-            </ListItem>
-            {/* Deliver Charge */}
-            <ListItem style={styles.TotalList}>
+                          <View>
+                           <Text style={styles.OrderPrice}>{totalAmount.toFixed(2)}</Text>
+                          </View>
+                        </ListItem>   
+{/* Deliver Charge */} 
+                         <ListItem style={styles.TotalList}>
+                          <View>
+                            <Text style={styles.TotalText}>{this.state.applyDeliveryCharge ? 'Delivery Charges' : 'Subscription Fees'} </Text>
+                          </View>
+                         <Body style={styles.TotalBar}>
+                          <Text></Text>
+                          </Body>
 
-              <View style={{ flex: 1, flexDirection: 'row' }}>
-                <View style={{ width: 210, }}>
-                  <Text style={[styles.TotalText, { alignSelf: 'flex-start' }]}>{this.state.applyDeliveryCharge ? 'Delivery Charges' : 'Subscription Fees'} </Text>
-                </View>
-                <View style={{ width: 55, }}>
-                  <Text style={[appStyles.currency, { alignSelf: 'flex-end' }]}>{Colors.CUR}</Text>
-                </View>
-                <View style={{ width: 75, }}>
-                  <Text style={styles.OrderPrice}> {deliveryCharges}</Text>
-                </View>
-              </View>
-            </ListItem>
-            {/* Sub Total */}
-            <ListItem style={[styles.TotalList]}>
+                          <View>
+                          <Text style={styles.OrderPrice}>{deliveryCharges}</Text>
+                          </View>
+                        </ListItem>   
+{/* Sub Total */}                         
+                         <ListItem style={[styles.TotalList]}>
+                          <View>
+                            <Text style={styles.TotalText}>Total</Text>
+                          </View>
+                         <Body style={styles.TotalBar}>
+                                <Text></Text>
+                          </Body>
 
-
-              <View style={{ flex: 1, flexDirection: 'row' }}>
-                <View style={{ width: 210, }}>
-                  <Text style={[styles.TotalText, { alignSelf: 'flex-start' }]}>Total</Text>
-                </View>
-                <View style={{ width: 55, }}>
-                  <Text style={[appStyles.currency, { alignSelf: 'flex-end' }]}>{Colors.CUR}</Text>
-                </View>
-                <View style={{ width: 75, }}>
-                  <Text style={styles.OrderPrice}> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
-                </View>
-              </View>
-            </ListItem>
+                          <View>
+                           <Text style={styles.OrderPrice}><Text style={appStyles.currencysmall}>{Colors.CUR}</Text> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
+                          </View>
+                        </ListItem>  
 
 
           </List>
@@ -395,8 +393,8 @@ class Checkout extends React.Component {
           <Row>
             <Col>
               <TouchableOpacity style={styles.checkOutBtnArea} >
-                <Button primary full style={styles.checkOutBtn} onPress={() => this.props.navigation.navigate(Screens.Home.route)}>
-                  <Text style={styles.checkOutText}> Continue Shopping</Text>
+                <Button primary full style={styles.checkOutBtn} onPress={() => this.openControlPanel()}>
+                  <Text style={styles.checkOutTextpay}> View Cart</Text>
                 </Button>
               </TouchableOpacity>
             </Col>

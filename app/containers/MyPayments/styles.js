@@ -480,10 +480,9 @@ addAddressStyle: {
     color:'#fff'
   },
   checkOutBtnArea:{
-  marginLeft:Layout.indent,
-  marginRight:Layout.indent,
-    paddingLeft:Layout.indent,
-  paddingRight:Layout.indent,
+
+    paddingLeft:5,
+  paddingRight:5,
   marginTop:20,
   marginBottom:20
 
