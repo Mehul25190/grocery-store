@@ -44,17 +44,74 @@ export default {
    borderWidth: 1,
     borderColor: '#333',
  },
+  bottomFilterDetailInner:{
+   height: "90%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
+   borderWidth: 1,
+    borderColor: '#333',
+ },
 SortModal:{
   margin:0,
   padding:0
 },
-closeBtn:{
+ApplyButtonSection:{
+  flex:1,
+  backgroundColor:'#ddd'
+
+},
+filterList:{
+flex:4,
+marginTop:20
+},
+imgSorting:{
+  color:Colors.primary
+},
+ListItemsFilter:{
+  paddingTop:20,
+    paddingBottom:20,
+    marginLeft:Layout.indent-7,
+    marginRight:Layout.indent-7,
+    paddingRight:Layout.indent-7,
+    borderColor:Colors.primary
+},
+ApplyButtonSection:{
+  marginLeft:Layout.indent-7,
+    marginRight:Layout.indent-7,
+    paddingRight:Layout.indent-7,
+},
+resetFilter:{
+borderWidth:1,
+borderColor:Colors.primary,
+borderRadius:5
+},
+applyFilter:{
+borderWidth:1,
+backgroundColor:Colors.primary,
+borderRadius:5,
+marginLeft:5
+},
+resetTextbutton:{
+color:Colors.primary,
+padding:12,
+fontFamily:'Font-Medium',
+textAlign:'center'
+},
+applyFilterText:{
+color:Colors.white,
+padding:12,
+fontFamily:'Font-Medium',
+textAlign:'center'
+},
+closeBtnArea:{
 position:'absolute',
 top:-15,
 right:30,
-color:'#333',
+
 backgroundColor:'#fff',
-borderRadius:50
+borderRadius:50,
+padding:5
+},
+closeBtn:{
+color:'#333',
 },
 bottmSortMain:{
   flex: 1,  padding:0,margin:0,flexDirection: 'column', justifyContent: 'flex-end', 

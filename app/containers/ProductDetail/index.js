@@ -155,6 +155,14 @@ class ProductDetail extends React.Component {
     const selectedIndex = Math.floor(contentOffset.x / viewSize.width);
     this.setState({ selectedIndex });
   };
+  _similarItem = ({ item, index }) => {
+    //console.log('item', item)
+    return (
+      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+        <ImageModal resizeMode="contain" source={{ uri: url.imageURL + item.imagePath }} style={styles.amulMoti} />
+      </View>
+    );
+  }
   _renderItem = ({ item, index }) => {
     //console.log('item', item)
     return (
@@ -394,13 +402,46 @@ class ProductDetail extends React.Component {
               </View>
             )}
 
+              {
+            ProductDetail.item[0].description2 != "" && (
+              <View>
+                <View>
+                  <Text style={styles.title}>Additional information </Text>
+                </View>
+
+                <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1 }]}>
+                  <View>
+                    <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
+                      {ProductDetail.item[0].description2}
+                    </Text>
+                  </View>
+                </Card>
+              </View>
+            )}
+               {
+            ProductDetail.item[0].description3 != "" && (
+              <View>
+                <View>
+                  <Text style={styles.title}>Additional information </Text>
+                </View>
+
+                <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1 }]}>
+                  <View>
+                    <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
+                      {ProductDetail.item[0].description3}
+                    </Text>
+                  </View>
+                </Card>
+              </View>
+            )}
+
           {/*<TouchableOpacity>     
           <Button style={styles.payBtn} primary full onPress={()=> this.addToCart(ProductDetail.item[0].id, this.state.selected)}>
             <Text style={styles.payTextNow}>Add to cart</Text>
           </Button>
         </TouchableOpacity>*/}
                   <View>
-                  <Text style={styles.title}>Relative Products </Text>
+                  <Text style={styles.title}>Similar Products  </Text>
                 </View>
 
 
@@ -412,7 +453,7 @@ class ProductDetail extends React.Component {
                   loop={true}
                   autoplay={true}
                   data={ProductDetail.itemImages}
-                  renderItem={this._renderItem}
+                  renderItem={this._similarItem}
                   sliderWidth={Layout.window.width}
                   itemWidth={Layout.window.width}
                   autoplayInterval={3000}

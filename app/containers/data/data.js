@@ -1,4 +1,57 @@
 import imgs from '../../assets/images';
+
+
+export const FilterDetailCat =[
+ 
+  {
+    key:1,
+    FilterType:'item1',
+    total:50
+  },
+  {
+      key:2,
+    FilterType:'item2',
+    total:30
+  },
+  {
+      key:3,
+    FilterType:'item3',
+    total:20
+  },
+  {
+    key:4,
+    FilterType:'item4',
+    total:35
+  },
+  {
+      key:4,
+    FilterType:'item5',
+    total:45
+  },
+  {
+      key:4,
+    FilterType:'item6',
+    total:15
+  },
+  {
+    key:7,
+    FilterType:'item7',
+    total:60
+  },
+  {
+      key:8,
+    FilterType:'item8',
+    total:48
+  },
+  {
+      key:9,
+    FilterType:'item9',
+    total:65
+  },
+ 
+ 
+];
+
 export const ProductSorting =[
  
   {
