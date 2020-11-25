@@ -54,7 +54,7 @@ class Headers extends React.Component {
   };
 
   onPressSearch = () => {
-    this.setState({ searcBar: !this.state.searcBar });
+    this.setState({ searcBar: !this.state.searcBar, });
   };
   onPressFilter = () => {
     this.setState({ filter: !this.state.filter });
@@ -164,7 +164,7 @@ class Headers extends React.Component {
               style={appStyles.filterArea}
               onPress={() =>this.props.FilterShow() }
             >
-              <Icon style={appStyles.filteroutline} name="filter-outline" type="MaterialCommunityIcons" />
+              <Icon style={appStyles.filteroutline} name="filter" type="Feather" />
              
             </TouchableOpacity>
           )}

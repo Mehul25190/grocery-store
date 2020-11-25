@@ -18,6 +18,29 @@ export default {
     justifyContent: 'center',
     flexDirection: 'column',
   },
+   vegImageSection:{
+    position:'absolute',
+    
+    zIndex:99,
+    bottom:0,
+    left:5
+
+   },
+   vegImage:{
+   width:12,
+   height:12,
+   resizeMode:'contain',
+   },
+   heartoSection:{
+    position:'absolute',
+   top:0,
+   left:5,
+  zIndex:99,
+   },
+hearto:{
+color:'red',
+fontSize:15
+},
    photo: {
      flex:1,
     width: null,
