@@ -380,6 +380,14 @@ fontFamily:'Font-Medium'
     width:95,
     textAlign:'center'
   },
+  filteroutline:{
+    fontSize:23,
+    marginLeft:5
+  },
+  sorting:{
+    fontSize:25,
+    marginLeft:5
+  },
   headerStyle:{
     backgroundColor:Colors.secondary,
     height:70,

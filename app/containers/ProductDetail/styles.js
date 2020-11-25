@@ -5,14 +5,15 @@ export default {
 alignItems:'center',
 textAlign:'center',
 justyfyContent:'center'
+
   },
   hearto:{
 color:'red',
-fontSize:18
+fontSize:16
 },
  vegImage:{
-   width:20,
-   height:20,
+  width:12,
+   height:12,
    resizeMode:'contain',
    },
   variantImg:{
@@ -23,10 +24,10 @@ variantBtnActive:{
   flex:1,
   justyfyContent:'center',
   alignItems:'center',
-    borderRadius:8,
-   backgroundColor:Colors.primary,
-   borderColor:Colors.secondary,
-   margin:5
+  borderRadius:8,
+  backgroundColor:Colors.primary,
+  borderColor:Colors.secondary,
+  margin:5
 },
 variantTextActive:{
 color:Colors.secondary,

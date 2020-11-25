@@ -75,7 +75,7 @@ class ProductList extends React.Component {
       flalistIndex: 0,
       buyOndeSelected: [],
       selctedProduct: '',
-      wished:false,
+       wished:false,
        isModalVisible: false,
        isFilterVisible: false,
        SortinType:''
@@ -352,6 +352,7 @@ onBackdropPress(){
           setSort={true}
           FilterShow={this.FilterShowFunction.bind(this)}
           Title={categoryName}
+          headersRight={{width:120}}
         />
         <Content enableOnAndroid style={appStyles.content}>
           {this.props.isLoading ? (
@@ -569,10 +570,10 @@ onBackdropPress(){
       <Icon name="closecircleo" type="AntDesign" style={styles.closeBtn} onPress={() =>this.SortShowFunction()} />
         
         {ProductSorting.map((data, key) => {
-          return (  <Grid key={key} style={{flex:1,justifyContent:'center',alignItems:'center'}}>       
+          return (  <Grid key={key} >       
                   {this.state.SortinType == data.SortinType ?
                   
-                     <Row style={{flex:0,justifyContent:'center'}}>
+                     <Row>
                       <Col style={{flex:1,justifyContent:'center',marginLeft:25}}>
                           <Text style={styles.SortingText}>{data.SortinType}</Text>
                       </Col>
@@ -584,10 +585,10 @@ onBackdropPress(){
                       :
                     
                     <Row>
-                      <Col onPress={()=>{this.setState({SortinType: data.SortinType})}}  style={{flex:1,justifyContent:'center',marginLeft:25}}>
+                      <Col style={{flex:1,justifyContent:'center',marginLeft:25}}>
                           <Text style={styles.SortingText}>{data.SortinType}</Text>
                       </Col>
-                       <Col onPress={()=>{this.setState({SortinType: data.SortinType})}} style={[styles.btn,{flex:0,justifyContent:'center',width:50}]}>
+                       <Col style={[styles.btn,{flex:0,justifyContent:'center',width:50}]} onPress={()=>{this.setState({SortinType: data.SortinType})}} >
                           <Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />
                       </Col>
                     </Row>
@@ -605,32 +606,24 @@ onBackdropPress(){
            
           </View>
         </Modal>
-         <Modal style={styles.SortModal} isVisible={this.state.isFilterVisible}  hasBackdrop={true} 
-     backdropColor={'#333'} backdropOpacity={0.3} >
-          <View
-         style={styles.bottmFilterMain}>  
-        
-           <View
-               style={styles.bottomFilterInner}>  
-      <Icon name="closecircleo" type="AntDesign" style={styles.closeBtn} onPress={() =>this.FilterShowFunction()} />
-      <Card>
-      {FilterCat.map((data, key) => {
-        
-           <CardItem key={key}>
-              <Icon active name="logo-googleplus" />
-              <Text>Google Plus</Text>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
+   <Modal style={styles.SortModal} isVisible={this.state.isFilterVisible}  hasBackdrop={true} backdropColor={'#333'} backdropOpacity={0.3} >
+    <View style={styles.bottmFilterMain}>  
+  
+       <View style={styles.bottomFilterInner}>  
+          <Icon name="closecircleo" type="AntDesign" style={styles.closeBtn} onPress={() =>this.FilterShowFunction()} />
+          <Card>
+             <CardItem>
+                  <Icon active name="logo-googleplus" />
+                  <Text>Google Plus</Text>
+                  <Right>
+                    <Icon name="arrow-forward" />
+                  </Right>
              </CardItem>
-           
-      })}
-            
-        </Card>  
-         
-          </View>
-         </View>
-        </Modal>
+          </Card>  
+     
+      </View>
+   </View>
+  </Modal>
         {/*<Catalog {...this.props} />*/}
       </Container>
     );

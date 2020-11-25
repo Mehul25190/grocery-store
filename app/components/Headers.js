@@ -54,7 +54,7 @@ class Headers extends React.Component {
   };
 
   onPressSearch = () => {
-    this.setState({ searcBar: !this.state.searcBar });
+    this.setState({ searcBar: !this.state.searcBar, });
   };
   onPressFilter = () => {
     this.setState({ filter: !this.state.filter });
