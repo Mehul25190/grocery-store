@@ -18,7 +18,7 @@ import * as userActions from "../../actions/user";
 import * as cartActions from "../../actions/cart";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
-import { productList, productImages } from '../data/data';
+import { productList, productImages,SimilarProductDetail } from '../data/data';
 import * as productActions from "../../actions/product";
 import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
@@ -158,11 +158,21 @@ class ProductDetail extends React.Component {
   _similarItem = ({ item, index }) => {
     //console.log('item', item)
     return (
-      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-        <ImageModal resizeMode="contain" source={{ uri: url.imageURL + item.imagePath }} style={styles.amulMoti} />
+      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center',borderColor:'#ddd',borderWidth:1,paddding:10 }}>
+        <View>
+          <Image style={styles.similarImges} source={item.itemimage} />
+    
+          
+             <Text style={appStyles.amountmedium} >{Colors.CUR}{" "} {item.item_price}</Text>
+          <Text style={styles.similarTitle}>{item.item_title}</Text>
+          <Text style={styles.similarWeight}>{item.item_weight}</Text>
+        </View>
+
+
       </View>
     );
   }
+
   _renderItem = ({ item, index }) => {
     //console.log('item', item)
     return (
@@ -422,7 +432,7 @@ class ProductDetail extends React.Component {
             ProductDetail.item[0].description3 != "" && (
               <View>
                 <View>
-                  <Text style={styles.title}>Additional information </Text>
+                  <Text style={styles.title}></Text>
                 </View>
 
                 <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1 }]}>
@@ -452,10 +462,10 @@ class ProductDetail extends React.Component {
                   ref={(c) => { this._carousel = c; }}
                   loop={true}
                   autoplay={true}
-                  data={ProductDetail.itemImages}
+                  data={SimilarProductDetail}
                   renderItem={this._similarItem}
                   sliderWidth={Layout.window.width}
-                  itemWidth={Layout.window.width}
+                  itemWidth={200}
                   autoplayInterval={3000}
                   autoplayDelay={3000}
                   onSnapToItem={(index) => this.setState({ activeSlide: index })}

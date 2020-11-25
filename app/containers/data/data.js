@@ -1,6 +1,50 @@
 import imgs from '../../assets/images';
 
 
+
+export const SimilarProductDetail =[
+ 
+  {
+    key:1,
+    itemimage:imgs.amulMoti,
+    item_price:50,
+    item_title:'Product title',
+    item_weight:'200gm'
+  },
+  {
+      key:2,
+  itemimage:imgs.amulMoti,
+    item_price:50,
+    item_title:'Product title',
+    item_weight:'200gm'
+  },
+  {
+      key:3,
+   itemimage:imgs.amulMoti,
+    item_price:50,
+    item_title:'Product title',
+    item_weight:'200gm'
+  },
+  {
+    key:5,
+   itemimage:imgs.amulMoti,
+    item_price:50,
+    item_title:'Product title',
+    item_weight:'200gm'
+  },
+  {
+      key:6,
+   itemimage:imgs.amulMoti,
+    item_price:50,
+    item_title:'Product title',
+    item_weight:'200gm'
+  },
+ 
+ 
+ 
+];
+
+
 export const FilterDetailCat =[
  
   {

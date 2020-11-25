@@ -19,6 +19,27 @@ fontSize:16
   variantImg:{
      fontSize:50,
   },
+  similarImges:{
+   width:150,
+  alignSelf:'center',
+  height:150,
+  alignItems:'center',
+  resizeMode:'contain',
+  justifyContent:'center',
+  flex:1
+  },
+  similarPrice:{
+fontFamily:'Font-Medium',
+  fontSize:16,
+  },
+  similarTitle:{
+ fontFamily:'Font-Medium',
+  fontSize:16,
+  },
+  similarWeight:{
+ fontFamily:'Font-Medium',
+  fontSize:13,
+  },
 variantBtnActive:{
   width:70,
   flex:1,
