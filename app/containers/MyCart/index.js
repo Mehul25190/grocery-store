@@ -275,7 +275,7 @@ class MyCart extends React.Component {
                   
               </Modal>
         <ScrollView>
-          {this.props.isLoading && this.state.userAddressDtls.aptNo != 'undefined' ? (
+          {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (<View>
             {/*<TouchableOpacity style={styles.clickBtn} onPress={()=>this.props.navigation.navigate(Screens.MyPayments.route)}>
@@ -293,13 +293,15 @@ class MyCart extends React.Component {
                   />
                 </Left>
                 <Body>
+                  {this.state.userAddressDtls.aptNo != undefined ?
+                  (<View>
                   <Text style={[appStyles.userArea, styles.addressText]} >
-                    {(this.state.userAddressDtls.aptNo != undefined ? (this.state.userAddressDtls.aptNo + ",") : "" )} {(this.state.userAddressDtls.buildingName != undefined ? (this.state.userAddressDtls.buildingName + ",") : "")} 
+                    {(this.state.userAddressDtls.aptNo  ? (this.state.userAddressDtls.aptNo + ",") : "" )} {(this.state.userAddressDtls.buildingName != undefined ? (this.state.userAddressDtls.buildingName + ",") : "")} 
                   </Text>
                   <Text style={[appStyles.userCity, styles.addressText]} >
                     {this.state.userAddressDtls.area != undefined ? this.state.userAddressDtls.area + ' - ' + this.state.userAddressDtls.city  : ''}
                   </Text>
-
+                   </View>) : (<Spinner color={Colors.secondary} style={appStyles.spinner} />)} 
                 </Body>
 
                 <Right>
