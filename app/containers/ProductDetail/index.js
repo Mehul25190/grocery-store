@@ -18,7 +18,7 @@ import * as userActions from "../../actions/user";
 import * as cartActions from "../../actions/cart";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
-import { productList, productImages } from '../data/data';
+import { productList, productImages,SimilarProductDetail } from '../data/data';
 import * as productActions from "../../actions/product";
 import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
@@ -155,6 +155,24 @@ class ProductDetail extends React.Component {
     const selectedIndex = Math.floor(contentOffset.x / viewSize.width);
     this.setState({ selectedIndex });
   };
+  _similarItem = ({ item, index }) => {
+    //console.log('item', item)
+    return (
+      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center',borderColor:'#ddd',borderWidth:1,paddding:10 }}>
+        <View>
+          <Image style={styles.similarImges} source={item.itemimage} />
+    
+          
+             <Text style={appStyles.amountmedium} >{Colors.CUR}{" "} {item.item_price}</Text>
+          <Text style={styles.similarTitle}>{item.item_title}</Text>
+          <Text style={styles.similarWeight}>{item.item_weight}</Text>
+        </View>
+
+
+      </View>
+    );
+  }
+
   _renderItem = ({ item, index }) => {
     //console.log('item', item)
     return (
@@ -394,12 +412,71 @@ class ProductDetail extends React.Component {
               </View>
             )}
 
+              {
+            ProductDetail.item[0].description2 != "" && (
+              <View>
+                <View>
+                  <Text style={styles.title}>Additional information </Text>
+                </View>
+
+                <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1 }]}>
+                  <View>
+                    <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
+                      {ProductDetail.item[0].description2}
+                    </Text>
+                  </View>
+                </Card>
+              </View>
+            )}
+               {
+            ProductDetail.item[0].description3 != "" && (
+              <View>
+                <View>
+                  <Text style={styles.title}></Text>
+                </View>
+
+                <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1 }]}>
+                  <View>
+                    <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
+                      {ProductDetail.item[0].description3}
+                    </Text>
+                  </View>
+                </Card>
+              </View>
+            )}
+
           {/*<TouchableOpacity>     
           <Button style={styles.payBtn} primary full onPress={()=> this.addToCart(ProductDetail.item[0].id, this.state.selected)}>
             <Text style={styles.payTextNow}>Add to cart</Text>
           </Button>
         </TouchableOpacity>*/}
+                  <View>
+                  <Text style={styles.title}>Similar Products  </Text>
+                </View>
 
+
+            <Row style={styles.secondRow}>
+
+              <Col style={{ justyfyContent: 'center', alignItems: 'center', marginLeft: Layout.indent, marginRight: Layout.indent }}>
+                <Carousel
+                  ref={(c) => { this._carousel = c; }}
+                  loop={true}
+                  autoplay={true}
+                  data={SimilarProductDetail}
+                  renderItem={this._similarItem}
+                  sliderWidth={Layout.window.width}
+                  itemWidth={200}
+                  autoplayInterval={3000}
+                  autoplayDelay={3000}
+                  onSnapToItem={(index) => this.setState({ activeSlide: index })}
+                />
+                {this.pagination}
+              </Col>
+
+
+              {/* <Image source={{uri: url.imageURL+ProductDetail.itemImages[0].imagePath}} style={styles.amulMoti} />*/}
+
+            </Row>
           <Row style={styles.okayBtnArea}>
             <Col>
               <Button priamary full style={styles.doneBtn} onPress={() => this.props.navigation.navigate(Screens.Home.route)}>

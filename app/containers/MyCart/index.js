@@ -44,7 +44,7 @@ class MyCart extends React.Component {
   }
   componentDidMount() {
     
-    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+    this.focusListener = this.props.navigation.addListener("willFocus", () => {
       this.getCartDetail();
     });
     var that = this;
@@ -70,6 +70,20 @@ class MyCart extends React.Component {
 
   getCartDetail() {
 
+    this.props.viewCart(this.props.user.user.id).then(res => {
+      //console.log('rerrer', res.data.itemsRemoved)
+      if(res.data.itemsRemoved == 'Y'){
+        this.setState({isModalVisible: true})
+      }
+      
+      if (res.status == 'success') {
+        this.setState({ userAddressDtls: res.data.userAddressDtls })
+      } else {
+        showToast("No cart detail found", "danger");
+        this.props.navigation.navigate(Screens.Home.route)
+      }
+    })
+
     //check user addredd is available or not
     this.props.getDeviveryAddress(this.props.user.user.id).then(res => {
       if (res.status == "success") {
@@ -84,21 +98,6 @@ class MyCart extends React.Component {
         showToast("Something wrong with Server response", "danger");
       }
 
-    })
-
-
-    this.props.viewCart(this.props.user.user.id).then(res => {
-      //console.log('rerrer', res.data.itemsRemoved)
-      if(res.data.itemsRemoved == 'Y'){
-        this.setState({isModalVisible: true})
-      }
-      
-      if (res.status == 'success') {
-        this.setState({ userAddressDtls: res.data.userAddressDtls })
-      } else {
-        showToast("No cart detail found", "danger");
-        this.props.navigation.navigate(Screens.Home.route)
-      }
     })
 
   }
@@ -294,13 +293,15 @@ class MyCart extends React.Component {
                   />
                 </Left>
                 <Body>
+                  {this.state.userAddressDtls.aptNo != undefined ?
+                  (<View>
                   <Text style={[appStyles.userArea, styles.addressText]} >
-                    {(this.state.userAddressDtls ? (this.state.userAddressDtls.aptNo + ",") : "" )} {(this.state.userAddressDtls ? (this.state.userAddressDtls.buildingName + ",") : "")} 
+                    {(this.state.userAddressDtls.aptNo  ? (this.state.userAddressDtls.aptNo + ",") : "" )} {(this.state.userAddressDtls.buildingName != undefined ? (this.state.userAddressDtls.buildingName + ",") : "")} 
                   </Text>
                   <Text style={[appStyles.userCity, styles.addressText]} >
-                    {this.state.userAddressDtls ? this.state.userAddressDtls.area + ' - ' + this.state.userAddressDtls.city  : ''}
+                    {this.state.userAddressDtls.area != undefined ? this.state.userAddressDtls.area + ' - ' + this.state.userAddressDtls.city  : ''}
                   </Text>
-
+                   </View>) : (<Spinner color={Colors.secondary} style={appStyles.spinner} />)} 
                 </Body>
 
                 <Right>

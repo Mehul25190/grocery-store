@@ -5,28 +5,50 @@ export default {
 alignItems:'center',
 textAlign:'center',
 justyfyContent:'center'
+
   },
   hearto:{
 color:'red',
-fontSize:18
+fontSize:16
 },
  vegImage:{
-   width:20,
-   height:20,
+  width:12,
+   height:12,
    resizeMode:'contain',
    },
   variantImg:{
      fontSize:50,
+  },
+  similarImges:{
+   width:150,
+  alignSelf:'center',
+  height:150,
+  alignItems:'center',
+  resizeMode:'contain',
+  justifyContent:'center',
+  flex:1
+  },
+  similarPrice:{
+fontFamily:'Font-Medium',
+  fontSize:16,
+  },
+  similarTitle:{
+ fontFamily:'Font-Medium',
+  fontSize:16,
+  },
+  similarWeight:{
+ fontFamily:'Font-Medium',
+  fontSize:13,
   },
 variantBtnActive:{
   width:70,
   flex:1,
   justyfyContent:'center',
   alignItems:'center',
-    borderRadius:8,
-   backgroundColor:Colors.primary,
-   borderColor:Colors.secondary,
-   margin:5
+  borderRadius:8,
+  backgroundColor:Colors.primary,
+  borderColor:Colors.secondary,
+  margin:5
 },
 variantTextActive:{
 color:Colors.secondary,

@@ -1,10 +1,42 @@
 import {Colors,Layout} from '../../constants/';
 export default {
+   scrollContainer: {
+    flex: 1
+  },
+  sliderContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    top: 80,
+    alignSelf: 'center'
+  },
+  sliderBtn: {
+    height: 13,
+    width: 13,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10
+  },
+  sliderBtnSelected: {
+    height: 12,
+    width: 12,
+    borderRadius: 6,
+    backgroundColor: 'white',
+  },
+  sliderBtnContainer: {
+    flexDirection: 'row', marginBottom: 24
+  },
+
+
+
+
   cateContainer:{
     flex: 1,
-      height:50,
+    height:50,
     width:Layout.width,
-      paddingTop:7,
+    paddingTop:7,
     paddingBottom:5,
     justifyContent: 'center',
     alignItems: 'center',
@@ -18,34 +50,12 @@ export default {
     justifyContent: 'center',
     flexDirection: 'column',
   },
-   vegImageSection:{
-    position:'absolute',
-    
-    zIndex:99,
-    bottom:0,
-    left:5
 
-   },
-   vegImage:{
-   width:12,
-   height:12,
-   resizeMode:'contain',
-   },
-   heartoSection:{
-    position:'absolute',
-   top:0,
-   left:5,
-  zIndex:99,
-   },
-hearto:{
-color:'red',
-fontSize:15
-},
    photo: {
-     flex:1,
-    width: null,
-    height: null,
-    resizeMode: 'contain',
+      flex:1,
+      width: null,
+      height: null,
+      resizeMode: 'contain',
       justifyContent: 'flex-end',
       flexDirection:'column',
       marginTop:50,
@@ -53,37 +63,37 @@ fontSize:15
      
   },
   productTitle:{
-     paddingTop:6,
-    paddingBottom:5,
+      paddingTop:6,
+      paddingBottom:5,
 
-    paddingLeft: 20,
-    paddingRight: 20,
-    borderRadius: 25,
-  marginRight:0
+      paddingLeft: 20,
+      paddingRight: 20,
+      borderRadius: 25,
+      marginRight:0
   },
   titleBackground:{
-backgroundColor:Colors.secondary,
-  paddingTop:3,
+    backgroundColor:Colors.primary,
+    paddingTop:3,
     paddingBottom:5,
     color:Colors.white,
     paddingLeft: 20,
-   
+
     paddingRight: 20,
     borderRadius: 25,
-     overflow: 'hidden',
-  marginRight:0,
+    overflow: 'hidden',
+    marginRight:0,
 
   },
   whiteBackground:{
-backgroundColor:'transparent',
-  paddingTop:6,
+    backgroundColor:'transparent',
+    paddingTop:6,
     paddingBottom:5,
 
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 25,
-     overflow: 'hidden',
-  marginRight:0
+    overflow: 'hidden',
+    marginRight:0
   },
   AlignLeft:{
     justifyContent:'flex-start'
@@ -116,7 +126,6 @@ backgroundColor:'transparent',
     borderRadius: 8
 
   },
-  outofstock: { fontSize:14, color:'#ff0000', textAlign:'right', paddingTop:5},
   ItemLayout:{
   
    flex: 2.5,
@@ -172,12 +181,12 @@ backgroundColor:'transparent',
     color: 'blue',
     paddingTop: 10
   },
-  
-addsSubTitle:{
-  color:'#F8BB1B',
-  textAlign:'right',
-  fontSize:16,
-  padding:0
+  outofstock: { fontSize:14, color:'#ff0000', textAlign:'right', paddingTop:5},
+    addsSubTitle:{
+    color:'#F8BB1B',
+    textAlign:'right',
+    fontSize:16,
+    padding:0
 },
 addsBigTitle:{
   fontFamily:'Raleway-Bold',
@@ -209,8 +218,7 @@ textTransform:'uppercase',
 },
 
 btnBlock:{
-   top:-15,
-
+  top:-15,
   width: '100%',
   justifyContent: 'flex-end',
   alignItems: 'flex-end'
@@ -332,8 +340,29 @@ categoryStyles: {
      flex: 0,
     paddingLeft:0,
     width: 90,
+    position:'relative',
+    // backgroundColor:'#ddd'
    },
+   vegImageSection:{
+    position:'absolute',
+    
+    zIndex:99,
+    bottom:-5,
 
+   },
+   vegImage:{
+   width:20,
+   height:20,
+   resizeMode:'contain',
+   },
+   heartoSection:{
+    position:'absolute',
+   top:-5,
+  zIndex:99,
+   },
+hearto:{
+color:'red'
+},
    ListRight:{
     // backgroundColor:'#ddd',
     flex: 0,
@@ -363,11 +392,14 @@ categoryStyles: {
    },
    proTitle:{
     textAlign:'left',
-    marginLeft:1
+    marginLeft:1,
+    fontSize:18,
+    lineHeight:23
    },
    proPrice:{
     marginLeft:1,
     fontSize:18,
+    color:Colors.primary,
     //textDecoration:'none',
     // backgroundColor:'#ddd',
     flex:0,
@@ -386,8 +418,8 @@ categoryStyles: {
     marginLeft:1
    },
    buyButton:{
-    //  backgroundColor:'#F8BB1B',
-       justifyContent: 'center',
+     // backgroundColor:'#F8BB1B',
+      justifyContent: 'center',
       alignItems: 'center',
       textAlign:'center',
       alignSelf:'center',
@@ -415,6 +447,7 @@ categoryStyles: {
     paddingRight:15,
     paddingBottom:3,
    color:Colors.primary,
+ 
    },
 
    buyText:{

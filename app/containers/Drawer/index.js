@@ -37,7 +37,8 @@ class Drawer extends React.Component {
                       Screens.MyWallet,
                       Screens.MyOffers,
                       Screens.MyAddress,
-                      Screens.Subscription];
+                      Screens.Subscription,
+                      Screens.MyWishlist];
     
   }
 

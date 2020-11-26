@@ -1,4 +1,142 @@
 import imgs from '../../assets/images';
+
+
+
+export const SimilarProductDetail =[
+ 
+  {
+    key:1,
+    itemimage:imgs.amulMoti,
+    item_price:50,
+    item_title:'Product title',
+    item_weight:'200gm'
+  },
+  {
+      key:2,
+  itemimage:imgs.amulMoti,
+    item_price:50,
+    item_title:'Product title',
+    item_weight:'200gm'
+  },
+  {
+      key:3,
+   itemimage:imgs.amulMoti,
+    item_price:50,
+    item_title:'Product title',
+    item_weight:'200gm'
+  },
+  {
+    key:5,
+   itemimage:imgs.amulMoti,
+    item_price:50,
+    item_title:'Product title',
+    item_weight:'200gm'
+  },
+  {
+      key:6,
+   itemimage:imgs.amulMoti,
+    item_price:50,
+    item_title:'Product title',
+    item_weight:'200gm'
+  },
+ 
+ 
+ 
+];
+
+
+export const FilterDetailCat =[
+ 
+  {
+    key:1,
+    FilterType:'item1',
+    total:50
+  },
+  {
+      key:2,
+    FilterType:'item2',
+    total:30
+  },
+  {
+      key:3,
+    FilterType:'item3',
+    total:20
+  },
+  {
+    key:4,
+    FilterType:'item4',
+    total:35
+  },
+  {
+      key:4,
+    FilterType:'item5',
+    total:45
+  },
+  {
+      key:4,
+    FilterType:'item6',
+    total:15
+  },
+  {
+    key:7,
+    FilterType:'item7',
+    total:60
+  },
+  {
+      key:8,
+    FilterType:'item8',
+    total:48
+  },
+  {
+      key:9,
+    FilterType:'item9',
+    total:65
+  },
+ 
+ 
+];
+
+export const ProductSorting =[
+ 
+  {
+    key:1,
+    SortinType:'Popurality'
+  },
+  {
+      key:2,
+    SortinType:'Price : High to Low'
+  },
+  {
+      key:3,
+    SortinType:'Price : Low to High'
+  },
+ 
+ 
+];
+export const FilterCat =[
+ 
+  {
+    key:1,
+    FilterType:'Category'
+  },
+  {
+      key:2,
+    FilterType:'Brand'
+  },
+  {
+      key:3,
+    FilterType:'Price'
+  },
+   {
+      key:4,
+    FilterType:'Seller'
+  },
+ 
+ 
+ 
+];
+
+
 export const ProductVariant =[
  
     {

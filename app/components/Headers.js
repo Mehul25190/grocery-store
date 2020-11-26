@@ -54,7 +54,7 @@ class Headers extends React.Component {
   };
 
   onPressSearch = () => {
-    this.setState({ searcBar: !this.state.searcBar });
+    this.setState({ searcBar: !this.state.searcBar, });
   };
   onPressFilter = () => {
     this.setState({ filter: !this.state.filter });
@@ -157,6 +157,26 @@ class Headers extends React.Component {
                 </TouchableOpacity>
               </List>
             </View>
+          )}
+
+           {this.props.setProFilter == true && (
+            <TouchableOpacity
+              style={appStyles.filterArea}
+              onPress={() =>this.props.FilterShow() }
+            >
+              <Icon style={appStyles.filteroutline} name="filter" type="Feather" />
+             
+            </TouchableOpacity>
+          )}
+
+            {this.props.setSort == true && (
+            <TouchableOpacity
+              style={appStyles.SortShowArea}
+              onPress={() =>this.props.SortShow() }
+            >
+              <Icon style={appStyles.sorting} name="sort" type="MaterialIcons" />
+             
+            </TouchableOpacity>
           )}
 
           {this.props.setCart == true && (

@@ -6,7 +6,7 @@ import { ActionTypes, Strings } from '../constants/';
 
 
 export const viewcart = payloads => dispatch => {
-  //dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.viewCart,  {queries: payloads}).then(res => {
     //dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){

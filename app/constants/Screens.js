@@ -65,6 +65,12 @@ export default {
     type: 'Feather',
     label: 'My Subscription',
   },
+  MyWishlist:{
+  route:'MyWishlist',
+    icon:'heart',
+    type: 'Feather',
+    label: 'My Wishlist',
+  },
   ModifySubscription: {
     route: 'ModifySubscription',
   },
