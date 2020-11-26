@@ -1,9 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
 import { Field, reduxForm } from 'redux-form';
-import { View } from "react-native";
+import { View,TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-import { Form, Item, Input, Title, Button, Text, Row, Col } from 'native-base';
+import { Form, Item, Input, Title, Button, Text, Row, Col,Icon } from 'native-base';
 import { required, email, length, confirmation } from 'redux-form-validators'
 import { InputBox } from '../../components';
 import styles from '../SignIn/styles';
@@ -22,6 +22,9 @@ export const passwordLength = value =>
 class SignUpForm extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+      showPass: false,
+     };
   }
   render(){
     const { handleSubmit, onSubmit, language } = this.props;
@@ -66,13 +69,28 @@ class SignUpForm extends React.Component {
           validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
         />
       <View><Text style={{height:15}}></Text></View>
+       <View style={{position:'relative'}}>
         <Field 
           name="password" 
           component={InputBox}
            placeholder='Password'
-          secureTextEntry={true}
+        secureTextEntry={this.state.showPass?false:true}
           validate={[required({msg: `${language.password} ${language.required}`}), passwordLength]}
         />
+         <TouchableOpacity  style={styles.hidePassSection}  onPress={() =>  this.setState({showPass: !this.state.showPass})}>
+        {
+          this.state.showPass?(
+             <Icon name='eye' type='Entypo'  style={styles.hidePass} />
+            
+            ):
+          (
+             <Icon name='eye-with-line'  type='Entypo' style={styles.hidePass} />
+          
+          )
+        }
+
+        </TouchableOpacity>
+        </View>
       </Form>
     )
   }

@@ -61,7 +61,7 @@ export default {
   },
    Subscription:{
     route:'Subscription',
-    icon:'heart',
+    icon:'repeat',
     type: 'Feather',
     label: 'My Subscription',
   },

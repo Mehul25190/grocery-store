@@ -437,23 +437,27 @@ categoryStyles: {
     
     zIndex:99,
     bottom:0,
-    left:5
-
+    left:5,
+ padding:5
    },
    vegImage:{
    width:12,
    height:12,
    resizeMode:'contain',
+ 
    },
    heartoSection:{
-    position:'absolute',
-   top:0,
-   left:5,
-  zIndex:99,
+      position:'absolute',
+      top:0,
+      left:5,
+      zIndex:99,
+      padding:5,
+      paddingRight:10,
+      paddingBottom:10
    },
 hearto:{
 color:'red',
-fontSize:15
+
 },
    ListRight:{
     // backgroundColor:'#ddd',

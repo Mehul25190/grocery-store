@@ -9,7 +9,7 @@ justyfyContent:'center'
   },
   hearto:{
 color:'red',
-fontSize:16
+fontSize:20
 },
  vegImage:{
   width:12,
@@ -20,9 +20,9 @@ fontSize:16
      fontSize:50,
   },
   similarImges:{
-   width:150,
+   width:100,
   alignSelf:'center',
-  height:150,
+  height:100,
   alignItems:'center',
   resizeMode:'contain',
   justifyContent:'center',
