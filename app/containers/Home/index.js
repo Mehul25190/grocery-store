@@ -466,7 +466,7 @@ class Home extends React.Component {
 
                   <View style={styles.shopbybrandbg}>
                     <View style={styles.shopbybrandtitle}>
-                      <Text style={styles.shopbybrandtitletext}>Shop By Brand</Text>
+                      <Text style={styles.shopbybrandtitletext}>Featured Brands</Text>
                     </View>
 
 
@@ -504,7 +504,7 @@ class Home extends React.Component {
                   />
                   <View style={styles.shopbyethnibg}>
                     <View style={styles.shopbyethnititle}>
-                      <Text style={styles.shopbybrandtitletext}>Shop By Ethnicities</Text>
+                      <Text style={styles.shopbybrandtitletext}>World Food Available</Text>
                     </View>
 
 
