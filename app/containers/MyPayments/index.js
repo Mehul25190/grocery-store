@@ -442,8 +442,8 @@ class MyPayments extends React.Component {
                         </Col>
                        <Col style={{flex:0, width:80}}>
                          <Text style={[styles.testStyles,{color:Colors.primary}]}>
-                         <Text style={[appStyles.currency,{color:Colors.primary}]}>{Colors.CUR} </Text> 
-                         {this.state.switch1Value ? ((totalAmount + deliveryCharges - this.state.offerValue) - walletAmount).toFixed(2) : (totalAmount + deliveryCharges - this.state.offerValue).toFixed(2)}</Text>
+                         <Text style={appStyles.currencymedium}>{Colors.CUR} </Text> 
+                         <Text style={appStyles.amountmedium}>{this.state.switch1Value ? ((totalAmount + deliveryCharges - this.state.offerValue) - walletAmount).toFixed(2) : (totalAmount + deliveryCharges - this.state.offerValue).toFixed(2)}</Text></Text>
                        </Col>
                       </Row>
                       
@@ -468,7 +468,7 @@ class MyPayments extends React.Component {
                       </Col>
                       <Col style={{flex:0,justifyContent:'flex-start'}}>
                         <Text style={styles.savedCardText}>{item.cardNumber} ({item.expiry})</Text> 
-                        {(item.isAutoDebit == "N" && item.id == this.state.CardCheckedId) && (<Input placeholderTextColor={Colors.primary} onChangeText={(value) => {this.setState({cvv: value })} }  style={{backgroundColor:'#fff',width:60,height:35,marginTop:5}} placeholder='CVV' />) }
+                        {(item.isAutoDebit == "N" && item.id == this.state.CardCheckedId) && (<Input secureTextEntry={true} keyboardType = 'numeric' placeholderTextColor={Colors.primary} onChangeText={(value) => {this.setState({cvv: value })} }  style={{backgroundColor:'#fff',width:60,height:35,marginTop:5}} placeholder='CVV' />) }
 
                       </Col>
                       <Col style={{justifyContent:'flex-start',alignItems:'center'}}>

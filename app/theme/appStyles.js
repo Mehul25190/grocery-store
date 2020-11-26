@@ -381,11 +381,11 @@ fontFamily:'Font-Medium'
     textAlign:'center'
   },
   filteroutline:{
-    fontSize:23,
+    fontSize:23,color:Colors.primary,
     marginLeft:5
   },
   sorting:{
-    fontSize:25,
+    fontSize:25,color:Colors.primary,
     marginLeft:5
   },
   headerStyle:{
@@ -533,9 +533,11 @@ fontFamily:'Font-Medium'
     currencysmall: {fontSize:13, fontWeight:'normal'},
     currencymedium: {fontSize:15,},
     currencybig: {fontSize:16,},
+    currencyverybig: {fontSize:18,},
     amountsmall: {fontSize:14, fontWeight:'bold'},
     amountmedium: {fontSize:16, fontWeight:'bold'},
     amountbig: {fontSize:17, fontWeight:'bold'},
+    amountverybig: {fontSize:22, fontWeight:'bold'},
 
 
     /* Slideshow*/

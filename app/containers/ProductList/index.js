@@ -473,9 +473,7 @@ onBackdropPress(){
                                 >{item.price}</Text>
                               </Text>
                               <Text style={styles.proPrice}>
-                                <Text
-                                  style={appStyles.currencysmall}
-                                >
+                                <Text style={appStyles.currencysmall}>
                                   {Colors.CUR}
                                  </Text>{" "}
                                 <Text

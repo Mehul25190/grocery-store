@@ -320,12 +320,15 @@ class ProductDetail extends React.Component {
               <Row>
               <Col style={{ flex: 0, width: '40%' }}>
                 <View style={styles.pricePart}>
-                <Text style={styles.priceText}><Text style={appStyles.currency, { fontSize: 23, color: Colors.gray }}> {Colors.CUR}</Text> {ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}</Text>
+                <Text style={styles.priceText}><Text style={appStyles.currencyverybig}>
+                                  {Colors.CUR}
+                                </Text> <Text style={appStyles.amountverybig}>{ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}
+                                </Text></Text>
                 </View>
               </Col>
 
               {ProductDetail.item[0].outOfStock == 'Y' ?
-                (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end' }}><Text style={styles.outofstock}>Out of Stock</Text></Col>) :
+                (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}><Text style={styles.outofstock}>Out of Stock</Text></Col>) :
                 (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}>
                   {this.state.selctedProduct == ProductDetail.item[0].id ? <ActivityIndicator style={{ marginRight: 20 }} /> :
                     (<View style={styles.reasonView}>
@@ -480,18 +483,11 @@ class ProductDetail extends React.Component {
               {/* <Image source={{uri: url.imageURL+ProductDetail.itemImages[0].imagePath}} style={styles.amulMoti} />*/}
 
             </Row>
-          <Row style={styles.okayBtnArea}>
-            <Col>
-              <Button priamary full style={styles.doneBtn} onPress={() => this.props.navigation.navigate(Screens.Home.route)}>
-                <Text style={[styles.btnTextDone, { fontSize: 12, fontWeight: 'bold' }]}>Continue Shopping</Text>
+            <View>
+              <Button priamary full style={[styles.doneBtn,{ marginBottom:20}]} onPress={() => this.props.navigation.navigate(Screens.Home.route)}>
+                <Text style={styles.btnTextDone}>Continue Shopping</Text>
               </Button>
-            </Col>
-            <Col>
-              <Button priamary full style={styles.doneBtn} onPress={() => this.props.navigation.navigate(Screens.MyCart.route)}>
-                <Text style={[styles.btnTextDone, { fontSize: 12, fontWeight: 'bold' }]}>View Cart</Text>
-              </Button>
-            </Col>
-          </Row>
+            </View>
 
         </Content>
 

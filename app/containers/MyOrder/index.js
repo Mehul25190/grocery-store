@@ -210,7 +210,8 @@ class MyOrder extends React.Component {
 
                     <Right style={styles.ListRight}>
                       <View>
-                        <Text style={styles.proPrice}>{Colors.CUR}  {item.orderAmt}</Text>
+                        <Text style={styles.proPrice}>
+                        <Text style={appStyles.currencysmall}>{Colors.CUR}</Text> <Text style={appStyles.amountmedium}>{item.orderAmt}</Text></Text>
                         <Button style={styles.statusBtn}>
                           <TouchableOpacity onPress={() => this.onDetailPage(item)}>
 

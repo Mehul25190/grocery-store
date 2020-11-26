@@ -98,7 +98,7 @@ class MyWallet extends React.Component {
                 <Image source={imgs.wallet}  style={styles.walletIcon} />
               </Col>
               <Col style={styles.amountCol}>
-                <Text style={styles.amountRs}>{Colors.CUR} {this.state.userWallet.walletBalance}</Text>
+                <Text><Text style={appStyles.currencyverybig}>{Colors.CUR}</Text> <Text style={appStyles.amountverybig}>{this.state.userWallet.walletBalance}</Text></Text>
               </Col>
             </Row>
           </Grid>
