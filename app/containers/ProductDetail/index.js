@@ -465,10 +465,13 @@ class ProductDetail extends React.Component {
                   data={SimilarProductDetail}
                   renderItem={this._similarItem}
                   sliderWidth={Layout.window.width}
-                  itemWidth={200}
-                  autoplayInterval={3000}
-                  autoplayDelay={3000}
+                  itemWidth={120}
+                  autoplayInterval={2000}
+                  autoplayDelay={2000}
                   onSnapToItem={(index) => this.setState({ activeSlide: index })}
+                  slideStyle={{paddding:0,margin:0}}
+                  contentContainerCustomStyle={{paddding:0,margin:0}}
+                  
                 />
                 {this.pagination}
               </Col>

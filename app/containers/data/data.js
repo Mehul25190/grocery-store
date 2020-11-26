@@ -6,24 +6,24 @@ export const SimilarProductDetail =[
  
   {
     key:1,
-    itemimage:imgs.amulMoti,
+    itemimage:imgs.mangoSale,
     item_price:50,
     item_title:'Product title',
-    item_weight:'200gm'
+    item_weight:'100gm'
   },
   {
       key:2,
-  itemimage:imgs.amulMoti,
+  itemimage:imgs.staplesImg,
     item_price:50,
     item_title:'Product title',
-    item_weight:'200gm'
+    item_weight:'300gm'
   },
   {
       key:3,
-   itemimage:imgs.amulMoti,
+   itemimage:imgs.mangoSale,
     item_price:50,
     item_title:'Product title',
-    item_weight:'200gm'
+    item_weight:'250gm'
   },
   {
     key:5,
@@ -37,7 +37,7 @@ export const SimilarProductDetail =[
    itemimage:imgs.amulMoti,
     item_price:50,
     item_title:'Product title',
-    item_weight:'200gm'
+    item_weight:'300gm'
   },
  
  
