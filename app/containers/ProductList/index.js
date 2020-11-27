@@ -675,10 +675,10 @@ onBackdropPress(){
       <Icon name="closecircleo" type="AntDesign" style={styles.closeBtn}  />
      </TouchableOpacity>
      <ScrollView>
-     <List style={styles.filterList} >
+     <List style={[styles.filterList,{paddingBottom:25}]} >
     {FilterDetailCat.map((data, key) => {
           return ( 
-             <ListItem style={[styles.ListItemsFilter,{paddingTop:10,paddingBottom:10,backgroundColor:'#ddd', overflow: 'scroll'}]}  key={key}>   
+             <ListItem style={[styles.ListItemsFilter,{paddingTop:10,paddingBottom:10, overflow: 'scroll'}]}  key={key}>   
               
                 <Left style={{marginLeft:10}}>
                  <TouchableOpacity>
@@ -691,7 +691,7 @@ onBackdropPress(){
       })}
    </List>
   
-      <Grid style={styles.ApplyButtonSection}>
+      <Grid style={[styles.ApplyButtonSection,{marginTop:10}]}>
         <Row>
          
           <Col>
