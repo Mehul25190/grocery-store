@@ -4,13 +4,23 @@ export default {
   heartoSection:{
 alignItems:'center',
 textAlign:'center',
-justyfyContent:'center'
+justyfyContent:'center',
+
 
   },
   hearto:{
 color:'red',
-fontSize:20
+fontSize:23,
+textAlign:'center'
 },
+ brandAndVeg:{
+    flex: 1,
+    justifyContent:'flex-start',
+    alignItems:'flex-start',
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+
+  },
  vegImage:{
   width:12,
    height:12,

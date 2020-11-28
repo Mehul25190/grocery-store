@@ -17,6 +17,18 @@ export default StyleSheet.create({
   row: {
     flex: 1,
   },
+  brandAndVeg:{
+  flex: 1,
+    justifyContent:'flex-start',
+    alignItems:'flex-start',
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+  },
+  vegImage:{
+width:11,
+height:11,
+resizeMode:'contain',
+},
   rowXYcenter: {
     flex: 1,
     justifyContent: 'center',

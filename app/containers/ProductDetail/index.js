@@ -234,14 +234,20 @@ class ProductDetail extends React.Component {
         />
 
         <Content enableOnAndroid>
-
-
           <Grid style={styles.paddingBox}>
-
             <Row style={styles.firstRow}>
               <Col >
                 <View>
-                  <Text style={styles.AmuText}>{ProductDetail.item[0].brandName}</Text>
+
+                  <View style={styles.brandAndVeg}>
+                          <View style={{ flex:0, marginRight:10 }}>
+                              <Text style={styles.AmuText}>{ProductDetail.item[0].brandName}</Text>
+                           </View>
+                          <View style={{ flex: 0,width:12 }}>
+                             <Image style={{width:12,height:12}} source={ProductDetail.item[0].foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg} />
+                           </View>
+                   </View>
+                 
                   <Text style={[styles.AmuText, styles.AmuTextTitle]}>{ProductDetail.item[0].itemName}</Text>
                   <Text style={styles.AmuText}>{ProductDetail.item[0].weight} {ProductDetail.item[0].uom}</Text>
 
@@ -299,26 +305,21 @@ class ProductDetail extends React.Component {
 
           <Grid>
             <Row>
-              <Col style={{ flex: 0, marginLeft:20, width: '15%',justyfyContent:'center', alignItems:'center',flexDirection:'row'}}>
-                <TouchableOpacity   onPress={() => this.setState({ wished: !this.state.wished })} style={styles.heartoSection}  >
-                          {this.state.wished ?
-                            (<Icon name='heart' type='AntDesign' style={styles.hearto} /> ):
-                            (<Icon name='hearto' type='AntDesign' style={styles.hearto} /> )
-                          }
-                     
-                    </TouchableOpacity>
-              </Col>
-                <Col style={{ flex: 0, width: '20%',justyfyContent:'center', alignItems:'center',flexDirection:'row'}}>
+              <Col style={{ flex: 0, marginLeft:20,width:50}}>
                
-                    <TouchableOpacity style={styles.vegImageSection}>
-                        <Image style={styles.vegImage} source={ProductDetail.item[0].foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
-                       
-                    </TouchableOpacity>
-
+                <TouchableOpacity onPress={() => this.setState({ wished: !this.state.wished })} style={styles.heartoSection}  >
+                   
+                      {this.state.wished ?
+                        (<Icon name='heart' type='AntDesign' style={styles.hearto} /> ):
+                        (<Icon name='hearto' type='AntDesign' style={styles.hearto} /> )
+                      }
+                     
+                </TouchableOpacity>
               </Col>
+                
               </Row>
               <Row>
-              <Col style={{ flex: 0, width: '40%' }}>
+              <Col style={{ flex: 0, width: '40%',marginLeft:10 }}>
                 <View style={styles.pricePart}>
                 <Text style={styles.priceText}><Text style={appStyles.currencyverybig}>
                                   {Colors.CUR}

@@ -267,14 +267,7 @@ class SearchProduct extends React.Component {
 
                     
                     <Left style={styles.ListLeft}>
-                    <TouchableOpacity   onPress={() => this.setState({ wished: !this.state.wished })} style={styles.heartoSection}  >
-                        {this.state.wished ?
-                          (   <Icon name='heart' type='AntDesign' style={styles.hearto} /> ):
-                          (<Icon name='hearto' type='AntDesign' style={styles.hearto} /> )
-                        }
                    
-                     
-                      </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.prodInfo}
                         onPress={() =>
@@ -286,11 +279,7 @@ class SearchProduct extends React.Component {
                         source={{ uri: url.imageURL + item.imagePath }}
                       />
                       </TouchableOpacity>
-                         <TouchableOpacity style={styles.vegImageSection}>
-
-                      <Image style={styles.vegImage} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
                      
-                      </TouchableOpacity>
                     </Left>
                     <Body>
                       <TouchableOpacity
@@ -301,7 +290,14 @@ class SearchProduct extends React.Component {
                       >
                        <Text style={styles.proBrand}>{item.brandName}</Text>
 
-                        <Text style={styles.proTitle}>{item.itemName}</Text>
+                        <View style={appStyles.brandAndVeg}>
+                          <View style={{ flex:0 }}>
+                               <Text style={styles.proBrand}>{item.brandName}</Text>
+                          </View>
+                          <View style={{ flex: 0,width:12 }}>
+                              <Image style={appStyles.vegImage} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
+                          </View>
+                        </View>
 
                         <Text style={styles.proQuanitty} note>
                           {item.weight !== ""

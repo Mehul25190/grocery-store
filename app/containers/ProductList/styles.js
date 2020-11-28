@@ -9,6 +9,7 @@ export default {
     top: 80,
     alignSelf: 'center'
   },
+ 
   sliderBtn: {
     height: 13,
     width: 13,
@@ -439,12 +440,6 @@ categoryStyles: {
     bottom:0,
     left:5,
  padding:5
-   },
-   vegImage:{
-   width:12,
-   height:12,
-   resizeMode:'contain',
- 
    },
    heartoSection:{
       position:'absolute',
