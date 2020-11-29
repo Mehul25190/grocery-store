@@ -413,7 +413,7 @@ class ProductDetail extends React.Component {
                       </View>
                     </Card>
                   </Tab>
-                  <Tab heading="More Information" tabStyle={{ backgroundColor: '#D7ECDD' }} textStyle={{ color: '#00545F' }} activeTextStyle={{ color: '#00545F', fontWeight: 'bold' }} activeTabStyle={{ backgroundColor: '#D7ECDD' }}>
+                  <Tab heading="Additional Information" tabStyle={{ backgroundColor: '#D7ECDD' }} textStyle={{ color: '#00545F' }} activeTextStyle={{ color: '#00545F', fontWeight: 'bold' }} activeTabStyle={{ backgroundColor: '#D7ECDD' }}>
                     <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1, marginTop: 20 }]}>
                       <View>
                         <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
