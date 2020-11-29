@@ -455,16 +455,7 @@ class Home extends React.Component {
 
               {
                 <View>
-                  <FlatList
-                    vertical
-                    showsVerticalScrollIndicator={false}
-                    numColumns={2}
-                    data={sixcat}
-                    renderItem={this.renderItems}
-                    keyExtractor={item => `${item.id}`}
-                  />
-
-                  <View style={styles.shopbybrandbg}>
+                <View style={styles.shopbybrandbg}>
                     <View style={styles.shopbybrandtitle}>
                       <Text style={styles.shopbybrandtitletext}>Featured Brands</Text>
                     </View>
@@ -493,6 +484,16 @@ class Home extends React.Component {
                       keyExtractor={item => item.id}
                     />
                   </View>
+                  <FlatList
+                    vertical
+                    showsVerticalScrollIndicator={false}
+                    numColumns={2}
+                    data={sixcat}
+                    renderItem={this.renderItems}
+                    keyExtractor={item => `${item.id}`}
+                  />
+
+                  
 
                   <FlatList
                     vertical
