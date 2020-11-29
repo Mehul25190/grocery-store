@@ -391,7 +391,7 @@ onBackdropPress(){
                      data={this.state.subCategory}
                     renderItem={this.renderItems}
                     sliderWidth={Layout.window.width}
-                    itemWidth={140}
+                    itemWidth={Layout.eightIndent*1.2}
                     autoplayInterval={3000}
                     autoplayDelay={3000}
                   />

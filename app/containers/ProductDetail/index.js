@@ -10,7 +10,7 @@ import {
   Icon,
   Spinner,
   Button,
-  Text,Tabs, Tab,
+  Text, Tabs, Tab,
   Header, Left, Body, Title, Right, Card, Grid, Col, Row, ListItem, Item, Input, DatePicker, Label, Picker
 } from 'native-base';
 import { connect } from "react-redux";
@@ -18,7 +18,7 @@ import * as userActions from "../../actions/user";
 import * as cartActions from "../../actions/cart";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
-import { productList, productImages,SimilarProductDetail } from '../data/data';
+import { productList, productImages, SimilarProductDetail } from '../data/data';
 import * as productActions from "../../actions/product";
 import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
@@ -56,8 +56,8 @@ class ProductDetail extends React.Component {
       selectedIndex: 0,
       productImages: '',
       selctedProduct: '',
-      variant:'',
-       wished:false,
+      variant: '',
+      wished: false,
     };
 
   }
@@ -158,12 +158,12 @@ class ProductDetail extends React.Component {
   _similarItem = ({ item, index }) => {
     //console.log('item', item)
     return (
-      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center',borderColor:'#ddd',borderWidth:1,paddding:10 }}>
+      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', borderColor: '#ddd', borderWidth: 1, paddding: 10 }}>
         <View>
           <Image style={styles.similarImges} source={item.itemimage} />
-    
-          
-             <Text style={appStyles.amountmedium} >{Colors.CUR}{" "} {item.item_price}</Text>
+
+
+          <Text style={appStyles.amountmedium} >{Colors.CUR}{" "} {item.item_price}</Text>
           <Text style={styles.similarTitle}>{item.item_title}</Text>
           <Text style={styles.similarWeight}>{item.item_weight}</Text>
         </View>
@@ -240,14 +240,14 @@ class ProductDetail extends React.Component {
                 <View>
 
                   <View style={styles.brandAndVeg}>
-                          <View style={{ flex:0, marginRight:10 }}>
-                              <Text style={styles.AmuText}>{ProductDetail.item[0].brandName}</Text>
-                           </View>
-                          <View style={{ flex: 0,width:12 }}>
-                             <Image style={{width:12,height:12}} source={ProductDetail.item[0].foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg} />
-                           </View>
-                   </View>
-                 
+                    <View style={{ flex: 0, marginRight: 10 }}>
+                      <Text style={styles.AmuText}>{ProductDetail.item[0].brandName}</Text>
+                    </View>
+                    <View style={{ flex: 0, width: 12 }}>
+                      <Image style={{ width: 12, height: 12 }} source={ProductDetail.item[0].foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
+                    </View>
+                  </View>
+
                   <Text style={[styles.AmuText, styles.AmuTextTitle]}>{ProductDetail.item[0].itemName}</Text>
                   <Text style={styles.AmuText}>{ProductDetail.item[0].weight} {ProductDetail.item[0].uom}</Text>
 
@@ -305,26 +305,26 @@ class ProductDetail extends React.Component {
 
           <Grid>
             <Row>
-              <Col style={{ flex: 0, marginLeft:20,width:50}}>
-               
+              <Col style={{ flex: 0, marginLeft: 20, width: 50 }}>
+
                 <TouchableOpacity onPress={() => this.setState({ wished: !this.state.wished })} style={styles.heartoSection}  >
-                   
-                      {this.state.wished ?
-                        (<Icon name='heart' type='AntDesign' style={styles.hearto} /> ):
-                        (<Icon name='hearto' type='AntDesign' style={styles.hearto} /> )
-                      }
-                     
+
+                  {this.state.wished ?
+                    (<Icon name='heart' type='AntDesign' style={styles.hearto} />) :
+                    (<Icon name='hearto' type='AntDesign' style={styles.hearto} />)
+                  }
+
                 </TouchableOpacity>
               </Col>
-                
-              </Row>
-              <Row>
-              <Col style={{ flex: 0, width: '40%',marginLeft:10 }}>
+
+            </Row>
+            <Row>
+              <Col style={{ flex: 0, width: '40%', marginLeft: 10 }}>
                 <View style={styles.pricePart}>
-                <Text style={styles.priceText}><Text style={appStyles.currencyverybig}>
-                                  {Colors.CUR}
-                                </Text> <Text style={appStyles.amountverybig}>{ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}
-                                </Text></Text>
+                  <Text style={styles.priceText}><Text style={appStyles.currencyverybig}>
+                    {Colors.CUR}
+                  </Text> <Text style={appStyles.amountverybig}>{ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}
+                    </Text></Text>
                 </View>
               </Col>
 
@@ -373,39 +373,39 @@ class ProductDetail extends React.Component {
             </Row>
 
           </Grid>
-            <Grid>
-          <Row style={{ flex: 1, marginLeft:Layout.indent, marginRight:15, flexDirection: 'row'}}>
-        
-        {ProductVariant.map((data, key) => {
-          return (  <View key={key}>       
-                  {this.state.variant  == data.variant ?
-                  
-                      <Col style={[styles.variantBtnActive,{}]}>
-                          {/*<Icon style={styles.variantImg} name='rectangle' type='MaterialCommunityIcons' />*/}
-                          <Text style={styles.variantTextActive}>{data.variant}</Text>
-                      </Col>
-                   
-                      :
-                    
-                      <Col onPress={()=>{this.setState({variant: data.variant})}} style={[styles.variantBtnDeactive,{}]}>
-                          {/*<Icon style={styles.variantImg} name='rectangle-outline' type='MaterialCommunityIcons' />*/}
-                          <Text style={styles.variantTextDeactive}>{data.variant}</Text>
-                      </Col>
-                    
+          <Grid>
+            <Row style={{ flex: 1, marginLeft: Layout.indent, marginRight: 15, flexDirection: 'row' }}>
+
+              {ProductVariant.map((data, key) => {
+                return (<View key={key}>
+                  {this.state.variant == data.variant ?
+
+                    <Col style={[styles.variantBtnActive, {}]}>
+                      {/*<Icon style={styles.variantImg} name='rectangle' type='MaterialCommunityIcons' />*/}
+                      <Text style={styles.variantTextActive}>{data.variant}</Text>
+                    </Col>
+
+                    :
+
+                    <Col onPress={() => { this.setState({ variant: data.variant }) }} style={[styles.variantBtnDeactive, {}]}>
+                      {/*<Icon style={styles.variantImg} name='rectangle-outline' type='MaterialCommunityIcons' />*/}
+                      <Text style={styles.variantTextDeactive}>{data.variant}</Text>
+                    </Col>
+
 
                   }
-                </View>  
-          )
-      })}
-       </Row>
-        </Grid> 
+                </View>
+                )
+              })}
+            </Row>
+          </Grid>
           {
             ProductDetail.item[0].description1 != null && (
-              <View style={{marginTop:15}}>
+              <View style={{ marginTop: 15 }}>
 
                 <Tabs>
-                  <Tab heading="Product Details" tabStyle={{backgroundColor: '#D7ECDD'}} textStyle={{color: '#00545F'}} activeTextStyle={{color: '#00545F', fontWeight: 'bold'}} activeTabStyle={{backgroundColor: '#D7ECDD'}}>
-                    <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1, marginTop:20 }]}>
+                  <Tab heading="Product Details" tabStyle={{ backgroundColor: '#D7ECDD' }} textStyle={{ color: '#00545F' }} activeTextStyle={{ color: '#00545F', fontWeight: 'bold' }} activeTabStyle={{ backgroundColor: '#D7ECDD' }}>
+                    <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1, marginTop: 20 }]}>
                       <View>
                         <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
                           {ProductDetail.item[0].description1}
@@ -413,22 +413,22 @@ class ProductDetail extends React.Component {
                       </View>
                     </Card>
                   </Tab>
-                  <Tab heading="More Information" tabStyle={{backgroundColor: '#D7ECDD'}} textStyle={{color: '#00545F'}} activeTextStyle={{color: '#00545F', fontWeight: 'bold'}} activeTabStyle={{backgroundColor: '#D7ECDD'}}>
-                    <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1, marginTop:20 }]}>
+                  <Tab heading="More Information" tabStyle={{ backgroundColor: '#D7ECDD' }} textStyle={{ color: '#00545F' }} activeTextStyle={{ color: '#00545F', fontWeight: 'bold' }} activeTabStyle={{ backgroundColor: '#D7ECDD' }}>
+                    <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1, marginTop: 20 }]}>
                       <View>
                         <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
-                          {ProductDetail.item[0].description1}
+                          {ProductDetail.item[0].description2}
                         </Text>
                       </View>
                     </Card>
                   </Tab>
                 </Tabs>
 
-               
+
               </View>
             )}
 
-              {
+          {/* {
             ProductDetail.item[0].description2 != "" && (
               <View>
                 <View>
@@ -443,8 +443,8 @@ class ProductDetail extends React.Component {
                   </View>
                 </Card>
               </View>
-            )}
-               {
+            )} */}
+          {
             ProductDetail.item[0].description3 != "" && (
               <View>
                 <View>
@@ -466,41 +466,41 @@ class ProductDetail extends React.Component {
             <Text style={styles.payTextNow}>Add to cart</Text>
           </Button>
         </TouchableOpacity>*/}
-                  <View>
-                  <Text style={styles.title}>Similar Products  </Text>
-                </View>
+          <View>
+            <Text style={styles.title}>Similar Products  </Text>
+          </View>
 
 
-            <Row style={styles.secondRow}>
+          <Row style={styles.secondRow}>
 
-              <Col style={{ justyfyContent: 'center', alignItems: 'center', marginLeft: Layout.indent, marginRight: Layout.indent }}>
-                <Carousel
-                  ref={(c) => { this._carousel = c; }}
-                  loop={true}
-                  autoplay={true}
-                  data={SimilarProductDetail}
-                  renderItem={this._similarItem}
-                  sliderWidth={Layout.window.width}
-                  itemWidth={120}
-                  autoplayInterval={2000}
-                  autoplayDelay={2000}
-                  onSnapToItem={(index) => this.setState({ activeSlide: index })}
-                  slideStyle={{paddding:0,margin:0}}
-                  contentContainerCustomStyle={{paddding:0,margin:0}}
-                  
-                />
-                {this.pagination}
-              </Col>
+            <Col style={{ justyfyContent: 'center', alignItems: 'center', marginLeft: Layout.indent, marginRight: Layout.indent }}>
+              <Carousel
+                ref={(c) => { this._carousel = c; }}
+                loop={true}
+                autoplay={true}
+                data={SimilarProductDetail}
+                renderItem={this._similarItem}
+                sliderWidth={Layout.window.width}
+                itemWidth={120}
+                autoplayInterval={2000}
+                autoplayDelay={2000}
+                onSnapToItem={(index) => this.setState({ activeSlide: index })}
+                slideStyle={{ paddding: 0, margin: 0 }}
+                contentContainerCustomStyle={{ paddding: 0, margin: 0 }}
+
+              />
+              {this.pagination}
+            </Col>
 
 
-              {/* <Image source={{uri: url.imageURL+ProductDetail.itemImages[0].imagePath}} style={styles.amulMoti} />*/}
+            {/* <Image source={{uri: url.imageURL+ProductDetail.itemImages[0].imagePath}} style={styles.amulMoti} />*/}
 
-            </Row>
-            <View>
-              <Button priamary full style={[styles.doneBtn,{ marginBottom:20}]} onPress={() => this.props.navigation.navigate(Screens.Home.route)}>
-                <Text style={styles.btnTextDone}>Continue Shopping</Text>
-              </Button>
-            </View>
+          </Row>
+          <View>
+            <Button priamary full style={[styles.doneBtn, { marginBottom: 20 }]} onPress={() => this.props.navigation.navigate(Screens.Home.route)}>
+              <Text style={styles.btnTextDone}>Continue Shopping</Text>
+            </Button>
+          </View>
 
         </Content>
 

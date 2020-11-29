@@ -268,20 +268,20 @@ class Home extends React.Component {
         console.log("SUCCESS FOR", val, res.status)
         this.props.navigation.navigate('SearchOffer',
           {
-           
+
             comefrom: 'Brand'
           })
       }
       console.log("SUCCESS FOR 00", res.status)
     });
   }
-  ethnicitiesNavigation(val){
+  ethnicitiesNavigation(val) {
     this.props.Ethnicitiesdetails(val).then(res => {
       if (res.status == 200) {
         console.log("SUCCESS FOR Ethnicitiesdetails", val, res.status)
         this.props.navigation.navigate('SearchOffer',
           {
-           
+
             comefrom: 'Ethnicities'
           })
       }
@@ -315,21 +315,21 @@ class Home extends React.Component {
 
       })
     }
-    if(brand != undefined || '' || null){
-    if (brand.length > 0) {
-      brand.map((item, i) => {
-        BrandName.push(item)
-      })
+    if (brand != undefined || '' || null) {
+      if (brand.length > 0) {
+        brand.map((item, i) => {
+          BrandName.push(item)
+        })
+      }
     }
-  }
-    if(ethnicities != undefined || '' || null){
+    if (ethnicities != undefined || '' || null) {
       if (ethnicities.length > 0) {
         ethnicities.map((item, i) => {
           Ethnicitieslist.push(item)
         })
       }
     }
-    
+
 
     if (this.props.user) {
       var dateofvisit = moment(this.props.user.user.subscriptionEndDate).add(1, 'days');
@@ -455,14 +455,14 @@ class Home extends React.Component {
 
               {
                 <View>
-                <View style={styles.shopbybrandbg}>
+                  <View style={styles.shopbybrandbg}>
                     <View style={styles.shopbybrandtitle}>
                       <Text style={styles.shopbybrandtitletext}>Featured Brands</Text>
                     </View>
 
 
                     <FlatList
-                      data={BrandName}
+                      data={BrandName.filter(brand => brand.isFeatured = 1)}
                       contentContainerStyle={styles.scrollViewStyle}
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}
@@ -474,12 +474,16 @@ class Home extends React.Component {
                       legacyImplementation={false}
                       keyExtractor={(item, index) => index}
                       renderItem={({ item, index }) =>
+
+
                         <TouchableOpacity onPress={() => this.brandNavigation(item.id)} style={styles.brandimagearea}>
                           <View>
                             <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1, height: 120, width: 120, resizeMode: 'contain' }} />
                             <Text style={styles.brandnametitle}>{item.brandName}</Text>
                           </View>
                         </TouchableOpacity>
+
+
                       }
                       keyExtractor={item => item.id}
                     />
@@ -493,7 +497,7 @@ class Home extends React.Component {
                     keyExtractor={item => `${item.id}`}
                   />
 
-                  
+
 
                   <FlatList
                     vertical
@@ -524,7 +528,7 @@ class Home extends React.Component {
                       renderItem={({ item, index }) =>
                         <TouchableOpacity onPress={() => this.ethnicitiesNavigation(item.id)} style={styles.brandimagearea}>
                           <View>
-                          <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1, height: 120, width: 120, resizeMode: 'contain' }} />
+                            <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1, height: 120, width: 120, resizeMode: 'contain' }} />
                             <Text style={styles.brandnametitle}>{item.ethnicity}</Text>
                           </View>
                         </TouchableOpacity>
@@ -574,7 +578,7 @@ const mapStateToProps = (state) => {
     categoryData: state.common.categoryData,
     offerData: state.common.categoryOfferData,
     brand: state.product.brand,
-    ethnicities : state.product.ethnicities
+    ethnicities: state.product.ethnicities
 
   };
 };
