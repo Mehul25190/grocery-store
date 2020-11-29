@@ -288,14 +288,12 @@ class SearchProduct extends React.Component {
                           this.productDetail(item.id)
                         }
                       >
-                       <Text style={styles.proBrand}>{item.brandName}</Text>
-
                         <View style={appStyles.brandAndVeg}>
                           <View style={{ flex:0 }}>
                                <Text style={styles.proBrand}>{item.brandName}</Text>
                           </View>
                           <View style={{ flex: 0,width:12 }}>
-                              <Image style={appStyles.vegImage} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
+                              <Image style={[appStyles.vegImage,{marginTop:2}]} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
                           </View>
                         </View>
 

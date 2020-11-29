@@ -10,7 +10,7 @@ import {
   Icon,
   Spinner,
   Button,
-  Text,
+  Text,Tabs, Tab,
   Header, Left, Body, Title, Right, Card, Grid, Col, Row, ListItem, Item, Input, DatePicker, Label, Picker
 } from 'native-base';
 import { connect } from "react-redux";
@@ -401,18 +401,30 @@ class ProductDetail extends React.Component {
         </Grid> 
           {
             ProductDetail.item[0].description1 != null && (
-              <View>
-                <View>
-                  <Text style={styles.title}>Product Description </Text>
-                </View>
+              <View style={{marginTop:15}}>
 
-                <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1 }]}>
-                  <View>
-                    <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
-                      {ProductDetail.item[0].description1}
-                    </Text>
-                  </View>
-                </Card>
+                <Tabs>
+                  <Tab heading="Product Details" tabStyle={{backgroundColor: '#D7ECDD'}} textStyle={{color: '#00545F'}} activeTextStyle={{color: '#00545F', fontWeight: 'bold'}} activeTabStyle={{backgroundColor: '#D7ECDD'}}>
+                    <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1, marginTop:20 }]}>
+                      <View>
+                        <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
+                          {ProductDetail.item[0].description1}
+                        </Text>
+                      </View>
+                    </Card>
+                  </Tab>
+                  <Tab heading="More Information" tabStyle={{backgroundColor: '#D7ECDD'}} textStyle={{color: '#00545F'}} activeTextStyle={{color: '#00545F', fontWeight: 'bold'}} activeTabStyle={{backgroundColor: '#D7ECDD'}}>
+                    <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1, marginTop:20 }]}>
+                      <View>
+                        <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
+                          {ProductDetail.item[0].description1}
+                        </Text>
+                      </View>
+                    </Card>
+                  </Tab>
+                </Tabs>
+
+               
               </View>
             )}
 

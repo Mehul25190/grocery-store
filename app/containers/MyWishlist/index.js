@@ -343,11 +343,12 @@ FilterShowFunction(){
           IconRightF="search"
           setCart={true}
           bgColor="transparent"
-          setSort={true}
-          SortShow={this.SortShowFunction.bind(this)}
           setProFilter={true}
+          SortShow={this.SortShowFunction.bind(this)}
+          setSort={true}
           FilterShow={this.FilterShowFunction.bind(this)}
           Title="My Wishlist"
+          headersRight={{width:120}}
         />
         <Content enableOnAndroid style={appStyles.content}>
           {this.props.isLoading ? (
@@ -364,17 +365,7 @@ FilterShowFunction(){
                 //  keyExtractor={(item) => `${item.id}`}
                 />
               </ScrollView>
-                  <Carousel
-                    ref={(c) => { this._carousel = c; }}
-                    loop={true}
-                    autoplay={true}
-                     data={this.state.subCategory}
-                    renderItem={this.renderItems}
-                    sliderWidth={Layout.window.width}
-                    itemWidth={140}
-                    autoplayInterval={2000}
-                    autoplayDelay={2000}
-                  />
+                  
               {this.state.productData.map((item, index) => {
                 // productList.map((item, index) => {
                 var foodType = '';
@@ -387,17 +378,9 @@ FilterShowFunction(){
                 
                 return (
                   <ListItem style={styles.ListItems}  key={index}>
-                  
-                  
+
+                    
                     <Left style={styles.ListLeft}>
-                     <TouchableOpacity   onPress={() => this.setState({ wished: !this.state.wished })} style={styles.heartoSection}  >
-                        {this.state.wished ?
-                          (   <Icon name='heart' type='AntDesign' style={styles.hearto} /> ):
-                          (<Icon name='hearto' type='AntDesign' style={styles.hearto} /> )
-                        }
-                   
-                     
-                      </TouchableOpacity>
                    
                     <TouchableOpacity
                         style={styles.prodInfo}
@@ -409,13 +392,8 @@ FilterShowFunction(){
                         style={styles.proImage}
                         source={{ uri: url.imageURL + item.imagePath }}
                       />
-                    </TouchableOpacity>
-
-                     <TouchableOpacity style={styles.vegImageSection}>
-
-                      <Image style={styles.vegImage} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
-                     
                       </TouchableOpacity>
+                     
                     </Left>
                     <Body>
                       <TouchableOpacity
@@ -424,10 +402,14 @@ FilterShowFunction(){
                           this.productDetail(item.id)
                         }
                       >
-                       
-                          <Text style={styles.proBrand}>{item.brandName}</Text>
-                       
-                        <Text style={styles.proTitle}>{item.itemName}</Text>
+                        <View style={appStyles.brandAndVeg}>
+                          <View style={{ flex:0 }}>
+                               <Text style={styles.proBrand}>{item.brandName}</Text>
+                          </View>
+                          <View style={{ flex: 0,width:12 }}>
+                              <Image style={[appStyles.vegImage,{marginTop:2}]} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
+                          </View>
+                        </View>
 
                         <Text style={styles.proQuanitty} note>
                           {item.weight !== ""
@@ -458,6 +440,7 @@ FilterShowFunction(){
                                   style={appStyles.currencysmall}
                                 >
                                   {Colors.CUR}
+                                  
                                  </Text>{" "}
                                 <Text
                                   style={appStyles.amountmedium}
@@ -466,7 +449,7 @@ FilterShowFunction(){
                             </View>
                           ) : (
                             <View>
-                              <Text style={[styles.proPrice,{color:'#000'}]}>
+                              <Text style={styles.proPrice}>
                                 <Text
                                   style={appStyles.currencysmall}
                                 >
@@ -483,41 +466,39 @@ FilterShowFunction(){
                     </Body>
                     <Right style={styles.ListRight}>
                       <View>
-                      
+                        
                       </View>
                       {item.outOfStock == 'Y' ? 
                         <Text style={styles.outofstock}>Out of Stock</Text> : 
-                      ( <View>
+                      (<View>
                         {item.isSubscribable ? (
-                          <ImageBackground source={imgs.AEDpng}  style={[styles.subscribeBtn,{}]}>
-                            <TouchableOpacity
+                          <TouchableOpacity
                               onPress={() =>
                                 this.subscribePressHandlder(item)
                               }
                             >
+                          <ImageBackground source={imgs.AEDpng}  style={[styles.subscribeBtn,{}]}>
+                            
                               <Text style={styles.subText}>
                                 {item.price}
                               </Text>
-                            </TouchableOpacity>
                           </ImageBackground>
-
+                          </TouchableOpacity>
                         ) : (
                           <View style={{ padding: 0, margin: 0 }}></View>
                         )}
-                        {/*<Text>{this.state.buyOndeSelected.indexOf(item.id)} {item.cartQty}</Text>*/}
+
                         {this.state.selctedProduct == item.id ? <ActivityIndicator style={{marginRight: 20}}/> : 
                         (<View>
-                         {item.cartQty > 0 ?
+                        {item.cartQty > 0 ?
                           (<NumericInput
                             initValue={item.cartQty}
-                            //value={this.state.qtyValue} 
                             //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
                             onChange={(value) => this.buyOncePressHnadler(item.id, value, 'update')}
                             onLimitReached={(isMax, msg) =>
                               console.log(isMax, msg)
                             }
                             minValue={0}
-                            maxValue={item.maxOrderQuantity ? item.maxOrderQuantity : 5}
                             totalWidth={100}
                             totalHeight={35}
                             iconSize={30}
@@ -539,7 +520,11 @@ FilterShowFunction(){
                           >
                            <Image source={imgs.addPlus} style={styles.buyButton} />
                           </TouchableOpacity>
+
                         )}
+                        <TouchableOpacity>
+                        <Text style={styles.outofstock}>Remove</Text>
+                        </TouchableOpacity>
                         </View>)}
                       </View>)}
                     </Right>

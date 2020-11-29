@@ -10,7 +10,7 @@ justyfyContent:'center',
   },
   hearto:{
 color:'red',
-fontSize:23,
+fontSize:30,
 textAlign:'center'
 },
  brandAndVeg:{

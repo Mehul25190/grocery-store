@@ -383,6 +383,7 @@ onBackdropPress(){
                 //  keyExtractor={(item) => `${item.id}`}
                 />
               </ScrollView>
+                <View style={{backgroundColor:'#f6f6f6', paddingTop:3, paddingBottom:5, marginBottom:5,}}>
                   <Carousel
                     ref={(c) => { this._carousel = c; }}
                     loop={true}
@@ -391,9 +392,10 @@ onBackdropPress(){
                     renderItem={this.renderItems}
                     sliderWidth={Layout.window.width}
                     itemWidth={140}
-                    autoplayInterval={2000}
-                    autoplayDelay={2000}
+                    autoplayInterval={3000}
+                    autoplayDelay={3000}
                   />
+                </View>
               {this.state.productData.map((item, index) => {
                 // productList.map((item, index) => {
                 var foodType = '';
@@ -436,7 +438,7 @@ onBackdropPress(){
                                <Text style={styles.proBrand}>{item.brandName}</Text>
                           </View>
                           <View style={{ flex: 0,width:12 }}>
-                              <Image style={appStyles.vegImage} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
+                              <Image style={[appStyles.vegImage,{marginTop:2}]} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
                           </View>
                         </View>
                       
