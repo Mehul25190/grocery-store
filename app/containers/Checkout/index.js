@@ -376,14 +376,14 @@ class Checkout extends React.Component {
 {/* Sub Total */}                         
                          <ListItem style={[styles.TotalList]}>
                           <View>
-                            <Text style={styles.TotalText}>Total</Text>
+                            <Text style={[styles.TotalText, {color:'#ff0000'}]}>Total</Text>
                           </View>
                          <Body style={styles.TotalBar}>
                                 <Text></Text>
                           </Body>
 
                           <View>
-                           <Text style={styles.OrderPrice}><Text style={appStyles.currencysmall}>{Colors.CUR}</Text> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
+                           <Text style={[styles.OrderPrice, {color:'#ff0000'}]}><Text style={[appStyles.currencysmall, {color:'#ff0000'}]}>{Colors.CUR}</Text> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
                           </View>
                         </ListItem>  
 
