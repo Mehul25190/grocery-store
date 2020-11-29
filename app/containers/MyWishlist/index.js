@@ -410,6 +410,7 @@ FilterShowFunction(){
                               <Image style={[appStyles.vegImage,{marginTop:2}]} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
                           </View>
                         </View>
+                        <Text style={styles.proTitle}>{item.itemName}</Text>
 
                         <Text style={styles.proQuanitty} note>
                           {item.weight !== ""
