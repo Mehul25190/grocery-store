@@ -462,7 +462,7 @@ class Home extends React.Component {
 
 
                     <FlatList
-                      data={BrandName.filter(brand => brand.isFeatured = 1)}
+                      data={BrandName.filter(brand => brand.isFeatured == 1)}
                       contentContainerStyle={styles.scrollViewStyle}
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}
@@ -480,6 +480,7 @@ class Home extends React.Component {
                           <View>
                             <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1, height: 120, width: 120, resizeMode: 'contain' }} />
                             <Text style={styles.brandnametitle}>{item.brandName}</Text>
+                            
                           </View>
                         </TouchableOpacity>
 

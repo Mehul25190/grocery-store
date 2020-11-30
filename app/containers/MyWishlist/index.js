@@ -38,7 +38,7 @@ import {
   Right,
   Thumbnail,
   Spinner,
-   Icon,Row
+  Icon, Row
 } from "native-base";
 import url from "../../config/api";
 import { ItemList } from "../data/data";
@@ -55,6 +55,7 @@ import * as cartActions from "../../actions/cart";
 import appStyles from "../../theme/appStyles";
 import styles from "./styles";
 import NumericInput from "react-native-numeric-input";
+import { Fontisto } from '@expo/vector-icons';
 import { ScreenLoader } from '../../components';
 import Carousel from 'react-native-snap-carousel';
 import Modal from 'react-native-modal';
@@ -74,10 +75,10 @@ class MyWishlist extends React.Component {
       flalistIndex: 0,
       buyOndeSelected: [],
       selctedProduct: '',
-      wished:false,
-       isModalVisible: false,
-       isFilterVisible: false,
-       type:''
+      wished: false,
+      isModalVisible: false,
+      isFilterVisible: false,
+      type: ''
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
@@ -125,12 +126,12 @@ class MyWishlist extends React.Component {
       .then((res) => {
         //console.log("sucess return", res.data.subCategory);
         if (res.status == "success") {
-          if(res.data.subCategory.length > 0){
+          if (res.data.subCategory.length > 0) {
             this.setState({ subCategory: res.data.subCategory, selectSubCat: res.data.subCategory[0].id });
             this.productItemList(res.data.subCategory[0].categoryId, res.data.subCategory[0].id, 0);
-          }else{
+          } else {
             showToast("No product found", "danger");
-             this.props.navigation.navigate(Screens.Home.route)
+            this.props.navigation.navigate(Screens.Home.route)
           }
           //console.log('set return');
           //console.log(res.data.itemList);
@@ -146,10 +147,10 @@ class MyWishlist extends React.Component {
       .searchItem(catName)
       .then((res) => {
         if (res.status == "success") {
-          if(res.data.itemList.length > 0){
+          if (res.data.itemList.length > 0) {
             this.setState({ productData: res.data.itemList, selectSubCat: catId });
-            this.courseFilterArr = res.data.itemList;         
-          }else{
+            this.courseFilterArr = res.data.itemList;
+          } else {
             this.courseFilterArr = [];
             this.setState({ productData: [], selectSubCat: catId });
           }
@@ -163,23 +164,24 @@ class MyWishlist extends React.Component {
   }
 
   productItemList(catId, subCatId, index) {
-    this.currentIndex = index-1;
+    this.currentIndex = index - 1;
     //catId = this.props.navigation.getParam("para_categoryId") ? this.props.navigation.getParam("para_categoryId") : this.state.selectSubCat;
-    this.setState({flalistIndex: index})
+    this.setState({ flalistIndex: index })
     this.props
-      .productItemList(catId, subCatId, this.props.user.user.id)
-      .then((res) => {
-        //console.log('sucess return', res.data.itemList);
-        if (res.status == "success") {
-          //console.log(res.data);
-          if(res.data.itemList){
-            this.setState({ productData: res.data.itemList, selectSubCat: subCatId });
-            this.courseFilterArr = res.data.itemList;   
+      .fetchwishlist(this.props.user.user.id)
+      // .productItemList(catId, subCatId, this.props.user.user.id)
 
-          }else{
-            this.courseFilterArr = [];
-            this.setState({ productData: [], selectSubCat: subCatId });
-          }
+      .then((res) => {
+
+        if (res.data.status == "success") {
+
+          const data = res.data.data.wishlist;
+          // data.map((item, index) => {
+          this.setState({
+            productData: data
+          })
+          // })
+
         } else {
           showToast("Something wrong with Server response", "danger");
         }
@@ -188,7 +190,7 @@ class MyWishlist extends React.Component {
         showToast("Error messages returned from server", "danger");
       });
 
-      //this.refs.flatListRef.scrollToIndex({animated: true,index:5})
+    //this.refs.flatListRef.scrollToIndex({animated: true,index:5})
 
     //console.log(catId);
   }
@@ -196,7 +198,7 @@ class MyWishlist extends React.Component {
   _itemChoose(item) {
     //  alert(item.title);
   }
-  _filterChoose(item) {}
+  _filterChoose(item) { }
   onPressRecipe(item) {
     alert(this.item);
   }
@@ -220,113 +222,132 @@ class MyWishlist extends React.Component {
     </TouchableOpacity>
   );
 
-  productDetail(id){
+  productDetail(id) {
     this.props.productDetail(id, this.props.user.user.id).then(res => {
       //console.log(res);
-      if(res.status == "success"){
-        if(res.data.item.length > 0){
+      if (res.status == "success") {
+        if (res.data.item.length > 0) {
           this.props.navigation.navigate(Screens.ProductDetail.route)
-        }else{
+        } else {
           showToast('Product detail not found', 'danger');
         }
       }
     });
   }
 
-  buyOncePressHnadler(productId, value, action){
-  this.setState({selctedProduct: productId})
-  if(value == 0){
-    this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
-      if(res.status == "success"){
-        this.props.viewCart(this.props.user.user.id).then(res => {
+  buyOncePressHnadler(productId, value, action) {
+    this.setState({ selctedProduct: productId })
+    if (value == 0) {
+      this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
+        if (res.status == "success") {
+          this.props.viewCart(this.props.user.user.id).then(res => {
             //showToast('Cart updated successfully.', "success");
             this.updateProductList(productId, value)
-        }) 
-      }
-      
-    })
-  }else if(value == 1 && action == 'add'){
-    this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
-      if(res.status == "success"){
-        this.props.viewCart(this.props.user.user.id).then(res => {
+          })
+        }
+
+      })
+    } else if (value == 1 && action == 'add') {
+      this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
+        if (res.status == "success") {
+          this.props.viewCart(this.props.user.user.id).then(res => {
             //console.log('dddd', res);
             //showToast('Cart updated successfully.', "success")
             this.updateProductList(productId, value)
-        }) 
-      }
-    })
-  }else if(value >= 1){
-    this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
-      if(res.status == "success"){
-        this.props.viewCart(this.props.user.user.id).then(res => {
+          })
+        }
+      })
+    } else if (value >= 1) {
+      this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
+        if (res.status == "success") {
+          this.props.viewCart(this.props.user.user.id).then(res => {
             //showToast('Cart updated successfully.', "success")
             this.updateProductList(productId, value)
-        }) 
-      }
-    })
-  }
+          })
+        }
+      })
+    }
 
-  
-  //this.setState({selctedProduct: ''})
+
+    //this.setState({selctedProduct: ''})
 
     //this.setState({value: value})
   }
 
-  updateProductList(productId, value){
+  removedwishlist(itemid, userid) {
+    console.log("CALL removedwishlist")
+    this.props
+      .removewishlist(itemid, userid)
+      .then((res) => {
+        if (res.data.status == "success") {
+          const data = res.data.data.wishlist;
+          this.setState({
+            productData: data
+          })
+        } else {
+          showToast("Something wrong with Server response", "danger");
+        }
+      })
+      .catch((error) => {
+        showToast("Error messages returned from server", "danger");
+      });
+  }
+
+  updateProductList(productId, value) {
     var array = [...this.state.buyOndeSelected]; // make a separate copy of the array
     var index = array.indexOf(productId)
     if (index !== -1 && value == 0) {
       array.splice(index, 1);
-      this.setState({buyOndeSelected: array});
-    }else{
+      this.setState({ buyOndeSelected: array });
+    } else {
       array.push(productId)
-      this.setState({buyOndeSelected: array});
+      this.setState({ buyOndeSelected: array });
     }
-    
+
     this.props.getproductItemList(this.state.categoryId, this.state.selectSubCat, this.props.user.user.id)
-    .then((res) => {
-      //console.log('sucess return', res.data.itemList);
-      this.setState({selctedProduct: ''})
-      if (res.status == "success") {
-        if(res.data.itemList.length > 0){
-          this.setState({ productData: res.data.itemList, selectSubCat: this.state.selectSubCat });
-        }else{
-          this.setState({ productData: [], selectSubCat: this.state.selectSubCat });
+      .then((res) => {
+        //console.log('sucess return', res.data.itemList);
+        this.setState({ selctedProduct: '' })
+        if (res.status == "success") {
+          if (res.data.itemList.length > 0) {
+            this.setState({ productData: res.data.itemList, selectSubCat: this.state.selectSubCat });
+          } else {
+            this.setState({ productData: [], selectSubCat: this.state.selectSubCat });
+          }
+        } else {
+          showToast("Something wrong with Server response", "danger");
+        }
+      }).catch(error => {
+        this.setState({ selctedProduct: '' })
+      })
+  }
+
+  subscribePressHandlder(item) {
+
+    this.props.checkActiveSubscription(item.id, this.props.user.user.id).then(res => {
+      //console.log(res.data);
+      if (res.status == 'success') {
+        if (res.data.isActiveSubscription == 'Y') {
+          showToast('You have already subscribed this product.', "danger")
+        } else {
+          showToast('Please ensure the quantity, once subscribed its not recommended to change', 'success');
+          this.props.navigation.navigate(
+            Screens.SubscribeOrder.route,
+            { item: item, qty: this.state.value }
+          )
         }
       } else {
-        showToast("Something wrong with Server response", "danger");
+        showToast('Please try again', "danger")
       }
-    }).catch(error => {
-      this.setState({selctedProduct: ''})
     })
   }
 
-  subscribePressHandlder(item){
-    
-    this.props.checkActiveSubscription(item.id, this.props.user.user.id).then(res => {
-        //console.log(res.data);
-        if(res.status == 'success'){
-          if(res.data.isActiveSubscription == 'Y'){
-            showToast('You have already subscribed this product.', "danger")
-          }else{
-            showToast('Please ensure the quantity, once subscribed its not recommended to change', 'success');
-            this.props.navigation.navigate(
-              Screens.SubscribeOrder.route,
-              { item: item , qty: this.state.value}
-            )
-          }
-        }else{
-          showToast('Please try again', "danger")
-        }
-    })
+  SortShowFunction() {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   }
-
- SortShowFunction(){
-    this.setState({isModalVisible: !this.state.isModalVisible});
+  FilterShowFunction() {
+    this.setState({ isFilterVisible: !this.state.isFilterVisible });
   }
-FilterShowFunction(){
- this.setState({isFilterVisible: !this.state.isFilterVisible});
-}
   render() {
 
     //console.log('product', this.state.productData)
@@ -348,107 +369,110 @@ FilterShowFunction(){
           setSort={true}
           FilterShow={this.FilterShowFunction.bind(this)}
           Title="My Wishlist"
-          headersRight={{width:120}}
+          headersRight={{ width: 120 }}
         />
         <Content enableOnAndroid style={appStyles.content}>
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (<View>
-              <ScrollView>
-                <FlatList
-                 // horizontal
-                  // initialScrollIndex={this.state.flalistIndex}
-                  // onScrollToIndexFailed={()=>{}}
-                  // showsHorizontalScrollIndicator={false}
-                 // data={this.state.subCategory}
-                //  renderItem={this.renderItems}
-                //  keyExtractor={(item) => `${item.id}`}
-                />
-              </ScrollView>
-                  
-              {this.state.productData.map((item, index) => {
-                // productList.map((item, index) => {
-                var foodType = '';
-                // if(item.foodType == 'veg')
-                //   foodType = '#00ff00';
-                // if(item.foodType == 'Nonveg')
-                //   foodType = 'red';
-                // if(item.foodType == 'vegan')
-                //   foodType = 'blue';
-                
-                return (
-                  <ListItem style={styles.ListItems}  key={index}>
+            <ScrollView>
+              <FlatList
+              // horizontal
+              // initialScrollIndex={this.state.flalistIndex}
+              // onScrollToIndexFailed={()=>{}}
+              // showsHorizontalScrollIndicator={false}
+              // data={this.state.subCategory}
+              //  renderItem={this.renderItems}
+              //  keyExtractor={(item) => `${item.id}`}
+              />
+            </ScrollView>
 
-                    
-                    <Left style={styles.ListLeft}>
-                   
+            {this.state.productData.map((wishlist, index) => {
+              // productList.map((item, index) => {
+              var item = wishlist.item
+              var foodType = '';
+              // if(item.foodType == 'veg')
+              //   foodType = '#00ff00';
+              // if(item.foodType == 'Nonveg')
+              //   foodType = 'red';
+              // if(item.foodType == 'vegan')
+              //   foodType = 'blue';
+
+              return (
+                <ListItem style={styles.ListItems} key={index}>
+
+
+                  <Left style={styles.ListLeft}>
+
                     <TouchableOpacity
-                        style={styles.prodInfo}
-                        onPress={() =>
-                          this.productDetail(item.id)
-                        }
-                      >
+                      style={styles.prodInfo}
+                      onPress={() =>
+                        this.productDetail(item.id)
+                      }
+                    >
+                      <Text>{}</Text>
                       <Image
                         style={styles.proImage}
-                        source={{ uri: url.imageURL + item.imagePath }}
+                        source={{ uri: url.imageURL + item.itemImage }}
                       />
-                      </TouchableOpacity>
-                     
-                    </Left>
-                    <Body>
-                      <TouchableOpacity
-                        style={styles.prodInfo}
-                        onPress={() =>
-                          this.productDetail(item.id)
-                        }
-                      >
-                        <View style={appStyles.brandAndVeg}>
-                          <View style={{ flex:0 }}>
-                               <Text style={styles.proBrand}>{item.brandName}</Text>
-                          </View>
-                          <View style={{ flex: 0,width:12 }}>
-                              <Image style={[appStyles.vegImage,{marginTop:2}]} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
-                          </View>
+                    </TouchableOpacity>
+
+                  </Left>
+                  <Body>
+                    <TouchableOpacity
+                      style={styles.prodInfo}
+                      onPress={() =>
+                        this.productDetail(item.id)
+                      }
+                    >
+                      <View style={appStyles.brandAndVeg}>
+                        <View style={{ flex: 0 }}>
+                          <Text style={styles.proBrand}>{item.brandName}</Text>
                         </View>
-                        <Text style={styles.proTitle}>{item.itemName}</Text>
+                        <View style={{ flex: 0, width: 12 }}>
+                          <Image style={[appStyles.vegImage, { marginTop: 2 }]} 
+                          source={item.foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
+                        </View>
+                      </View>
+                      <Text style={styles.proTitle}>{item.itemName}</Text>
 
-                        <Text style={styles.proQuanitty} note>
-                          {item.weight !== ""
-                            ? "(" + item.weight + " " + item.uom + ")"
-                            : ""}{" "}
-                        </Text>
+                      <Text style={styles.proQuanitty} note>
+                        {item.weight !== ""
+                          ? "(" + item.weight + " " + item.uom + ")"
+                          : ""}{" "}
+                      </Text>
 
-                        <View
-                          style={{
-                            flex: 1,
-                            flexDirection: "row",
-                            justifyContent: "flex-start",
-                            alignItems: "flex-start",
-                          }}
-                        >
-                          {item.discountedPrice > 0 && item.discountedPrice < item.price  ? (
-                            <View style={{ flexDirection: "row" }}>
-                              <Text style={styles.proPriceStrike}>
-                                <Text style={appStyles.currencysmall}>
-                                  {Colors.CUR}
-                                </Text>{" "}
-                                <Text
-                                  style={appStyles.amountmedium}
-                                >{item.price}</Text>
-                              </Text>
-                              <Text style={styles.proPrice}>
-                                <Text
-                                  style={appStyles.currencysmall}
-                                >
-                                  {Colors.CUR}
-                                  
-                                 </Text>{" "}
-                                <Text
-                                  style={appStyles.amountmedium}
-                                >{item.discountedPrice}</Text>
-                              </Text>
-                            </View>
-                          ) : (
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "flex-start",
+                        }}
+                      >
+                        {item.discountedPrice > 0 && item.discountedPrice < item.price ? (
+                          <View style={{ flexDirection: "row" }}>
+                            <Text style={styles.proPriceStrike}>
+                              <Text style={appStyles.currencysmall}>
+                                {Colors.CUR}
+                              </Text>{" "}
+                              <Text
+                                style={appStyles.amountmedium}
+                              >{item.price}</Text>
+                            </Text>
+                            <Text style={styles.proPrice}>
+                              <Text
+                                style={appStyles.currencysmall}
+                              >
+                                {Colors.CUR}
+
+                              </Text>{" "}
+                              <Text
+                                style={appStyles.amountmedium}
+                              >{item.discountedPrice}</Text>
+                            </Text>
+                          </View>
+                        ) : (
                             <View>
                               <Text style={styles.proPrice}>
                                 <Text
@@ -462,135 +486,108 @@ FilterShowFunction(){
                               </Text>
                             </View>
                           )}
-                        </View>
-                      </TouchableOpacity>
-                    </Body>
-                    <Right style={styles.ListRight}>
-                      <View>
-                        
                       </View>
-                      {item.outOfStock == 'Y' ? 
-                        <Text style={styles.outofstock}>Out of Stock</Text> : 
+                    </TouchableOpacity>
+                  </Body>
+                  <Right style={styles.ListRight}>
+                    <View>
+
+                    </View>
+                    {item.outOfStock == 'Y' ?
+                      <Text style={styles.outofstock}>Out of Stock</Text> :
                       (<View>
                         {item.isSubscribable ? (
                           <TouchableOpacity
-                              onPress={() =>
-                                this.subscribePressHandlder(item)
-                              }
-                            >
-                          <ImageBackground source={imgs.AEDpng}  style={[styles.subscribeBtn,{}]}>
-                            
+                            onPress={() =>
+                              this.subscribePressHandlder(item)
+                            }
+                          >
+                            <ImageBackground source={imgs.AEDpng} style={[styles.subscribeBtn, {}]}>
+
                               <Text style={styles.subText}>
                                 {item.price}
                               </Text>
-                          </ImageBackground>
+                            </ImageBackground>
                           </TouchableOpacity>
                         ) : (
-                          <View style={{ padding: 0, margin: 0 }}></View>
-                        )}
+                            <View style={{ padding: 0, margin: 0 }}></View>
+                          )}
 
-                        {this.state.selctedProduct == item.id ? <ActivityIndicator style={{marginRight: 20}}/> : 
-                        (<View>
-                        {item.cartQty > 0 ?
-                          (<NumericInput
-                            initValue={item.cartQty}
-                            //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
-                            onChange={(value) => this.buyOncePressHnadler(item.id, value, 'update')}
-                            onLimitReached={(isMax, msg) =>
-                              console.log(isMax, msg)
-                            }
-                            minValue={0}
-                            totalWidth={100}
-                            totalHeight={35}
-                            iconSize={30}
-                            borderColor={Colors.primary}
-                            inputStyle={{ fontSize: 15 }}
-                            step={1}
-                            valueType="real"
-                            rounded
-                            textColor={Colors.primary}
-                            iconStyle={{ color: Colors.primary, fontSize: 25 }}
-                            rightButtonBackgroundColor="#fff"
-                            leftButtonBackgroundColor="#fff"
-                          />) : 
-                          (
-                          <TouchableOpacity
-                            onPress={() =>
-                              this.buyOncePressHnadler(item.id, 1, 'add')
-                            }
-                          >
-                           <Image source={imgs.addPlus} style={styles.buyButton} />
-                          </TouchableOpacity>
+                        {this.state.selctedProduct == item.id ? <ActivityIndicator style={{ marginRight: 20 }} /> :
+                          (<View>
 
-                        )}
-                        <TouchableOpacity>
-                        <Text style={styles.outofstock}>Remove</Text>
-                        </TouchableOpacity>
-                        </View>)}
+                            <TouchableOpacity
+                              onPress={() => this.removedwishlist(wishlist.id)}
+                              style={{ flexDirection: 'row' }}>
+                              <Fontisto name="shopping-basket-remove" size={24} color="red" />
+                              <Text style={styles.outofstock}>Remove</Text>
+                              
+                            </TouchableOpacity>
+                          </View>)}
                       </View>)}
-                    </Right>
-                  </ListItem>
-                );
-              })}
-              {this.state.productData.length == 0 ? <View style={[appStyles.spinner, appStyles.norecordfound]}><Text>No Product Found</Text></View> : null }
-            </View>
+                  </Right>
+                </ListItem>
+              );
+            })}
+            {this.state.productData.length == 0 ? <View style={[appStyles.spinner, appStyles.norecordfound]}><Text>No Product Found</Text></View> : null}
+          </View>
             )}
 
 
         </Content>
-       <Modal isVisible={this.state.isModalVisible} backdropColor={'white'} backdropOpacity={0.8} coverScreen={false} style={{height:250}}>
-         
-       <View
-          style={{
-             backgroundColor:'transparent',
-             flex:1,
-             justifyContent:'flex-end'
-                 }}>  
-             <Grid
-               style={{
-                   backgroundColor:'green',
-                   height:'20%'
-                 }}>  
-     
-        
-        {ProductSorting.map((data, key) => {
-          return (  <Row key={key}>       
+        <Modal isVisible={this.state.isModalVisible} backdropColor={'white'} backdropOpacity={0.8} coverScreen={false} style={{ height: 250 }}>
+
+          <View
+            style={{
+              backgroundColor: 'transparent',
+              flex: 1,
+              justifyContent: 'flex-end'
+            }}>
+            <Grid
+              style={{
+                backgroundColor: 'green',
+                height: '20%'
+              }}>
+
+
+              {ProductSorting.map((data, key) => {
+                return (<Row key={key}>
                   {this.state.type == data.type ?
-                  
-                      <Col style={[styles.btn,{}]}>
-                          <Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />
-                          <Text style={styles.reasonText}>{data.type}</Text>
-                      </Col>
-                   
-                      :
-                    
-                      <Col onPress={()=>{this.setState({reason: data.type})}} style={[styles.btn,{}]}>
-                          <Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />
-                          <Text style={styles.reasonText}>{data.type}</Text>
-                      </Col>
-                    
+
+                    <Col style={[styles.btn, {}]}>
+                      <Icon style={styles.img} name='radio-button-checked' type='MaterialIcons' />
+                      <Text style={styles.reasonText}>{data.type}</Text>
+                    </Col>
+
+                    :
+
+                    <Col onPress={() => { this.setState({ reason: data.type }) }} style={[styles.btn, {}]}>
+                      <Icon style={styles.img} name='radio-button-unchecked' type='MaterialIcons' />
+                      <Text style={styles.reasonText}>{data.type}</Text>
+                    </Col>
+
 
                   }
-                </Row>  
-          )
-      })}
-    
-       <Row>
-        <Button title="Hide modal"  onPress={() =>this.SortShowFunction()} />
-       </Row>
+                </Row>
+                )
+              })}
+
+              <Row>
+                <Button title="Hide modal" onPress={() => this.SortShowFunction()} />
+              </Row>
 
 
-        </Grid> 
-           
+            </Grid>
+
           </View>
         </Modal>
-         <Modal isVisible={this.state.isFilterVisible} backdropColor={'white'} backdropOpacity={0} >
-         
-          <View style={{ flex: 1 ,flexDirection: 'column', justifyContent: 'flex-end'}}>
-          <View style={{ height: "50%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center"}}>
-            <Text>Testing a modal with transparent background</Text>
+        <Modal isVisible={this.state.isFilterVisible} backdropColor={'white'} backdropOpacity={0} >
+
+          <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-end' }}>
+            <View style={{ height: "50%", width: '100%', backgroundColor: "#fff", justifyContent: "center" }}>
+              <Text>Testing a modal with transparent background</Text>
+            </View>
           </View>
-         </View>
         </Modal>
         {/*<Catalog {...this.props} />*/}
       </Container>
@@ -610,18 +607,24 @@ const mapDispatchToProps = (dispatch) => {
     productItemList: (categoryId, subCategoryId, userId) =>
       dispatch(userActions.showProductList({ subCategoryId: subCategoryId, categoryId: categoryId, userId: userId })),
     getproductItemList: (categoryId, subCategoryId, userId) =>
-      dispatch(userActions.getProductList({ subCategoryId: subCategoryId, categoryId: categoryId, userId: userId })),  
+      dispatch(userActions.getProductList({ subCategoryId: subCategoryId, categoryId: categoryId, userId: userId })),
     fetchSubCategory: (categoryId) =>
       dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
     searchItem: (searchString) =>
       dispatch(productActions.searchItem({ searchString: searchString })),
-    productDetail: (id, userId) => 
+    productDetail: (id, userId) =>
       dispatch(productActions.productDetail({ itemId: id, userId: userId })),
     viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
-    addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
-    updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId:userId, itemId:itemId, quantity:quantity  })),
-    deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId:userId })),
-    checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId:userId })),
+    addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId: userId, itemId: itemId, quantity: quantity })),
+    updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId: userId, itemId: itemId, quantity: quantity })),
+    deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
+    checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId: userId })),
+
+    fetchwishlist: (userId) =>
+      dispatch(productActions.fetchwishlist({ userId: userId })),
+
+    removewishlist: (itemid) =>
+      dispatch(productActions.deltowishlist({itemId: itemid })),
   };
 };
 

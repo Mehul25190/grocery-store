@@ -26,6 +26,7 @@ export const initialState = {
 		ethnicitieslisting: [],
 		brand: [],
 		brandlisting: [],
+		fetchwishlist:[],
 	},
 	cart: {
 		viewCartDetail: {},

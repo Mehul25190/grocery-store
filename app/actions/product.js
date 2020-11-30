@@ -150,3 +150,46 @@ export const fetchItemsByOfferWithoutLoader = payloads => dispatch => {
 }
 
 
+
+
+export const fetchwishlist = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchwishlist, { queries: payloads }).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    if (res.status == 200) {
+      console.log("wishlist",res.data.data.wishlist)
+      dispatch({ type: ActionTypes.FETCHWISHLIST, data: res.data.data.wishlist });
+      return res
+    } else {
+      return res
+    }
+  });
+}
+
+export const addtowishlist = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.addtowishlist, { payloads: payloads }).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    console.log(res.data);
+    if (res.status == 200) {
+      dispatch({ type: ActionTypes.FETCHWISHLIST, data: res.data.data.wishlist });
+      return res.data
+    } else {
+      return res
+    }
+  });
+}
+
+export const deltowishlist = payloads => dispatch => {
+  //dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.post(url.deltowishlist, { payloads: payloads }).then(res => {
+    //dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    console.log(res.data);
+    if (res.status == 200) {
+      dispatch({ type: ActionTypes.FETCHWISHLIST, data: res.data.data.wishlist });
+      return res.data
+    } else {
+      return res
+    }
+  });
+}

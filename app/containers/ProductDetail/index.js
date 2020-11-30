@@ -204,13 +204,45 @@ class ProductDetail extends React.Component {
     );
   }
 
+  addtowishlist(itemid, userid) {
+    {
+      !this.state.wished ?
+      this.props
+        .addtowishlist(itemid, userid)
+        .then((res) => {
+          if (res.data.status == "success") {
+            this.setState({ wished: !this.state.wished })
+          } else {
+            showToast("Something wrong with Server response", "danger");
+          }
+        })
+        .catch((error) => {
+          showToast("Error messages returned from server", "danger");
+        }) :
+      this.props
+        .removewishlist(itemid)
+        .then((res) => {
+          if (res.data.status == "success") {
+            this.setState({ wished: !this.state.wished })
+          } else {
+            showToast("Something wrong with Server response", "danger");
+          }
+        })
+        .catch((error) => {
+          showToast("Error messages returned from server", "danger");
+        });
+    }
+
+
+  }
+
   render() {
 
     const { entries, activeSlide } = this.state;
     // const { navigation } = this.props;
 
     const { navigation, ProductDetail } = this.props;
-    console.log('ProductDetail', ProductDetail);
+    console.log('ProductDetail 00', ProductDetail);
     const { selectedIndex } = this.state;
 
     var foodType = '';
@@ -307,7 +339,9 @@ class ProductDetail extends React.Component {
             <Row>
               <Col style={{ flex: 0, marginLeft: 20, width: 50 }}>
 
-                <TouchableOpacity onPress={() => this.setState({ wished: !this.state.wished })} style={styles.heartoSection}  >
+                <TouchableOpacity 
+                onPress={() => this.addtowishlist(ProductDetail.item[0].id,this.props.user.user.id,)} 
+                style={styles.heartoSection}  >
 
                   {this.state.wished ?
                     (<Icon name='heart' type='AntDesign' style={styles.hearto} />) :
@@ -321,9 +355,11 @@ class ProductDetail extends React.Component {
             <Row>
               <Col style={{ flex: 0, width: '40%', marginLeft: 10 }}>
                 <View style={styles.pricePart}>
-                  <Text style={styles.priceText}><Text style={appStyles.currencyverybig}>
+                  <Text style={styles.priceText}>
+                    <Text style={appStyles.currencyverybig}>
                     {Colors.CUR}
-                  </Text> <Text style={appStyles.amountverybig}>{ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}
+                  </Text> 
+                  <Text style={appStyles.amountverybig}>{ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}
                     </Text></Text>
                 </View>
               </Col>
@@ -525,6 +561,12 @@ const mapDispatchToProps = (dispatch) => {
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
     productDetail: (id, userId) =>
       dispatch(productActions.productDetail({ itemId: id, userId: userId })),
+
+      addtowishlist: (userId, itemid) =>
+      dispatch(productActions.addtowishlist({ userId: userId, itemId: itemid })),
+
+      removewishlist: (itemid) =>
+      dispatch(productActions.deltowishlist({itemId: itemid })),
   };
 };
 

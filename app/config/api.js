@@ -67,6 +67,10 @@ export default {
   fetchBrand: 'item/fetchBrand',
   fetchBranddetails: 'item/fetchItemList',
   fetchEthnicities: 'adminSettings/fetchEthnicityList',
-  fetchEthnicitiesdetails:'item/fetchItemList'
+  fetchEthnicitiesdetails:'item/fetchItemList',
+
+  fetchwishlist:'userWishlist/fetchWishlist',
+  addtowishlist:'userWishlist/addToWishlist',
+  deltowishlist:'userWishlist/deleteWishListItem',
 
 }
