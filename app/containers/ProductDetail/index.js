@@ -449,7 +449,7 @@ class ProductDetail extends React.Component {
                       </View>
                     </Card>
                   </Tab>
-                  <Tab heading="Additional Information" tabStyle={{ backgroundColor: '#D7ECDD' }} textStyle={{ color: '#00545F' }} activeTextStyle={{ color: '#00545F', fontWeight: 'bold' }} activeTabStyle={{ backgroundColor: '#D7ECDD' }}>
+                  <Tab heading="Additional Info" tabStyle={{ backgroundColor: '#D7ECDD' }} textStyle={{ color: '#00545F' }} activeTextStyle={{ color: '#00545F', fontWeight: 'bold' }} activeTabStyle={{ backgroundColor: '#D7ECDD' }}>
                     <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1, marginTop: 20 }]}>
                       <View>
                         <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
@@ -521,8 +521,8 @@ class ProductDetail extends React.Component {
                 autoplayInterval={2000}
                 autoplayDelay={2000}
                 onSnapToItem={(index) => this.setState({ activeSlide: index })}
-                slideStyle={{ paddding: 0, margin: 0 }}
-                contentContainerCustomStyle={{ paddding: 0, margin: 0 }}
+                slideStyle={{ paddding: 0, margin: 0, borderWidth:0, borderColor:0 }}
+                contentContainerCustomStyle={{ paddding: 0, margin: 0, borderWidth:0 }}
 
               />
               {this.pagination}
