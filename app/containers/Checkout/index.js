@@ -199,6 +199,12 @@ class Checkout extends React.Component {
     }
   }
 
+  totalprice(qty,itemPrice,discountedPrice){
+    const Itemprice = discountedPrice > 0 && discountedPrice < itemPrice ? discountedPrice.toFixed(2) : itemPrice.toFixed(2)
+    const totalprice = qty * Itemprice
+    return totalprice.toFixed(2)
+  }
+
 
   render() {
     const { navigation, cartDetail, totalItem, totalAmount, deliveryCharges } = this.props;
@@ -319,29 +325,36 @@ class Checkout extends React.Component {
             })}
           </Grid>
           <Grid style={styles.OrderTitle}>
-            <Col style={{width:210, alignSelf:'flex-start'}}>
+            <Col style={{width:150, alignSelf:'flex-start'}}>
               <Text style={styles.OrderTitleText}>Items </Text>
             </Col>
-            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:70  }}>
               <Text style={styles.OrderTitleText}>Qty </Text>
             </Col>
-            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:80  }}>
               <Text style={styles.OrderTitleText}>Items {totalItem}</Text>
             </Col>
+            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:70 }}>
+              <Text style={styles.OrderTitleText}>Total</Text>
+            </Col>
+            
           </Grid>
           <List style={{ paddingBottom: 10 }}>
 
             {cartDetail.map((item, index) => {
               return (
                 <ListItem style={styles.ItemList}>
-                  <View style={{width:200, alignSelf:'flex-start'}}>
+                  <View style={{width:140, alignSelf:'flex-start'}}>
                     <Text style={styles.orderName}>{item.itemName}</Text>
                   </View>
-                  <View style={{justifyContent: 'flex-start', alignItems: 'flex-start',  width:50, flex:1 }}>
+                  <View style={{justifyContent: 'flex-start', alignItems: 'flex-start',  width:80, }}>
                      <Text style={styles.orderQty}>{item.quantity}</Text>
                   </View>
-                  <View>
+                  <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:50  }}>
                     <Text style={styles.OrderPrice}>{item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? item.discountedPrice.toFixed(2) : item.itemPrice.toFixed(2)}</Text>
+                  </View>
+                  <View  style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:80  }}>
+                    <Text style={styles.OrderPrice}>{this.totalprice(item.quantity,item.itemPrice,item.discountedPrice)}</Text>
                   </View>
                 </ListItem>
               );
