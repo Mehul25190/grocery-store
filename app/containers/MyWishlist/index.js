@@ -274,10 +274,15 @@ class MyWishlist extends React.Component {
     //this.setState({value: value})
   }
 
-  removedwishlist(itemid, userid) {
-    console.log("CALL removedwishlist")
+  removedwishlist(itemid) {
+    
     this.props
-      .removewishlist(itemid, userid)
+      .removewishlist(itemid)
+      .then((res) => {
+        console.log("CALL removedwishlist",res)
+        if (res.status == "success") {
+          this.props
+      .fetchwishlist(this.props.user.user.id)
       .then((res) => {
         if (res.data.status == "success") {
           const data = res.data.data.wishlist;
@@ -289,6 +294,14 @@ class MyWishlist extends React.Component {
         }
       })
       .catch((error) => {
+        showToast("Error messages returned from server", "danger");
+      });
+        } else {
+          showToast("Something wrong with Server response", "danger");
+        }
+      })
+      .catch((error) => {
+        console.log("ERROR",error)
         showToast("Error messages returned from server", "danger");
       });
   }
@@ -390,6 +403,7 @@ class MyWishlist extends React.Component {
             {this.state.productData.map((wishlist, index) => {
               // productList.map((item, index) => {
               var item = wishlist.item
+              console.log("PRODUCT IS HERE",item)
               var foodType = '';
               // if(item.foodType == 'veg')
               //   foodType = '#00ff00';
@@ -435,7 +449,7 @@ class MyWishlist extends React.Component {
                         </View>
                       </View>
                       <Text style={styles.proTitle}>{item.itemName}</Text>
-
+                     
                       <Text style={styles.proQuanitty} note>
                         {item.weight !== ""
                           ? "(" + item.weight + " " + item.uom + ")"
@@ -521,6 +535,7 @@ class MyWishlist extends React.Component {
                               style={{ flexDirection: 'row' }}>
                               <Fontisto name="shopping-basket-remove" size={24} color="red" />
                               <Text style={styles.outofstock}>Remove</Text>
+                              
                               
                             </TouchableOpacity>
                           </View>)}
@@ -624,7 +639,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(productActions.fetchwishlist({ userId: userId })),
 
     removewishlist: (itemid) =>
-      dispatch(productActions.deltowishlist({itemId: itemid })),
+      dispatch(productActions.deltowishlist({id: itemid })),
   };
 };
 

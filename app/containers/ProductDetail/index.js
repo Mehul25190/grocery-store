@@ -210,10 +210,11 @@ class ProductDetail extends React.Component {
       this.props
         .addtowishlist(itemid, userid)
         .then((res) => {
-          if (res.data.status == "success") {
-            this.setState({ wished: !this.state.wished })
+          console.log("Add to wishlist here",res.status)
+          if (res.status == "success") {
+            this.setState({ wished: true })
           } else {
-            showToast("Something wrong with Server response", "danger");
+            showToast("Something wrong with Server response ", "danger");
           }
         })
         .catch((error) => {
@@ -223,7 +224,7 @@ class ProductDetail extends React.Component {
         .removewishlist(itemid)
         .then((res) => {
           if (res.data.status == "success") {
-            this.setState({ wished: !this.state.wished })
+            this.setState({ wished: false })
           } else {
             showToast("Something wrong with Server response", "danger");
           }
@@ -359,6 +360,7 @@ class ProductDetail extends React.Component {
                     <Text style={appStyles.currencyverybig}>
                     {Colors.CUR}
                   </Text> 
+                  
                   <Text style={appStyles.amountverybig}>{ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}
                     </Text></Text>
                 </View>
@@ -562,7 +564,7 @@ const mapDispatchToProps = (dispatch) => {
     productDetail: (id, userId) =>
       dispatch(productActions.productDetail({ itemId: id, userId: userId })),
 
-      addtowishlist: (userId, itemid) =>
+      addtowishlist: (itemid,userId) =>
       dispatch(productActions.addtowishlist({ userId: userId, itemId: itemid })),
 
       removewishlist: (itemid) =>
