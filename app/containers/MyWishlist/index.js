@@ -441,7 +441,7 @@ class MyWishlist extends React.Component {
                     >
                       <View style={appStyles.brandAndVeg}>
                         <View style={{ flex: 0 }}>
-                          <Text style={styles.proBrand}>{item.brandName}</Text>
+                               <Text style={styles.proBrand}>{item.brandName}</Text>
                         </View>
                         <View style={{ flex: 0, width: 12 }}>
                           <Image style={[appStyles.vegImage, { marginTop: 2 }]} 

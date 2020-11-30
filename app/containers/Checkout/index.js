@@ -332,7 +332,7 @@ class Checkout extends React.Component {
               <Text style={styles.OrderTitleText}>Qty </Text>
             </Col>
             <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:80  }}>
-              <Text style={styles.OrderTitleText}>Items {totalItem}</Text>
+              <Text style={styles.OrderTitleText}>Items ({totalItem})</Text>
             </Col>
             <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:70 }}>
               <Text style={styles.OrderTitleText}>Total</Text>
@@ -353,7 +353,7 @@ class Checkout extends React.Component {
                   <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:50  }}>
                     <Text style={styles.OrderPrice}>{item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? item.discountedPrice.toFixed(2) : item.itemPrice.toFixed(2)}</Text>
                   </View>
-                  <View  style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:80  }}>
+                  <View  style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:70  }}>
                     <Text style={styles.OrderPrice}>{this.totalprice(item.quantity,item.itemPrice,item.discountedPrice)}</Text>
                   </View>
                 </ListItem>
@@ -389,7 +389,7 @@ class Checkout extends React.Component {
 {/* Sub Total */}                         
                          <ListItem style={[styles.TotalList]}>
                           <View>
-                            <Text style={[styles.TotalText, {color:'#ff0000'}]}>Total</Text>
+                            <Text style={[styles.TotalText, {color:'#ff0000'}]}>Total <Text style={{fontSize:12, color:'#ff0000'}}>(Inclusive of VAT)</Text></Text>
                           </View>
                          <Body style={styles.TotalBar}>
                                 <Text></Text>
