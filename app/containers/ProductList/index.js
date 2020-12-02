@@ -37,7 +37,7 @@ import {
   Body,
   Right,
   Thumbnail,
-  Spinner,
+  Spinner, Footer, FooterTab,
    Icon,Row,CardItem
 } from "native-base";
 import url from "../../config/api";
@@ -361,11 +361,11 @@ onBackdropPress(){
           IconRightF="search"
           setCart={true}
           bgColor="transparent"
-          setProFilter={true}
-          SortShow={this.SortShowFunction.bind(this)}
-          setSort={true}
-          FilterShow={this.FilterShowFunction.bind(this)}
-          Title={categoryName}
+        //  setProFilter={true}
+          // SortShow={this.SortShowFunction.bind(this)}
+          // setSort={true}
+          // FilterShow={this.FilterShowFunction.bind(this)}
+           Title={categoryName}
           headersRight={{width:120}}
         />
         <Content enableOnAndroid style={appStyles.content}>
@@ -566,18 +566,45 @@ onBackdropPress(){
 
 
         </Content>
-       <Modal style={styles.SortModal} isVisible={this.state.isModalVisible} hasBackdrop={true} 
+        <Footer style={appStyles.footers}>
+          <Col style={{flex:1,justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
+              <TouchableOpacity
+              style={[appStyles.SortShowArea,{ paddingLeft:120}]}
+              onPress={() =>this.FilterShowFunction() } >
+             
+                     <View style={{ flex:0 }}>
+                        <Text style={appStyles.sortLabel}>FILTER</Text>
+                       </View>
+                        
+                        <Icon style={appStyles.sorting} name="filter" type="Feather" />
+                      
+            </TouchableOpacity>
+          </Col>
+         <Col style={{flex:1,justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
+           
+             <TouchableOpacity style={[appStyles.SortShowArea,{ paddingLeft:20}]}  onPress={() =>this.SortShowFunction() } >
+                          <View style={{ flex:0 }}>
+                             <Text style={appStyles.sortLabel}>SORT</Text>
+                          </View>
+                          
+                            <Icon style={appStyles.sorting} name="sort" type="MaterialIcons" />
+                        
+              </TouchableOpacity>
+          </Col>
+         
+        </Footer>
+       <Modal style={appStyles.SortModal} isVisible={this.state.isModalVisible} hasBackdrop={true} 
      backdropColor={'#333'} backdropOpacity={0.3}>
          
        <View
-         style={styles.bottmSortMain}>  
+         style={appStyles.bottmSortMain}>  
         
        
       
              <View
-               style={styles.bottomSortInner}>  
-      <TouchableOpacity onPress={() =>this.SortShowFunction()} style={styles.closeBtnArea} >
-      <Icon name="closecircleo" type="AntDesign" style={styles.closeBtn}  />
+               style={appStyles.bottomSortInner}>  
+      <TouchableOpacity onPress={() =>this.SortShowFunction()} style={appStyles.closeBtnArea} >
+      <Icon name="closecircleo" type="AntDesign" style={appStyles.closeBtn}  />
       </TouchableOpacity>
         {ProductSorting.map((data, key) => {
           return (  <Grid key={key} style={{paddingTop:20}}>       
@@ -585,7 +612,7 @@ onBackdropPress(){
                   
                      <Row>
                       <Col style={{flex:1,justifyContent:'center',marginLeft:25}}>
-                          <Text style={styles.SortingText}>{data.SortinType}</Text>
+                          <Text style={appStyles.SortingText}>{data.SortinType}</Text>
                       </Col>
                        <Col style={[styles.btn,{flex:0,justifyContent:'center',width:50}]}>
                           <Icon style={styles.imgSorting} name='radio-button-checked' type='MaterialIcons' />
@@ -596,10 +623,10 @@ onBackdropPress(){
                     
                     <Row>
                       <Col style={{flex:1,justifyContent:'center',marginLeft:25}}>
-                          <Text style={styles.SortingText}>{data.SortinType}</Text>
+                          <Text style={appStyles.SortingText}>{data.SortinType}</Text>
                       </Col>
                        <Col style={[styles.btn,{flex:0,justifyContent:'center',width:50}]} onPress={()=>{this.setState({SortinType: data.SortinType})}} >
-                          <Icon style={styles.imgSorting} name='radio-button-unchecked' type='MaterialIcons' />
+                          <Icon style={appStyles.imgSorting} name='radio-button-unchecked' type='MaterialIcons' />
                       </Col>
                     </Row>
                     
@@ -616,22 +643,22 @@ onBackdropPress(){
            
           </View>
         </Modal>
-         <Modal style={styles.SortModal} isVisible={this.state.isFilterVisible}  hasBackdrop={true} 
+         <Modal style={appStyles.SortModal} isVisible={this.state.isFilterVisible}  hasBackdrop={true} 
      backdropColor={'#333'} backdropOpacity={0.3} >
- <View   style={styles.bottmFilterMain}>  
+ <View   style={appStyles.bottmFilterMain}>  
         
-  <View style={styles.bottomFilterInner}>  
-     <TouchableOpacity onPress={() =>this.FilterShowFunction()} style={styles.closeBtnArea} >
-      <Icon name="closecircleo" type="AntDesign" style={styles.closeBtn}  />
+  <View style={appStyles.bottomFilterInner}>  
+     <TouchableOpacity onPress={() =>this.FilterShowFunction()} style={appStyles.closeBtnArea} >
+      <Icon name="closecircleo" type="AntDesign" style={appStyles.closeBtn}  />
      </TouchableOpacity>
-     <List style={styles.filterList} >
+     <List style={appStyles.filterList} >
     {FilterCat.map((data, key) => {
-          return (      <ListItem style={styles.ListItemsFilter}  key={key}>   
+          return (      <ListItem style={appStyles.ListItemsFilter}  key={key}>   
                 
                   
                 <Left style={{marginLeft:10}}>
                  <TouchableOpacity onPress={()=>this.goFilterDetail()}>
-                  <Text style={styles.SortingText}>{data.FilterType}</Text>
+                  <Text style={appStyles.SortingText}>{data.FilterType}</Text>
                   </TouchableOpacity>
                 </Left>
                 <Right style={{marginRight:10}}>
@@ -647,13 +674,13 @@ onBackdropPress(){
           )
       })}
             </List>
-      <Grid style={styles.ApplyButtonSection}>
+      <Grid style={appStyles.ApplyButtonSection}>
         <Row>
           <Col>
-            <TouchableOpacity style={styles.resetFilter}><Text style={styles.resetTextbutton}>Reset</Text></TouchableOpacity>
+            <TouchableOpacity style={appStyles.resetFilter}><Text style={appStyles.resetTextbutton}>Reset</Text></TouchableOpacity>
           </Col>
           <Col>
-            <TouchableOpacity style={styles.applyFilter}><Text style={styles.applyFilterText}>Apply</Text></TouchableOpacity>
+            <TouchableOpacity style={appStyles.applyFilter}><Text style={appStyles.applyFilterText}>Apply</Text></TouchableOpacity>
           </Col>
         </Row>
       </Grid>
@@ -663,23 +690,23 @@ onBackdropPress(){
         </Modal>
 
 
- <Modal style={styles.SortModal} isVisible={this.state.isFilterDetailVisible}  hasBackdrop={true} 
+ <Modal style={appStyles.SortModal} isVisible={this.state.isFilterDetailVisible}  hasBackdrop={true} 
      backdropColor={'#333'} backdropOpacity={0.3} >
- <View   style={styles.bottmFilterMain}>  
+ <View   style={appStyles.bottmFilterMain}>  
         
-  <View style={styles.bottomFilterDetailInner}>  
-     <TouchableOpacity onPress={() =>this.FilterDetailShowFunction()} style={styles.closeBtnArea} >
-      <Icon name="closecircleo" type="AntDesign" style={styles.closeBtn}  />
+  <View style={appStyles.bottomFilterDetailInner}>  
+     <TouchableOpacity onPress={() =>this.FilterDetailShowFunction()} style={appStyles.closeBtnArea} >
+      <Icon name="closecircleo" type="AntDesign" style={appStyles.closeBtn}  />
      </TouchableOpacity>
      <ScrollView>
-     <List style={[styles.filterList,{paddingBottom:25}]} >
+     <List style={[appStyles.filterList,{paddingBottom:25}]} >
     {FilterDetailCat.map((data, key) => {
           return ( 
-             <ListItem style={[styles.ListItemsFilter,{paddingTop:10,paddingBottom:10, overflow: 'scroll'}]}  key={key}>   
+             <ListItem style={[appStyles.ListItemsFilter,{paddingTop:10,paddingBottom:10, overflow: 'scroll'}]}  key={key}>   
               
                 <Left style={{marginLeft:10}}>
                  <TouchableOpacity>
-                  <Text style={styles.SortingText}>{data.FilterType}({data.total})</Text>
+                  <Text style={appStyles.SortingText}>{data.FilterType}({data.total})</Text>
                   </TouchableOpacity>
                 </Left>
             
@@ -688,12 +715,12 @@ onBackdropPress(){
       })}
    </List>
   
-      <Grid style={[styles.ApplyButtonSection,{marginTop:10}]}>
+      <Grid style={[appStyles.ApplyButtonSection,{marginTop:10}]}>
         <Row>
          
           <Col>
             <TouchableOpacity onPress={() =>this.FilterDetailShowFunction()}
-            style={styles.applyFilter}><Text style={styles.applyFilterText}>Apply</Text></TouchableOpacity>
+            style={appStyles.applyFilter}><Text style={appStyles.applyFilterText}>Apply</Text></TouchableOpacity>
           </Col>
         </Row>
       </Grid>

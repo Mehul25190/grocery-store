@@ -398,7 +398,9 @@ fontFamily:'Font-Medium'
   },
   sorting:{
     fontSize:25,color:Colors.primary,
-    marginLeft:5
+    marginLeft:5,
+    width:100,
+    flex:0
   },
   headerStyle:{
     backgroundColor:Colors.secondary,
@@ -407,11 +409,140 @@ fontFamily:'Font-Medium'
     borderBottomRightRadius:8,
     zIndex:99
   },
+  sortLabel:{
+    textTransform:'uppercase'
+  },
+  footers:{
+    padding:0,
+  margin:0,
+backgroundColor:Colors.secondary,
+  },
+  footerTabs:{
+backgroundColor:Colors.secondary,
+flex:1,
+  justifyContent:'center',
+    alignItems:'center',
+   alignSelf:'center',
+flexDirection:'row'
+  },
+  sortLabel:{
+    color:Colors.primary
+  },
   categoryStyles: {
    
     backgroundColor: '#fff',
 },
+SortShowArea:{
+  padding:0,
+  margin:0,
+ flex: 1,
+    justifyContent:'center',
+    alignItems:'center',
 
+    flexDirection: 'row',
+},
+SortModal:{
+  margin:0,
+  padding:0
+},
+bottmSortMain:{
+  flex: 1,  padding:0,margin:0,flexDirection: 'column', justifyContent: 'flex-end', 
+  position:'relative'
+},
+bottmFilterMain:{
+  flex: 1,  padding:0,margin:0,flexDirection: 'column', justifyContent: 'flex-end', 
+  position:'relative'
+},
+bottomSortInner:{
+   height: "45%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
+   borderWidth: 1,
+    borderColor: '#333',
+ },
+ SortingText:{
+   textAlign: 'left',
+  fontFamily:'Font-Medium',
+   fontSize:16,
+  
+ },
+ filterList:{
+flex:4,
+marginTop:20
+},
+ListItemsFilter:{
+  paddingTop:20,
+    paddingBottom:20,
+    marginLeft:Layout.indent-7,
+    marginRight:Layout.indent-7,
+    paddingRight:Layout.indent-7,
+    borderColor:Colors.primary
+},
+SortingText:{
+   textAlign: 'left',
+  fontFamily:'Font-Medium',
+   fontSize:16,
+  
+ },
+ resetFilter:{
+borderWidth:1,
+borderColor:Colors.primary,
+borderRadius:5
+},
+imgSorting:{
+  color:Colors.primary
+},
+applyFilter:{
+borderWidth:1,
+backgroundColor:Colors.primary,
+borderRadius:5,
+marginLeft:5
+},
+resetTextbutton:{
+color:Colors.primary,
+padding:12,
+fontFamily:'Font-Medium',
+textAlign:'center'
+},
+applyFilterText:{
+color:Colors.white,
+padding:12,
+fontFamily:'Font-Medium',
+textAlign:'center'
+},
+ bottomFilterInner:{
+   height: "80%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
+   borderWidth: 1,
+    borderColor: '#333',
+ },
+ ApplyButtonSection:{
+  marginLeft:Layout.indent-7,
+    marginRight:Layout.indent-7,
+    paddingRight:Layout.indent-7,
+
+},
+  bottomFilterDetailInner:{
+   height: "90%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
+   borderWidth: 1,
+    borderColor: '#333',
+    paddingTop:20
+ },
+ closeBtnArea:{
+position:'absolute',
+top:-15,
+right:30,
+
+backgroundColor:'#fff',
+borderRadius:50,
+padding:5
+},
+closeBtn:{
+color:'#333',
+},
+ bottomFilterDetailInner:{
+   height: "90%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
+   borderWidth: 1,
+    borderColor: '#333',
+    paddingTop:20
+ },
   flatListStyles: {
     paddingTop:7,
     paddingBottom:5,

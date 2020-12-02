@@ -30,7 +30,7 @@ export default {
     flexDirection: 'row', marginBottom: 24
   },
   bottomSortInner:{
-   height: "30%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
+   height: "45%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
    borderWidth: 1,
     borderColor: '#333',
  },
@@ -49,6 +49,7 @@ export default {
    height: "90%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
    borderWidth: 1,
     borderColor: '#333',
+    paddingTop:20
  },
 SortModal:{
   margin:0,

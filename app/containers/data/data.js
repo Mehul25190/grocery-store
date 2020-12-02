@@ -1,7 +1,5 @@
 import imgs from '../../assets/images';
 
-
-
 export const SimilarProductDetail =[
  
   {
@@ -12,14 +10,14 @@ export const SimilarProductDetail =[
     item_weight:'100gm'
   },
   {
-      key:2,
-  itemimage:imgs.staplesImg,
+   key:2,
+   itemimage:imgs.staplesImg,
     item_price:50,
     item_title:'Product title',
     item_weight:'300gm'
   },
   {
-      key:3,
+   key:3,
    itemimage:imgs.mangoSale,
     item_price:50,
     item_title:'Product title',
@@ -33,7 +31,7 @@ export const SimilarProductDetail =[
     item_weight:'200gm'
   },
   {
-      key:6,
+   key:6,
    itemimage:imgs.amulMoti,
     item_price:50,
     item_title:'Product title',
@@ -103,33 +101,40 @@ export const ProductSorting =[
     SortinType:'Popurality'
   },
   {
-      key:2,
+    key:2,
     SortinType:'Price : High to Low'
   },
   {
-      key:3,
+    key:3,
     SortinType:'Price : Low to High'
+  },
+  {
+   key:4,
+    SortinType:'Newest'
+  },
+  {
+    key:5,
+    SortinType:'Oldest'
   },
  
  
 ];
 export const FilterCat =[
- 
   {
     key:1,
-    FilterType:'Category'
+    FilterType:'Price'
   },
   {
       key:2,
-    FilterType:'Brand'
+    FilterType:'Brands'
   },
   {
       key:3,
-    FilterType:'Price'
+    FilterType:'Discounts'
   },
    {
       key:4,
-    FilterType:'Seller'
+    FilterType:'Ethnicty'
   },
  
  
