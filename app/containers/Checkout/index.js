@@ -325,16 +325,13 @@ class Checkout extends React.Component {
             })}
           </Grid>
           <Grid style={styles.OrderTitle}>
-            <Col style={{width:150, alignSelf:'flex-start'}}>
-              <Text style={styles.OrderTitleText}>Items </Text>
-            </Col>
-            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:70  }}>
-              <Text style={styles.OrderTitleText}>Qty </Text>
-            </Col>
-            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:80  }}>
+            <Col style={{width:Layout.eightIndent*1.3, alignSelf:'flex-start'}}>
               <Text style={styles.OrderTitleText}>Items ({totalItem})</Text>
             </Col>
-            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:70 }}>
+            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:Layout.fourIndent  }}>
+              <Text style={styles.OrderTitleText}>Qty </Text>
+            </Col>
+            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:Layout.fourIndent}}>
               <Text style={styles.OrderTitleText}>Total</Text>
             </Col>
             
@@ -344,16 +341,14 @@ class Checkout extends React.Component {
             {cartDetail.map((item, index) => {
               return (
                 <ListItem style={styles.ItemList}>
-                  <View style={{width:140, alignSelf:'flex-start'}}>
+                  <View style={{width:Layout.eightIndent*1.3, alignSelf:'flex-start'}}>
                     <Text style={styles.orderName}>{item.itemName}</Text>
                   </View>
-                  <View style={{justifyContent: 'flex-start', alignItems: 'flex-start',  width:80, }}>
+                  <View style={{justifyContent: 'flex-start', alignItems: 'flex-start',  width:Layout.fourIndent, }}>
                      <Text style={styles.orderQty}>{item.quantity}</Text>
                   </View>
-                  <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:50  }}>
-                    <Text style={styles.OrderPrice}>{item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? item.discountedPrice.toFixed(2) : item.itemPrice.toFixed(2)}</Text>
-                  </View>
-                  <View  style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:70  }}>
+                  
+                  <View  style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:Layout.doubleIndent*1.5, }}>
                     <Text style={styles.OrderPrice}>{this.totalprice(item.quantity,item.itemPrice,item.discountedPrice)}</Text>
                   </View>
                 </ListItem>
