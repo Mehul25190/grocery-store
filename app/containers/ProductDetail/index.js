@@ -167,7 +167,7 @@ class ProductDetail extends React.Component {
 
           <Text style={appStyles.amountmedium} >{Colors.CUR}{" "} {item.price}</Text>
           <Text style={styles.similarTitle}>{item.itemName}</Text>
-          <Text style={styles.similarWeight}>{item.weight}</Text>
+         
         </View>
 
 
@@ -176,7 +176,6 @@ class ProductDetail extends React.Component {
   }
 
   _renderItem = ({ item, index }) => {
-    console.log('item1100', url.imageURL + item.imagePath)
     return (
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
         <ImageModal resizeMode="contain" source={{ uri: url.imageURL + item.imagePath }} style={styles.amulMoti} />
@@ -256,7 +255,6 @@ class ProductDetail extends React.Component {
     // const { navigation } = this.props;
 
     const { navigation, ProductDetail,similarproducts } = this.props;
-    console.log('similarproducts 000', similarproducts);
     const { selectedIndex } = this.state;
 
     var foodType = '';
@@ -288,7 +286,7 @@ class ProductDetail extends React.Component {
                   <View style={styles.brandAndVeg}>
                     <View style={{ flex: 0, marginRight: 10 }}>
                       <Text style={styles.AmuText}>{ProductDetail.item[0].brandName}</Text>
-                      <Text style={styles.AmuText}>here{this.props.ProductDetail.item[0].id}</Text>
+                      
                     </View>
                     <View style={{ flex: 0, width: 12 }}>
                       <Image style={{ width: 12, height: 12 }} source={ProductDetail.item[0].foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
