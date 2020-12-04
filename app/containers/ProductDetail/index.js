@@ -359,9 +359,8 @@ class ProductDetail extends React.Component {
                   <Text style={styles.priceText}>
                     <Text style={appStyles.currencyverybig}>
                     {Colors.CUR}
-                  </Text> 
-                  
-                  <Text style={appStyles.amountverybig}>{ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}
+                  </Text>
+                  <Text style={appStyles.amountverybig}> {ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}
                     </Text></Text>
                 </View>
               </Col>

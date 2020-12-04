@@ -397,10 +397,7 @@ fontFamily:'Font-Medium'
     marginLeft:5
   },
   sorting:{
-    fontSize:25,color:Colors.primary,
-    marginLeft:5,
-    width:100,
-    flex:0
+    fontSize:15, color:Colors.primary, fontWeight:'bold', paddingLeft:5
   },
   headerStyle:{
     backgroundColor:Colors.secondary,
@@ -409,11 +406,9 @@ fontFamily:'Font-Medium'
     borderBottomRightRadius:8,
     zIndex:99
   },
-  sortLabel:{
-    textTransform:'uppercase'
-  },
+
   footers:{
-    padding:0,
+    padding:10,
   margin:0,
 backgroundColor:Colors.secondary,
   },
@@ -426,7 +421,7 @@ flex:1,
 flexDirection:'row'
   },
   sortLabel:{
-    color:Colors.primary
+    color:Colors.primary, fontSize:14, color:Colors.primary, textTransform:'uppercase', fontWeight:'bold',
   },
   categoryStyles: {
    
@@ -436,10 +431,7 @@ SortShowArea:{
   padding:0,
   margin:0,
  flex: 1,
-    justifyContent:'center',
-    alignItems:'center',
-
-    flexDirection: 'row',
+    flexDirection: 'column',
 },
 SortModal:{
   margin:0,
@@ -469,12 +461,12 @@ flex:4,
 marginTop:20
 },
 ListItemsFilter:{
-  paddingTop:20,
-    paddingBottom:20,
+  paddingTop:10,
+    paddingBottom:10,
     marginLeft:Layout.indent-7,
     marginRight:Layout.indent-7,
     paddingRight:Layout.indent-7,
-    borderColor:Colors.primary
+    borderColor:'#cccccc'
 },
 SortingText:{
    textAlign: 'left',
