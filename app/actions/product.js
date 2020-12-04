@@ -186,7 +186,7 @@ export const deltowishlist = payloads => dispatch => {
     //dispatch({ type: ActionTypes.LOADING, isLoading: false });
     console.log(res.data);
     if (res.status == 200) {
-      dispatch({ type: ActionTypes.FETCHWISHLIST, data: res.data.data.wishlist });
+      
       return res.data
     } else {
       return res
