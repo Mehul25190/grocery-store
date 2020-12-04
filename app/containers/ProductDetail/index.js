@@ -164,9 +164,9 @@ class ProductDetail extends React.Component {
         <View>
           <Image style={styles.similarImges} source={{ uri: url.imageURL + item.imagePath }} />
 
-
-          <Text style={appStyles.amountmedium} >{Colors.CUR}{" "} {item.price}</Text>
           <Text style={styles.similarTitle}>{item.itemName}</Text>
+          <Text style={appStyles.amountmedium} >{Colors.CUR}{" "} {item.price}</Text>
+          
          
         </View>
 
