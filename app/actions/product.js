@@ -52,6 +52,18 @@ export const productDetail = payloads => dispatch => {
     }
   });
 }
+export const similarproduct = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.similarproduct, { queries: payloads }).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    if (res.status == 200) {
+      dispatch({ type: ActionTypes.SIMILARPRODUCT, data: res.data.data.itemList });
+      return res.data
+    } else {
+      return res
+    }
+  });
+}
 
 export const fetchOffers = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });

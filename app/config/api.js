@@ -72,5 +72,6 @@ export default {
   fetchwishlist:'userWishlist/fetchWishlist',
   addtowishlist:'userWishlist/addToWishlist',
   deltowishlist:'userWishlist/deleteWishListItem',
+  similarproduct:'item/fetchItemList'
 
 }

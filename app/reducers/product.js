@@ -49,6 +49,14 @@ const subscription = (state = initialState.product, action) => {
         fetchwishlist: action.data,
       }
     }
+
+    case ActionTypes.SIMILARPRODUCT: {
+      return {
+        ...state,
+        similarproduct: action.data,
+      }
+    }
+
     // Default
     default: {
       return state;

@@ -74,6 +74,7 @@ class ProductDetail extends React.Component {
     });
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
       this.productDetail(this.props.ProductDetail.item[0].id);
+      this.props.similarproduct(this.props.ProductDetail.item[0].subCategoryId)
       this.setState({
         productImages: this.props.ProductDetail.itemImages,
       });
@@ -161,12 +162,12 @@ class ProductDetail extends React.Component {
     return (
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', borderColor: '#ddd', borderWidth: 1, paddding: 10 }}>
         <View>
-          <Image style={styles.similarImges} source={item.itemimage} />
+          <Image style={styles.similarImges} source={{ uri: url.imageURL + item.imagePath }} />
 
 
-          <Text style={appStyles.amountmedium} >{Colors.CUR}{" "} {item.item_price}</Text>
-          <Text style={styles.similarTitle}>{item.item_title}</Text>
-          <Text style={styles.similarWeight}>{item.item_weight}</Text>
+          <Text style={appStyles.amountmedium} >{Colors.CUR}{" "} {item.price}</Text>
+          <Text style={styles.similarTitle}>{item.itemName}</Text>
+          <Text style={styles.similarWeight}>{item.weight}</Text>
         </View>
 
 
@@ -175,7 +176,7 @@ class ProductDetail extends React.Component {
   }
 
   _renderItem = ({ item, index }) => {
-    //console.log('item', item)
+    console.log('item1100', url.imageURL + item.imagePath)
     return (
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
         <ImageModal resizeMode="contain" source={{ uri: url.imageURL + item.imagePath }} style={styles.amulMoti} />
@@ -254,8 +255,8 @@ class ProductDetail extends React.Component {
     const { entries, activeSlide } = this.state;
     // const { navigation } = this.props;
 
-    const { navigation, ProductDetail } = this.props;
-    console.log('ProductDetail 00', ProductDetail);
+    const { navigation, ProductDetail,similarproducts } = this.props;
+    console.log('similarproducts 000', similarproducts);
     const { selectedIndex } = this.state;
 
     var foodType = '';
@@ -287,6 +288,7 @@ class ProductDetail extends React.Component {
                   <View style={styles.brandAndVeg}>
                     <View style={{ flex: 0, marginRight: 10 }}>
                       <Text style={styles.AmuText}>{ProductDetail.item[0].brandName}</Text>
+                      <Text style={styles.AmuText}>here{this.props.ProductDetail.item[0].id}</Text>
                     </View>
                     <View style={{ flex: 0, width: 12 }}>
                       <Image style={{ width: 12, height: 12 }} source={ProductDetail.item[0].foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
@@ -531,7 +533,7 @@ class ProductDetail extends React.Component {
                 ref={(c) => { this._carousel = c; }}
                 loop={true}
                 autoplay={true}
-                data={SimilarProductDetail}
+                data={similarproducts}
                 renderItem={this._similarItem}
                 sliderWidth={Layout.window.width}
                 itemWidth={120}
@@ -565,7 +567,8 @@ class ProductDetail extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    ProductDetail: state.product.productDetail
+    ProductDetail: state.product.productDetail,
+    similarproducts:state.product.similarproduct
   };
 };
 
@@ -578,6 +581,9 @@ const mapDispatchToProps = (dispatch) => {
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
     productDetail: (id, userId) =>
       dispatch(productActions.productDetail({ itemId: id, userId: userId })),
+
+    similarproduct: (id) =>
+      dispatch(productActions.similarproduct({ subCategoryId: id, })),
 
     addtowishlist: (itemid, userId) =>
       dispatch(productActions.addtowishlist({ userId: userId, itemId: itemid })),
