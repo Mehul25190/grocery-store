@@ -325,7 +325,7 @@ class Checkout extends React.Component {
             })}
           </Grid>
           <Grid style={styles.OrderTitle}>
-            <Col style={{width:Layout.eightIndent*1.3, alignSelf:'flex-start'}}>
+            <Col style={{width:Layout.eightIndent*1.5, alignSelf:'flex-start'}}>
               <Text style={styles.OrderTitleText}>Items ({totalItem})</Text>
             </Col>
             <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:Layout.fourIndent  }}>
@@ -341,7 +341,7 @@ class Checkout extends React.Component {
             {cartDetail.map((item, index) => {
               return (
                 <ListItem style={styles.ItemList}>
-                  <View style={{width:Layout.eightIndent*1.3, alignSelf:'flex-start'}}>
+                  <View style={{width:Layout.eightIndent*1.5, alignSelf:'flex-start'}}>
                     <Text style={styles.orderName}>{item.itemName}</Text>
                   </View>
                   <View style={{justifyContent: 'flex-start', alignItems: 'flex-start',  width:Layout.fourIndent, }}>

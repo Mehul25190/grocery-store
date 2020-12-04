@@ -305,6 +305,24 @@ goFilterDetail(){
 
         </Header>
         <Content enableOnAndroid style={appStyles.content}>
+        <Row style={appStyles.footers}>
+                <Col style={{justifyContent:'center',alignItems:'center', borderColor:Colors.primary, borderRightWidth:1}}>
+                  <TouchableOpacity onPress={() =>this.FilterShowFunction() } >
+                    <Item style={{borderBottomWidth:0,}} onPress={() =>this.FilterShowFunction() } >
+                      <Text style={appStyles.sortLabel}>FILTER</Text>
+                      <Icon style={appStyles.sorting} name="filter" type="Feather" />
+                    </Item>
+                  </TouchableOpacity>
+                </Col>
+                <Col style={{justifyContent:'center',alignItems:'center'}}>
+                  <TouchableOpacity>
+                    <Item style={{borderBottomWidth:0,}} onPress={() =>this.SortShowFunction() } >
+                      <Text style={appStyles.sortLabel}>SORT</Text>
+                      <Icon style={appStyles.sorting} name="sort" type="MaterialIcons" />
+                    </Item>
+                  </TouchableOpacity>
+                </Col>
+              </Row>
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (
@@ -480,33 +498,7 @@ goFilterDetail(){
 
           }
         </Content>
-            <Footer style={appStyles.footers}>
-          <Col style={{flex:1,justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
-              <TouchableOpacity
-              style={[appStyles.SortShowArea,{ paddingLeft:120}]}
-              onPress={() =>this.FilterShowFunction() } >
-             
-                     <View style={{ flex:0 }}>
-                        <Text style={appStyles.sortLabel}>FILTER</Text>
-                       </View>
-                        
-                        <Icon style={appStyles.sorting} name="filter" type="Feather" />
-                      
-            </TouchableOpacity>
-          </Col>
-         <Col style={{flex:1,justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
            
-             <TouchableOpacity style={[appStyles.SortShowArea,{ paddingLeft:20}]}  onPress={() =>this.SortShowFunction() } >
-                          <View style={{ flex:0 }}>
-                             <Text style={appStyles.sortLabel}>SORT</Text>
-                          </View>
-                          
-                            <Icon style={appStyles.sorting} name="sort" type="MaterialIcons" />
-                        
-              </TouchableOpacity>
-          </Col>
-         
-        </Footer>
        <Modal style={appStyles.SortModal} isVisible={this.state.isModalVisible} hasBackdrop={true} 
      backdropColor={'#333'} backdropOpacity={0.3}>
          
@@ -590,9 +582,6 @@ goFilterDetail(){
             </List>
       <Grid style={appStyles.ApplyButtonSection}>
         <Row>
-          <Col>
-            <TouchableOpacity style={appStyles.resetFilter}><Text style={appStyles.resetTextbutton}>Reset</Text></TouchableOpacity>
-          </Col>
           <Col>
             <TouchableOpacity style={appStyles.applyFilter}><Text style={appStyles.applyFilterText}>Apply</Text></TouchableOpacity>
           </Col>
