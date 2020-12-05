@@ -44,7 +44,7 @@ fontFamily:'Font-Medium',
   },
   similarTitle:{
  fontFamily:'Font-Medium',
-  fontSize:16,
+  fontSize:15,
   },
   similarWeight:{
  fontFamily:'Font-Medium',

@@ -160,14 +160,15 @@ class ProductDetail extends React.Component {
   _similarItem = ({ item, index }) => {
     //console.log('item', item)
     return (
-      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', borderColor: '#ddd', borderWidth: 1, paddding: 10 }}>
+      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddding: 10 }}>
         <View>
           <Image style={styles.similarImges} source={{ uri: url.imageURL + item.imagePath }} />
-
+          <View style={{paddingLeft:5, paddingRight:5}}>
           <Text style={styles.similarTitle}>{item.itemName}</Text>
-          <Text style={appStyles.amountmedium} >{Colors.CUR}{" "} {item.price}</Text>
-          
-         
+           <Text>
+            <Text style={appStyles.currencysmall}> {Colors.CUR} </Text>{" "}<Text style={appStyles.amountmedium}>{item.price}</Text>
+           </Text>
+          </View>
         </View>
 
 
