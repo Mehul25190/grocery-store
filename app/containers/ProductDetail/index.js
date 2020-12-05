@@ -10,7 +10,7 @@ import {
   Icon,
   Spinner,
   Button,
-  Text,
+  Text, Tabs, Tab,
   Header, Left, Body, Title, Right, Card, Grid, Col, Row, ListItem, Item, Input, DatePicker, Label, Picker
 } from 'native-base';
 import { connect } from "react-redux";
@@ -18,7 +18,7 @@ import * as userActions from "../../actions/user";
 import * as cartActions from "../../actions/cart";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
-import { productList, productImages,SimilarProductDetail } from '../data/data';
+import { productList, productImages, SimilarProductDetail } from '../data/data';
 import * as productActions from "../../actions/product";
 import NumericInput from 'react-native-numeric-input';
 import CheckBox from 'react-native-check-box';
@@ -56,8 +56,9 @@ class ProductDetail extends React.Component {
       selectedIndex: 0,
       productImages: '',
       selctedProduct: '',
-      variant:'',
-       wished:false,
+      variant: '',
+      wished: false,
+      likeloder:false
     };
 
   }
@@ -73,6 +74,7 @@ class ProductDetail extends React.Component {
     });
     this.focusListener = this.props.navigation.addListener("didFocus", () => {
       this.productDetail(this.props.ProductDetail.item[0].id);
+      this.props.similarproduct(this.props.ProductDetail.item[0].subCategoryId)
       this.setState({
         productImages: this.props.ProductDetail.itemImages,
       });
@@ -158,14 +160,15 @@ class ProductDetail extends React.Component {
   _similarItem = ({ item, index }) => {
     //console.log('item', item)
     return (
-      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center',borderColor:'#ddd',borderWidth:1,paddding:10 }}>
+      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddding: 10 }}>
         <View>
-          <Image style={styles.similarImges} source={item.itemimage} />
-    
-          
-             <Text style={appStyles.amountmedium} >{Colors.CUR}{" "} {item.item_price}</Text>
-          <Text style={styles.similarTitle}>{item.item_title}</Text>
-          <Text style={styles.similarWeight}>{item.item_weight}</Text>
+          <Image style={styles.similarImges} source={{ uri: url.imageURL + item.imagePath }} />
+          <View style={{paddingLeft:5, paddingRight:5}}>
+          <Text style={styles.similarTitle}>{item.itemName}</Text>
+           <Text>
+            <Text style={appStyles.currencysmall}> {Colors.CUR} </Text>{" "}<Text style={appStyles.amountmedium}>{item.price}</Text>
+           </Text>
+          </View>
         </View>
 
 
@@ -174,7 +177,6 @@ class ProductDetail extends React.Component {
   }
 
   _renderItem = ({ item, index }) => {
-    //console.log('item', item)
     return (
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
         <ImageModal resizeMode="contain" source={{ uri: url.imageURL + item.imagePath }} style={styles.amulMoti} />
@@ -204,13 +206,56 @@ class ProductDetail extends React.Component {
     );
   }
 
+  addtowishlist(itemid, userid) {
+    {
+      this.setState({
+        likeloder: true
+      });
+      !this.state.wished ?
+        this.props
+          .addtowishlist(itemid, userid)
+          .then((res) => {
+            console.log("Add to wishlist here", res.status)
+            if (res.status == "success") {
+              this.setState({ wished: true, likeloder: false })
+            } else {
+              this.setState({
+                likeloder: false
+              })
+              showToast("Something wrong with Server response ", "danger");
+            }
+          })
+          .catch((error) => {
+            this.setState({ likeloder: false })
+            showToast("Error messages returned from server", "danger");
+          }) :
+        this.props
+          .removewishlist(itemid, userid)
+          .then((res) => {
+            console.log("SERVER RES LIKE", error)
+            if (res.status == "success") {
+              this.setState({ wished: false, likeloder: false })
+            } else {
+              this.setState({ likeloder: false })
+              showToast("Something wrong with Server response 0", "danger");
+            }
+          })
+          .catch((error) => {
+            console.log("SERVER ERROR LIKE 1", error)
+            this.setState({ likeloder: false })
+            showToast(error, "danger");
+          });
+    }
+
+
+  }
+
   render() {
 
     const { entries, activeSlide } = this.state;
     // const { navigation } = this.props;
 
-    const { navigation, ProductDetail } = this.props;
-    console.log('ProductDetail', ProductDetail);
+    const { navigation, ProductDetail,similarproducts } = this.props;
     const { selectedIndex } = this.state;
 
     var foodType = '';
@@ -234,14 +279,21 @@ class ProductDetail extends React.Component {
         />
 
         <Content enableOnAndroid>
-
-
           <Grid style={styles.paddingBox}>
-
             <Row style={styles.firstRow}>
               <Col >
                 <View>
-                  <Text style={styles.AmuText}>{ProductDetail.item[0].brandName}</Text>
+
+                  <View style={styles.brandAndVeg}>
+                    <View style={{ flex: 0, marginRight: 10 }}>
+                      <Text style={styles.AmuText}>{ProductDetail.item[0].brandName}</Text>
+                      
+                    </View>
+                    <View style={{ flex: 0, width: 12 }}>
+                      <Image style={{ width: 12, height: 12 }} source={ProductDetail.item[0].foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
+                    </View>
+                  </View>
+
                   <Text style={[styles.AmuText, styles.AmuTextTitle]}>{ProductDetail.item[0].itemName}</Text>
                   <Text style={styles.AmuText}>{ProductDetail.item[0].weight} {ProductDetail.item[0].uom}</Text>
 
@@ -299,33 +351,39 @@ class ProductDetail extends React.Component {
 
           <Grid>
             <Row>
-              <Col style={{ flex: 0, marginLeft:20, width: '15%',justyfyContent:'center', alignItems:'center',flexDirection:'row'}}>
-                <TouchableOpacity   onPress={() => this.setState({ wished: !this.state.wished })} style={styles.heartoSection}  >
-                          {this.state.wished ?
-                            (<Icon name='heart' type='AntDesign' style={styles.hearto} /> ):
-                            (<Icon name='hearto' type='AntDesign' style={styles.hearto} /> )
-                          }
-                     
-                    </TouchableOpacity>
-              </Col>
-                <Col style={{ flex: 0, width: '20%',justyfyContent:'center', alignItems:'center',flexDirection:'row'}}>
-               
-                    <TouchableOpacity style={styles.vegImageSection}>
-                        <Image style={styles.vegImage} source={ProductDetail.item[0].foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
-                       
-                    </TouchableOpacity>
+              <Col style={{ flex: 0, marginLeft: 20, width: 50 }}>
 
+                <TouchableOpacity
+                  onPress={() => this.addtowishlist(ProductDetail.item[0].id, this.props.user.user.id,)}
+                  style={styles.heartoSection}  >
+
+                  {
+                   this.state.likeloder ?
+                   <ActivityIndicator /> :
+                  this.state.wished ?
+                   
+                      (<Icon name='heart' type='AntDesign' style={styles.hearto} />) :
+                    (<Icon name='hearto' type='AntDesign' style={styles.hearto} />)
+                  }
+
+                </TouchableOpacity>
               </Col>
-              </Row>
-              <Row>
-              <Col style={{ flex: 0, width: '40%' }}>
+
+            </Row>
+            <Row>
+              <Col style={{ flex: 0, width: '40%', marginLeft: 10 }}>
                 <View style={styles.pricePart}>
-                <Text style={styles.priceText}><Text style={appStyles.currency, { fontSize: 23, color: Colors.gray }}> {Colors.CUR}</Text> {ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}</Text>
+                  <Text style={styles.priceText}>
+                    <Text style={appStyles.currencyverybig}>
+                    {Colors.CUR}
+                  </Text>
+                  <Text style={appStyles.amountverybig}> {ProductDetail.item[0].discountedPrice ? ProductDetail.item[0].discountedPrice : ProductDetail.item[0].price}
+                    </Text></Text>
                 </View>
               </Col>
 
               {ProductDetail.item[0].outOfStock == 'Y' ?
-                (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end' }}><Text style={styles.outofstock}>Out of Stock</Text></Col>) :
+                (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}><Text style={styles.outofstock}>Out of Stock</Text></Col>) :
                 (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}>
                   {this.state.selctedProduct == ProductDetail.item[0].id ? <ActivityIndicator style={{ marginRight: 20 }} /> :
                     (<View style={styles.reasonView}>
@@ -369,50 +427,62 @@ class ProductDetail extends React.Component {
             </Row>
 
           </Grid>
-            <Grid>
-          <Row style={{ flex: 1, marginLeft:Layout.indent, marginRight:15, flexDirection: 'row'}}>
-        
-        {ProductVariant.map((data, key) => {
-          return (  <View key={key}>       
-                  {this.state.variant  == data.variant ?
-                  
-                      <Col style={[styles.variantBtnActive,{}]}>
-                          {/*<Icon style={styles.variantImg} name='rectangle' type='MaterialCommunityIcons' />*/}
-                          <Text style={styles.variantTextActive}>{data.variant}</Text>
-                      </Col>
-                   
-                      :
-                    
-                      <Col onPress={()=>{this.setState({variant: data.variant})}} style={[styles.variantBtnDeactive,{}]}>
-                          {/*<Icon style={styles.variantImg} name='rectangle-outline' type='MaterialCommunityIcons' />*/}
-                          <Text style={styles.variantTextDeactive}>{data.variant}</Text>
-                      </Col>
-                    
+          <Grid>
+            <Row style={{ flex: 1, marginLeft: Layout.indent, marginRight: 15, flexDirection: 'row' }}>
+
+              {ProductVariant.map((data, key) => {
+                return (<View key={key}>
+                  {this.state.variant == data.variant ?
+
+                    <Col style={[styles.variantBtnActive, {}]}>
+                      {/*<Icon style={styles.variantImg} name='rectangle' type='MaterialCommunityIcons' />*/}
+                      <Text style={styles.variantTextActive}>{data.variant}</Text>
+                    </Col>
+
+                    :
+
+                    <Col onPress={() => { this.setState({ variant: data.variant }) }} style={[styles.variantBtnDeactive, {}]}>
+                      {/*<Icon style={styles.variantImg} name='rectangle-outline' type='MaterialCommunityIcons' />*/}
+                      <Text style={styles.variantTextDeactive}>{data.variant}</Text>
+                    </Col>
+
 
                   }
-                </View>  
-          )
-      })}
-       </Row>
-        </Grid> 
+                </View>
+                )
+              })}
+            </Row>
+          </Grid>
           {
             ProductDetail.item[0].description1 != null && (
-              <View>
-                <View>
-                  <Text style={styles.title}>Product Description </Text>
-                </View>
+              <View style={{ marginTop: 15 }}>
 
-                <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1 }]}>
-                  <View>
-                    <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
-                      {ProductDetail.item[0].description1}
-                    </Text>
-                  </View>
-                </Card>
+                <Tabs>
+                  <Tab heading="Product Details" tabStyle={{ backgroundColor: '#D7ECDD' }} textStyle={{ color: '#00545F' }} activeTextStyle={{ color: '#00545F', fontWeight: 'bold' }} activeTabStyle={{ backgroundColor: '#D7ECDD' }}>
+                    <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1, marginTop: 20 }]}>
+                      <View>
+                        <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
+                          {ProductDetail.item[0].description1}
+                        </Text>
+                      </View>
+                    </Card>
+                  </Tab>
+                  <Tab heading="Additional Info" tabStyle={{ backgroundColor: '#D7ECDD' }} textStyle={{ color: '#00545F' }} activeTextStyle={{ color: '#00545F', fontWeight: 'bold' }} activeTabStyle={{ backgroundColor: '#D7ECDD' }}>
+                    <Card style={[appStyles.addBox, styles.deliveryAddress, { elevation: 1, marginTop: 20 }]}>
+                      <View>
+                        <Text style={{ fontFamily: 'Font-Regular', color: Colors.gray, fontSize: 14 }}>
+                          {ProductDetail.item[0].description2}
+                        </Text>
+                      </View>
+                    </Card>
+                  </Tab>
+                </Tabs>
+
+
               </View>
             )}
 
-              {
+          {/* {
             ProductDetail.item[0].description2 != "" && (
               <View>
                 <View>
@@ -427,8 +497,8 @@ class ProductDetail extends React.Component {
                   </View>
                 </Card>
               </View>
-            )}
-               {
+            )} */}
+          {
             ProductDetail.item[0].description3 != "" && (
               <View>
                 <View>
@@ -450,48 +520,41 @@ class ProductDetail extends React.Component {
             <Text style={styles.payTextNow}>Add to cart</Text>
           </Button>
         </TouchableOpacity>*/}
-                  <View>
-                  <Text style={styles.title}>Similar Products  </Text>
-                </View>
+          <View>
+            <Text style={styles.title}>Similar Products  </Text>
+          </View>
 
 
-            <Row style={styles.secondRow}>
+          <Row style={styles.secondRow}>
 
-              <Col style={{ justyfyContent: 'center', alignItems: 'center', marginLeft: Layout.indent, marginRight: Layout.indent }}>
-                <Carousel
-                  ref={(c) => { this._carousel = c; }}
-                  loop={true}
-                  autoplay={true}
-                  data={SimilarProductDetail}
-                  renderItem={this._similarItem}
-                  sliderWidth={Layout.window.width}
-                  itemWidth={120}
-                  autoplayInterval={2000}
-                  autoplayDelay={2000}
-                  onSnapToItem={(index) => this.setState({ activeSlide: index })}
-                  slideStyle={{paddding:0,margin:0}}
-                  contentContainerCustomStyle={{paddding:0,margin:0}}
-                  
-                />
-                {this.pagination}
-              </Col>
+            <Col style={{ justyfyContent: 'center', alignItems: 'center', marginLeft: Layout.indent, marginRight: Layout.indent }}>
+              <Carousel
+                ref={(c) => { this._carousel = c; }}
+                loop={true}
+                autoplay={true}
+                data={similarproducts}
+                renderItem={this._similarItem}
+                sliderWidth={Layout.window.width}
+                itemWidth={120}
+                autoplayInterval={2000}
+                autoplayDelay={2000}
+                onSnapToItem={(index) => this.setState({ activeSlide: index })}
+                slideStyle={{ paddding: 0, margin: 0, borderWidth: 0, borderColor: 0 }}
+                contentContainerCustomStyle={{ paddding: 0, margin: 0, borderWidth: 0 }}
 
-
-              {/* <Image source={{uri: url.imageURL+ProductDetail.itemImages[0].imagePath}} style={styles.amulMoti} />*/}
-
-            </Row>
-          <Row style={styles.okayBtnArea}>
-            <Col>
-              <Button priamary full style={styles.doneBtn} onPress={() => this.props.navigation.navigate(Screens.Home.route)}>
-                <Text style={[styles.btnTextDone, { fontSize: 12, fontWeight: 'bold' }]}>Continue Shopping</Text>
-              </Button>
+              />
+              {this.pagination}
             </Col>
-            <Col>
-              <Button priamary full style={styles.doneBtn} onPress={() => this.props.navigation.navigate(Screens.MyCart.route)}>
-                <Text style={[styles.btnTextDone, { fontSize: 12, fontWeight: 'bold' }]}>View Cart</Text>
-              </Button>
-            </Col>
+
+
+            {/* <Image source={{uri: url.imageURL+ProductDetail.itemImages[0].imagePath}} style={styles.amulMoti} />*/}
+
           </Row>
+          <View>
+            <Button priamary full style={[styles.doneBtn, { marginBottom: 20 }]} onPress={() => this.props.navigation.navigate(Screens.Home.route)}>
+              <Text style={styles.btnTextDone}>Continue Shopping</Text>
+            </Button>
+          </View>
 
         </Content>
 
@@ -503,7 +566,8 @@ class ProductDetail extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
-    ProductDetail: state.product.productDetail
+    ProductDetail: state.product.productDetail,
+    similarproducts:state.product.similarproduct
   };
 };
 
@@ -516,6 +580,15 @@ const mapDispatchToProps = (dispatch) => {
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
     productDetail: (id, userId) =>
       dispatch(productActions.productDetail({ itemId: id, userId: userId })),
+
+    similarproduct: (id) =>
+      dispatch(productActions.similarproduct({ subCategoryId: id, })),
+
+    addtowishlist: (itemid, userId) =>
+      dispatch(productActions.addtowishlist({ userId: userId, itemId: itemid })),
+
+    removewishlist: (itemid, userId) =>
+      dispatch(productActions.deltowishlist({ itemId: itemid, userId: userId, })),
   };
 };
 

@@ -166,5 +166,8 @@ export default {
   },
   SearchOffer: {
     route: 'SearchOffer'
-  }
+  },
+  Nointernet: {
+    route: 'Nointernet'
+  },
 };

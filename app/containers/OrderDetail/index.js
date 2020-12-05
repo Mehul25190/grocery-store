@@ -183,7 +183,7 @@ class OrderDetail extends React.Component {
                   <TouchableOpacity style={styles.prodInfo} onPress={() => this.onRatingPage(item)}>
                     <Text  style={[styles.proTitle,{  fontFamily:'Font-Medium'}]}>{item.itemName} </Text>
                     <Text style={styles.QtyPro}>Qty: {item.quantity}</Text>
-                    <Text style={styles.proPrice}>{Colors.CUR} {item.itemPrice} {item.orderStatus}</Text>
+                    <Text><Text style={appStyles.currencymedium}>{Colors.CUR}</Text> <Text style={appStyles.amountmedium}>{item.itemPrice} {item.orderStatus}</Text></Text>
                     
                   </TouchableOpacity>  
                  </Body>
@@ -330,7 +330,7 @@ class OrderDetail extends React.Component {
               </Col>
               <Col style={styles.orderValue}>
                 <Text style={styles.orderValText}>
-                  <Text style={{fontFamily:'Roboto',color:'gray'}}>{Colors.CUR} </Text> {(this.state.orderData.length >0 )? this.state.orderData[0].orderAmt : ""}</Text>
+                  <Text style={appStyles.currencymedium}>{Colors.CUR}</Text> <Text style={appStyles.amountmedium}>{(this.state.orderData.length >0 )? this.state.orderData[0].orderAmt : ""}</Text></Text>
               </Col>
             </Row>
           </Grid>

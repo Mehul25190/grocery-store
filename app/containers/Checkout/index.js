@@ -199,6 +199,12 @@ class Checkout extends React.Component {
     }
   }
 
+  totalprice(qty,itemPrice,discountedPrice){
+    const Itemprice = discountedPrice > 0 && discountedPrice < itemPrice ? discountedPrice.toFixed(2) : itemPrice.toFixed(2)
+    const totalprice = qty * Itemprice
+    return totalprice.toFixed(2)
+  }
+
 
   render() {
     const { navigation, cartDetail, totalItem, totalAmount, deliveryCharges } = this.props;
@@ -319,29 +325,31 @@ class Checkout extends React.Component {
             })}
           </Grid>
           <Grid style={styles.OrderTitle}>
-            <Col style={{width:210, alignSelf:'flex-start'}}>
-              <Text style={styles.OrderTitleText}>Items </Text>
+            <Col style={{width:Layout.eightIndent*1.5, alignSelf:'flex-start'}}>
+              <Text style={styles.OrderTitleText}>Items ({totalItem})</Text>
             </Col>
-            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:Layout.fourIndent  }}>
               <Text style={styles.OrderTitleText}>Qty </Text>
             </Col>
-            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-              <Text style={styles.OrderTitleText}>Items {totalItem}</Text>
+            <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:Layout.fourIndent}}>
+              <Text style={styles.OrderTitleText}>Total</Text>
             </Col>
+            
           </Grid>
           <List style={{ paddingBottom: 10 }}>
 
             {cartDetail.map((item, index) => {
               return (
                 <ListItem style={styles.ItemList}>
-                  <View style={{width:200, alignSelf:'flex-start'}}>
+                  <View style={{width:Layout.eightIndent*1.5, alignSelf:'flex-start'}}>
                     <Text style={styles.orderName}>{item.itemName}</Text>
                   </View>
-                  <View style={{justifyContent: 'flex-start', alignItems: 'flex-start',  width:50, flex:1 }}>
+                  <View style={{justifyContent: 'flex-start', alignItems: 'flex-start',  width:Layout.fourIndent, }}>
                      <Text style={styles.orderQty}>{item.quantity}</Text>
                   </View>
-                  <View>
-                    <Text style={styles.OrderPrice}>{item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? item.discountedPrice.toFixed(2) : item.itemPrice.toFixed(2)}</Text>
+                  
+                  <View  style={{ justifyContent: 'flex-end', alignItems: 'flex-end',width:Layout.doubleIndent*1.5, }}>
+                    <Text style={styles.OrderPrice}>{this.totalprice(item.quantity,item.itemPrice,item.discountedPrice)}</Text>
                   </View>
                 </ListItem>
               );
@@ -376,14 +384,14 @@ class Checkout extends React.Component {
 {/* Sub Total */}                         
                          <ListItem style={[styles.TotalList]}>
                           <View>
-                            <Text style={styles.TotalText}>Total</Text>
+                            <Text style={[styles.TotalText, {color:'#ff0000'}]}>Total <Text style={{fontSize:12, color:'#ff0000'}}>(Inclusive of VAT)</Text></Text>
                           </View>
                          <Body style={styles.TotalBar}>
                                 <Text></Text>
                           </Body>
 
                           <View>
-                           <Text style={styles.OrderPrice}><Text style={appStyles.currencysmall}>{Colors.CUR}</Text> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
+                           <Text style={[styles.OrderPrice, {color:'#ff0000'}]}><Text style={[appStyles.currencysmall, {color:'#ff0000'}]}>{Colors.CUR}</Text> {(totalAmount + deliveryCharges).toFixed(2)}</Text>
                           </View>
                         </ListItem>  
 

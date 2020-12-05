@@ -9,6 +9,7 @@ export default {
     top: 80,
     alignSelf: 'center'
   },
+ 
   sliderBtn: {
     height: 13,
     width: 13,
@@ -29,7 +30,7 @@ export default {
     flexDirection: 'row', marginBottom: 24
   },
   bottomSortInner:{
-   height: "30%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
+   height: "45%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
    borderWidth: 1,
     borderColor: '#333',
  },
@@ -48,6 +49,7 @@ export default {
    height: "90%" ,width: '100%', backgroundColor:"#fff", justifyContent:"center", position:'relative',
    borderWidth: 1,
     borderColor: '#333',
+    paddingTop:20
  },
 SortModal:{
   margin:0,
@@ -439,12 +441,6 @@ categoryStyles: {
     bottom:0,
     left:5,
  padding:5
-   },
-   vegImage:{
-   width:12,
-   height:12,
-   resizeMode:'contain',
- 
    },
    heartoSection:{
       position:'absolute',

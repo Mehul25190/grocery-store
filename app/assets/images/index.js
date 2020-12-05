@@ -6,6 +6,7 @@ const images = {
 	logoRed : require('./logo-red.png'),
 	bg : require('./green-bg.png'),
 	signupBg : require('./signup-bg1.png'),
+	Nointernet : require('./internet-failure.png'),
 	languageBg : require('./language-bg.jpg'),
 	placeholder : require('./placeholder.png'),
 	orLine : require('./or-line.png'),

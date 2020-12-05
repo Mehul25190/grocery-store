@@ -21,7 +21,7 @@ const doubleIndent = moderateScale(indent * 2);
 const tripleIndent = moderateScale(indent * 3);
 const fourIndent = moderateScale(indent * 4);
 const sixIndent = moderateScale(indent * 6);
-
+const eightIndent = moderateScale(indent * 8);
 const verticalIndent = verticalScale(indent);
 const halfVerticalIndent = verticalScale(indent / 2);
 
@@ -50,6 +50,7 @@ export default {
 	tripleIndent,
 	fourIndent,
 	sixIndent,
+	eightIndent,
 	verticalIndent,
 	halfVerticalIndent,
 	borderRadius,

@@ -222,7 +222,7 @@ class editSubscribe extends React.Component {
                  <Text style={[styles.AmuText,styles.AmuTextTitle]}>{this.state.subscriptionDtls.itemName}</Text>
                  <Text style={styles.AmuText}>{this.state.subscriptionDtls.weight} {this.state.subscriptionDtls.uom}</Text>
                  {/*<Text style={styles.AmuText}>Qty: {this.state.subscriptionDtls.quantity}</Text>*/}
-                 <Text> <Text style={{}}>{Colors.CUR}</Text> {this.state.subscriptionDtls.price}</Text>
+                 <Text> <Text style={appStyles.currencymedium}>{Colors.CUR}</Text>  <Text style={appStyles.amountmedium}>{this.state.subscriptionDtls.price}</Text></Text>
                 </View>
               </Col>
             </Row>
