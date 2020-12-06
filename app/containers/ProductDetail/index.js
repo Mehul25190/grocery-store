@@ -161,7 +161,7 @@ class ProductDetail extends React.Component {
     //console.log('item', item)
     return (
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddding: 10 }}>
-        <View>
+        <TouchableOpacity onPress={() => this.productDetail(item.id)}>
           <Image style={styles.similarImges} source={{ uri: url.imageURL + item.imagePath }} />
           <View style={{paddingLeft:5, paddingRight:5}}>
           <Text style={styles.similarTitle}>{item.itemName}</Text>
@@ -169,7 +169,7 @@ class ProductDetail extends React.Component {
             <Text style={appStyles.currencysmall}> {Colors.CUR} </Text>{" "}<Text style={appStyles.amountmedium}>{item.price}</Text>
            </Text>
           </View>
-        </View>
+        </TouchableOpacity>
 
 
       </View>
