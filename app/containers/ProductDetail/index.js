@@ -57,7 +57,7 @@ class ProductDetail extends React.Component {
       productImages: '',
       selctedProduct: '',
       variant: '',
-      wished: false,
+      wished: this.props.ProductDetail.item[0].wishListExists == 1 ? "true" : "false",
       likeloder:false
     };
 
@@ -215,7 +215,7 @@ class ProductDetail extends React.Component {
         this.props
           .addtowishlist(itemid, userid)
           .then((res) => {
-            console.log("Add to wishlist here", res.status)
+            //console.log("Add to wishlist here", res.status)
             if (res.status == "success") {
               this.setState({ wished: true, likeloder: false })
             } else {
@@ -229,19 +229,20 @@ class ProductDetail extends React.Component {
             this.setState({ likeloder: false })
             showToast("Error messages returned from server", "danger");
           }) :
+         // console.log("Call removed")
         this.props
-          .removewishlist(itemid, userid)
+          .removewishlist(this.props.ProductDetail.item[0].wishListId)
           .then((res) => {
-            console.log("SERVER RES LIKE", error)
+            //console.log("SERVER RES LIKE", error)
             if (res.status == "success") {
               this.setState({ wished: false, likeloder: false })
             } else {
               this.setState({ likeloder: false })
-              showToast("Something wrong with Server response 0", "danger");
+              showToast("Something wrong with Server response ", "danger");
             }
           })
           .catch((error) => {
-            console.log("SERVER ERROR LIKE 1", error)
+            //console.log("SERVER ERROR LIKE 1", error)
             this.setState({ likeloder: false })
             showToast(error, "danger");
           });
@@ -257,6 +258,8 @@ class ProductDetail extends React.Component {
 
     const { navigation, ProductDetail,similarproducts } = this.props;
     const { selectedIndex } = this.state;
+
+    //console.log("PRODUCT",ProductDetail.item[0].wishListId)
 
     var foodType = '';
     if (ProductDetail.item[0].foodType == 'veg')
@@ -365,7 +368,6 @@ class ProductDetail extends React.Component {
                       (<Icon name='heart' type='AntDesign' style={styles.hearto} />) :
                     (<Icon name='hearto' type='AntDesign' style={styles.hearto} />)
                   }
-
                 </TouchableOpacity>
               </Col>
 
@@ -587,8 +589,8 @@ const mapDispatchToProps = (dispatch) => {
     addtowishlist: (itemid, userId) =>
       dispatch(productActions.addtowishlist({ userId: userId, itemId: itemid })),
 
-    removewishlist: (itemid, userId) =>
-      dispatch(productActions.deltowishlist({ itemId: itemid, userId: userId, })),
+      removewishlist: (itemid) =>
+      dispatch(productActions.deltowishlist({id: itemid })),
   };
 };
 
