@@ -83,8 +83,14 @@ class ProductDetail extends React.Component {
   }
 
   productDetail(id) {
+    console.log("HEERE IS PRODUCT ID",id)
     this.props.productDetail(id, this.props.user.user.id).then(res => {
-      this.setState({ selctedProduct: '' })
+      // this.setState({ selctedProduct: '' })
+      this.component._root.scrollToPosition(0, 0)
+       this.setState({
+      wished: this.props.ProductDetail.item[0].wishListExists == 1 ? "true" : "false",
+    })
+      console.log("RES",res)
     })
 
   }
@@ -281,7 +287,7 @@ class ProductDetail extends React.Component {
           IconRightF="search"
         />
 
-        <Content enableOnAndroid>
+        <Content enableOnAndroid ref={c => (this.component = c)} >
           <Grid style={styles.paddingBox}>
             <Row style={styles.firstRow}>
               <Col >
