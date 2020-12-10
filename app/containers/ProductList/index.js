@@ -61,6 +61,7 @@ import NumericInput from "react-native-numeric-input";
 import { ScreenLoader } from '../../components';
 import Carousel from 'react-native-snap-carousel';
 import Modal from 'react-native-modal';
+import { InputAutoSuggest } from 'react-native-autocomplete-search';
 
 class ProductList extends React.Component {
   constructor(props) {
@@ -383,7 +384,17 @@ onBackdropPress(){
                 //  keyExtractor={(item) => `${item.id}`}
                 />
               </ScrollView>
-              
+              <View style={[{width:'95%', marginLeft:10, marginTop:5, marginBottom:5}]}>
+              <InputAutoSuggest
+              staticData={[
+                {id:'1', name:'Paris'},
+                {id:'2', name: 'Pattanduru'},
+                {id:'3', name: 'Para'},
+                {id:'4', name:'London'},
+                {id:'5', name:'New York'},
+                {id:'6', name:'Berlin'}]}
+              />
+              </View>
               <Row style={appStyles.footers}>
                 <Col style={{justifyContent:'center',alignItems:'center', borderColor:Colors.primary, borderRightWidth:1}}>
                   <TouchableOpacity onPress={() =>this.FilterShowFunction() } >
