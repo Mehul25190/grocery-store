@@ -361,9 +361,6 @@ class SearchProduct extends React.Component {
         console.log("RESPONSE OF FILTER",res)  
         if(res.status == 200){
             this.setState({ isFilterVisible: false,Filter:true  });
-            this.props.navigation.navigate('SearchProduct',{
-              Filter:true
-            })
           } else {
             showToast("Something went Wrong","danger")
           }
