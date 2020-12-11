@@ -205,3 +205,15 @@ export const deltowishlist = payloads => dispatch => {
     }
   });
 }
+export const filterapply = payloads => dispatch => {
+  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  return axios.get(url.fetchEthnicitiesdetails).then(res => {
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    if (res.status == 200) {
+      dispatch({ type: ActionTypes.FILTERDATA, data: res.data.data.itemList });
+      return res
+    } else {
+      return res
+    }
+  });
+}
