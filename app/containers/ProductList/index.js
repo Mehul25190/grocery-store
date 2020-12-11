@@ -33,11 +33,10 @@ import {
   Card,
   List,
   ListItem,
-  CheckBox,
   Left,
-  Body,
-  Right,
-  Thumbnail,
+  Body, Separator,
+  Right,CheckBox,
+  Thumbnail, Accordion,
   Spinner, Footer, FooterTab,
   Icon, Row, CardItem
 } from "native-base";
@@ -64,8 +63,8 @@ import NumericInput from "react-native-numeric-input";
 import { ScreenLoader } from '../../components';
 import Carousel from 'react-native-snap-carousel';
 import Modal from 'react-native-modal';
-import { InputAutoSuggest } from 'react-native-autocomplete-search';
 import { element } from "prop-types";
+import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
 
 class ProductList extends React.Component {
   constructor(props) {
@@ -91,8 +90,8 @@ class ProductList extends React.Component {
       filterpriceto: [],
       filterpricefrom: [],
       filterid: [],
-      Discounts: ['0-10', '10-20', '20-30', '30-40', '40-100'],
-      Ratings: ['5', '4 & More', '3 & More', '2 & More', '1 & More'],
+      Discounts: ['1-10', '10-20', '20-30', '30-40', '40-100'],
+      Ratings: ['5', '4', '3', '2', '1'],
 
       selectedbrand: [],
       selectedid: [],
@@ -216,6 +215,8 @@ class ProductList extends React.Component {
 
     //console.log(catId);
   }
+
+
 
   async filterdata(val) {
 
@@ -362,6 +363,8 @@ class ProductList extends React.Component {
       </View>
     </TouchableOpacity>
   );
+
+
 
   productDetail(id) {
     this.props.productDetail(id, this.props.user.user.id).then(res => {
@@ -522,17 +525,7 @@ class ProductList extends React.Component {
               //  keyExtractor={(item) => `${item.id}`}
               />
             </ScrollView>
-            <View style={[{ width: '95%', marginLeft: 10, marginTop: 5, marginBottom: 5 }]}>
-              <InputAutoSuggest
-                staticData={[
-                  { id: '1', name: 'Paris' },
-                  { id: '2', name: 'Pattanduru' },
-                  { id: '3', name: 'Para' },
-                  { id: '4', name: 'London' },
-                  { id: '5', name: 'New York' },
-                  { id: '6', name: 'Berlin' }]}
-              />
-            </View>
+            
             <Row style={appStyles.footers}>
               <Col style={{ justifyContent: 'center', alignItems: 'center', borderColor: Colors.primary, borderRightWidth: 1 }}>
                 <TouchableOpacity onPress={() => this.FilterShowFunction()} >
@@ -792,11 +785,15 @@ class ProductList extends React.Component {
               <TouchableOpacity onPress={() => this.FilterShowFunction()} style={appStyles.closeBtnArea} >
                 <Icon name="closecircleo" type="AntDesign" style={appStyles.closeBtn} />
               </TouchableOpacity>
-              <List style={appStyles.filterList} >
-                <View style={{ borderColor: '#ccc', borderTopWidth: 1, borderBottomWidth: 1, padding: 7 }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Brand</Text>
-                </View>
-                {this.state.filterbrand.map((data, index) => {
+
+<ScrollView style={{marginTop:25, flexDirection:'column', marginBottom:20, height:350}}>
+    <Collapse>
+      <CollapseHeader style={{flexDirection:'row',alignItems:'center',padding:10,backgroundColor:'#ffffff', borderBottomWidth:1, borderColor:'#dddddd'}}>
+
+         <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color:'#333333' }}>Brand</Text>
+      </CollapseHeader>
+      <CollapseBody>
+         {this.state.filterbrand.map((data, index) => {
                   return (
                     <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
                       <CheckBox checked={this.state.selectedid.indexOf(this.state.filterid[index]) !== -1} />
@@ -808,11 +805,14 @@ class ProductList extends React.Component {
                     </View>
                   )
                 })}
-                <View style={{ borderColor: '#ccc', borderTopWidth: 1, borderBottomWidth: 1, padding: 7 }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Prices From</Text>
-                </View>
-
-                {this.state.filterpricefrom.map((data, index) => {
+      </CollapseBody>
+    </Collapse>
+    <Collapse>
+      <CollapseHeader style={{flexDirection:'row',alignItems:'center',padding:10,backgroundColor:'#ffffff', borderBottomWidth:1, borderColor:'#dddddd'}}>
+          <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color:'#333333' }}>Prices From</Text>
+      </CollapseHeader>
+      <CollapseBody>
+          {this.state.filterpricefrom.map((data, index) => {
                   return (
                     <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
                       <CheckBox checked={this.state.selectedpricefrom == this.state.filterpricefrom[index]} />
@@ -825,11 +825,14 @@ class ProductList extends React.Component {
 
                   )
                 })}
+      </CollapseBody>
+    </Collapse>
 
-                <View style={{ borderColor: '#ccc', borderTopWidth: 1, borderBottomWidth: 1, padding: 7 }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Prices To</Text>
-                </View>
-
+    <Collapse>
+      <CollapseHeader style={{flexDirection:'row',alignItems:'center',padding:10,backgroundColor:'#ffffff', borderBottomWidth:1, borderColor:'#dddddd'}}>
+          <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color:'#333333' }}>Prices To</Text>
+      </CollapseHeader>
+      <CollapseBody>
                 {this.state.filterpriceto.map((data, index) => {
                   return (
                     <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
@@ -843,12 +846,15 @@ class ProductList extends React.Component {
 
                   )
                 })}
+      </CollapseBody>
+    </Collapse>
 
-                <View style={{ borderColor: '#ccc', borderTopWidth: 1, borderBottomWidth: 1, padding: 7 }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Discounts in %</Text>
-                </View>
-
-                {this.state.Discounts.map((data, index) => {
+    <Collapse>
+      <CollapseHeader style={{flexDirection:'row',alignItems:'center',padding:10,backgroundColor:'#ffffff', borderBottomWidth:1, borderColor:'#dddddd'}}>
+          <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color:'#333333' }}>Discounts in %</Text>
+      </CollapseHeader>
+      <CollapseBody>
+          {this.state.Discounts.map((data, index) => {
                   return (
                     <View style={{ padding: 7, marginStart: 10, flexDirection: 'row' }}>
                       <CheckBox
@@ -862,11 +868,15 @@ class ProductList extends React.Component {
                     </View>
                   )
                 })}
-                <View style={{ borderColor: '#ccc', borderTopWidth: 1, borderBottomWidth: 1, padding: 7 }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Ratings</Text>
-                </View>
+      </CollapseBody>
+    </Collapse>
 
-                {this.state.Ratings.map((data, index) => {
+    <Collapse>
+      <CollapseHeader style={{flexDirection:'row',alignItems:'center',padding:10,backgroundColor:'#ffffff', borderBottomWidth:1, borderColor:'#dddddd'}}>
+          <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color:'#333333' }}>Ratings</Text>
+      </CollapseHeader>
+      <CollapseBody>
+           {this.state.Ratings.map((data, index) => {
                   return (
                     <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
                       <CheckBox checked={this.state.selectedrating.indexOf(this.state.Ratings[index]) !== -1} />
@@ -878,7 +888,10 @@ class ProductList extends React.Component {
                     </View>
                   )
                 })}
-              </List>
+      </CollapseBody>
+    </Collapse>
+  </ScrollView>
+
               <Grid style={appStyles.ApplyButtonSection}>
                 <Row>
                   <Col>

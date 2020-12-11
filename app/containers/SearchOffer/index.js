@@ -84,8 +84,8 @@ class SearchOffer extends React.Component {
       filterpriceto: [],
       filterpricefrom: [],
       filterid: [],
-      Discounts: ['0-10', '10-20', '20-30', '30-40', '40-100'],
-      Ratings: ['5', '4 & More', '3 & More', '2 & More', '1 & More'],
+      Discounts: ['1-10', '10-20', '20-30', '30-40', '40-100'],
+      Ratings: ['5', '4', '3', '2', '1'],
 
       selectedbrand: [],
       selectedid: [],
