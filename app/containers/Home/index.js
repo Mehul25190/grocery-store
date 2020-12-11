@@ -276,16 +276,16 @@ class Home extends React.Component {
     });
   }
   ethnicitiesNavigation(val) {
+     console.log("SUCCESS FOR 0011",val)
     this.props.Ethnicitiesdetails(val).then(res => {
       if (res.status == 200) {
         console.log("SUCCESS FOR Ethnicitiesdetails", val, res.status)
         this.props.navigation.navigate('SearchOffer',
           {
-
             comefrom: 'Ethnicities'
           })
       }
-      console.log("SUCCESS FOR 00", res.status)
+     
     });
   }
 

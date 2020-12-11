@@ -322,8 +322,10 @@ class ProductList extends React.Component {
       return showToast("Please Check Price", "danger")
     } else {
       this.props.filterapply(this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount).then(res => {
-          if(res.status == 200){
-            this.props.navigation.navigate(Screens.SearchProduct.route,{
+        console.log("RESPONSE OF FILTER",res)  
+        if(res.status == 200){
+            this.setState({ isFilterVisible: false });
+            this.props.navigation.navigate('SearchProduct',{
               Filter:true
             })
           } else {
@@ -963,13 +965,12 @@ const mapDispatchToProps = (dispatch) => {
     checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId: userId })),
     filterapply: (brandid, pricefrom, priceto, rating, discount) => dispatch(productActions.filterapply(
       {
-        categoryId: 1,
-        subCategoryId: 1,
-        brandId: brandid,
-        priceFrom: pricefrom,
-        priceTo: priceto,
-        ratings: rating,
-        discount: discount,
+       
+        brandId: brandid.toString(),
+        priceFrom: pricefrom.toString(),
+        priceTo: priceto.toString(),
+        ratings: rating.toString(),
+        discount: discount.toString(),
       })),
     //  
   };

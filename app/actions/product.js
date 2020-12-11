@@ -95,7 +95,7 @@ export const fetchEthnicities = payloads => dispatch => {
 
 export const fetchEthnicitiesdetails = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
-  return axios.get(url.fetchEthnicitiesdetails).then(res => {
+  return axios.get(url.fetchEthnicitiesdetails, { queries: payloads }).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     if (res.status == 200) {
       dispatch({ type: ActionTypes.FETHETHNICITIESDETAILS, data: res.data.data.itemList });
@@ -207,8 +207,9 @@ export const deltowishlist = payloads => dispatch => {
 }
 export const filterapply = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
-  return axios.get(url.fetchEthnicitiesdetails).then(res => {
+  return axios.get(url.fetchEthnicitiesdetails,{ queries: payloads }).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    console.log("API RES",res)
     if (res.status == 200) {
       dispatch({ type: ActionTypes.FILTERDATA, data: res.data.data.itemList });
       return res

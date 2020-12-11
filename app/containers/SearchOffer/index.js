@@ -121,7 +121,9 @@ class SearchOffer extends React.Component {
   productItemList(offer_id) {
     //this.setState({text: offer_id})
     const comefrom = this.props.navigation.getParam("comefrom");
+    console.log("Comefrom",comefrom)
     const { brandlisting, ethnicitieslisting } = this.props
+    console.log("ethnicitieslisting",ethnicitieslisting)
     comefrom == 'offer' ?
       this.props
         .fetchItemsByOffer(offer_id, this.props.user.user.id)
@@ -138,13 +140,20 @@ class SearchOffer extends React.Component {
         })
         .catch((error) => {
           showToast("Error messages returned from server", "danger");
-        }) : comefrom == "Brand" ?
-        this.setState({
-          productData: brandlisting
-        }) :
-        this.setState({
-          productData: ethnicitieslisting
-        })
+        }) : comefrom == "Brand" ?(
+          this.filterdata(brandlisting),
+          this.setState({
+            productData: brandlisting
+          }) 
+        )
+        
+        :(
+          this.filterdata(ethnicitieslisting),
+          this.setState({
+            productData: ethnicitieslisting
+          })
+        )
+        
 
 
 
