@@ -34,7 +34,7 @@ import {
   List,
   ListItem,
   Left,
-  Body, Separator,
+  Body,
   Right,CheckBox,
   Thumbnail, Accordion,
   Spinner, Footer, FooterTab,
