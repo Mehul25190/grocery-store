@@ -83,7 +83,18 @@ class MyWishlist extends React.Component {
       isFilterVisible: false,
       type: '',
       filterbrand: [],
-      filterprice: []
+      filterpriceto: [],
+      filterpricefrom: [],
+      filterid: [],
+      Discounts: ['0-10', '10-20', '20-30', '30-40', '40-100'],
+      Ratings: ['5', '4 & More', '3 & More', '2 & More', '1 & More'],
+
+      selectedbrand: [],
+      selectedid: [],
+      selecteddiscount: [],
+      selectedpriceto: [],
+      selectedpricefrom: [],
+      selectedrating: [],
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
@@ -149,17 +160,24 @@ class MyWishlist extends React.Component {
   }
 
   async filterdata(val) {
+
+    console.log("TOTAL VAL", val)
+
     const Brandname = []
+    const Brandnid = []
     const Price = []
     const result = []
-    const filterdisplayprice = []
+    const filterdisplaypriceto = []
+    const filterdisplaypricefrom = []
     var size = ''
 
     val.forEach(element => Brandname.push(element.brandName))
-    let unique = Brandname.filter((item, i, ar) => ar.indexOf(item) === i);
+    val.forEach(element => Brandnid.push(element.brandId))
 
-    val.forEach(element => Price.push(element.item.discountedPrice < element.item.price ? element.item.discountedPrice : element.item.price))
+    let uniquebrand = Brandname.filter((item, i, ar) => ar.indexOf(item) === i);
+    let uniqueid = Brandnid.filter((item, i, ar) => ar.indexOf(item) === i);
 
+    val.forEach(element => Price.push(element.discountedPrice < element.price ? element.discountedPrice : element.price))
     let uniqueprice = Price.filter((item, i, ar) => ar.indexOf(item) === i);
 
     uniqueprice.sort(function (a, b) {
@@ -167,25 +185,98 @@ class MyWishlist extends React.Component {
       if (a < b) return -1;
       return 0;
     })
-
     if (uniqueprice.length > 12) {
       var size = "6"
     } else {
       var size = "3"
     }
-    while (uniqueprice.length > 0)
-    result.push(uniqueprice.splice(0, size));
 
+    while (uniqueprice.length > 0)
+      result.push(uniqueprice.splice(0, size));
     result.map((item, index) => {
-      filterdisplayprice.push(Math.floor(item[size - 1]))
+      filterdisplaypricefrom.push(Math.floor(item[0]))
+      filterdisplaypriceto.push(Math.floor(item[size - 1]))
     })
 
     this.setState({
-      filterbrand: unique,
-      filterprice: filterdisplayprice.filter(value => !Number.isNaN(value))
+      filterbrand: uniquebrand,
+      filterid: uniqueid,
+      filterpriceto: filterdisplaypriceto.filter(value => !Number.isNaN(value)),
+      filterpricefrom: filterdisplaypricefrom.filter(value => !Number.isNaN(value))
     })
-    console.log("Wishlist Filter DATA",this.state.filterprice,this.state.filterbrand)
+    console.log("Product List Filter DATA", this.state.filterprice, this.state.filterbrand)
   }
+
+  addtobrand(clickIndex) {
+    var array = [...this.state.selectedid];
+    var index = array.indexOf(clickIndex)
+    if (index !== -1) {
+      array.splice(index, 1);
+      this.setState({ selectedid: array, });
+    }
+    else {
+      array.push(clickIndex)
+      this.setState({ selectedid: array, });
+    }
+  }
+  addtopriceto(clickIndex) {
+
+    this.setState({ selectedpriceto: clickIndex, });
+  }
+
+  addtopricefrom(clickIndex) {
+
+    this.setState({ selectedpricefrom: clickIndex, });
+
+  }
+  addtodiscount(clickIndex) {
+    var array = [...this.state.selecteddiscount];
+    var index = array.indexOf(clickIndex)
+    if (index !== -1) {
+      array.splice(index, 1);
+      this.setState({ selecteddiscount: array, });
+    }
+    else {
+      array.push(clickIndex)
+      this.setState({ selecteddiscount: array, });
+    }
+  }
+  addtorating(clickIndex) {
+    var array = [...this.state.selectedrating];
+    var index = array.indexOf(clickIndex)
+    if (index !== -1) {
+      array.splice(index, 1);
+      this.setState({ selectedrating: array, });
+    }
+    else {
+      array.push(clickIndex)
+      this.setState({ selectedrating: array, });
+    }
+  }
+
+  Filterapply() {
+    console.log("Brand", this.state.selectedid)
+    console.log("PriceFrom", this.state.selectedpricefrom)
+    console.log("PriceTo", this.state.selectedpriceto)
+    console.log("Discount", this.state.selecteddiscount)
+    console.log("Rating", this.state.selectedrating)
+    if (this.state.selectedpricefrom > this.state.selectedpriceto) {
+      return showToast("Please Check Price", "danger")
+    } else {
+      this.props.filterapply(this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount).then(res => {
+        console.log("RESPONSE OF FILTER",res)  
+        if(res.status == 200){
+            this.setState({ isFilterVisible: false });
+            this.props.navigation.navigate('SearchProduct',{
+              Filter:true
+            })
+          } else {
+            showToast("Something went Wrong","danger")
+          }
+      })
+    }
+  }
+
 
   subBySubCategoryList(catId, catName, index) {
     this.props
@@ -794,6 +885,16 @@ const mapDispatchToProps = (dispatch) => {
 
     removewishlist: (itemid) =>
       dispatch(productActions.deltowishlist({ id: itemid })),
+
+      filterapply: (brandid, pricefrom, priceto, rating, discount) => dispatch(productActions.filterapply(
+        {
+         
+          brandId: brandid.toString(),
+          priceFrom: pricefrom.toString(),
+          priceTo: priceto.toString(),
+          ratings: rating.toString(),
+          discount: discount.toString(),
+        })),
   };
 };
 
