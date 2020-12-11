@@ -360,7 +360,7 @@ class SearchProduct extends React.Component {
       this.props.filterapply(this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount).then(res => {
         console.log("RESPONSE OF FILTER",res)  
         if(res.status == 200){
-            this.setState({ isFilterVisible: false });
+            this.setState({ isFilterVisible: false,Filter:true  });
             this.props.navigation.navigate('SearchProduct',{
               Filter:true
             })
