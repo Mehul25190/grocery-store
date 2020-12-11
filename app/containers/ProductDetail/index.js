@@ -57,10 +57,13 @@ class ProductDetail extends React.Component {
       productImages: '',
       selctedProduct: '',
       variant: '',
-      wished: this.props.ProductDetail.item[0].wishListExists == 1 ? "true" : "false",
-      likeloder:false
+      wished: this.props.ProductDetail.item[0].wishListExists == "1" ? true : false,
+      likeloder:false,
+      load:true
     };
-
+    setTimeout(() => {
+      this.setState({load:false})
+    }, 7000);
   }
   onValueChange(value: string) {
     this.setState({
@@ -78,6 +81,7 @@ class ProductDetail extends React.Component {
       this.setState({
         productImages: this.props.ProductDetail.itemImages,
       });
+     
     });
 
   }
@@ -88,7 +92,7 @@ class ProductDetail extends React.Component {
       // this.setState({ selctedProduct: '' })
       this.component._root.scrollToPosition(0, 0)
        this.setState({
-      wished: this.props.ProductDetail.item[0].wishListExists == 1 ? "true" : "false",
+      wished: this.props.ProductDetail.item[0].wishListExists == 1 ? true : false
     })
       console.log("RES",res)
     })
@@ -375,6 +379,7 @@ class ProductDetail extends React.Component {
                     (<Icon name='hearto' type='AntDesign' style={styles.hearto} />)
                   }
                 </TouchableOpacity>
+                
               </Col>
 
             </Row>
@@ -534,25 +539,29 @@ class ProductDetail extends React.Component {
 
 
           <Row style={styles.secondRow}>
-
+          
+          {
+            this.state.load ? <ActivityIndicator/> :  
             <Col style={{ justyfyContent: 'center', alignItems: 'center', marginLeft: Layout.indent, marginRight: Layout.indent }}>
-              <Carousel
-                ref={(c) => { this._carousel = c; }}
-                loop={true}
-                autoplay={true}
-                data={similarproducts}
-                renderItem={this._similarItem}
-                sliderWidth={Layout.window.width}
-                itemWidth={120}
-                autoplayInterval={2000}
-                autoplayDelay={2000}
-                onSnapToItem={(index) => this.setState({ activeSlide: index })}
-                slideStyle={{ paddding: 0, margin: 0, borderWidth: 0, borderColor: 0 }}
-                contentContainerCustomStyle={{ paddding: 0, margin: 0, borderWidth: 0 }}
+            <Carousel
+              ref={(c) => { this._carousel = c; }}
+              loop={true}
+              autoplay={true}
+              data={similarproducts}
+              renderItem={this._similarItem}
+              sliderWidth={Layout.window.width}
+              itemWidth={120}
+              autoplayInterval={2000}
+              autoplayDelay={2000}
+              onSnapToItem={(index) => this.setState({ activeSlide: index })}
+              slideStyle={{ paddding: 0, margin: 0, borderWidth: 0, borderColor: 0 }}
+              contentContainerCustomStyle={{ paddding: 0, margin: 0, borderWidth: 0 }}
 
-              />
-              {this.pagination}
-            </Col>
+            />
+            {this.pagination}
+          </Col>
+          }
+           
 
 
             {/* <Image source={{uri: url.imageURL+ProductDetail.itemImages[0].imagePath}} style={styles.amulMoti} />*/}
