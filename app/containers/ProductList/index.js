@@ -352,10 +352,19 @@ class ProductList extends React.Component {
     console.log("PriceTo", this.state.selectedpriceto)
     console.log("Discount", this.state.selecteddiscount)
     console.log("Rating", this.state.selectedrating)
+    console.log("CatogoryID",this.state.categoryId)
+    console.log("SubcatogoryID",this.state.selectSubCat)
+
     if (this.state.selectedpricefrom > this.state.selectedpriceto) {
       return showToast("Please Check Price", "danger")
     } else {
-      this.props.filterapply(this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount).then(res => {
+      this.props.filterapply(this.state.selectedid, 
+        this.state.selectedpricefrom, 
+        this.state.selectedpriceto, 
+        this.state.selectedrating, 
+        this.state.selecteddiscount,
+        this.state.categoryId,
+        this.state.selectSubCat).then(res => {
         console.log("RESPONSE OF FILTER", res)
         if (res.status == 200) {
           this.setState({ isFilterVisible: false });
@@ -1041,7 +1050,7 @@ const mapDispatchToProps = (dispatch) => {
     updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId: userId, itemId: itemId, quantity: quantity })),
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
     checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId: userId })),
-    filterapply: (brandid, pricefrom, priceto, rating, discount) => dispatch(productActions.filterapply(
+    filterapply: (brandid, pricefrom, priceto, rating, discount,catid,subcatid) => dispatch(productActions.filterapply(
       {
 
         brandId: brandid.toString(),
@@ -1049,6 +1058,8 @@ const mapDispatchToProps = (dispatch) => {
         priceTo: priceto.toString(),
         ratings: rating.toString(),
         discount: discount.toString(),
+        categoryId: catid.toString(),
+        subCategoryId: subcatid.toString(),
       })),
     //  
   };
