@@ -94,19 +94,19 @@ class ProductList extends React.Component {
       filterpricefrom: [],
       filterid: [],
       Ratings: [{
-        name: require('../../assets/icon.png'),
+        name: require('../../assets/stars/stars5.jpg'),
         value: '5'
       }, {
-        name: require('../../assets/icon.png'),
+        name: require('../../assets/stars/stars4.jpg'),
         value: '4'
       }, {
-        name: require('../../assets/icon.png'),
+        name: require('../../assets/stars/stars3.jpg'),
         value: '3'
       }, {
-        name: require('../../assets/icon.png'),
+        name: require('../../assets/stars/stars2.jpg'),
         value: '2'
       }, {
-        name: require('../../assets/icon.png'),
+        name: require('../../assets/stars/stars1.jpg'),
         value: '1'
       },],
       Discounts: [{
@@ -810,6 +810,7 @@ class ProductList extends React.Component {
 
           </View>
         </Modal>
+
         <Modal style={[appStyles.SortModal, { height: '100%' }]} isVisible={this.state.isFilterVisible} hasBackdrop={true}
           backdropColor={'#333'} backdropOpacity={0.3} >
           <View style={appStyles.bottmFilterMain}>
@@ -863,13 +864,13 @@ class ProductList extends React.Component {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10 }}>
                       <TextInput
                         placeholder="From min"
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
+                        style={{ height: 40, borderColor: 'gray', marginBottom:2, borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
                         onChangeText={text => this.addtopricefrom(text)}
                         value={this.state.selectedpricefrom}
                       />
                       <TextInput
                         placeholder="To max"
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
+                        style={{ height: 40, borderColor: 'gray', marginBottom:2, borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
                         onChangeText={text => this.addtopriceto(text)}
                         value={this.state.selectedpriceto}
                       />
@@ -928,14 +929,14 @@ class ProductList extends React.Component {
                     {this.state.Ratings.map((data, index) => {
                       return (
 
-                        <View style={{ marginStart: 10, flexDirection: 'row' }}>
+                        <View style={{ marginStart: 10, flexDirection: 'row', alignItems:'center', justifyContent:'flex-start' }}>
                           <CheckBox
                             onPress={() => this.addtorating(this.state.Ratings[index].value)}
                             checked={this.state.selectedrating.indexOf(this.state.Ratings[index].value) !== -1} />
                           <Image source={data.name}
-                            style={{ width: 70, height: 10 }}
+                            style={{ width: 100, height: 17, }}
                           />
-                          <Text>{index != 0 ? '&more' : null}</Text>
+                          <Text> {index != 0 ? '& more' : null}</Text>
                         </View>
                       )
                     })}
