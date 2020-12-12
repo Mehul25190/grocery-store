@@ -7,6 +7,7 @@ import {
   FlatList,
   ScrollView,
   ImageBackground,
+  TextInput,
   StatusBar,
   TouchableOpacity,
   ActivityIndicator,
@@ -35,7 +36,7 @@ import {
   ListItem,
   Left,
   Body,
-  Right,CheckBox,
+  Right, CheckBox,
   Thumbnail,
   Icon,
   Item,
@@ -63,7 +64,7 @@ import styles from "./styles";
 import NumericInput from "react-native-numeric-input";
 import { ScreenLoader } from '../../components';
 import Modal from 'react-native-modal';
-import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
+import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
 
 class SearchOffer extends React.Component {
   constructor(props) {
@@ -133,9 +134,9 @@ class SearchOffer extends React.Component {
   productItemList(offer_id) {
     //this.setState({text: offer_id})
     const comefrom = this.props.navigation.getParam("comefrom");
-    console.log("Comefrom",comefrom)
+    console.log("Comefrom", comefrom)
     const { brandlisting, ethnicitieslisting } = this.props
-    console.log("ethnicitieslisting",ethnicitieslisting)
+    console.log("ethnicitieslisting", ethnicitieslisting)
     comefrom == 'offer' ?
       this.props
         .fetchItemsByOffer(offer_id, this.props.user.user.id)
@@ -152,20 +153,20 @@ class SearchOffer extends React.Component {
         })
         .catch((error) => {
           showToast("Error messages returned from server", "danger");
-        }) : comefrom == "Brand" ?(
+        }) : comefrom == "Brand" ? (
           this.filterdata(brandlisting),
           this.setState({
             productData: brandlisting
-          }) 
+          })
         )
-        
-        :(
+
+        : (
           this.filterdata(ethnicitieslisting),
           this.setState({
             productData: ethnicitieslisting
           })
         )
-        
+
 
 
 
@@ -395,15 +396,15 @@ class SearchOffer extends React.Component {
       return showToast("Please Check Price", "danger")
     } else {
       this.props.filterapply(this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount).then(res => {
-        console.log("RESPONSE OF FILTER",res)  
-        if(res.status == 200){
-            this.setState({ isFilterVisible: false });
-            this.props.navigation.navigate('SearchProduct',{
-              Filter:true
-            })
-          } else {
-            showToast("Something went Wrong","danger")
-          }
+
+        if (res.status == 200) {
+          this.setState({ isFilterVisible: false });
+          this.props.navigation.navigate('SearchProduct', {
+            Filter: true
+          })
+        } else {
+          showToast("Something went Wrong", "danger")
+        }
       })
     }
   }
@@ -693,7 +694,7 @@ class SearchOffer extends React.Component {
 
           </View>
         </Modal>
-       <Modal style={[appStyles.SortModal, { height: '100%' }]} isVisible={this.state.isFilterVisible} hasBackdrop={true}
+        <Modal style={[appStyles.SortModal, { height: '100%' }]} isVisible={this.state.isFilterVisible} hasBackdrop={true}
           backdropColor={'#333'} backdropOpacity={0.3} >
           <View style={appStyles.bottmFilterMain}>
 
@@ -702,111 +703,127 @@ class SearchOffer extends React.Component {
                 <Icon name="closecircleo" type="AntDesign" style={appStyles.closeBtn} />
               </TouchableOpacity>
 
-<ScrollView style={{marginTop:25, flexDirection:'column', marginBottom:20, height:350}}>
-    <Collapse>
-      <CollapseHeader style={{flexDirection:'row',alignItems:'center',padding:10,backgroundColor:'#ffffff', borderBottomWidth:1, borderColor:'#dddddd'}}>
+              <ScrollView style={{ marginTop: 25, flexDirection: 'column', marginBottom: 20, height: 350 }}>
+                <Collapse>
+                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
 
-         <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color:'#333333' }}>Brand</Text>
-      </CollapseHeader>
-      <CollapseBody>
-         {this.state.filterbrand.map((data, index) => {
-                  return (
-                    <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
-                      <CheckBox checked={this.state.selectedid.indexOf(this.state.filterid[index]) !== -1} />
-                      <TouchableOpacity
-                        onPress={() => this.addtobrand(this.state.filterid[index])}
-                        style={{ marginStart: 20 }}>
-                        <Text>{data}</Text>
-                      </TouchableOpacity>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Brand</Text>
+                  </CollapseHeader>
+                  <CollapseBody>
+                    {this.state.filterbrand.map((data, index) => {
+                      return (
+                        <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
+                          <CheckBox checked={this.state.selectedid.indexOf(this.state.filterid[index]) !== -1} />
+                          <TouchableOpacity
+                            onPress={() => this.addtobrand(this.state.filterid[index])}
+                            style={{ marginStart: 20 }}>
+                            <Text>{data}</Text>
+                          </TouchableOpacity>
+                        </View>
+                      )
+                    })}
+                  </CollapseBody>
+                </Collapse>
+                <Collapse>
+                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Prices</Text>
+                  </CollapseHeader>
+                  <CollapseBody>
+                    {/* {this.state.filterpricefrom.map((data, index) => {
+                      return (
+                        <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
+                          <CheckBox checked={this.state.selectedpricefrom == this.state.filterpricefrom[index]} />
+                          <TouchableOpacity
+                            onPress={() => this.addtopricefrom(this.state.filterpricefrom[index])}
+                            style={{ marginStart: 20 }}>
+                            <Text>{data}</Text>
+                          </TouchableOpacity>
+                        </View>
+
+                      )
+                    })} */}
+                    <View style={{ flexDirection: 'row',justifyContent:'space-evenly' ,marginTop:10}}>
+                      <TextInput
+                      placeholder="From min"
+                       style={{ height: 40, borderColor: 'gray', borderWidth: 1, width:160,borderRadius:30,padding:5}}
+                        onChangeText={text => this.addtopricefrom(text)}
+                        value={this.state.selectedpricefrom}
+                      />
+                      <TextInput
+                      placeholder="To max"
+                       style={{ height: 40, borderColor: 'gray', borderWidth: 1, width:160,borderRadius:30,padding:5}}
+                        onChangeText={text => this.addtopriceto(text)}
+                        value={this.state.selectedpriceto}
+                      />
+
                     </View>
-                  )
-                })}
-      </CollapseBody>
-    </Collapse>
-    <Collapse>
-      <CollapseHeader style={{flexDirection:'row',alignItems:'center',padding:10,backgroundColor:'#ffffff', borderBottomWidth:1, borderColor:'#dddddd'}}>
-          <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color:'#333333' }}>Prices From</Text>
-      </CollapseHeader>
-      <CollapseBody>
-          {this.state.filterpricefrom.map((data, index) => {
-                  return (
-                    <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
-                      <CheckBox checked={this.state.selectedpricefrom == this.state.filterpricefrom[index]} />
-                      <TouchableOpacity
-                        onPress={() => this.addtopricefrom(this.state.filterpricefrom[index])}
-                        style={{ marginStart: 20 }}>
-                        <Text>{data}</Text>
-                      </TouchableOpacity>
-                    </View>
+                  </CollapseBody>
+                </Collapse>
 
-                  )
-                })}
-      </CollapseBody>
-    </Collapse>
 
-    <Collapse>
-      <CollapseHeader style={{flexDirection:'row',alignItems:'center',padding:10,backgroundColor:'#ffffff', borderBottomWidth:1, borderColor:'#dddddd'}}>
-          <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color:'#333333' }}>Prices To</Text>
-      </CollapseHeader>
-      <CollapseBody>
-                {this.state.filterpriceto.map((data, index) => {
-                  return (
-                    <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
-                      <CheckBox checked={this.state.selectedpriceto == this.state.filterpriceto[index]} />
-                      <TouchableOpacity
-                        onPress={() => this.addtopriceto(this.state.filterpriceto[index])}
-                        style={{ marginStart: 20 }}>
-                        <Text>{data}</Text>
-                      </TouchableOpacity>
-                    </View>
+                {/* <Collapse>
+                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Prices To</Text>
+                  </CollapseHeader>
+                  <CollapseBody>
+                    {this.state.filterpriceto.map((data, index) => {
+                      return (
+                        <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
+                          <CheckBox checked={this.state.selectedpriceto == this.state.filterpriceto[index]} />
+                          <TouchableOpacity
+                            onPress={() => this.addtopriceto(this.state.filterpriceto[index])}
+                            style={{ marginStart: 20 }}>
+                            <Text>{data}</Text>
+                          </TouchableOpacity>
+                        </View>
 
-                  )
-                })}
-      </CollapseBody>
-    </Collapse>
+                      )
+                    })}
+                  </CollapseBody>
+                </Collapse> */}
 
-    <Collapse>
-      <CollapseHeader style={{flexDirection:'row',alignItems:'center',padding:10,backgroundColor:'#ffffff', borderBottomWidth:1, borderColor:'#dddddd'}}>
-          <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color:'#333333' }}>Discounts in %</Text>
-      </CollapseHeader>
-      <CollapseBody>
-          {this.state.Discounts.map((data, index) => {
-                  return (
-                    <View style={{ padding: 7, marginStart: 10, flexDirection: 'row' }}>
-                      <CheckBox
-                        checkboxSize={25}
-                        checked={this.state.selecteddiscount.indexOf(this.state.Discounts[index]) !== -1} />
-                      <TouchableOpacity
-                        onPress={() => this.addtodiscount(this.state.Discounts[index])}
-                        style={{ marginStart: 20 }}>
-                        <Text>{data}</Text>
-                      </TouchableOpacity>
-                    </View>
-                  )
-                })}
-      </CollapseBody>
-    </Collapse>
+                <Collapse>
+                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Discounts in %</Text>
+                  </CollapseHeader>
+                  <CollapseBody>
+                    {this.state.Discounts.map((data, index) => {
+                      return (
+                        <View style={{ padding: 7, marginStart: 10, flexDirection: 'row' }}>
+                          <CheckBox
+                            checkboxSize={25}
+                            checked={this.state.selecteddiscount.indexOf(this.state.Discounts[index]) !== -1} />
+                          <TouchableOpacity
+                            onPress={() => this.addtodiscount(this.state.Discounts[index])}
+                            style={{ marginStart: 20 }}>
+                            <Text>{data}</Text>
+                          </TouchableOpacity>
+                        </View>
+                      )
+                    })}
+                  </CollapseBody>
+                </Collapse>
 
-    <Collapse>
-      <CollapseHeader style={{flexDirection:'row',alignItems:'center',padding:10,backgroundColor:'#ffffff', borderBottomWidth:1, borderColor:'#dddddd'}}>
-          <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color:'#333333' }}>Ratings</Text>
-      </CollapseHeader>
-      <CollapseBody>
-           {this.state.Ratings.map((data, index) => {
-                  return (
-                    <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
-                      <CheckBox checked={this.state.selectedrating.indexOf(this.state.Ratings[index]) !== -1} />
-                      <TouchableOpacity
-                        onPress={() => this.addtorating(this.state.Ratings[index])}
-                        style={{ marginStart: 20 }}>
-                        <Text>{data}</Text>
-                      </TouchableOpacity>
-                    </View>
-                  )
-                })}
-      </CollapseBody>
-    </Collapse>
-  </ScrollView>
+                <Collapse>
+                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Ratings</Text>
+                  </CollapseHeader>
+                  <CollapseBody>
+                    {this.state.Ratings.map((data, index) => {
+                      return (
+                        <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
+                          <CheckBox checked={this.state.selectedrating.indexOf(this.state.Ratings[index]) !== -1} />
+                          <TouchableOpacity
+                            onPress={() => this.addtorating(this.state.Ratings[index])}
+                            style={{ marginStart: 20 }}>
+                            <Text>{data}</Text>
+                          </TouchableOpacity>
+                        </View>
+                      )
+                    })}
+                  </CollapseBody>
+                </Collapse>
+              </ScrollView>
 
               <Grid style={appStyles.ApplyButtonSection}>
                 <Row>
@@ -898,7 +915,7 @@ const mapDispatchToProps = (dispatch) => {
     searchItem: (searchString, userId) => dispatch(productActions.searchItem({ searchString: searchString, userId: userId })),
     filterapply: (brandid, pricefrom, priceto, rating, discount) => dispatch(productActions.filterapply(
       {
-       
+
         brandId: brandid.toString(),
         priceFrom: pricefrom.toString(),
         priceTo: priceto.toString(),

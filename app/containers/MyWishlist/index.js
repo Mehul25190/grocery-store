@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   ScrollView,
+  TextInput,
   ImageBackground,
   StatusBar,
   TouchableOpacity,
@@ -810,10 +811,10 @@ class MyWishlist extends React.Component {
                 </Collapse>
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Prices From</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Prices</Text>
                   </CollapseHeader>
                   <CollapseBody>
-                    {this.state.filterpricefrom.map((data, index) => {
+                    {/* {this.state.filterpricefrom.map((data, index) => {
                       return (
                         <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
                           <CheckBox checked={this.state.selectedpricefrom == this.state.filterpricefrom[index]} />
@@ -825,11 +826,27 @@ class MyWishlist extends React.Component {
                         </View>
 
                       )
-                    })}
+                    })} */}
+                    <View style={{ flexDirection: 'row',justifyContent:'space-evenly' ,marginTop:10}}>
+                      <TextInput
+                      placeholder="From min"
+                       style={{ height: 40, borderColor: 'gray', borderWidth: 1, width:160,borderRadius:30,padding:5}}
+                        onChangeText={text => this.addtopricefrom(text)}
+                        value={this.state.selectedpricefrom}
+                      />
+                      <TextInput
+                      placeholder="To max"
+                       style={{ height: 40, borderColor: 'gray', borderWidth: 1, width:160,borderRadius:30,padding:5}}
+                        onChangeText={text => this.addtopriceto(text)}
+                        value={this.state.selectedpriceto}
+                      />
+
+                    </View>
                   </CollapseBody>
                 </Collapse>
 
-                <Collapse>
+
+                {/* <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
                     <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Prices To</Text>
                   </CollapseHeader>
@@ -848,7 +865,7 @@ class MyWishlist extends React.Component {
                       )
                     })}
                   </CollapseBody>
-                </Collapse>
+                </Collapse> */}
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>

@@ -209,7 +209,7 @@ export const filterapply = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.fetchEthnicitiesdetails,{ queries: payloads }).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    console.log("API RES",res)
+    console.log("API RES",res.status)
     if (res.status == 200) {
       dispatch({ type: ActionTypes.FILTERDATA, data: res.data.data.itemList });
       return res
