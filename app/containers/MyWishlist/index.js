@@ -310,6 +310,20 @@ class MyWishlist extends React.Component {
       })
     }
   }
+  sortingapply(val){
+    this.setState({ SortinType: val })
+    // this.props.sortingapply(val).then(res => {
+    //   console.log("RESPONSE OF FILTER", res)
+    //   if (res.status == 200) {
+    //     this.setState({ isModalVisible: false });
+    //     this.props.navigation.navigate('SearchProduct', {
+    //       Filter: true
+    //     })
+    //   } else {
+    //     showToast("Something went Wrong", "danger")
+    //   }
+    // })
+  }
 
 
   subBySubCategoryList(catId, catName, index) {
@@ -775,7 +789,7 @@ class MyWishlist extends React.Component {
               </TouchableOpacity>
               {ProductSorting.map((data, key) => {
                 return (<Grid key={key} style={{ paddingTop: 20 }}>
-                  {this.state.SortinType == data.SortinType ?
+                  {this.state.SortinType == data.SortinValue ?
 
                     <Row>
                       <Col style={{ flex: 1, justifyContent: 'center', marginLeft: 25 }}>
@@ -792,7 +806,7 @@ class MyWishlist extends React.Component {
                       <Col style={{ flex: 1, justifyContent: 'center', marginLeft: 25 }}>
                         <Text style={appStyles.SortingText}>{data.SortinType}</Text>
                       </Col>
-                      <Col style={[styles.btn, { flex: 0, justifyContent: 'center', width: 50 }]} onPress={() => { this.setState({ SortinType: data.SortinType }) }} >
+                      <Col style={[styles.btn, { flex: 0, justifyContent: 'center', width: 50 }]} onPress={() =>  this.sortingapply(data.SortinValue)} >
                         <Icon style={appStyles.imgSorting} name='radio-button-unchecked' type='MaterialIcons' />
                       </Col>
                     </Row>
