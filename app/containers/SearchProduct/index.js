@@ -39,7 +39,7 @@ import {
   Right,
   Thumbnail,
   Icon,
-  Item, CheckBox,
+  Item,
   Spinner,
   Input, Row, Footer
 } from "native-base";
@@ -64,6 +64,7 @@ import NumericInput from "react-native-numeric-input";
 import { ScreenLoader } from '../../components';
 import Modal from 'react-native-modal';
 import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
+import { CheckBox } from 'react-native-elements'
 
 class SearchProduct extends React.Component {
   constructor(props) {
@@ -85,8 +86,38 @@ class SearchProduct extends React.Component {
       filterpriceto: [],
       filterpricefrom: [],
       filterid: [],
-      Discounts: ['1-10', '10-20', '20-30', '30-40', '40-100'],
-      Ratings: ['5', '4', '3', '2', '1'],
+      Ratings: [{
+        name: require('../../assets/icon.png'),
+        value: '5'
+      }, {
+        name: require('../../assets/icon.png'),
+        value: '4'
+      }, {
+        name: require('../../assets/icon.png'),
+        value: '3'
+      }, {
+        name: require('../../assets/icon.png'),
+        value: '2'
+      }, {
+        name: require('../../assets/icon.png'),
+        value: '1'
+      },],
+      Discounts: [{
+        name: 'Upto 10%',
+        value: '1-10'
+      }, {
+        name: '10% - 20%',
+        value: '10-20'
+      }, {
+        name: '20% - 30%',
+        value: '20-30'
+      }, {
+        name: '30% - 40%',
+        value: '30-40'
+      }, {
+        name: 'More than 40%',
+        value: '40-100'
+      },],
 
       selectedbrand: [],
       selectedid: [],

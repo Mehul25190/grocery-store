@@ -352,21 +352,21 @@ class ProductList extends React.Component {
     console.log("PriceTo", this.state.selectedpriceto)
     console.log("Discount", this.state.selecteddiscount)
     console.log("Rating", this.state.selectedrating)
-    // if (this.state.selectedpricefrom > this.state.selectedpriceto) {
-    //   return showToast("Please Check Price", "danger")
-    // } else {
-    //   this.props.filterapply(this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount).then(res => {
-    //     console.log("RESPONSE OF FILTER", res)
-    //     if (res.status == 200) {
-    //       this.setState({ isFilterVisible: false });
-    //       this.props.navigation.navigate('SearchProduct', {
-    //         Filter: true
-    //       })
-    //     } else {
-    //       showToast("Something went Wrong", "danger")
-    //     }
-    //   })
-    // }
+    if (this.state.selectedpricefrom > this.state.selectedpriceto) {
+      return showToast("Please Check Price", "danger")
+    } else {
+      this.props.filterapply(this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount).then(res => {
+        console.log("RESPONSE OF FILTER", res)
+        if (res.status == 200) {
+          this.setState({ isFilterVisible: false });
+          this.props.navigation.navigate('SearchProduct', {
+            Filter: true
+          })
+        } else {
+          showToast("Something went Wrong", "danger")
+        }
+      })
+    }
   }
 
   //func call when click item category
