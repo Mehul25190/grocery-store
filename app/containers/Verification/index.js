@@ -26,8 +26,9 @@ import { showToast } from '../../utils/common';
 import appStyles from '../../theme/appStyles';
 import styles from '../SignIn/styles';
 // import OtpInputs from 'react-native-otp-inputs';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
+//import OTPInputView from '@twotalltotems/react-native-otp-input';
 //import SignInVerification from './form';
+import OtpInputs from 'react-native-otp-textinput';
 import axios from '../../utils/api';
 import url from '../../config/api';
 import { Platform } from 'react-native';
@@ -205,17 +206,9 @@ class Verification extends React.Component {
                         Enter Your Code Here
 		                  	</Text>
                     </View>
-                    <OTPInputView
-                      style={{ width: '70%', height: 200, alignItems: 'center', textAlign: 'center' }}
-                      pinCount={4}
-                      // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-                      onCodeChanged = {code => { this.setState({code})}}
-                      autoFocusOnLoad
-                      codeInputFieldStyle={styles.underlineStyleBase}
-                      codeInputHighlightStyle={styles.underlineStyleHighLighted}
-                      onCodeFilled={(code => {
-                        console.log(`Code is ${code}, you are good to go!`)
-                      })}
+                    <OtpInputs
+                      handleTextChange={code => { this.setState({code})}}
+                      numberOfInputs={4}
                     />
                   </View>
 

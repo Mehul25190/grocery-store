@@ -1,7 +1,9 @@
 export default {
   // apiBaseUrl: 'http://pushpanathan.com/services/',
-  apiBaseUrl:'http://dev.tieskills.com/foodapp/services/',
-  imageURL: 'http://dev.tieskills.com/foodapp',
+  //apiBaseUrl:'http://dev.tieskills.com/foodapp/services/',
+  //imageURL: 'http://dev.tieskills.com/foodapp',
+  apiBaseUrl: 'https://dev.myallaadin.com/services/',
+  imageURL: 'https://dev.myallaadin.com',
   signin: 'user/login',
   signup: 'user/register',
   signupVerifyMobile: 'user/verifyMobile',
