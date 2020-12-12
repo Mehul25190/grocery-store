@@ -935,6 +935,7 @@ class ProductList extends React.Component {
                           <Image source={data.name}
                             style={{ width: 70, height: 10 }}
                           />
+                          <Text>{index != 0 ? '&more' : null}</Text>
                         </View>
                       )
                     })}
