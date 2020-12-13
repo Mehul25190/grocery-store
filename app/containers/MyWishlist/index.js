@@ -590,6 +590,11 @@ class MyWishlist extends React.Component {
           headersRight={{ width: 120 }}
         />
         <Content enableOnAndroid style={appStyles.content}>
+
+         
+         
+          {/* 
+          //Wishlist Filter UI/UX
           <Row style={appStyles.footers}>
             <Col style={{ justifyContent: 'center', alignItems: 'center', borderColor: Colors.primary, borderRightWidth: 1 }}>
               <TouchableOpacity onPress={() => this.FilterShowFunction()} >
@@ -607,7 +612,7 @@ class MyWishlist extends React.Component {
                 </Item>
               </TouchableOpacity>
             </Col>
-          </Row>
+          </Row> */}
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (<View>

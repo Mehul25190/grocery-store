@@ -93,6 +93,7 @@ class ProductList extends React.Component {
       filterpriceto: [],
       filterpricefrom: [],
       filterid: [],
+      filterload:false,
       Ratings: [{
         name: require('../../assets/stars/stars5.jpg'),
         value: '5'
@@ -354,7 +355,9 @@ class ProductList extends React.Component {
     console.log("Rating", this.state.selectedrating)
     console.log("CatogoryID",this.state.categoryId)
     console.log("SubcatogoryID",this.state.selectSubCat)
-
+    this.setState({
+      filterload:true
+    })
     if (this.state.selectedpricefrom > this.state.selectedpriceto) {
       return showToast("Please Check Price", "danger")
     } else {
@@ -365,13 +368,19 @@ class ProductList extends React.Component {
         this.state.selecteddiscount,
         this.state.categoryId,
         this.state.selectSubCat).then(res => {
-        console.log("RESPONSE OF FILTER", res)
-        if (res.status == 200) {
-          this.setState({ isFilterVisible: false });
-          this.props.navigation.navigate('SearchProduct', {
-            Filter: true
+          this.setState({
+            filterload:false
           })
+        if (res.status == 200) {
+          this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
+          // this.props.navigation.navigate('SearchProduct', {
+          //   Filter: true
+          // })
         } else {
+          this.setState({ isFilterVisible: false})
+          this.setState({
+            filterload:false
+          })
           showToast("Something went Wrong", "danger")
         }
       })
@@ -379,17 +388,17 @@ class ProductList extends React.Component {
   }
 sortingapply(val){
   this.setState({ SortinType: val })
-  // this.props.sortingapply(val).then(res => {
-  //   console.log("RESPONSE OF FILTER", res)
-  //   if (res.status == 200) {
-  //     this.setState({ isModalVisible: false });
-  //     this.props.navigation.navigate('SearchProduct', {
-  //       Filter: true
-  //     })
-  //   } else {
-  //     showToast("Something went Wrong", "danger")
-  //   }
-  // })
+  this.props.sortingapply(val,this.state.categoryId,this.state.selectSubCat).then(res => {
+    this.setState({ isModalVisible: false})
+    if (res.status == 200) {
+      this.setState({ isModalVisible: false,productData: res.data.data.itemList, });
+      // this.props.navigation.navigate('SearchProduct', {
+      //   Filter: true
+      // })
+    } else {
+      showToast("Something went Wrong", "danger")
+    }
+  })
 }
   //func call when click item category
   _itemChoose(item) {
@@ -971,7 +980,13 @@ sortingapply(val){
                   <Col>
                     <TouchableOpacity
                       onPress={() => this.Filterapply()}
-                      style={appStyles.applyFilter}><Text style={appStyles.applyFilterText}>Apply</Text></TouchableOpacity>
+                      style={appStyles.applyFilter}>
+                        {
+                          this.state.filterload ? <View style={{padding:12}}><ActivityIndicator color="#FFF"/></View> : <Text style={appStyles.applyFilterText}>Apply</Text>
+                        }
+                        
+                        
+                        </TouchableOpacity>
                   </Col>
                 </Row>
               </Grid>
@@ -1061,6 +1076,13 @@ const mapDispatchToProps = (dispatch) => {
         categoryId: catid.toString(),
         subCategoryId: subcatid.toString(),
       })),
+
+      sortingapply: (sort,catid,subcatid) => dispatch(productActions.filterapply(
+        {
+          sortBy:sort,
+          categoryId: catid.toString(),
+          subCategoryId: subcatid.toString(),
+        })),
     //  
   };
 };

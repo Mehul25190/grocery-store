@@ -269,23 +269,26 @@ class Home extends React.Component {
         this.props.navigation.navigate('SearchOffer',
           {
 
-            comefrom: 'Brand'
+            comefrom: 'Brand',
+            brandid: val
+
           })
       }
       console.log("SUCCESS FOR 00", res.status)
     });
   }
   ethnicitiesNavigation(val) {
-     console.log("SUCCESS FOR 0011",val)
+    console.log("SUCCESS FOR 0011", val)
     this.props.Ethnicitiesdetails(val).then(res => {
       if (res.status == 200) {
         console.log("SUCCESS FOR Ethnicitiesdetails", val, res.status)
         this.props.navigation.navigate('SearchOffer',
           {
-            comefrom: 'Ethnicities'
+            comefrom: 'Ethnicities',
+            ethenicityid: val
           })
       }
-     
+
     });
   }
 
@@ -480,7 +483,7 @@ class Home extends React.Component {
                           <View>
                             <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1, height: 120, width: 120, resizeMode: 'contain' }} />
                             <Text style={styles.brandnametitle}>{item.brandName}</Text>
-                            
+
                           </View>
                         </TouchableOpacity>
 

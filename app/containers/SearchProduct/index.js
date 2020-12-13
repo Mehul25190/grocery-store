@@ -86,6 +86,7 @@ class SearchProduct extends React.Component {
       filterpriceto: [],
       filterpricefrom: [],
       filterid: [],
+      filterload: false,
       Ratings: [{
         name: require('../../assets/stars/stars5.jpg'),
         value: '5'
@@ -163,11 +164,10 @@ class SearchProduct extends React.Component {
         if (res.status == "success") {
           if (res.data.itemList) {
 
-            {
-              this.state.Filter ? this.setState({ productData: this.props.applyfilter })
-                : this.setState({ productData: res.data.itemList });
-              this.filterdata(res.data.itemList)
-            }
+
+            this.setState({ productData: res.data.itemList });
+            this.filterdata(res.data.itemList)
+
 
 
             this.courseFilterArr = res.data.itemList;
@@ -287,8 +287,6 @@ class SearchProduct extends React.Component {
 
   async filterdata(val) {
 
-    console.log("TOTAL VAL", val)
-
     const Brandname = []
     const Brandnid = []
     const Price = []
@@ -386,33 +384,41 @@ class SearchProduct extends React.Component {
     console.log("PriceTo", this.state.selectedpriceto)
     console.log("Discount", this.state.selecteddiscount)
     console.log("Rating", this.state.selectedrating)
+    this.setState({
+      filterload: true
+    })
     if (this.state.selectedpricefrom > this.state.selectedpriceto) {
+      this.setState({
+        filterload: false
+      })
       return showToast("Please Check Price", "danger")
     } else {
-      this.props.filterapply(this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount).then(res => {
-        console.log("RESPONSE OF FILTER", res)
-        if (res.status == 200) {
-          this.setState({ isFilterVisible: false, Filter: true, productData: res.data.data.itemList });
+      this.props.filterapply(this.state.text, this.props.user.user.id, this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount).then(res => {
+        this.setState({
+          filterload:false
+        })
+        if (res.status == "success") {
+          this.setState({ isFilterVisible: false, Filter: true, productData: res.data.itemList });
         } else {
+          this.setState({ isFilterVisible: false})
           showToast("Something went Wrong", "danger")
         }
       })
+     
     }
   }
 
-  sortingapply(val){
+  sortingapply(val) {
     this.setState({ SortinType: val })
-    // this.props.sortingapply(val).then(res => {
-    //   console.log("RESPONSE OF FILTER", res)
-    //   if (res.status == 200) {
-    //     this.setState({ isModalVisible: false });
-    //     this.props.navigation.navigate('SearchProduct', {
-    //       Filter: true
-    //     })
-    //   } else {
-    //     showToast("Something went Wrong", "danger")
-    //   }
-    // })
+    this.props.sortingapply(this.state.text, this.props.user.user.id, val).then(res => {
+      console.log("RESPONSE OF sorting", res.status)
+      this.setState({ isModalVisible: false})
+      if (res.status == "success") {
+        this.setState({ isModalVisible: false, productData: res.data.itemList });
+      } else {
+        showToast("Something went Wrong", "danger")
+      }
+    })
   }
 
 
@@ -676,7 +682,7 @@ class SearchProduct extends React.Component {
                       <Col style={{ flex: 1, justifyContent: 'center', marginLeft: 25 }}>
                         <Text style={appStyles.SortingText}>{data.SortinType}</Text>
                       </Col>
-                      <Col style={[styles.btn, { flex: 0, justifyContent: 'center', width: 50 }]} onPress={() =>  this.sortingapply(data.SortinValue)} >
+                      <Col style={[styles.btn, { flex: 0, justifyContent: 'center', width: 50 }]} onPress={() => this.sortingapply(data.SortinValue)} >
                         <Icon style={appStyles.imgSorting} name='radio-button-unchecked' type='MaterialIcons' />
                       </Col>
                     </Row>
@@ -694,8 +700,8 @@ class SearchProduct extends React.Component {
 
           </View>
         </Modal>
-        
-        
+
+
         <Modal style={[appStyles.SortModal, { height: '100%' }]} isVisible={this.state.isFilterVisible} hasBackdrop={true}
           backdropColor={'#333'} backdropOpacity={0.3} >
           <View style={appStyles.bottmFilterMain}>
@@ -749,13 +755,13 @@ class SearchProduct extends React.Component {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10 }}>
                       <TextInput
                         placeholder="From min"
-                        style={{ height: 40, borderColor: 'gray', marginBottom:2, borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
+                        style={{ height: 40, borderColor: 'gray', marginBottom: 2, borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
                         onChangeText={text => this.addtopricefrom(text)}
                         value={this.state.selectedpricefrom}
                       />
                       <TextInput
                         placeholder="To max"
-                        style={{ height: 40, borderColor: 'gray', marginBottom:2, borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
+                        style={{ height: 40, borderColor: 'gray', marginBottom: 2, borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
                         onChangeText={text => this.addtopriceto(text)}
                         value={this.state.selectedpriceto}
                       />
@@ -814,7 +820,7 @@ class SearchProduct extends React.Component {
                     {this.state.Ratings.map((data, index) => {
                       return (
 
-                        <View style={{ marginStart: 10, flexDirection: 'row', alignItems:'center', justifyContent:'flex-start' }}>
+                        <View style={{ marginStart: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                           <CheckBox
                             onPress={() => this.addtorating(this.state.Ratings[index].value)}
                             checked={this.state.selectedrating.indexOf(this.state.Ratings[index].value) !== -1} />
@@ -834,7 +840,9 @@ class SearchProduct extends React.Component {
                   <Col>
                     <TouchableOpacity
                       onPress={() => this.Filterapply()}
-                      style={appStyles.applyFilter}><Text style={appStyles.applyFilterText}>Apply</Text></TouchableOpacity>
+                      style={appStyles.applyFilter}>{
+                        this.state.filterload ? <View style={{ padding: 12 }}><ActivityIndicator color="#FFF" /></View> : <Text style={appStyles.applyFilterText}>Apply</Text>
+                      }</TouchableOpacity>
                   </Col>
                 </Row>
               </Grid>
@@ -909,14 +917,20 @@ const mapDispatchToProps = (dispatch) => {
     updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId: userId, itemId: itemId, quantity: quantity })),
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
     checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId: userId })),
-    filterapply: (brandid, pricefrom, priceto, rating, discount) => dispatch(productActions.filterapply(
+    filterapply: (searchString, userId, brandid, pricefrom, priceto, rating, discount) => dispatch(productActions.searchItem(
       {
-
+        searchString: searchString, userId: userId,
         brandId: brandid.toString(),
         priceFrom: pricefrom.toString(),
         priceTo: priceto.toString(),
         ratings: rating.toString(),
         discount: discount.toString(),
+      })),
+
+    sortingapply: (searchString, userId, sort) => dispatch(productActions.searchItem(
+      {
+        searchString: searchString, userId: userId,
+        sortBy: sort,
       })),
   };
 };
