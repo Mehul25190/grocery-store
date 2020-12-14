@@ -58,7 +58,8 @@ class ProductDetail extends React.Component {
       selctedProduct: '',
       variant: '',
       wished: false,
-      likeloder:false
+      likeloder:false,
+      isLoading: false,
     };
 
   }
@@ -85,6 +86,14 @@ class ProductDetail extends React.Component {
   productDetail(id) {
     this.props.productDetail(id, this.props.user.user.id).then(res => {
       this.setState({ selctedProduct: '' })
+    })
+
+  }
+
+  variantProductDetail(id) {
+    this.setState({isLoading: true});
+    this.props.productDetail(id, this.props.user.user.id).then(res => {
+      this.setState({ selctedProduct: '', isLoading: false })
     })
 
   }
@@ -257,7 +266,7 @@ class ProductDetail extends React.Component {
 
     const { navigation, ProductDetail,similarproducts } = this.props;
     const { selectedIndex } = this.state;
-
+    const ProductVariant = ProductDetail.item[0].variations;
     var foodType = '';
     if (ProductDetail.item[0].foodType == 'veg')
       foodType = '#00ff00';
@@ -277,8 +286,12 @@ class ProductDetail extends React.Component {
           Title='Product Detail'
           IconRightF="search"
         />
-
+        
         <Content enableOnAndroid>
+        {this.state.isLoading ? (
+            <Spinner color={Colors.secondary} style={appStyles.spinner} />
+        ) : (
+          <View>
           <Grid style={styles.paddingBox}>
             <Row style={styles.firstRow}>
               <Col >
@@ -432,22 +445,16 @@ class ProductDetail extends React.Component {
 
               {ProductVariant.map((data, key) => {
                 return (<View key={key}>
-                  {this.state.variant == data.variant ?
 
-                    <Col style={[styles.variantBtnActive, {}]}>
-                      {/*<Icon style={styles.variantImg} name='rectangle' type='MaterialCommunityIcons' />*/}
-                      <Text style={styles.variantTextActive}>{data.variant}</Text>
-                    </Col>
-
-                    :
-
-                    <Col onPress={() => { this.setState({ variant: data.variant }) }} style={[styles.variantBtnDeactive, {}]}>
+                    {/*<Col style={[styles.variantBtnActive, {}]}>
+                      <Text style={styles.variantTextActive}>{data.weight} {data.uom}</Text>
+                    </Col>*/}
+                    {data.id != ProductDetail.item[0].id ?
+                    <Col onPress={() =>  this.variantProductDetail(data.id) } style={[styles.variantBtnDeactive, {}]}>
                       {/*<Icon style={styles.variantImg} name='rectangle-outline' type='MaterialCommunityIcons' />*/}
-                      <Text style={styles.variantTextDeactive}>{data.variant}</Text>
+                      <Text style={styles.variantTextDeactive}>{data.weight} {data.uom}</Text>
                     </Col>
-
-
-                  }
+                    : null}
                 </View>
                 )
               })}
@@ -555,9 +562,9 @@ class ProductDetail extends React.Component {
               <Text style={styles.btnTextDone}>Continue Shopping</Text>
             </Button>
           </View>
-
+          </View>)}
         </Content>
-
+        
       </Container>
 
     );
@@ -565,6 +572,7 @@ class ProductDetail extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
+    //isLoading: state.common.isLoading,
     user: state.auth.user,
     ProductDetail: state.product.productDetail,
     similarproducts:state.product.similarproduct
