@@ -7,6 +7,7 @@ import {
   FlatList,
   ScrollView,
   ImageBackground,
+  TextInput,
   StatusBar,
   TouchableOpacity,
   ActivityIndicator,
@@ -39,8 +40,8 @@ import {
   Thumbnail,
   Icon,
   Item,
-  Spinner,Footer,
-  Input,Row
+  Spinner, Footer,
+  Input, Row
 } from "native-base";
 import url from "../../config/api";
 import { ItemList } from "../data/data";
@@ -63,6 +64,8 @@ import styles from "./styles";
 import NumericInput from "react-native-numeric-input";
 import { ScreenLoader } from '../../components';
 import Modal from 'react-native-modal';
+import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
+import { CheckBox } from 'react-native-elements'
 
 class SearchOffer extends React.Component {
   constructor(props) {
@@ -79,7 +82,51 @@ class SearchOffer extends React.Component {
       flalistIndex: 0,
       buyOndeSelected: [],
       selctedProduct: '',
-        wished:false
+      wished: false,
+      filterbrand: [],
+      filterpriceto: [],
+      filterpricefrom: [],
+      filterid: [],
+      filterload:false,
+      Ratings: [{
+        name: require('../../assets/stars/stars5.jpg'),
+        value: '5'
+      }, {
+        name: require('../../assets/stars/stars4.jpg'),
+        value: '4'
+      }, {
+        name: require('../../assets/stars/stars3.jpg'),
+        value: '3'
+      }, {
+        name: require('../../assets/stars/stars2.jpg'),
+        value: '2'
+      }, {
+        name: require('../../assets/stars/stars1.jpg'),
+        value: '1'
+      },],
+      Discounts: [{
+        name: 'Upto 10%',
+        value: '1-10'
+      }, {
+        name: '10% - 20%',
+        value: '10-20'
+      }, {
+        name: '20% - 30%',
+        value: '20-30'
+      }, {
+        name: '30% - 40%',
+        value: '30-40'
+      }, {
+        name: 'More than 40%',
+        value: '40-100'
+      },],
+
+      selectedbrand: [],
+      selectedid: [],
+      selecteddiscount: [],
+      selectedpriceto: [],
+      selectedpricefrom: [],
+      selectedrating: [],
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
@@ -127,6 +174,7 @@ class SearchOffer extends React.Component {
           if (res.status == "success") {
             if (res.data.itemList) {
               this.setState({ productData: res.data.itemList });
+              this.filterdata(res.data.itemList)
               this.courseFilterArr = res.data.itemList;
             }
           } else {
@@ -135,13 +183,20 @@ class SearchOffer extends React.Component {
         })
         .catch((error) => {
           showToast("Error messages returned from server", "danger");
-        }) : comefrom == "Brand" ?
-        this.setState({
-          productData: brandlisting
-        }) :
-        this.setState({
-          productData: ethnicitieslisting
-        })
+        }) : comefrom == "Brand" ? (
+          this.filterdata(brandlisting),
+          this.setState({
+            productData: brandlisting
+          })
+        )
+
+        : (
+          this.filterdata(ethnicitieslisting),
+          this.setState({
+            productData: ethnicitieslisting
+          })
+        )
+
 
 
 
@@ -248,23 +303,225 @@ class SearchOffer extends React.Component {
       }
     })
   }
-SortShowFunction(){
-    this.setState({isModalVisible: !this.state.isModalVisible});
+  SortShowFunction() {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   }
-FilterShowFunction(){
- this.setState({isFilterVisible: !this.state.isFilterVisible});
-}
+  FilterShowFunction() {
+    this.setState({ isFilterVisible: !this.state.isFilterVisible });
+  }
 
-FilterDetailShowFunction(){
- this.setState({isFilterDetailVisible: !this.state.isFilterDetailVisible});
-}
+  FilterDetailShowFunction() {
+    this.setState({ isFilterDetailVisible: !this.state.isFilterDetailVisible });
+  }
 
 
 
-goFilterDetail(){
-  this.setState({isFilterVisible: !this.state.isFilterVisible});
-  this.setState({isFilterDetailVisible: !this.state.isFilterDetailVisible});
-}
+  goFilterDetail() {
+    this.setState({ isFilterVisible: !this.state.isFilterVisible });
+    this.setState({ isFilterDetailVisible: !this.state.isFilterDetailVisible });
+  }
+
+  async filterdata(val) {
+
+    const Brandname = []
+    const Brandnid = []
+    const Price = []
+    const result = []
+    const filterdisplaypriceto = []
+    const filterdisplaypricefrom = []
+    var size = ''
+
+    val.forEach(element => Brandname.push(element.brandName))
+    val.forEach(element => Brandnid.push(element.brandId))
+
+    let uniquebrand = Brandname.filter((item, i, ar) => ar.indexOf(item) === i);
+    let uniqueid = Brandnid.filter((item, i, ar) => ar.indexOf(item) === i);
+
+    val.forEach(element => Price.push(element.discountedPrice < element.price ? element.discountedPrice : element.price))
+    let uniqueprice = Price.filter((item, i, ar) => ar.indexOf(item) === i);
+
+    uniqueprice.sort(function (a, b) {
+      if (a > b) return 1;
+      if (a < b) return -1;
+      return 0;
+    })
+    if (uniqueprice.length > 12) {
+      var size = "6"
+    } else {
+      var size = "3"
+    }
+
+    while (uniqueprice.length > 0)
+      result.push(uniqueprice.splice(0, size));
+    result.map((item, index) => {
+      filterdisplaypricefrom.push(Math.floor(item[0]))
+      filterdisplaypriceto.push(Math.floor(item[size - 1]))
+    })
+
+    this.setState({
+      filterbrand: uniquebrand,
+      filterid: uniqueid,
+      filterpriceto: filterdisplaypriceto.filter(value => !Number.isNaN(value)),
+      filterpricefrom: filterdisplaypricefrom.filter(value => !Number.isNaN(value))
+    })
+    console.log("Product List Filter DATA", this.state.filterprice, this.state.filterbrand)
+  }
+
+  addtobrand(clickIndex) {
+    var array = [...this.state.selectedid];
+    var index = array.indexOf(clickIndex)
+    if (index !== -1) {
+      array.splice(index, 1);
+      this.setState({ selectedid: array, });
+    }
+    else {
+      array.push(clickIndex)
+      this.setState({ selectedid: array, });
+    }
+  }
+  addtopriceto(clickIndex) {
+
+    this.setState({ selectedpriceto: clickIndex, });
+  }
+
+  addtopricefrom(clickIndex) {
+
+    this.setState({ selectedpricefrom: clickIndex, });
+
+  }
+  addtodiscount(clickIndex) {
+    var array = [...this.state.selecteddiscount];
+    var index = array.indexOf(clickIndex)
+    if (index !== -1) {
+      array.splice(index, 1);
+      this.setState({ selecteddiscount: array, });
+    }
+    else {
+      array.push(clickIndex)
+      this.setState({ selecteddiscount: array, });
+    }
+  }
+  addtorating(clickIndex) {
+    var array = [...this.state.selectedrating];
+    var index = array.indexOf(clickIndex)
+    if (index !== -1) {
+      array.splice(index, 1);
+      this.setState({ selectedrating: array, });
+    }
+    else {
+      array.push(clickIndex)
+      this.setState({ selectedrating: array, });
+    }
+  }
+
+  Filterapply() {
+    console.log("Brand", this.state.selectedid)
+    console.log("PriceFrom", this.state.selectedpricefrom)
+    console.log("PriceTo", this.state.selectedpriceto)
+    console.log("Discount", this.state.selecteddiscount)
+    console.log("Rating", this.state.selectedrating)
+
+    const brand = this.props.navigation.getParam("brandid");
+    const ethenicity = this.props.navigation.getParam("ethenicityid");
+    const comefrom = this.props.navigation.getParam("comefrom");
+    const offer_id = this.props.navigation.getParam('offer_id');
+    this.setState({
+      filterload:true
+    })
+    if (this.state.selectedpricefrom > this.state.selectedpriceto) {
+      this.setState({
+        Filterapply:false
+      })
+      return showToast("Please Check Price", "danger")
+    } else {
+      {
+        comefrom == "offer" ?
+          this.props
+            .fetchItemsByOfferfilter(
+              offer_id,
+              this.props.user.user.id,
+              this.state.selectedid,
+              this.state.selectedpricefrom,
+              this.state.selectedpriceto,
+              this.state.selectedrating,
+              this.state.selecteddiscount)
+            .then((res) => {
+              this.setState({
+                filterload:false
+              })
+              if (res.status == "success") {
+                if (res.data.itemList) {
+                  this.setState({ isFilterVisible: false,productData: res.data.itemList });
+                  this.courseFilterArr = res.data.itemList;
+                }
+              } else {
+                showToast("Something wrong with Server response", "danger");
+              }
+            }
+            ) :
+
+          this.props.filtersapply(
+            brand,
+            ethenicity,
+            this.state.selectedid,
+            this.state.selectedpricefrom,
+            this.state.selectedpriceto,
+            this.state.selectedrating,
+            this.state.selecteddiscount).then(res => {
+              this.setState({
+                filterload:false
+              })
+              if (res.status == 200) {
+                this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
+                // this.props.navigation.navigate('SearchProduct', {
+                //   Filter: true
+                // })
+              } else {
+                showToast("Something went Wrong", "danger")
+              }
+            })
+      }
+    }
+  }
+  sortingapply(val) {
+
+    const brand = this.props.navigation.getParam("brandid");
+    const ethenicity = this.props.navigation.getParam("ethenicityid");
+    const comefrom = this.props.navigation.getParam("comefrom");
+    const offer_id = this.props.navigation.getParam('offer_id');
+    this.setState({ SortinType: val })
+
+    {
+      comefrom == 'offer' ?
+        this.props.fetchItemsByOffersorting(offer_id, this.props.user.user.id, val,)
+          .then((res) => {
+            this.setState({ isModalVisible: false})
+            if (res.status == "success") {
+              if (res.data.itemList) {
+                this.setState({ productData: res.data.itemList });
+                this.courseFilterArr = res.data.itemList;
+              }
+            } else {
+              showToast("Something wrong with Server response", "danger");
+            }
+          }
+          ) :
+
+
+        this.props.sortingapply(val, brand, ethenicity).then(res => {
+          if (res.status == 200) {
+            this.setState({ isModalVisible: false, productData: res.data.data.itemList, });
+            // this.props.navigation.navigate('SearchProduct', {
+            //   Filter: true
+            // })
+          } else {
+            showToast("Something went Wrong", "danger")
+          }
+        })
+    }
+  }
+
+
   render() {
 
     console.log('buyOndeSelected', this.state.buyOndeSelected)
@@ -305,24 +562,24 @@ goFilterDetail(){
 
         </Header>
         <Content enableOnAndroid style={appStyles.content}>
-        <Row style={appStyles.footers}>
-                <Col style={{justifyContent:'center',alignItems:'center', borderColor:Colors.primary, borderRightWidth:1}}>
-                  <TouchableOpacity onPress={() =>this.FilterShowFunction() } >
-                    <Item style={{borderBottomWidth:0,}} onPress={() =>this.FilterShowFunction() } >
-                      <Text style={appStyles.sortLabel}>FILTER</Text>
-                      <Icon style={appStyles.sorting} name="filter" type="Feather" />
-                    </Item>
-                  </TouchableOpacity>
-                </Col>
-                <Col style={{justifyContent:'center',alignItems:'center'}}>
-                  <TouchableOpacity>
-                    <Item style={{borderBottomWidth:0,}} onPress={() =>this.SortShowFunction() } >
-                      <Text style={appStyles.sortLabel}>SORT</Text>
-                      <Icon style={appStyles.sorting} name="sort" type="MaterialIcons" />
-                    </Item>
-                  </TouchableOpacity>
-                </Col>
-              </Row>
+          <Row style={appStyles.footers}>
+            <Col style={{ justifyContent: 'center', alignItems: 'center', borderColor: Colors.primary, borderRightWidth: 1 }}>
+              <TouchableOpacity onPress={() => this.FilterShowFunction()} >
+                <Item style={{ borderBottomWidth: 0, }} onPress={() => this.FilterShowFunction()} >
+                  <Text style={appStyles.sortLabel}>FILTER</Text>
+                  <Icon style={appStyles.sorting} name="filter" type="Feather" />
+                </Item>
+              </TouchableOpacity>
+            </Col>
+            <Col style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <TouchableOpacity>
+                <Item style={{ borderBottomWidth: 0, }} onPress={() => this.SortShowFunction()} >
+                  <Text style={appStyles.sortLabel}>SORT</Text>
+                  <Icon style={appStyles.sorting} name="sort" type="MaterialIcons" />
+                </Item>
+              </TouchableOpacity>
+            </Col>
+          </Row>
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (
@@ -342,9 +599,9 @@ goFilterDetail(){
                   return (
                     <ListItem style={styles.ListItems} key={index}>
 
-                    
+
                       <Left style={styles.ListLeft}>
-                    
+
                         <TouchableOpacity
                           style={styles.prodInfo}
                           onPress={() =>
@@ -356,7 +613,7 @@ goFilterDetail(){
                             source={{ uri: url.imageURL + item.imagePath }}
                           />
                         </TouchableOpacity>
-                   
+
                       </Left>
                       <Body>
                         <TouchableOpacity
@@ -365,14 +622,14 @@ goFilterDetail(){
                             this.productDetail(item.id)
                           }
                         >
-                        <View style={appStyles.brandAndVeg}>
-                          <View style={{ flex:0 }}>
-                               <Text style={styles.proBrand}>{item.brandName}</Text>
+                          <View style={appStyles.brandAndVeg}>
+                            <View style={{ flex: 0 }}>
+                              <Text style={styles.proBrand}>{item.brandName}</Text>
+                            </View>
+                            <View style={{ flex: 0, width: 12 }}>
+                              <Image style={appStyles.vegImage} source={item.foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
+                            </View>
                           </View>
-                          <View style={{ flex: 0,width:12 }}>
-                              <Image style={appStyles.vegImage} source={item.foodType == 'veg'?imgs.smallVeg:imgs.smallNonVeg}  />
-                          </View>
-                        </View>
 
                           <Text style={styles.proTitle}>{item.itemName}</Text>
 
@@ -396,9 +653,9 @@ goFilterDetail(){
                                   <Text style={appStyles.currencysmall}>
                                     {Colors.CUR}
                                   </Text>{" "}
-                                   <Text
-                                      style={appStyles.amountmedium}
-                                    >{item.price}</Text>
+                                  <Text
+                                    style={appStyles.amountmedium}
+                                  >{item.price}</Text>
                                 </Text>
                                 <Text style={styles.proPrice}>
                                   <Text
@@ -407,9 +664,9 @@ goFilterDetail(){
                                     {Colors.CUR}
 
                                   </Text>{" "}
-                                   <Text
-                                      style={appStyles.amountmedium}
-                                    >{item.discountedPrice}</Text>
+                                  <Text
+                                    style={appStyles.amountmedium}
+                                  >{item.discountedPrice}</Text>
                                 </Text>
                               </View>
                             ) : (
@@ -420,7 +677,7 @@ goFilterDetail(){
                                     >
                                       {Colors.CUR}
                                     </Text>{" "}
-                                     <Text
+                                    <Text
                                       style={appStyles.amountmedium}
                                     >{item.price}</Text>
                                   </Text>
@@ -498,138 +755,246 @@ goFilterDetail(){
 
           }
         </Content>
-           
-       <Modal style={appStyles.SortModal} isVisible={this.state.isModalVisible} hasBackdrop={true} 
-     backdropColor={'#333'} backdropOpacity={0.3}>
-         
-       <View
-         style={appStyles.bottmSortMain}>  
-        
-       
-      
-             <View
-               style={appStyles.bottomSortInner}>  
-      <TouchableOpacity onPress={() =>this.SortShowFunction()} style={appStyles.closeBtnArea} >
-      <Icon name="closecircleo" type="AntDesign" style={appStyles.closeBtn}  />
-      </TouchableOpacity>
-        {ProductSorting.map((data, key) => {
-          return (  <Grid key={key} style={{paddingTop:20}}>       
-                  {this.state.SortinType == data.SortinType ?
-                  
-                     <Row>
-                      <Col style={{flex:1,justifyContent:'center',marginLeft:25}}>
-                          <Text style={appStyles.SortingText}>{data.SortinType}</Text>
-                      </Col>
-                       <Col style={[styles.btn,{flex:0,justifyContent:'center',width:50}]}>
-                          <Icon style={styles.imgSorting} name='radio-button-checked' type='MaterialIcons' />
-                       </Col>
-                      </Row>
-                   
-                      :
-                    
+
+        <Modal style={appStyles.SortModal} isVisible={this.state.isModalVisible} hasBackdrop={true}
+          backdropColor={'#333'} backdropOpacity={0.3}>
+
+          <View
+            style={appStyles.bottmSortMain}>
+
+
+
+            <View
+              style={appStyles.bottomSortInner}>
+              <TouchableOpacity onPress={() => this.SortShowFunction()} style={appStyles.closeBtnArea} >
+                <Icon name="closecircleo" type="AntDesign" style={appStyles.closeBtn} />
+              </TouchableOpacity>
+              {ProductSorting.map((data, key) => {
+                return (<Grid key={key} style={{ paddingTop: 20 }}>
+                  {this.state.SortinType == data.SortinValue ?
+
                     <Row>
-                      <Col style={{flex:1,justifyContent:'center',marginLeft:25}}>
-                          <Text style={appStyles.SortingText}>{data.SortinType}</Text>
+                      <Col style={{ flex: 1, justifyContent: 'center', marginLeft: 25 }}>
+                        <Text style={appStyles.SortingText}>{data.SortinType}</Text>
                       </Col>
-                       <Col style={[styles.btn,{flex:0,justifyContent:'center',width:50}]} onPress={()=>{this.setState({SortinType: data.SortinType})}} >
-                          <Icon style={appStyles.imgSorting} name='radio-button-unchecked' type='MaterialIcons' />
+                      <Col style={[styles.btn, { flex: 0, justifyContent: 'center', width: 50 }]}>
+                        <Icon style={styles.imgSorting} name='radio-button-checked' type='MaterialIcons' />
                       </Col>
                     </Row>
-                    
+
+                    :
+
+                    <Row>
+                      <Col style={{ flex: 1, justifyContent: 'center', marginLeft: 25 }}>
+                        <Text style={appStyles.SortingText}>{data.SortinType}</Text>
+                      </Col>
+                      <Col style={[styles.btn, { flex: 0, justifyContent: 'center', width: 50 }]} onPress={() => this.sortingapply(data.SortinValue)} >
+                        <Icon style={appStyles.imgSorting} name='radio-button-unchecked' type='MaterialIcons' />
+                      </Col>
+                    </Row>
+
 
                   }
-                </Grid>  
-          )
-      })}
-    
-      
+                </Grid>
+                )
+              })}
 
 
-        </View> 
-           
+
+
+            </View>
+
           </View>
         </Modal>
-         <Modal style={appStyles.SortModal} isVisible={this.state.isFilterVisible}  hasBackdrop={true} 
-     backdropColor={'#333'} backdropOpacity={0.3} >
- <View   style={appStyles.bottmFilterMain}>  
-        
-  <View style={appStyles.bottomFilterInner}>  
-     <TouchableOpacity onPress={() =>this.FilterShowFunction()} style={appStyles.closeBtnArea} >
-      <Icon name="closecircleo" type="AntDesign" style={appStyles.closeBtn}  />
-     </TouchableOpacity>
-     <List style={appStyles.filterList} >
-    {FilterCat.map((data, key) => {
-          return (      <ListItem style={appStyles.ListItemsFilter}  key={key}>   
-                
-                  
-                <Left style={{marginLeft:10}}>
-                 <TouchableOpacity onPress={()=>this.goFilterDetail()}>
-                  <Text style={appStyles.SortingText}>{data.FilterType}</Text>
-                  </TouchableOpacity>
-                </Left>
-                <Right style={{marginRight:10}}>
-                <TouchableOpacity>
-                 <Icon style={styles.img} name='angle-right' type='FontAwesome' />
-                 </TouchableOpacity>
-                </Right>
-                   
-                    
 
-                
-                </ListItem>  
-          )
-      })}
-            </List>
-      <Grid style={appStyles.ApplyButtonSection}>
-        <Row>
-          <Col>
-            <TouchableOpacity style={appStyles.applyFilter}><Text style={appStyles.applyFilterText}>Apply</Text></TouchableOpacity>
-          </Col>
-        </Row>
-      </Grid>
-         
+
+        <Modal style={[appStyles.SortModal, { height: '100%' }]} isVisible={this.state.isFilterVisible} hasBackdrop={true}
+          backdropColor={'#333'} backdropOpacity={0.3} >
+          <View style={appStyles.bottmFilterMain}>
+
+            <View style={appStyles.bottomFilterInner}>
+              <TouchableOpacity onPress={() => this.FilterShowFunction()} style={appStyles.closeBtnArea} >
+                <Icon name="closecircleo" type="AntDesign" style={appStyles.closeBtn} />
+              </TouchableOpacity>
+
+              <ScrollView style={{ marginTop: 25, flexDirection: 'column', marginBottom: 20, height: 350 }}>
+                <Collapse>
+                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
+
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Brand</Text>
+                  </CollapseHeader>
+                  <CollapseBody>
+                    {this.state.filterbrand.map((data, index) => {
+                      return (
+                        <View style={{ marginStart: 10, flexDirection: 'row' }}>
+                          <CheckBox
+                            title={data}
+                            onPress={() => this.addtobrand(this.state.filterid[index])}
+                            checked={this.state.selectedid.indexOf(this.state.filterid[index]) !== -1} />
+
+                        </View>
+                      )
+                    })}
+                  </CollapseBody>
+                </Collapse>
+
+
+
+                <Collapse>
+                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Prices</Text>
+                  </CollapseHeader>
+                  <CollapseBody>
+                    {/* {this.state.filterpricefrom.map((data, index) => {
+                      return (
+                        <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
+                          <CheckBox checked={this.state.selectedpricefrom == this.state.filterpricefrom[index]} />
+                          <TouchableOpacity
+                            onPress={() => this.addtopricefrom(this.state.filterpricefrom[index])}
+                            style={{ marginStart: 20 }}>
+                            <Text>{data}</Text>
+                          </TouchableOpacity>
+                        </View>
+
+                      )
+                    })} */}
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10 }}>
+                      <TextInput
+                        placeholder="From min"
+                        style={{ height: 40, borderColor: 'gray', marginBottom: 2, borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
+                        onChangeText={text => this.addtopricefrom(text)}
+                        value={this.state.selectedpricefrom}
+                      />
+                      <TextInput
+                        placeholder="To max"
+                        style={{ height: 40, borderColor: 'gray', marginBottom: 2, borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
+                        onChangeText={text => this.addtopriceto(text)}
+                        value={this.state.selectedpriceto}
+                      />
+
+                    </View>
+                  </CollapseBody>
+                </Collapse>
+
+
+                {/* <Collapse>
+                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Prices To</Text>
+                  </CollapseHeader>
+                  <CollapseBody>
+                    {this.state.filterpriceto.map((data, index) => {
+                      return (
+                        <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
+                          <CheckBox checked={this.state.selectedpriceto == this.state.filterpriceto[index]} />
+                          <TouchableOpacity
+                            onPress={() => this.addtopriceto(this.state.filterpriceto[index])}
+                            style={{ marginStart: 20 }}>
+                            <Text>{data}</Text>
+                          </TouchableOpacity>
+                        </View>
+
+                      )
+                    })}
+                  </CollapseBody>
+                </Collapse> */}
+
+                <Collapse>
+                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Discounts in %</Text>
+                  </CollapseHeader>
+                  <CollapseBody>
+                    {this.state.Discounts.map((data, index) => {
+                      return (
+                        <View style={{ marginStart: 10, flexDirection: 'row' }}>
+
+                          <CheckBox
+                            title={data.name}
+                            onPress={() => this.addtodiscount(this.state.Discounts[index].value)}
+                            checked={this.state.selecteddiscount.indexOf(this.state.Discounts[index].value) !== -1} />
+
+                        </View>
+                      )
+                    })}
+                  </CollapseBody>
+                </Collapse>
+
+                <Collapse>
+                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Ratings</Text>
+                  </CollapseHeader>
+                  <CollapseBody>
+                    {this.state.Ratings.map((data, index) => {
+                      return (
+
+                        <View style={{ marginStart: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                          <CheckBox
+                            onPress={() => this.addtorating(this.state.Ratings[index].value)}
+                            checked={this.state.selectedrating.indexOf(this.state.Ratings[index].value) !== -1} />
+                          <Image source={data.name}
+                            style={{ width: 100, height: 17, }}
+                          />
+                          <Text> {index != 0 ? '& more' : null}</Text>
+                        </View>
+                      )
+                    })}
+                  </CollapseBody>
+                </Collapse>
+              </ScrollView>
+
+              <Grid style={appStyles.ApplyButtonSection}>
+                <Row>
+                  <Col>
+                    <TouchableOpacity
+                      onPress={() => this.Filterapply()}
+                      style={appStyles.applyFilter}>{
+                        this.state.filterload ? <View style={{padding:12}}><ActivityIndicator color="#FFF"/></View> : <Text style={appStyles.applyFilterText}>Apply</Text>
+                      }</TouchableOpacity>
+                  </Col>
+                </Row>
+              </Grid>
+
+            </View>
           </View>
-         </View>
         </Modal>
 
 
- <Modal style={appStyles.SortModal} isVisible={this.state.isFilterDetailVisible}  hasBackdrop={true} 
-     backdropColor={'#333'} backdropOpacity={0.3} >
- <View   style={appStyles.bottmFilterMain}>  
-        
-  <View style={appStyles.bottomFilterDetailInner}>  
-     <TouchableOpacity onPress={() =>this.FilterDetailShowFunction()} style={appStyles.closeBtnArea} >
-      <Icon name="closecircleo" type="AntDesign" style={appStyles.closeBtn}  />
-     </TouchableOpacity>
-     <ScrollView>
-     <List style={[appStyles.filterList,{paddingBottom:25}]} >
-    {FilterDetailCat.map((data, key) => {
-          return ( 
-             <ListItem style={[appStyles.ListItemsFilter,{paddingTop:10,paddingBottom:10, overflow: 'scroll'}]}  key={key}>   
-              
-                <Left style={{marginLeft:10}}>
-                 <TouchableOpacity>
-                  <Text style={appStyles.SortingText}>{data.FilterType}({data.total})</Text>
-                  </TouchableOpacity>
-                </Left>
-            
-            </ListItem>  
-          )
-      })}
-   </List>
-  
-      <Grid style={[appStyles.ApplyButtonSection,{marginTop:10}]}>
-        <Row>
-         
-          <Col>
-            <TouchableOpacity onPress={() =>this.FilterDetailShowFunction()}
-            style={appStyles.applyFilter}><Text style={appStyles.applyFilterText}>Apply</Text></TouchableOpacity>
-          </Col>
-        </Row>
-      </Grid>
-      </ScrollView>    
+        <Modal style={appStyles.SortModal} isVisible={this.state.isFilterDetailVisible} hasBackdrop={true}
+          backdropColor={'#333'} backdropOpacity={0.3} >
+          <View style={appStyles.bottmFilterMain}>
+
+            <View style={appStyles.bottomFilterDetailInner}>
+              <TouchableOpacity onPress={() => this.FilterDetailShowFunction()} style={appStyles.closeBtnArea} >
+                <Icon name="closecircleo" type="AntDesign" style={appStyles.closeBtn} />
+              </TouchableOpacity>
+              <ScrollView>
+                <List style={[appStyles.filterList, { paddingBottom: 25 }]} >
+                  {FilterDetailCat.map((data, key) => {
+                    return (
+                      <ListItem style={[appStyles.ListItemsFilter, { paddingTop: 10, paddingBottom: 10, overflow: 'scroll' }]} key={key}>
+
+                        <Left style={{ marginLeft: 10 }}>
+                          <TouchableOpacity>
+                            <Text style={appStyles.SortingText}>{data.FilterType}({data.total})</Text>
+                          </TouchableOpacity>
+                        </Left>
+
+                      </ListItem>
+                    )
+                  })}
+                </List>
+
+                <Grid style={[appStyles.ApplyButtonSection, { marginTop: 10 }]}>
+                  <Row>
+
+                    <Col>
+                      <TouchableOpacity onPress={() => this.FilterDetailShowFunction()}
+                        style={appStyles.applyFilter}><Text style={appStyles.applyFilterText}>Apply</Text></TouchableOpacity>
+                    </Col>
+                  </Row>
+                </Grid>
+              </ScrollView>
+            </View>
           </View>
-         </View>
         </Modal>
         {/*<Catalog {...this.props} />*/}
       </Container>
@@ -654,8 +1019,25 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(userActions.showProductList({ subCategoryId: subCategoryId, categoryId: categoryId })),
     fetchSubCategory: (categoryId) =>
       dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
+
+    fetchItemsByOfferfilter: (offerId, userId,brandid, pricefrom, priceto, rating, discount) =>
+      dispatch(productActions.fetchItemsByOffer({
+        offerId: offerId, 
+        userId: userId, 
+        brandId: brandid.toString(),
+        priceFrom: pricefrom.toString(),
+        priceTo: priceto.toString(),
+        ratings: rating.toString(),
+        discount: discount.toString(),
+      })),
+
     fetchItemsByOffer: (offerId, userId) =>
       dispatch(productActions.fetchItemsByOffer({ offerId: offerId, userId: userId })),
+
+    fetchItemsByOffersorting: (offerId, userId, sort) =>
+      dispatch(productActions.fetchItemsByOffer({ offerId: offerId, userId: userId, sortBy: sort, })),
+
+
     fetchItemsByOfferWithoutLoader: (offerId, userId) =>
       dispatch(productActions.fetchItemsByOfferWithoutLoader({ offerId: offerId, userId: userId })),
     productDetail: (id, userId) =>
@@ -666,7 +1048,25 @@ const mapDispatchToProps = (dispatch) => {
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
     checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId: userId })),
     searchItem: (searchString, userId) => dispatch(productActions.searchItem({ searchString: searchString, userId: userId })),
+    filtersapply: (brandid, ethenicityid, localbrandid, pricefrom, priceto, rating, discount) => dispatch(productActions.filterapply(
+      {
+        brandid: brandid,
+        ethenicity: ethenicityid,
+        brandId: localbrandid.toString(),
+        priceFrom: pricefrom.toString(),
+        priceTo: priceto.toString(),
+        ratings: rating.toString(),
+        discount: discount.toString(),
 
+      })),
+
+    sortingapply: (sort, brandid, ethenicityid) => dispatch(productActions.filterapply(
+      {
+        sortBy: sort,
+        brandId: brandid,
+        ethenicity: ethenicityid
+
+      })),
   };
 };
 

@@ -57,11 +57,14 @@ class ProductDetail extends React.Component {
       productImages: '',
       selctedProduct: '',
       variant: '',
-      wished: false,
+      wished: this.props.ProductDetail.item[0].wishListExists == "1" ? true : false,
       likeloder:false,
       isLoading: false,
+      load:true,
     };
-
+    setTimeout(() => {
+      this.setState({load:false})
+    }, 7000);
   }
   onValueChange(value: string) {
     this.setState({
@@ -79,13 +82,20 @@ class ProductDetail extends React.Component {
       this.setState({
         productImages: this.props.ProductDetail.itemImages,
       });
+     
     });
 
   }
 
   productDetail(id) {
+    console.log("HEERE IS PRODUCT ID",id)
     this.props.productDetail(id, this.props.user.user.id).then(res => {
-      this.setState({ selctedProduct: '' })
+      // this.setState({ selctedProduct: '' })
+      this.component._root.scrollToPosition(0, 0)
+       this.setState({
+      wished: this.props.ProductDetail.item[0].wishListExists == 1 ? true : false
+    })
+      console.log("RES",res)
     })
 
   }
@@ -224,7 +234,7 @@ class ProductDetail extends React.Component {
         this.props
           .addtowishlist(itemid, userid)
           .then((res) => {
-            console.log("Add to wishlist here", res.status)
+            //console.log("Add to wishlist here", res.status)
             if (res.status == "success") {
               this.setState({ wished: true, likeloder: false })
             } else {
@@ -238,19 +248,20 @@ class ProductDetail extends React.Component {
             this.setState({ likeloder: false })
             showToast("Error messages returned from server", "danger");
           }) :
+         // console.log("Call removed")
         this.props
-          .removewishlist(itemid, userid)
+          .removewishlist(this.props.ProductDetail.item[0].wishListId)
           .then((res) => {
-            console.log("SERVER RES LIKE", error)
+            //console.log("SERVER RES LIKE", error)
             if (res.status == "success") {
               this.setState({ wished: false, likeloder: false })
             } else {
               this.setState({ likeloder: false })
-              showToast("Something wrong with Server response 0", "danger");
+              showToast("Something wrong with Server response ", "danger");
             }
           })
           .catch((error) => {
-            console.log("SERVER ERROR LIKE 1", error)
+            //console.log("SERVER ERROR LIKE 1", error)
             this.setState({ likeloder: false })
             showToast(error, "danger");
           });
@@ -267,6 +278,9 @@ class ProductDetail extends React.Component {
     const { navigation, ProductDetail,similarproducts } = this.props;
     const { selectedIndex } = this.state;
     const ProductVariant = ProductDetail.item[0].variations;
+
+    //console.log("PRODUCT",ProductDetail.item[0].wishListId)
+
     var foodType = '';
     if (ProductDetail.item[0].foodType == 'veg')
       foodType = '#00ff00';
@@ -285,13 +299,13 @@ class ProductDetail extends React.Component {
           bgColor='transparent'
           Title='Product Detail'
           IconRightF="search"
-        />
-        
-        <Content enableOnAndroid>
+        />   
+      <Content enableOnAndroid ref={c => (this.component = c)} >
         {this.state.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
         ) : (
           <View>
+
           <Grid style={styles.paddingBox}>
             <Row style={styles.firstRow}>
               <Col >
@@ -378,8 +392,8 @@ class ProductDetail extends React.Component {
                       (<Icon name='heart' type='AntDesign' style={styles.hearto} />) :
                     (<Icon name='hearto' type='AntDesign' style={styles.hearto} />)
                   }
-
                 </TouchableOpacity>
+                
               </Col>
 
             </Row>
@@ -533,25 +547,29 @@ class ProductDetail extends React.Component {
 
 
           <Row style={styles.secondRow}>
-
+          
+          {
+            this.state.load ? <ActivityIndicator/> :  
             <Col style={{ justyfyContent: 'center', alignItems: 'center', marginLeft: Layout.indent, marginRight: Layout.indent }}>
-              <Carousel
-                ref={(c) => { this._carousel = c; }}
-                loop={true}
-                autoplay={true}
-                data={similarproducts}
-                renderItem={this._similarItem}
-                sliderWidth={Layout.window.width}
-                itemWidth={120}
-                autoplayInterval={2000}
-                autoplayDelay={2000}
-                onSnapToItem={(index) => this.setState({ activeSlide: index })}
-                slideStyle={{ paddding: 0, margin: 0, borderWidth: 0, borderColor: 0 }}
-                contentContainerCustomStyle={{ paddding: 0, margin: 0, borderWidth: 0 }}
+            <Carousel
+              ref={(c) => { this._carousel = c; }}
+              loop={true}
+              autoplay={true}
+              data={similarproducts}
+              renderItem={this._similarItem}
+              sliderWidth={Layout.window.width}
+              itemWidth={120}
+              autoplayInterval={2000}
+              autoplayDelay={2000}
+              onSnapToItem={(index) => this.setState({ activeSlide: index })}
+              slideStyle={{ paddding: 0, margin: 0, borderWidth: 0, borderColor: 0 }}
+              contentContainerCustomStyle={{ paddding: 0, margin: 0, borderWidth: 0 }}
 
-              />
-              {this.pagination}
-            </Col>
+            />
+            {this.pagination}
+          </Col>
+          }
+           
 
 
             {/* <Image source={{uri: url.imageURL+ProductDetail.itemImages[0].imagePath}} style={styles.amulMoti} />*/}
@@ -595,8 +613,8 @@ const mapDispatchToProps = (dispatch) => {
     addtowishlist: (itemid, userId) =>
       dispatch(productActions.addtowishlist({ userId: userId, itemId: itemid })),
 
-    removewishlist: (itemid, userId) =>
-      dispatch(productActions.deltowishlist({ itemId: itemid, userId: userId, })),
+      removewishlist: (itemid) =>
+      dispatch(productActions.deltowishlist({id: itemid })),
   };
 };
 

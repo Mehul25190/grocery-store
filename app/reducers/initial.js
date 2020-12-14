@@ -28,6 +28,7 @@ export const initialState = {
 		brandlisting: [],
 		fetchwishlist:[],
 		similarproduct:[],
+		applyfilter:[]
 	},
 	cart: {
 		viewCartDetail: {},
