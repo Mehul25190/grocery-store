@@ -388,7 +388,13 @@ class ProductList extends React.Component {
   }
 sortingapply(val){
   this.setState({ SortinType: val })
-  this.props.sortingapply(val,this.state.categoryId,this.state.selectSubCat).then(res => {
+  this.props.filterapply(this.state.selectedid, 
+    this.state.selectedpricefrom, 
+    this.state.selectedpriceto, 
+    this.state.selectedrating, 
+    this.state.selecteddiscount,
+    this.state.categoryId,
+    this.state.selectSubCat,val).then(res => {
     this.setState({ isModalVisible: false})
     if (res.status == 200) {
       this.setState({ isModalVisible: false,productData: res.data.data.itemList, });
@@ -1068,7 +1074,7 @@ const mapDispatchToProps = (dispatch) => {
     updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId: userId, itemId: itemId, quantity: quantity })),
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
     checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId: userId })),
-    filterapply: (brandid, pricefrom, priceto, rating, discount,catid,subcatid) => dispatch(productActions.filterapply(
+    filterapply: (brandid, pricefrom, priceto, rating, discount,catid,subcatid,sort) => dispatch(productActions.filterapply(
       {
 
         brandId: brandid.toString(),
@@ -1078,14 +1084,15 @@ const mapDispatchToProps = (dispatch) => {
         discount: discount.toString(),
         categoryId: catid.toString(),
         subCategoryId: subcatid.toString(),
+        sortBy:sort,
       })),
 
-      sortingapply: (sort,catid,subcatid) => dispatch(productActions.filterapply(
-        {
-          sortBy:sort,
-          categoryId: catid.toString(),
-          subCategoryId: subcatid.toString(),
-        })),
+      // sortingapply: (sort,catid,subcatid) => dispatch(productActions.filterapply(
+      //   {
+          
+      //     categoryId: catid.toString(),
+      //     subCategoryId: subcatid.toString(),
+      //   })),
     //  
   };
 };

@@ -410,7 +410,7 @@ class SearchProduct extends React.Component {
 
   sortingapply(val) {
     this.setState({ SortinType: val })
-    this.props.sortingapply(this.state.text, this.props.user.user.id, val).then(res => {
+    this.props.filterapply(this.state.text, this.props.user.user.id, this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount, val).then(res => {
       console.log("RESPONSE OF sorting", res.status)
       this.setState({ isModalVisible: false})
       if (res.status == "success") {
@@ -446,7 +446,7 @@ class SearchProduct extends React.Component {
               if (text.length > 2)
                 setTimeout(() => { this.productItemList(this.state.text) }, 3000)
             }
-            } placeholder='Search Product' />
+            } placeholder='Search Product 0' />
           </Item>
 
           <Right style={appStyles.headerRight}>
@@ -920,7 +920,7 @@ const mapDispatchToProps = (dispatch) => {
     updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId: userId, itemId: itemId, quantity: quantity })),
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
     checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId: userId })),
-    filterapply: (searchString, userId, brandid, pricefrom, priceto, rating, discount) => dispatch(productActions.searchItem(
+    filterapply: (searchString, userId, brandid, pricefrom, priceto, rating, discount, sort) => dispatch(productActions.searchItem(
       {
         searchString: searchString, userId: userId,
         brandId: brandid.toString(),
@@ -928,13 +928,14 @@ const mapDispatchToProps = (dispatch) => {
         priceTo: priceto.toString(),
         ratings: rating.toString(),
         discount: discount.toString(),
-      })),
-
-    sortingapply: (searchString, userId, sort) => dispatch(productActions.searchItem(
-      {
-        searchString: searchString, userId: userId,
         sortBy: sort,
       })),
+
+    // sortingapply: (searchString, userId, sort) => dispatch(productActions.searchItem(
+    //   {
+    //     searchString: searchString, userId: userId,
+       
+    //   })),
   };
 };
 

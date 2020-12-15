@@ -87,7 +87,7 @@ class SearchOffer extends React.Component {
       filterpriceto: [],
       filterpricefrom: [],
       filterid: [],
-      filterload:false,
+      filterload: false,
       Ratings: [{
         name: require('../../assets/stars/stars5.jpg'),
         value: '5'
@@ -426,20 +426,12 @@ class SearchOffer extends React.Component {
     const comefrom = this.props.navigation.getParam("comefrom");
     const offer_id = this.props.navigation.getParam('offer_id');
 
-    console.log("check HERE",brand,
-    ethenicity,
-    this.state.selectedid,
-    this.state.selectedpricefrom,
-    this.state.selectedpriceto,
-    this.state.selectedrating,
-    this.state.selecteddiscount)
-
     this.setState({
-      filterload:true
+      filterload: true
     })
     if (this.state.selectedpricefrom > this.state.selectedpriceto) {
       this.setState({
-        Filterapply:false
+        Filterapply: false
       })
       return showToast("Please Check Price", "danger")
     } else {
@@ -456,11 +448,11 @@ class SearchOffer extends React.Component {
               this.state.selecteddiscount)
             .then((res) => {
               this.setState({
-                filterload:false
+                filterload: false
               })
               if (res.status == "success") {
                 if (res.data.itemList) {
-                  this.setState({ isFilterVisible: false,productData: res.data.itemList });
+                  this.setState({ isFilterVisible: false, productData: res.data.itemList });
                   this.courseFilterArr = res.data.itemList;
                 }
               } else {
@@ -470,17 +462,16 @@ class SearchOffer extends React.Component {
             ) :
 
           this.props.filtersapply(
-            brand,
             ethenicity,
-            this.state.selectedid,
+            brand ? brand : this.state.selectedid,
             this.state.selectedpricefrom,
             this.state.selectedpriceto,
             this.state.selectedrating,
             this.state.selecteddiscount).then(res => {
               this.setState({
-                filterload:false
+                filterload: false
               })
-              console.log("ETHENI FILTER",res.status)
+              console.log("ETHENI FILTER", res.status)
               if (res.status == 200) {
                 this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
                 // this.props.navigation.navigate('SearchProduct', {
@@ -503,9 +494,15 @@ class SearchOffer extends React.Component {
 
     {
       comefrom == 'offer' ?
-        this.props.fetchItemsByOffersorting(offer_id, this.props.user.user.id, val,)
+        this.props.fetchItemsByOfferfilter(offer_id,
+          this.props.user.user.id,
+          this.state.selectedid,
+          this.state.selectedpricefrom,
+          this.state.selectedpriceto,
+          this.state.selectedrating,
+          this.state.selecteddiscount, val)
           .then((res) => {
-            this.setState({ isModalVisible: false})
+            this.setState({ isModalVisible: false })
             if (res.status == "success") {
               if (res.data.itemList) {
                 this.setState({ productData: res.data.itemList });
@@ -518,16 +515,21 @@ class SearchOffer extends React.Component {
           ) :
 
 
-        this.props.sortingapply(val, brand, ethenicity).then(res => {
-          if (res.status == 200) {
-            this.setState({ isModalVisible: false, productData: res.data.data.itemList, });
-            // this.props.navigation.navigate('SearchProduct', {
-            //   Filter: true
-            // })
-          } else {
-            showToast("Something went Wrong", "danger")
-          }
-        })
+        this.props.filtersapply(ethenicity,
+          brand ? brand : this.state.selectedid,
+          this.state.selectedpricefrom,
+          this.state.selectedpriceto,
+          this.state.selectedrating,
+          this.state.selecteddiscount, val).then(res => {
+            if (res.status == 200) {
+              this.setState({ isModalVisible: false, productData: res.data.data.itemList, });
+              // this.props.navigation.navigate('SearchProduct', {
+              //   Filter: true
+              // })
+            } else {
+              showToast("Something went Wrong", "danger")
+            }
+          })
     }
   }
 
@@ -637,10 +639,10 @@ class SearchOffer extends React.Component {
                               <Text style={styles.proBrand}>{item.brandName}</Text>
                             </View>
                             <View style={{ flex: 0, width: 12 }}>
-                            {
-                            item.foodType != "NA" &&
-                              <Image style={appStyles.vegImage} source={item.foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
-                            }
+                              {
+                                item.foodType != "NA" &&
+                                <Image style={appStyles.vegImage} source={item.foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
+                              }
                             </View>
                           </View>
 
@@ -960,7 +962,7 @@ class SearchOffer extends React.Component {
                     <TouchableOpacity
                       onPress={() => this.Filterapply()}
                       style={appStyles.applyFilter}>{
-                        this.state.filterload ? <View style={{padding:12}}><ActivityIndicator color="#FFF"/></View> : <Text style={appStyles.applyFilterText}>Apply</Text>
+                        this.state.filterload ? <View style={{ padding: 12 }}><ActivityIndicator color="#FFF" /></View> : <Text style={appStyles.applyFilterText}>Apply</Text>
                       }</TouchableOpacity>
                   </Col>
                 </Row>
@@ -1033,22 +1035,23 @@ const mapDispatchToProps = (dispatch) => {
     fetchSubCategory: (categoryId) =>
       dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
 
-    fetchItemsByOfferfilter: (offerId, userId,brandid, pricefrom, priceto, rating, discount) =>
+    fetchItemsByOfferfilter: (offerId, userId, brandid, pricefrom, priceto, rating, discount,sort) =>
       dispatch(productActions.fetchItemsByOffer({
-        offerId: offerId, 
-        userId: userId, 
+        offerId: offerId,
+        userId: userId,
         brandId: brandid.toString(),
         priceFrom: pricefrom.toString(),
         priceTo: priceto.toString(),
         ratings: rating.toString(),
         discount: discount.toString(),
+        sortBy: sort,
       })),
 
     fetchItemsByOffer: (offerId, userId) =>
       dispatch(productActions.fetchItemsByOffer({ offerId: offerId, userId: userId })),
 
-    fetchItemsByOffersorting: (offerId, userId, sort) =>
-      dispatch(productActions.fetchItemsByOffer({ offerId: offerId, userId: userId, sortBy: sort, })),
+    // fetchItemsByOffersorting: (offerId, userId, sort) =>
+    //   dispatch(productActions.fetchItemsByOffer({ offerId: offerId, userId: userId,  })),
 
 
     fetchItemsByOfferWithoutLoader: (offerId, userId) =>
@@ -1061,25 +1064,25 @@ const mapDispatchToProps = (dispatch) => {
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
     checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId: userId })),
     searchItem: (searchString, userId) => dispatch(productActions.searchItem({ searchString: searchString, userId: userId })),
-    filtersapply: (brandid, ethenicityid, localbrandid, pricefrom, priceto, rating, discount) => dispatch(productActions.filterapply(
+    filtersapply: (ethenicityid, localbrandid, pricefrom, priceto, rating, discount, sort) => dispatch(productActions.filterapply(
       {
-        brandid: brandid,
         ethnicity: ethenicityid,
         brandId: localbrandid.toString(),
         priceFrom: pricefrom.toString(),
         priceTo: priceto.toString(),
         ratings: rating.toString(),
         discount: discount.toString(),
-
-      })),
-
-    sortingapply: (sort, brandid, ethenicityid) => dispatch(productActions.filterapply(
-      {
         sortBy: sort,
-        brandId: brandid,
-        ethnicity: ethenicityid
 
       })),
+
+    // sortingapply: (, brandid, ethenicityid) => dispatch(productActions.filterapply(
+    //   {
+
+    //     brandId: brandid,
+    //     ethnicity: ethenicityid
+
+    //   })),
   };
 };
 
