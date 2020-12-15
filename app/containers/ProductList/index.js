@@ -664,7 +664,10 @@ sortingapply(val){
                           <Text style={styles.proBrand}>{item.brandName}</Text>
                         </View>
                         <View style={{ flex: 0, width: 12 }}>
+                        {
+                            item.foodType != "NA" &&
                           <Image style={[appStyles.vegImage, { marginTop: 2 }]} source={item.foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
+                        }
                         </View>
                       </View>
 
