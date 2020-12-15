@@ -425,6 +425,15 @@ class SearchOffer extends React.Component {
     const ethenicity = this.props.navigation.getParam("ethenicityid");
     const comefrom = this.props.navigation.getParam("comefrom");
     const offer_id = this.props.navigation.getParam('offer_id');
+
+    console.log("check HERE",brand,
+    ethenicity,
+    this.state.selectedid,
+    this.state.selectedpricefrom,
+    this.state.selectedpriceto,
+    this.state.selectedrating,
+    this.state.selecteddiscount)
+
     this.setState({
       filterload:true
     })
@@ -471,6 +480,7 @@ class SearchOffer extends React.Component {
               this.setState({
                 filterload:false
               })
+              console.log("ETHENI FILTER",res.status)
               if (res.status == 200) {
                 this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
                 // this.props.navigation.navigate('SearchProduct', {
@@ -1051,7 +1061,7 @@ const mapDispatchToProps = (dispatch) => {
     filtersapply: (brandid, ethenicityid, localbrandid, pricefrom, priceto, rating, discount) => dispatch(productActions.filterapply(
       {
         brandid: brandid,
-        ethenicity: ethenicityid,
+        ethnicity: ethenicityid,
         brandId: localbrandid.toString(),
         priceFrom: pricefrom.toString(),
         priceTo: priceto.toString(),
@@ -1064,7 +1074,7 @@ const mapDispatchToProps = (dispatch) => {
       {
         sortBy: sort,
         brandId: brandid,
-        ethenicity: ethenicityid
+        ethnicity: ethenicityid
 
       })),
   };
