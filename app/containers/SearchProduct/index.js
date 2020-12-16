@@ -446,7 +446,7 @@ class SearchProduct extends React.Component {
               if (text.length > 2)
                 setTimeout(() => { this.productItemList(this.state.text) }, 3000)
             }
-            } placeholder='Search Product 0' />
+            } placeholder='Search Product' />
           </Item>
 
           <Right style={appStyles.headerRight}>

@@ -314,10 +314,14 @@ class ProductDetail extends React.Component {
                   <View style={styles.brandAndVeg}>
                     <View style={{ flex: 0, marginRight: 10 }}>
                       <Text style={styles.AmuText}>{ProductDetail.item[0].brandName}</Text>
+                  
                       
                     </View>
                     <View style={{ flex: 0, width: 12 }}>
-                      <Image style={{ width: 12, height: 12 }} source={ProductDetail.item[0].foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
+                      {
+                       ProductDetail.item[0].foodType != 'NA' && <Image style={{ width: 12, height: 12 }} source={ProductDetail.item[0].foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
+                      }
+                      
                     </View>
                   </View>
 
