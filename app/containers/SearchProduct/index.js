@@ -527,7 +527,7 @@ class SearchProduct extends React.Component {
                         </View>
                         <View style={{ flex: 0, width: 12 }}>
                           {
-                            (item.foodType != "NA" || item.foodType != null )&& <Image style={[appStyles.vegImage, { marginTop: 2 }]} source={item.foodType == 'veg' ? imgs.smallVeg
+                            (item.foodType != "NA" && item.foodType != null )&& <Image style={[appStyles.vegImage, { marginTop: 2 }]} source={item.foodType == 'veg' ? imgs.smallVeg
                               :
                               item.foodType == 'vegan' ? imgs.smallVegan
                                 :

@@ -641,7 +641,7 @@ class SearchOffer extends React.Component {
                             <View style={{ flex: 0, width: 12 }}>
                               
                               {
-                            (item.foodType != "NA" || item.foodType != null)  && <Image style={appStyles.vegImage} source={item.foodType == 'veg' ? imgs.smallVeg
+                            (item.foodType != "NA" && item.foodType != null)  && <Image style={appStyles.vegImage} source={item.foodType == 'veg' ? imgs.smallVeg
                               :
                               item.foodType == 'vegan' ? imgs.smallVegan
                                 :
