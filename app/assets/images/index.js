@@ -37,6 +37,7 @@ const images = {
 	AEDpng:require('./aed3.png'),
 	subscribe:require('./subscribe.png'),
 	smallVeg:require('./small-veg.png'),
+	smallVegan:require('./small-vegan.png'),
 	smallNonVeg:require('./small-nonveg.png'),
 
 };

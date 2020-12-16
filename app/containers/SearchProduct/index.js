@@ -395,16 +395,16 @@ class SearchProduct extends React.Component {
     } else {
       this.props.filterapply(this.state.text, this.props.user.user.id, this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount).then(res => {
         this.setState({
-          filterload:false
+          filterload: false
         })
         if (res.status == "success") {
           this.setState({ isFilterVisible: false, Filter: true, productData: res.data.itemList });
         } else {
-          this.setState({ isFilterVisible: false})
+          this.setState({ isFilterVisible: false })
           showToast("Something went Wrong", "danger")
         }
       })
-     
+
     }
   }
 
@@ -412,7 +412,7 @@ class SearchProduct extends React.Component {
     this.setState({ SortinType: val })
     this.props.filterapply(this.state.text, this.props.user.user.id, this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount, val).then(res => {
       console.log("RESPONSE OF sorting", res.status)
-      this.setState({ isModalVisible: false})
+      this.setState({ isModalVisible: false })
       if (res.status == "success") {
         this.setState({ isModalVisible: false, productData: res.data.itemList });
       } else {
@@ -487,6 +487,7 @@ class SearchProduct extends React.Component {
           ) : (<View>
             {this.state.productData.map((item, index) => {
               // productList.map((item, index) => {
+                console.log("NULL CHECK",item.foodType)
               var foodType = '';
               if (item.foodType == 'veg')
                 foodType = '#00ff00';
@@ -526,13 +527,17 @@ class SearchProduct extends React.Component {
                         </View>
                         <View style={{ flex: 0, width: 12 }}>
                           {
-                            item.foodType != "NA" && <Image style={[appStyles.vegImage, { marginTop: 2 }]} source={item.foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
+                            item.foodType != "NA"||null && <Image style={[appStyles.vegImage, { marginTop: 2 }]} source={item.foodType == 'veg' ? imgs.smallVeg
+                              :
+                              item.foodType == 'vegan' ? imgs.smallVegan
+                                :
+                                imgs.smallNonVeg} />
                           }
-                          
+
                         </View>
                       </View>
                       <Text style={styles.proTitle}>{item.itemName}</Text>
-
+                    
                       <Text style={styles.proQuanitty} note>
                         {item.weight !== ""
                           ? "(" + item.weight + " " + item.uom + ")"
@@ -934,7 +939,7 @@ const mapDispatchToProps = (dispatch) => {
     // sortingapply: (searchString, userId, sort) => dispatch(productActions.searchItem(
     //   {
     //     searchString: searchString, userId: userId,
-       
+
     //   })),
   };
 };

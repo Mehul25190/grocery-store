@@ -639,10 +639,14 @@ class SearchOffer extends React.Component {
                               <Text style={styles.proBrand}>{item.brandName}</Text>
                             </View>
                             <View style={{ flex: 0, width: 12 }}>
+                              
                               {
-                                item.foodType != "NA" &&
-                                <Image style={appStyles.vegImage} source={item.foodType == 'veg' ? imgs.smallVeg : imgs.smallNonVeg} />
-                              }
+                            item.foodType != "NA"||null && <Image style={appStyles.vegImage} source={item.foodType == 'veg' ? imgs.smallVeg
+                              :
+                              item.foodType == 'vegan' ? imgs.smallVegan
+                                :
+                                imgs.smallNonVeg} />
+                          }
                             </View>
                           </View>
 
