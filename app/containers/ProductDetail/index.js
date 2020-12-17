@@ -319,7 +319,7 @@ class ProductDetail extends React.Component {
                           </View>
                           <View style={{ flex: 0, width: 12 }}>
                             {
-                              (item.foodType != "NA" && item.foodType != null)  && <Image style={{ width: 12, height: 12 }} source={ProductDetail.item[0].foodType == 'veg' ? imgs.smallVeg
+                              (ProductDetail.item[0].foodType != "NA" && ProductDetail.item[0].foodType != null)  && <Image style={{ width: 12, height: 12 }} source={ProductDetail.item[0].foodType == 'veg' ? imgs.smallVeg
                                 :
                                 ProductDetail.item[0].foodType == 'vegan' ? imgs.smallVegan
                                   :
