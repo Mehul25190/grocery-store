@@ -57,6 +57,14 @@ const subscription = (state = initialState.product, action) => {
       }
     }
 
+    case ActionTypes.FILTERDATA: {
+      return {
+        ...state,
+        applyfilter: action.data,
+      }
+    }
+    
+
     // Default
     default: {
       return state;

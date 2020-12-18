@@ -95,26 +95,32 @@ export const FilterDetailCat =[
 ];
 
 export const ProductSorting =[
- 
+  //popular,price_asc,price_desc,createdDtm_desc,createdDtm_asc
+  
   {
     key:1,
-    SortinType:'Popurality'
+    SortinType:'Popurality',
+    SortinValue:'popular',
   },
   {
     key:2,
-    SortinType:'Price : High to Low'
+    SortinType:'Price : High to Low',
+    SortinValue:'price_desc'
   },
   {
     key:3,
-    SortinType:'Price : Low to High'
+    SortinType:'Price : Low to High',
+    SortinValue:'price_asc'
   },
   {
    key:4,
-    SortinType:'Newest'
+    SortinType:'Newest',
+    SortinValue:'createdDtm_desc'
   },
   {
     key:5,
-    SortinType:'Oldest'
+    SortinType:'Oldest',
+    SortinValue:'createdDtm_asc'
   },
  
  
