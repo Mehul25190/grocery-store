@@ -88,14 +88,14 @@ class ProductDetail extends React.Component {
   }
 
   productDetail(id) {
-    console.log("HEERE IS PRODUCT ID", id)
+    //console.log("HEERE IS PRODUCT ID", id)
     this.props.productDetail(id, this.props.user.user.id).then(res => {
       // this.setState({ selctedProduct: '' })
       this.component._root.scrollToPosition(0, 0)
       this.setState({
         wished: this.props.ProductDetail.item[0].wishListExists == 1 ? true : false
       })
-      console.log("RES", res)
+      //console.log("RES", res)
     })
 
   }
@@ -103,7 +103,8 @@ class ProductDetail extends React.Component {
   variantProductDetail(id) {
     this.setState({ isLoading: true });
     this.props.productDetail(id, this.props.user.user.id).then(res => {
-      this.setState({ selctedProduct: '', isLoading: false })
+      //console.log('eeeee', res.data.item[0].wishListExists)
+      this.setState({ selctedProduct: '', isLoading: false, wished: res.data.item[0].wishListExists == 1 ? true : false })
     })
 
   }
@@ -279,7 +280,7 @@ class ProductDetail extends React.Component {
     const { selectedIndex } = this.state;
     const ProductVariant = ProductDetail.item[0].variations;
 
-    //console.log("PRODUCT",ProductDetail.item[0].wishListId)
+    console.log("PRODUCT",ProductDetail.item[0])
 
     var foodType = '';
     if (ProductDetail.item[0].foodType == 'veg')
@@ -471,12 +472,10 @@ class ProductDetail extends React.Component {
                         {/*<Col style={[styles.variantBtnActive, {}]}>
                       <Text style={styles.variantTextActive}>{data.weight} {data.uom}</Text>
                     </Col>*/}
-                        {data.id != ProductDetail.item[0].id ?
                           <Col onPress={() => this.variantProductDetail(data.id)} style={[styles.variantBtnDeactive, {}]}>
                             {/*<Icon style={styles.variantImg} name='rectangle-outline' type='MaterialCommunityIcons' />*/}
                             <Text style={styles.variantTextDeactive}>{data.weight} {data.uom}</Text>
                           </Col>
-                          : null}
                       </View>
                       )
                     })}
