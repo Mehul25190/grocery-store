@@ -66,7 +66,7 @@ import Carousel from 'react-native-snap-carousel';
 import Modal from 'react-native-modal';
 import { element } from "prop-types";
 import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
-
+import { AntDesign } from '@expo/vector-icons'; 
 import { CheckBox } from 'react-native-elements'
 
 class ProductList extends React.Component {
@@ -867,7 +867,8 @@ sortingapply(val){
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
 
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Brand</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Brand</Text>
+                    <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
                     {this.state.filterbrand.map((data, index) => {
@@ -888,7 +889,8 @@ sortingapply(val){
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Prices</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Prices</Text>
+                    <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
                     {/* {this.state.filterpricefrom.map((data, index) => {
@@ -945,8 +947,9 @@ sortingapply(val){
                 </Collapse> */}
 
                 <Collapse>
-                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Discounts in %</Text>
+                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd', }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Discounts in %</Text>
+                    <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
                     {this.state.Discounts.map((data, index) => {
@@ -966,7 +969,8 @@ sortingapply(val){
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Ratings</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Ratings</Text>
+                    <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
                     {this.state.Ratings.map((data, index) => {

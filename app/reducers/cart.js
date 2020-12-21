@@ -50,6 +50,18 @@ const cart = (state = initialState.cart, action) => {
         walletAmount: action.data,
       }
     }
+    case ActionTypes.CHECHOUTAMOUNT: {
+      return {
+        ...state,
+        checkoutAmount: action.data,
+      }
+    }
+    case ActionTypes.DUMMYUSER: {
+      return {
+        ...state,
+        dummyuser: action.data,
+      }
+    }
     
     // Default
     default: {

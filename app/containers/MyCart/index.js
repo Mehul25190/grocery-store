@@ -25,6 +25,7 @@ import url from "../../config/api";
 import { showToast } from '../../utils/common';
 import { ScreenLoader } from '../../components';
 import * as productActions from "../../actions/product";
+import { Alert } from 'react-native';
 
 class MyCart extends React.Component {
 
@@ -43,7 +44,7 @@ class MyCart extends React.Component {
 
   }
   componentDidMount() {
-    
+
     this.focusListener = this.props.navigation.addListener("willFocus", () => {
       this.getCartDetail();
     });
@@ -72,10 +73,10 @@ class MyCart extends React.Component {
 
     this.props.viewCart(this.props.user.user.id).then(res => {
       //console.log('rerrer', res.data.itemsRemoved)
-      if(res.data.itemsRemoved == 'Y'){
-        this.setState({isModalVisible: true})
+      if (res.data.itemsRemoved == 'Y') {
+        this.setState({ isModalVisible: true })
       }
-      
+
       if (res.status == 'success') {
         this.setState({ userAddressDtls: res.data.userAddressDtls })
       } else {
@@ -116,7 +117,7 @@ class MyCart extends React.Component {
   }
 
   updateCartPress(id, itemId, value) {
-    this.setState({selctedProduct: id})
+    this.setState({ selctedProduct: id })
 
     //this.setState({loading: true}); 
     if (value == 0) {
@@ -124,7 +125,7 @@ class MyCart extends React.Component {
         if (res.status == "success") {
           this.props.viewCart(this.props.user.user.id).then(res => {
             //showToast('Cart updated successfully.', "success")
-            this.setState({selctedProduct: ''})
+            this.setState({ selctedProduct: '' })
           })
         }
 
@@ -135,7 +136,7 @@ class MyCart extends React.Component {
           this.props.viewCart(this.props.user.user.id).then(res => {
             //showToast('Cart updated successfully.', "success");
             //this.setState({loading: false});
-            this.setState({selctedProduct: ''})
+            this.setState({ selctedProduct: '' })
           })
         }
 
@@ -143,90 +144,98 @@ class MyCart extends React.Component {
     }
   }
 
-  productDetail(id){
+  productDetail(id) {
     this.props.productDetail(id, this.props.user.user.id).then(res => {
-      if(res.status == "success"){
-        if(res.data.item.length > 0){
+      if (res.status == "success") {
+        if (res.data.item.length > 0) {
           this.props.navigation.navigate(Screens.ProductDetail.route)
-        }else{
+        } else {
           showToast('Product detail not found', 'danger');
         }
       }
     });
   }
 
+  checkoutnow(total, checkout) {
+    if (total < checkout) {
+      Alert.alert("My Cart", "Minimum order value for placing this order is " +Colors.CUR+" " + checkout)
+    } else {
+      this.props.navigation.navigate(Screens.Checkout.route)
+    }
+  }
+
   renderItems = ({ item, index }) => {
     if (item.isSubscribedItem == 1) return;
     return (
       <Row style={styles.secondRow}>
-        
+
         <Col style={styles.amulCol}>
-            <Image style={styles.amulMoti} source={{ uri: url.imageURL + item.imagePath }} />
+          <Image style={styles.amulMoti} source={{ uri: url.imageURL + item.imagePath }} />
         </Col>
-       
+
         <Col style={styles.amulInfo}>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() =>
               this.productDetail(item.itemId)
             }
           >
-          <View>
-            <Text style={styles.AmuText}>{item.brandName}</Text>
-            <Text style={[styles.AmuText, styles.AmuTextTitle]}>{item.itemName}</Text>
-            <Text style={styles.AmuText}>{item.weight} {item.uom}</Text>
-            <Text style={styles.AmuText}></Text>
-            {item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? (
-              <Text style={styles.AmuText}>
-                <Text style={[styles.proPriceStrike, styles.AmuText]}>
-                  <Text style={appStyles.currencymedium}>{Colors.CUR} </Text>{" "}
-                  <Text style={appStyles.amountmedium}>{item.itemPrice}</Text>
-                </Text>
+            <View>
+              <Text style={styles.AmuText}>{item.brandName}</Text>
+              <Text style={[styles.AmuText, styles.AmuTextTitle]}>{item.itemName}</Text>
+              <Text style={styles.AmuText}>{item.weight} {item.uom}</Text>
+              <Text style={styles.AmuText}></Text>
+              {item.discountedPrice > 0 && item.discountedPrice < item.itemPrice ? (
                 <Text style={styles.AmuText}>
-                  {" "}<Text style={appStyles.currencymedium}>{Colors.CUR}</Text>{" "}
-                  <Text style={appStyles.amountmedium}>{item.discountedPrice}</Text>
-                </Text>
-              </Text>
-            ) : (
-                <Text style={styles.AmuText}>
-                  <Text style={styles.AmuText}>
-                    <Text style={appStyles.currencymedium}>{Colors.CUR}</Text>{" "}
+                  <Text style={[styles.proPriceStrike, styles.AmuText]}>
+                    <Text style={appStyles.currencymedium}>{Colors.CUR} </Text>{" "}
                     <Text style={appStyles.amountmedium}>{item.itemPrice}</Text>
                   </Text>
+                  <Text style={styles.AmuText}>
+                    {" "}<Text style={appStyles.currencymedium}>{Colors.CUR}</Text>{" "}
+                    <Text style={appStyles.amountmedium}>{item.discountedPrice}</Text>
+                  </Text>
                 </Text>
-              )}
-          </View>
+              ) : (
+                  <Text style={styles.AmuText}>
+                    <Text style={styles.AmuText}>
+                      <Text style={appStyles.currencymedium}>{Colors.CUR}</Text>{" "}
+                      <Text style={appStyles.amountmedium}>{item.itemPrice}</Text>
+                    </Text>
+                  </Text>
+                )}
+            </View>
           </TouchableOpacity>
         </Col>
         <Col style={styles.QtyBox}>
           <View style={{ bottom: 10 }}><TouchableOpacity onPress={() => this.deleteCartPress(item.itemId)}>
-          <Icon type="Ionicons" name="trash" style={{color:'red'}} /></TouchableOpacity></View>
-          {this.state.selctedProduct == item.id ? <ActivityIndicator style={{marginRight: 20}}/> : 
-          (<View>
-            <NumericInput
-              inputStyle={{ fontSize: 13 }}
-              initValue={item.quantity}
-              //value={item.quantity} 
-              onChange={(value) => this.updateCartPress(item.id, item.itemId, value)}
-              onLimitReached={(isMax, msg) => console.log(isMax, msg)}
-              totalWidth={99}
-              totalHeight={35}
-              iconSize={10}
-              borderColor={Colors.primary}
-              step={1}
-              valueType='real'
-              rounded
-              textColor={Colors.primary}
-              iconStyle={{ color: Colors.primary, fontSize: 20 }}
-              rightButtonBackgroundColor='#fff'
-              leftButtonBackgroundColor='#fff'
-            />
-          </View>)}
+            <Icon type="Ionicons" name="trash" style={{ color: 'red' }} /></TouchableOpacity></View>
+          {this.state.selctedProduct == item.id ? <ActivityIndicator style={{ marginRight: 20 }} /> :
+            (<View>
+              <NumericInput
+                inputStyle={{ fontSize: 13 }}
+                initValue={item.quantity}
+                //value={item.quantity} 
+                onChange={(value) => this.updateCartPress(item.id, item.itemId, value)}
+                onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                totalWidth={99}
+                totalHeight={35}
+                iconSize={10}
+                borderColor={Colors.primary}
+                step={1}
+                valueType='real'
+                rounded
+                textColor={Colors.primary}
+                iconStyle={{ color: Colors.primary, fontSize: 20 }}
+                rightButtonBackgroundColor='#fff'
+                leftButtonBackgroundColor='#fff'
+              />
+            </View>)}
         </Col>
       </Row>);
   }
 
   render() {
-    const { navigation, totalItem, cartDetail, totalAmount, actualTotal, user, walletAmount } = this.props;
+    const { navigation, totalItem, cartDetail, totalAmount, actualTotal, user, walletAmount, checkoutamount } = this.props;
     const getItem = navigation.getParam('item');
     return (
       <Container style={appStyles.container}>
@@ -244,36 +253,36 @@ class MyCart extends React.Component {
           flexDirection: 'row', justifyContent: 'flex-start', marginLeft: Layout.indent - 5,
           marginRight: Layout.indent - 5, marginTop: 10, marginBottom: 0, backgroundColor: '#D7ECDD', paddingTop: 5, paddingBottom: 5, paddingLeft: 10,
         }}>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          <Text style={styles.shopSubTitleText}>Your item in cart is available till stock out</Text>
-        </View>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+            <Text style={styles.shopSubTitleText}>Your item in cart is available till stock out</Text>
+          </View>
         </View>
 
-            <Modal 
-              isVisible={this.state.isModalVisible}
-              coverScreen={false}
-              backdropColor={'#fff'}
-              backdropOpacity={0.6}
-              animationIn={'slideInDown'}
-              style={{flex:1}}
-              >
-                  <View style={{backgroundColor:'#fff',padding:10,borderWidth:1, borderColor:Colors.gray, borderRadius:5}}>
-                    <TouchableOpacity style={styles.closeIcon} onPress = {() => this.setState({isModalVisible:false}) }>
-                      <Icon type="AntDesign" name="closecircleo" />
-                    </TouchableOpacity>
-                    <Text style = {[styles.Modeltext,{fontSize:16,alignSelf:'center'}]}>Valuable Customer..!</Text>
-                       <Icon type="SimpleLineIcons" name="emotsmile"  style={styles.smileIcon} />
-                    <Text  style = {styles.Modeltext}>
-                    OOPS..!
+        <Modal
+          isVisible={this.state.isModalVisible}
+          coverScreen={false}
+          backdropColor={'#fff'}
+          backdropOpacity={0.6}
+          animationIn={'slideInDown'}
+          style={{ flex: 1 }}
+        >
+          <View style={{ backgroundColor: '#fff', padding: 10, borderWidth: 1, borderColor: Colors.gray, borderRadius: 5 }}>
+            <TouchableOpacity style={styles.closeIcon} onPress={() => this.setState({ isModalVisible: false })}>
+              <Icon type="AntDesign" name="closecircleo" />
+            </TouchableOpacity>
+            <Text style={[styles.Modeltext, { fontSize: 16, alignSelf: 'center' }]}>Valuable Customer..!</Text>
+            <Icon type="SimpleLineIcons" name="emotsmile" style={styles.smileIcon} />
+            <Text style={styles.Modeltext}>
+              OOPS..!
                     One or more items added to your Shopping Cart are moved out as they are no longer available in stock...please proceed with pending items..!</Text>
-                    <Text style={styles.Modeltext}>You can still enjoy our evening slots with nominal delviery charge</Text>
-                    <TouchableOpacity style={styles.closeOk} onPress = {() => this.setState({isModalVisible:false}) }>
-                    <Text style={{color:'#fff',fontSize:16,fontFamily:'Font-Medium'}}>OK</Text>
-                    </TouchableOpacity>
-                  
-                  </View>
-                  
-              </Modal>
+            <Text style={styles.Modeltext}>You can still enjoy our evening slots with nominal delviery charge</Text>
+            <TouchableOpacity style={styles.closeOk} onPress={() => this.setState({ isModalVisible: false })}>
+              <Text style={{ color: '#fff', fontSize: 16, fontFamily: 'Font-Medium' }}>OK</Text>
+            </TouchableOpacity>
+
+          </View>
+
+        </Modal>
         <ScrollView>
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
@@ -294,14 +303,14 @@ class MyCart extends React.Component {
                 </Left>
                 <Body>
                   {this.state.userAddressDtls.aptNo != undefined ?
-                  (<View>
-                  <Text style={[appStyles.userArea, styles.addressText]} >
-                    {(this.state.userAddressDtls.aptNo  ? (this.state.userAddressDtls.aptNo + ",") : "" )} {(this.state.userAddressDtls.buildingName != undefined ? (this.state.userAddressDtls.buildingName + ",") : "")} 
-                  </Text>
-                  <Text style={[appStyles.userCity, styles.addressText]} >
-                    {this.state.userAddressDtls.area != undefined ? this.state.userAddressDtls.area + ' - ' + this.state.userAddressDtls.city  : ''}
-                  </Text>
-                   </View>) : (<Spinner color={Colors.secondary} style={appStyles.spinner} />)} 
+                    (<View>
+                      <Text style={[appStyles.userArea, styles.addressText]} >
+                        {(this.state.userAddressDtls.aptNo ? (this.state.userAddressDtls.aptNo + ",") : "")} {(this.state.userAddressDtls.buildingName != undefined ? (this.state.userAddressDtls.buildingName + ",") : "")}
+                      </Text>
+                      <Text style={[appStyles.userCity, styles.addressText]} >
+                        {this.state.userAddressDtls.area != undefined ? this.state.userAddressDtls.area + ' - ' + this.state.userAddressDtls.city : ''}
+                      </Text>
+                    </View>) : (<Spinner color={Colors.secondary} style={appStyles.spinner} />)}
                 </Body>
 
                 <Right>
@@ -326,10 +335,10 @@ class MyCart extends React.Component {
                   </Col>*/}
               </Row>
               <Row>
-                <Col style={{ width:'39%'}}>
+                <Col style={{ width: '39%' }}>
                   <Text style={styles.title}>Total items: {totalItem}</Text>
                 </Col>
-                <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end', alignSelf:'flex-end', width:'60%'}}>
+                <Col style={{ justifyContent: 'flex-end', alignItems: 'flex-end', alignSelf: 'flex-end', width: '60%' }}>
                   <View style={styles.totalAmount}>
                     <Text style={styles.totalText}>Total <Text style={appStyles.currencysmall}>{Colors.CUR}</Text> <Text style={appStyles.amountsmall}>{totalAmount.toFixed(2)}</Text></Text>
                   </View>
@@ -339,9 +348,9 @@ class MyCart extends React.Component {
 
 
 
-            {cartDetail.length > 0 ? 
+            {cartDetail.length > 0 ?
               (
-                <View style={[{ height: 'auto',borderWidth:0,elevation:0 }, styles.paddingBox]}>
+                <View style={[{ height: 'auto', borderWidth: 0, elevation: 0 }, styles.paddingBox]}>
                   <Grid >
                     <FlatList
                       vertical
@@ -368,15 +377,16 @@ class MyCart extends React.Component {
               <View><Text style={styles.footerAmount}>
                 <Text style={appStyles.currencysmall}>{Colors.CUR}</Text> <Text style={appStyles.amountsmall}>{(actualTotal - totalAmount).toFixed(2)}</Text></Text></View>
             </Col>
-            <Col style={[styles.footerCol, { borderRightWidth: 0, backgroundColor:'#D7ECDD' }]}>
-              <TouchableOpacity style={styles.orderSummary} onPress={() => this.props.navigation.navigate(Screens.Checkout.route)}>
-                <Text style={styles.textSummary}>Checkout now </Text>
+            <Col style={[styles.footerCol, { borderRightWidth: 0, backgroundColor: '#D7ECDD' }]}>
+              <TouchableOpacity style={styles.orderSummary}
+                onPress={() => this.checkoutnow(totalAmount, checkoutamount)}>
+                <Text style={styles.textSummary}>Checkout now</Text>
               </TouchableOpacity>
             </Col>
           </Grid>
         </Footer>
 
-       
+
 
       </Container>
 
@@ -388,6 +398,7 @@ const mapStateToProps = (state) => {
     isLoading: state.common.isLoading,
     user: state.auth.user,
     totalItem: state.cart.totalItem,
+    checkoutamount: state.cart.checkoutAmount,
     cartDetail: state.cart.cartDetail,
     totalAmount: state.cart.totalAmount,
     actualTotal: state.cart.actualTotal,
