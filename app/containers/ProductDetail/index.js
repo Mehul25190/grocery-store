@@ -272,15 +272,11 @@ class ProductDetail extends React.Component {
   }
 
   render() {
-
     const { entries, activeSlide } = this.state;
     // const { navigation } = this.props;
-
     const { navigation, ProductDetail, similarproducts } = this.props;
     const { selectedIndex } = this.state;
     const ProductVariant = ProductDetail.item[0].variations;
-
-    console.log("PRODUCT",ProductDetail.item[0])
 
     var foodType = '';
     if (ProductDetail.item[0].foodType == 'veg')
@@ -469,13 +465,16 @@ class ProductDetail extends React.Component {
                     {ProductVariant.map((data, key) => {
                       return (<View key={key}>
 
-                        {/*<Col style={[styles.variantBtnActive, {}]}>
-                      <Text style={styles.variantTextActive}>{data.weight} {data.uom}</Text>
-                    </Col>*/}
+                        {data.id == ProductDetail.item[0].id ?
+                          <Col style={[styles.variantBtnActive, {}]}>
+                            <Text style={styles.variantTextActive}>{data.weight} {data.uom}</Text>
+                          </Col>
+                        :
                           <Col onPress={() => this.variantProductDetail(data.id)} style={[styles.variantBtnDeactive, {}]}>
                             {/*<Icon style={styles.variantImg} name='rectangle-outline' type='MaterialCommunityIcons' />*/}
                             <Text style={styles.variantTextDeactive}>{data.weight} {data.uom}</Text>
                           </Col>
+                        }
                       </View>
                       )
                     })}
