@@ -480,10 +480,11 @@ class Home extends React.Component {
 
 
                         <TouchableOpacity onPress={() => this.brandNavigation(item.id)} style={styles.brandimagearea}>
+                          <View style={{borderRadius:200, backgroundColor:'#ffffff', marginBottom:5}}>
+                            <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1, borderRadius:200, height: 110, width: 110, resizeMode: 'contain'}} />
+                          </View>
                           <View>
-                            <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1, height: 120, width: 120, resizeMode: 'contain' }} />
                             <Text style={styles.brandnametitle}>{item.brandName}</Text>
-
                           </View>
                         </TouchableOpacity>
 
@@ -531,8 +532,10 @@ class Home extends React.Component {
                       keyExtractor={(item, index) => index}
                       renderItem={({ item, index }) =>
                         <TouchableOpacity onPress={() => this.ethnicitiesNavigation(item.id)} style={styles.brandimagearea}>
+                          <View style={{borderRadius:200, backgroundColor:'#ffffff', marginBottom:5}}>
+                            <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1,borderRadius:200, height: 110, width: 110, resizeMode: 'contain' }} />
+                          </View>
                           <View>
-                            <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1, height: 120, width: 120, resizeMode: 'contain' }} />
                             <Text style={styles.brandnametitle}>{item.ethnicity}</Text>
                           </View>
                         </TouchableOpacity>
