@@ -66,7 +66,7 @@ import { ScreenLoader } from '../../components';
 import Modal from 'react-native-modal';
 import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
 import { CheckBox } from 'react-native-elements'
-
+import { AntDesign } from '@expo/vector-icons'; 
 class SearchOffer extends React.Component {
   constructor(props) {
     super(props);
@@ -840,7 +840,8 @@ class SearchOffer extends React.Component {
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
 
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Brand</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Brand</Text>
+                    <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
                     {this.state.filterbrand.map((data, index) => {
@@ -861,8 +862,9 @@ class SearchOffer extends React.Component {
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Prices</Text>
-                  </CollapseHeader>
+                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Prices</Text>
+                    <AntDesign name="rightcircleo" size={24} color="black" />
+                     </CollapseHeader>
                   <CollapseBody>
                     {/* {this.state.filterpricefrom.map((data, index) => {
                       return (
@@ -919,7 +921,8 @@ class SearchOffer extends React.Component {
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Discounts in %</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Discounts in %</Text>
+                    <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
                     {this.state.Discounts.map((data, index) => {
@@ -939,7 +942,8 @@ class SearchOffer extends React.Component {
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Ratings</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Ratings</Text>
+                    <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
                     {this.state.Ratings.map((data, index) => {

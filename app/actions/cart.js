@@ -27,6 +27,8 @@ export const viewcart = payloads => dispatch => {
         dispatch({ type: ActionTypes.TOTALITEM, data: totalItem });
         dispatch({ type: ActionTypes.ACTUALTOTAL, data: actualTotal });
         dispatch({ type: ActionTypes.WALLETAMOUNT , data: res.data.data.userWalletBalance})
+        dispatch({ type: ActionTypes.CHECHOUTAMOUNT , data: res.data.data.minOrderValue})
+        dispatch({ type: ActionTypes.DUMMYUSER , data: res.data.data.user.isDummyUser})
         return res.data
       } else {
         return res

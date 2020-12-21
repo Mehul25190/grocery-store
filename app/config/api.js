@@ -3,6 +3,7 @@ export default {
   //stageImagURL: 'http://dev.tieskills.com/foodapp',
   //liveURL: 'https://dev.myallaadin.com/services/',
   //liveImgURL: 'https://dev.myallaadin.com',
+  //paymentURL:'https://dev.myallaadin.com',
 
   paymentURL: 'http://dev.tieskills.com/foodapp',
 

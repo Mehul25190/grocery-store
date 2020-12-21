@@ -18,6 +18,7 @@ import {
   ListItem,
 } from "native-base";
 
+import * as userActions from "../actions/user";
 import appStyles from "../theme/appStyles";
 import svgs from "../assets/svgs";
 import { Screens, Colors, Layout, ActionTypes } from "../constants";
@@ -61,9 +62,21 @@ class Headers extends React.Component {
   };
 
   onChangeSearchText(text) {
-    this.setState({textValue:text});
-    if(text.length > 2)
-      setTimeout(() => {  this.props.searchPage(this.state.textValue) }, 3000)
+    this.setState({ textValue: text });
+    if (text.length > 2)
+      setTimeout(() => { this.props.searchPage(this.state.textValue) }, 3000)
+  }
+
+  async carticonclick(val) {
+    if (val == 1) {
+      this.dummylogout()
+    } else {
+      this.props.cartPage()
+    }
+  }
+  dummylogout() {
+    this.props.logout();
+    this.props.signupPage()
   }
   render() {
 
@@ -75,7 +88,7 @@ class Headers extends React.Component {
       />
     );
     const { searcBar } = this.state;
-    const { totalItem } = this.props;
+    const { totalItem, isdummy } = this.props;
     return (
       <Header searchBar rounded style={[appStyles.headerStyle]}>
         <Left style={appStyles.headerLeft} icon>
@@ -95,21 +108,21 @@ class Headers extends React.Component {
         </Left>
         {this.state.searcBar == true ? (
           <Item style={[appStyles.searchBar]}>
-            <Icon name="search" style={{ color: Colors.primary }} />       
+            <Icon name="search" style={{ color: Colors.primary }} />
             <Input
               style={appStyles.searchInput}
-              onChangeText={(text)=>{
-              this.onChangeSearchText(text)
+              onChangeText={(text) => {
+                this.onChangeSearchText(text)
               }}
               value={this.state.textValue}
               placeholder="Search..."
             />
           </Item>
         ) : (
-          <Item style={{ width: 60, backgroundColor: "transparent" }}>
-            <Text style={appStyles.headerTitle}>{this.props.Title}</Text>
-          </Item>
-        )}
+            <Item style={{ width: 60, backgroundColor: "transparent" }}>
+              <Text style={appStyles.headerTitle}>{this.props.Title}</Text>
+            </Item>
+          )}
 
         <Right style={[appStyles.headersRight, this.props.headersRight]}>
           {this.props.setFilter == true && (
@@ -122,12 +135,12 @@ class Headers extends React.Component {
                 />
               </MenuTrigger>
               <MenuOptions style={{ backgroundColor: "#D2EAD2" }}>
-                <CheckedOption  checked={this.props.selectedStatus == 'PEN' ? true : false } value={'PEN'} text="Pending" />
-                <CheckedOption checked={this.props.selectedStatus == 'INP' ? true : false } value={'INP'} text="In Process" />
-                <CheckedOption checked={this.props.selectedStatus == 'DEL' ? true : false } value={'DEL'} text="Delivered" />
-                <CheckedOption checked={this.props.selectedStatus == 'CNF' ? true : false } value={'CNF'} text="Confirmed" />
-                <CheckedOption checked={this.props.selectedStatus == 'RET' ? true : false } value={'RET'} text="Returned" />
-                <CheckedOption checked={this.props.selectedStatus == 'CAN' ? true : false } value={'CAN'} text="Cancelled" />
+                <CheckedOption checked={this.props.selectedStatus == 'PEN' ? true : false} value={'PEN'} text="Pending" />
+                <CheckedOption checked={this.props.selectedStatus == 'INP' ? true : false} value={'INP'} text="In Process" />
+                <CheckedOption checked={this.props.selectedStatus == 'DEL' ? true : false} value={'DEL'} text="Delivered" />
+                <CheckedOption checked={this.props.selectedStatus == 'CNF' ? true : false} value={'CNF'} text="Confirmed" />
+                <CheckedOption checked={this.props.selectedStatus == 'RET' ? true : false} value={'RET'} text="Returned" />
+                <CheckedOption checked={this.props.selectedStatus == 'CAN' ? true : false} value={'CAN'} text="Cancelled" />
               </MenuOptions>
             </Menu>
           )}
@@ -159,30 +172,30 @@ class Headers extends React.Component {
             </View>
           )}
 
-           {this.props.setProFilter == true && (
+          {this.props.setProFilter == true && (
             <TouchableOpacity
               style={appStyles.filterArea}
-              onPress={() =>this.props.FilterShow() }
+              onPress={() => this.props.FilterShow()}
             >
               <Icon style={appStyles.filteroutline} name="filter" type="Feather" />
-             
+
             </TouchableOpacity>
           )}
 
-            {this.props.setSort == true && (
+          {this.props.setSort == true && (
             <TouchableOpacity
               style={appStyles.SortShowArea}
-              onPress={() =>this.props.SortShow() }
+              onPress={() => this.props.SortShow()}
             >
               <Icon style={appStyles.sorting} name="sort" type="MaterialIcons" />
-             
+
             </TouchableOpacity>
           )}
 
           {this.props.setCart == true && (
             <TouchableOpacity
               style={appStyles.cartIconArea}
-              onPress={() => totalItem > 0 ? this.props.cartPage() : ''}
+              onPress={() => totalItem > 0 ? this.carticonclick(isdummy) : ''}
             >
               <Icon style={appStyles.cartIcon} name="cart" />
               {totalItem > 0 && (
@@ -191,17 +204,17 @@ class Headers extends React.Component {
             </TouchableOpacity>
           )}
 
-        {this.props.setSearch != false && (
-          <TouchableOpacity
-            style={appStyles.StyleIconRightS}
-            onPress={() => this.onPressSearch()}
-          >
-            <Icon
-              style={[appStyles.IconsRight, this.props.IconsRight]}
-              name={this.props.IconRightF}
-            />
-          </TouchableOpacity>
-        )}
+          {this.props.setSearch != false && (
+            <TouchableOpacity
+              style={appStyles.StyleIconRightS}
+              onPress={() => this.onPressSearch()}
+            >
+              <Icon
+                style={[appStyles.IconsRight, this.props.IconsRight]}
+                name={this.props.IconRightF}
+              />
+            </TouchableOpacity>
+          )}
         </Right>
       </Header>
     );
@@ -210,7 +223,8 @@ class Headers extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    totalItem: state.cart.totalItem
+    totalItem: state.cart.totalItem,
+    isdummy: state.cart.dummyuser,
   };
 };
 
@@ -219,9 +233,11 @@ const mapDispatchToProps = (dispatch) => {
     showModal: () => {
       dispatch({ type: ActionTypes.SHOWMODAL, showModal: true });
     },
+    logout: () => dispatch(userActions.logoutUser()),
+    signupPage: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignUp.route })),
     cartPage: () => dispatch(NavigationActions.navigate({ routeName: Screens.MyCart.route })),
     onPress: () => dispatch(NavigationActions.back()),
-    searchPage: (text) => dispatch(NavigationActions.navigate({ routeName: Screens.SearchProduct.route, params:{text:text } })),
+    searchPage: (text) => dispatch(NavigationActions.navigate({ routeName: Screens.SearchProduct.route, params: { text: text } })),
 
   };
 };
