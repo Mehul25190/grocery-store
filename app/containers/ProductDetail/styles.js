@@ -62,7 +62,7 @@ variantBtnActive:{
 },
 variantTextActive:{
 color:Colors.secondary,
-marginTop:5,
+padding:5,
 
 },
 variantBtnDeactive:{

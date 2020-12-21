@@ -493,7 +493,7 @@ class MyPayments extends React.Component {
           <Row>
             <Col>
               <TouchableOpacity style={styles.checkOutBtnArea} >
-                <Button primary full style={styles.checkOutBtn} onPress={() => this.openControlPanel()}>
+                <Button primary full style={styles.checkOutBtn} onPress={() => this.props.navigation.navigate(Screens.MyCart.route)}>
                   <Text style={styles.checkOutText}> View Cart</Text>
                 </Button>
               </TouchableOpacity>
