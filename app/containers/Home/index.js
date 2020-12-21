@@ -298,11 +298,28 @@ class Home extends React.Component {
       isModalVisible: !this.state.isModalVisible
     })
   }
+
+  clickoncart(totalItem, isdummy) {
+    isdummy == 1 ? this.dummylogout() :
+      totalItem > 0 ? this.props.navigation.navigate(Screens.MyCart.route) : ''
+  }
+  dummylogout() {
+    this.props.logout();
+    this.props.navigation.navigate(Screens.SignUp.route)
+  }
+  async searchbar(text) {
+    await this.setState({ text: text });
+    console.log("Search Lenght", this.state.text.length)
+    if (this.state.text.length >= 3) {
+      this.SearchFilterFunction(this.state.text)
+    }
+    // setTimeout(() => { this.SearchFilterFunction(this.state.text) }, 2000)
+  }
   render() {
     //console.log("first render");
     //console.log(this.state.categoryData);
     //console.log("after render");
-    const { totalItem, categoryData, brand, ethnicities } = this.props;
+    const { totalItem, categoryData, brand, ethnicities, isdummy } = this.props;
     var BrandName = []
     var Ethnicitieslist = []
     var sixcat = []
@@ -355,15 +372,14 @@ class Home extends React.Component {
           <Item style={[appStyles.searchBar]} >
             <Icon name="search" style={{ color: Colors.primary }} />
             <Input style={appStyles.searchInput} value={this.state.text} onChangeText={text => {
-              this.setState({ text: text });
-              setTimeout(() => { this.SearchFilterFunction(this.state.text) }, 2000)
+              this.searchbar(text)
             }
             } placeholder='Search Product' />
           </Item>
 
           <Right style={appStyles.headerRight}>
             <Button transparent>
-              <TouchableOpacity style={appStyles.cartIconArea} onPress={() => totalItem > 0 ? this.props.navigation.navigate(Screens.MyCart.route) : ''}>
+              <TouchableOpacity style={appStyles.cartIconArea} onPress={() => this.clickoncart(totalItem, isdummy)}>
                 <Icon style={appStyles.cartIcon} name="cart" />
                 {totalItem > 0 && (<Text style={appStyles.cartCount}>{totalItem}</Text>)}
               </TouchableOpacity>
@@ -579,6 +595,7 @@ const mapStateToProps = (state) => {
     user: state.auth.user,
     isLoading: state.common.isLoading,
     totalItem: state.cart.totalItem,
+    isdummy: state.cart.dummyuser,
     categoryData: state.common.categoryData,
     offerData: state.common.categoryOfferData,
     brand: state.product.brand,
