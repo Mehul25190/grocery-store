@@ -580,6 +580,24 @@ sortingapply(val){
           Title={categoryName}
           headersRight={{ width: 120 }}
         />
+        <View style={{height:Layout.doubleIndent,marginTop:Layout.indent - 7}}><Row style={appStyles.footers}>
+          <Col style={{ justifyContent: 'center', alignItems: 'center', borderColor: Colors.primary, borderRightWidth: 1 }}>
+            <TouchableOpacity onPress={() => this.FilterShowFunction()} >
+              <Item style={{ borderBottomWidth: 0, }} onPress={() => this.FilterShowFunction()} >
+                <Text style={appStyles.sortLabel}>FILTER</Text>
+                <Icon style={appStyles.sorting} name="filter" type="Feather" />
+              </Item>
+            </TouchableOpacity>
+          </Col>
+          <Col style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <TouchableOpacity>
+              <Item style={{ borderBottomWidth: 0, }} onPress={() => this.SortShowFunction()} >
+                <Text style={appStyles.sortLabel}>SORT</Text>
+                <Icon style={appStyles.sorting} name="sort" type="MaterialIcons" />
+              </Item>
+            </TouchableOpacity>
+          </Col>
+        </Row></View>
         <Content enableOnAndroid style={appStyles.content}>
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
@@ -596,24 +614,7 @@ sortingapply(val){
               />
             </ScrollView>
 
-            <Row style={appStyles.footers}>
-              <Col style={{ justifyContent: 'center', alignItems: 'center', borderColor: Colors.primary, borderRightWidth: 1 }}>
-                <TouchableOpacity onPress={() => this.FilterShowFunction()} >
-                  <Item style={{ borderBottomWidth: 0, }} onPress={() => this.FilterShowFunction()} >
-                    <Text style={appStyles.sortLabel}>FILTER</Text>
-                    <Icon style={appStyles.sorting} name="filter" type="Feather" />
-                  </Item>
-                </TouchableOpacity>
-              </Col>
-              <Col style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <TouchableOpacity>
-                  <Item style={{ borderBottomWidth: 0, }} onPress={() => this.SortShowFunction()} >
-                    <Text style={appStyles.sortLabel}>SORT</Text>
-                    <Icon style={appStyles.sorting} name="sort" type="MaterialIcons" />
-                  </Item>
-                </TouchableOpacity>
-              </Col>
-            </Row>
+            
             <View style={{ backgroundColor: '#f6f6f6', paddingTop: 3, paddingBottom: 5, marginBottom: 5, }}>
               <Carousel
                 ref={(c) => { this._carousel = c; }}
