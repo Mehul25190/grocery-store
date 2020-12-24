@@ -170,6 +170,7 @@ export const getProductList = payloads => dispatch => {
     //dispatch({ type: ActionTypes.LOADING, isLoading: false });
     //console.log(res.data);
     if(res.status == 200){
+      dispatch({ type: ActionTypes.LOADING, isLoading: false });
       //console.log('product list return');  
       //console.log(res);
       return res.data;

@@ -473,6 +473,7 @@ sortingapply(val){
       })
     } else if (value >= 1) {
       this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
+        console.log("Update Value",res)
         if (res.status == "success") {
           this.props.viewCart(this.props.user.user.id).then(res => {
             //showToast('Cart updated successfully.', "success")
@@ -1068,9 +1069,15 @@ const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(userActions.logoutUser()),
     productItemList: (categoryId, subCategoryId, userId) =>
-      dispatch(userActions.showProductList({ subCategoryId: subCategoryId, categoryId: categoryId, userId: userId })),
+      dispatch(userActions.showProductList({ 
+        subCategoryId: subCategoryId, 
+        categoryId: categoryId, 
+        userId: userId })),
     getproductItemList: (categoryId, subCategoryId, userId) =>
-      dispatch(userActions.getProductList({ subCategoryId: subCategoryId, categoryId: categoryId, userId: userId })),
+      dispatch(userActions.getProductList({ 
+        subCategoryId: subCategoryId, 
+        categoryId: categoryId, 
+        userId: userId })),
     fetchSubCategory: (categoryId) =>
       dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
     searchItem: (searchString) =>
