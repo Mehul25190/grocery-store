@@ -8,7 +8,7 @@ import { ActionTypes, Strings } from '../constants/';
 export const viewcart = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.viewCart,  {queries: payloads}).then(res => {
-    //dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         //console.log(res.data.data);
         dispatch({ type: ActionTypes.VIEWCARTDETAIL, data: res.data.data });
@@ -39,7 +39,7 @@ export const viewcart = payloads => dispatch => {
 export const addToCartItem = payloads => dispatch => {
   //dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.addToCartItem,  {payloads: payloads}).then(res => {
-    //dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         return res.data
       } else {
@@ -52,7 +52,7 @@ export const addToCartItem = payloads => dispatch => {
 export const updateCartItem = payloads => dispatch => {
   //dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.post(url.updateCartItem,  {payloads: payloads}).then(res => {
-    //dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         return res.data
       } else {

@@ -456,33 +456,28 @@ class SearchProduct extends React.Component {
                 <Icon style={appStyles.cartIcon} name="cart" />
                 {totalItem > 0 && (<Text style={appStyles.cartCount}>{totalItem}</Text>)}
               </TouchableOpacity>
-
-
-
             </Button>
           </Right>
-
-
         </Header>
+        <View style={{height:Layout.doubleIndent,marginTop:Layout.indent - 7}}><Row style={appStyles.footers}>
+          <Col style={{ justifyContent: 'center', alignItems: 'center', borderColor: Colors.primary, borderRightWidth: 1 }}>
+            <TouchableOpacity onPress={() => this.FilterShowFunction()} >
+              <Item style={{ borderBottomWidth: 0, }} onPress={() => this.FilterShowFunction()} >
+                <Text style={appStyles.sortLabel}>FILTER</Text>
+                <Icon style={appStyles.sorting} name="filter" type="Feather" />
+              </Item>
+            </TouchableOpacity>
+          </Col>
+          <Col style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <TouchableOpacity>
+              <Item style={{ borderBottomWidth: 0, }} onPress={() => this.SortShowFunction()} >
+                <Text style={appStyles.sortLabel}>SORT</Text>
+                <Icon style={appStyles.sorting} name="sort" type="MaterialIcons" />
+              </Item>
+            </TouchableOpacity>
+          </Col>
+        </Row></View>
         <Content enableOnAndroid style={appStyles.content}>
-          <Row style={appStyles.footers}>
-            <Col style={{ justifyContent: 'center', alignItems: 'center', borderColor: Colors.primary, borderRightWidth: 1 }}>
-              <TouchableOpacity onPress={() => this.FilterShowFunction()} >
-                <Item style={{ borderBottomWidth: 0, }} onPress={() => this.FilterShowFunction()} >
-                  <Text style={appStyles.sortLabel}>FILTER</Text>
-                  <Icon style={appStyles.sorting} name="filter" type="Feather" />
-                </Item>
-              </TouchableOpacity>
-            </Col>
-            <Col style={{ justifyContent: 'center', alignItems: 'center' }}>
-              <TouchableOpacity>
-                <Item style={{ borderBottomWidth: 0, }} onPress={() => this.SortShowFunction()} >
-                  <Text style={appStyles.sortLabel}>SORT</Text>
-                  <Icon style={appStyles.sorting} name="sort" type="MaterialIcons" />
-                </Item>
-              </TouchableOpacity>
-            </Col>
-          </Row>
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (<View>
@@ -749,19 +744,7 @@ class SearchProduct extends React.Component {
                     <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
-                    {/* {this.state.filterpricefrom.map((data, index) => {
-                      return (
-                        <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
-                          <CheckBox checked={this.state.selectedpricefrom == this.state.filterpricefrom[index]} />
-                          <TouchableOpacity
-                            onPress={() => this.addtopricefrom(this.state.filterpricefrom[index])}
-                            style={{ marginStart: 20 }}>
-                            <Text>{data}</Text>
-                          </TouchableOpacity>
-                        </View>
-
-                      )
-                    })} */}
+                  
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10 }}>
                       <TextInput
                         placeholder="From min"
@@ -779,28 +762,6 @@ class SearchProduct extends React.Component {
                     </View>
                   </CollapseBody>
                 </Collapse>
-
-
-                {/* <Collapse>
-                  <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333' }}>Prices To</Text>
-                  </CollapseHeader>
-                  <CollapseBody>
-                    {this.state.filterpriceto.map((data, index) => {
-                      return (
-                        <View style={{ padding: 4, marginStart: 10, flexDirection: 'row' }}>
-                          <CheckBox checked={this.state.selectedpriceto == this.state.filterpriceto[index]} />
-                          <TouchableOpacity
-                            onPress={() => this.addtopriceto(this.state.filterpriceto[index])}
-                            style={{ marginStart: 20 }}>
-                            <Text>{data}</Text>
-                          </TouchableOpacity>
-                        </View>
-
-                      )
-                    })}
-                  </CollapseBody>
-                </Collapse> */}
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
