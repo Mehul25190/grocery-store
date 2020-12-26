@@ -139,10 +139,12 @@ class SearchProduct extends React.Component {
   }
 
   SortShowFunction() {
+    this.setState({ SortinType: '' })
     this.setState({ isModalVisible: !this.state.isModalVisible });
   }
   FilterShowFunction() {
-    this.setState({ isFilterVisible: !this.state.isFilterVisible });
+    this.setfilterdatanull();
+    this.setState({ isFilterVisible: !this.state.isFilterVisible,filterload:false });
   }
 
   FilterDetailShowFunction() {
@@ -380,11 +382,7 @@ class SearchProduct extends React.Component {
   }
 
   Filterapply() {
-    console.log("Brand", this.state.selectedid)
-    console.log("PriceFrom", this.state.selectedpricefrom)
-    console.log("PriceTo", this.state.selectedpriceto)
-    console.log("Discount", this.state.selecteddiscount)
-    console.log("Rating", this.state.selectedrating)
+   
     this.setState({
       filterload: true
     })
@@ -399,6 +397,7 @@ class SearchProduct extends React.Component {
           filterload: false
         })
         if (res.status == "success") {
+         // this.setfilterdatanull();
           this.setState({ isFilterVisible: false, Filter: true, productData: res.data.itemList });
         } else {
           this.setState({ isFilterVisible: false })
@@ -408,6 +407,47 @@ class SearchProduct extends React.Component {
 
     }
   }
+
+  setfilterdatanull() {
+    this.setState({
+      filterload: true,
+      selectedbrand: [],
+      selectedid: [],
+      selecteddiscount: [],
+      selectedpriceto: [],
+      selectedpricefrom: [],
+      selectedrating: [],
+    })
+  }
+
+  async resetapply() {
+    this.setfilterdatanull();
+    this.setState({
+      filterload: true
+    })
+
+      this.props.filterapply(
+        this.state.text, 
+        this.props.user.user.id, 
+        this.state.selectedid, 
+        this.state.selectedpricefrom, 
+        this.state.selectedpriceto, 
+        this.state.selectedrating, 
+        this.state.selecteddiscount).then(res => {
+        this.setState({
+          filterload: false
+        })
+        if (res.status == "success") {
+         // this.setfilterdatanull();
+          this.setState({ isFilterVisible: false, Filter: true, productData: res.data.itemList });
+        } else {
+          this.setState({ isFilterVisible: false })
+          showToast("Something went Wrong", "danger")
+        }
+      })
+
+    }
+  
 
   sortingapply(val) {
     this.setState({ SortinType: val })
@@ -817,6 +857,19 @@ class SearchProduct extends React.Component {
                         this.state.filterload ? <View style={{ padding: 12 }}><ActivityIndicator color="#FFF" /></View> : <Text style={appStyles.applyFilterText}>Apply</Text>
                       }</TouchableOpacity>
                   </Col>
+
+                  <Col>
+                    <TouchableOpacity
+                      onPress={() => this.resetapply()}
+                      style={appStyles.applyFilter}>
+                      {
+                        this.state.filterload ?
+                          <View style={{ padding: 12 }}><ActivityIndicator color="#FFF" /></View>
+                          : <Text style={appStyles.applyFilterText}>Reset</Text>
+                      }
+                    </TouchableOpacity>
+                  </Col>
+
                 </Row>
               </Grid>
 
