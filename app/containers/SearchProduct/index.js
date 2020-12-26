@@ -470,6 +470,8 @@ class SearchProduct extends React.Component {
     const { navigation, totalItem } = this.props;
     const getTitle = navigation.getParam("item");
     const categoryName = this.props.navigation.getParam("categoryName");
+
+    console.log("PRODUCT ATA",this.state.productData)
     return (
       <Container style={appStyles.container}>
         <Header searchBar rounded style={appStyles.headerStyle}>
@@ -560,6 +562,7 @@ class SearchProduct extends React.Component {
                       <View style={appStyles.brandAndVeg}>
                         <View style={{ flex: 0 }}>
                           <Text style={styles.proBrand}>{item.brandName}</Text>
+                         
                         </View>
                         <View style={{ flex: 0, width: 12 }}>
                           {
@@ -662,6 +665,7 @@ class SearchProduct extends React.Component {
                                   console.log(isMax, msg)
                                 }
                                 minValue={0}
+                                maxValue={item.maxOrderQuantity ? item.maxOrderQuantity : 5}
                                 totalWidth={100}
                                 totalHeight={35}
                                 iconSize={30}

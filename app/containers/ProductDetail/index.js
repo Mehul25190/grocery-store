@@ -61,6 +61,7 @@ class ProductDetail extends React.Component {
       likeloder: false,
       isLoading: false,
       load: true,
+      NumericInputloader:"false",
     };
     setTimeout(() => {
       this.setState({ load: false })
@@ -110,7 +111,8 @@ class ProductDetail extends React.Component {
   }
 
   buyOncePressHnadler(productId, value, action) {
-    this.setState({ selctedProduct: productId })
+   
+    this.setState({ selctedProduct: productId,NumericInputloader:"true" })
     if (value == 0) {
       this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
         if (res.status == "success") {
@@ -119,9 +121,11 @@ class ProductDetail extends React.Component {
             this.productDetail(productId, this.props.user.user.id);
           })
         }
+        
 
       })
     } else if (value == 1 && action == 'add') {
+      this.setState({ selctedProduct: productId })
       this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
         if (res.status == "success") {
           this.props.viewCart(this.props.user.user.id).then(res => {
@@ -132,6 +136,7 @@ class ProductDetail extends React.Component {
         }
       })
     } else if (value >= 1) {
+      this.setState({ selctedProduct: productId })
       this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
         if (res.status == "success") {
           this.props.viewCart(this.props.user.user.id).then(res => {
@@ -141,7 +146,15 @@ class ProductDetail extends React.Component {
         }
       })
     }
-    //this.setState({value: value})
+    setTimeout(
+      function() {
+          this.setState({NumericInputloader: "false"});
+      }
+      .bind(this),
+      2000
+    );
+   // setTimeout(function(){this.setState({NumericInputloader: "false"})}, 2000);
+    
   }
 
   addToCart(productId, value) {
@@ -417,8 +430,11 @@ class ProductDetail extends React.Component {
                     {ProductDetail.item[0].outOfStock == 'Y' ?
                       (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}><Text style={styles.outofstock}>Out of Stock</Text></Col>) :
                       (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}>
-                        {this.state.selctedProduct == ProductDetail.item[0].id ? <ActivityIndicator style={{ marginRight: 20 }} /> :
+                        {this.state.NumericInputloader == "true" ? 
+                        
+                        <ActivityIndicator style={{ marginRight: 20 }} /> :
                           (<View style={styles.reasonView}>
+                            
                             {ProductDetail.item[0].cartQty > 0 ?
                               (<NumericInput
                                 initValue={ProductDetail.item[0].cartQty}

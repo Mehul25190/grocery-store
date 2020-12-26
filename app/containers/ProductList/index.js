@@ -370,7 +370,7 @@ class ProductList extends React.Component {
           if (res.status == 200) {
             //this.setfilterdatanull()
             this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
-           
+
           } else {
             this.setState({ isFilterVisible: false })
             this.setState({
@@ -574,7 +574,7 @@ class ProductList extends React.Component {
   }
   FilterShowFunction() {
     this.setfilterdatanull();
-    this.setState({ isFilterVisible: !this.state.isFilterVisible,filterload:false });
+    this.setState({ isFilterVisible: !this.state.isFilterVisible, filterload: false });
   }
 
   FilterDetailShowFunction() {
@@ -782,6 +782,7 @@ class ProductList extends React.Component {
                               <Text style={styles.subText}>
                                 {item.price}
                               </Text>
+
                             </TouchableOpacity>
                           </ImageBackground>
 

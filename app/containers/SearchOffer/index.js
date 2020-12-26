@@ -720,6 +720,7 @@ class SearchOffer extends React.Component {
                           </View>
 
                           <Text style={styles.proTitle}>{item.itemName}</Text>
+                          
 
                           <Text style={styles.proQuanitty} note>
                             {item.weight !== ""
@@ -808,6 +809,7 @@ class SearchOffer extends React.Component {
                                       console.log(isMax, msg)
                                     }
                                     minValue={0}
+                                    maxValue={item.maxOrderQuantity ? item.maxOrderQuantity : 5}
                                     totalWidth={100}
                                     totalHeight={35}
                                     iconSize={30}
