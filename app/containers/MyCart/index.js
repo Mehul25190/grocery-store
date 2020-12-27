@@ -217,6 +217,7 @@ class MyCart extends React.Component {
                 //value={item.quantity} 
                 onChange={(value) => this.updateCartPress(item.id, item.itemId, value)}
                 onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                maxValue={item.maxOrderQuantity ? item.maxOrderQuantity : 5}
                 totalWidth={99}
                 totalHeight={35}
                 iconSize={10}
