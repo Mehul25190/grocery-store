@@ -402,15 +402,17 @@ class Checkout extends React.Component {
           <Row>
             <Col>
               <TouchableOpacity style={styles.checkOutBtnArea} >
-                <Button primary full style={styles.checkOutBtn} onPress={() => this.openControlPanel()}>
-                  <Text style={styles.checkOutTextpay}>Continue shopping</Text>
+                <Button primary full style={styles.checkOutBtn} onPress={() => this.onPressSubmit('Checkout')}>
+                  <Text style={styles.checkOutTextpay}> Pay Now</Text>
                 </Button>
               </TouchableOpacity>
             </Col>
+          </Row>
+          <Row>
             <Col>
               <TouchableOpacity style={styles.checkOutBtnArea} >
-                <Button primary full style={styles.checkOutBtn} onPress={() => this.onPressSubmit('Checkout')}>
-                  <Text style={styles.checkOutTextpay}> Pay Now</Text>
+                <Button primary full style={styles.checkOutBtn} onPress={() => this.openControlPanel()}>
+                  <Text style={styles.checkOutTextpay}>Continue shopping</Text>
                 </Button>
               </TouchableOpacity>
             </Col>
