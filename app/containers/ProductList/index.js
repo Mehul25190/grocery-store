@@ -39,7 +39,7 @@ import {
   Right,
   Thumbnail, Accordion,
   Spinner, Footer, FooterTab,
-  Icon, Row, CardItem,Picker
+  Icon, Row, CardItem, Picker
 } from "native-base";
 import url from "../../config/api";
 import { ItemList } from "../data/data";
@@ -66,7 +66,7 @@ import Carousel from 'react-native-snap-carousel';
 import Modal from 'react-native-modal';
 import { element } from "prop-types";
 import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 import { CheckBox } from 'react-native-elements'
 
 class ProductList extends React.Component {
@@ -93,7 +93,7 @@ class ProductList extends React.Component {
       filterpriceto: [],
       filterpricefrom: [],
       filterid: [],
-      filterload:false,
+      filterload: false,
       Ratings: [{
         name: require('../../assets/stars/stars5.jpg'),
         value: '5'
@@ -348,64 +348,94 @@ class ProductList extends React.Component {
   }
 
   Filterapply() {
-    console.log("Brand", this.state.selectedid)
-    console.log("PriceFrom", this.state.selectedpricefrom)
-    console.log("PriceTo", this.state.selectedpriceto)
-    console.log("Discount", this.state.selecteddiscount)
-    console.log("Rating", this.state.selectedrating)
-    console.log("CatogoryID",this.state.categoryId)
-    console.log("SubcatogoryID",this.state.selectSubCat)
     this.setState({
-      filterload:true
+      filterload: true
     })
     if (this.state.selectedpricefrom > this.state.selectedpriceto) {
+      this.setState({
+        filterload: false
+      })
       return showToast("Please Check Price", "danger")
     } else {
-      this.props.filterapply(this.state.selectedid, 
-        this.state.selectedpricefrom, 
-        this.state.selectedpriceto, 
-        this.state.selectedrating, 
+      this.props.filterapply(this.state.selectedid,
+        this.state.selectedpricefrom,
+        this.state.selectedpriceto,
+        this.state.selectedrating,
         this.state.selecteddiscount,
         this.state.categoryId,
         this.state.selectSubCat).then(res => {
           this.setState({
-            filterload:false
+            filterload: false
           })
+          if (res.status == 200) {
+            //this.setfilterdatanull()
+            this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
+
+          } else {
+            this.setState({ isFilterVisible: false })
+            this.setState({
+              filterload: false
+            })
+            showToast("Something went Wrong", "danger")
+          }
+        })
+    }
+  }
+  setfilterdatanull() {
+    this.setState({
+      filterload: true,
+      selectedbrand: [],
+      selectedid: [],
+      selecteddiscount: [],
+      selectedpriceto: [],
+      selectedpricefrom: [],
+      selectedrating: [],
+    })
+  }
+  async resetapply() {
+    //this.setfilterdatanull();
+    await this.props.filterapply(this.state.selectedid,
+      this.state.selectedpricefrom,
+      this.state.selectedpriceto,
+      this.state.selectedrating,
+      this.state.selecteddiscount,
+      this.state.categoryId,
+      this.state.selectSubCat).then(res => {
+        this.setState({
+          filterload: false
+        })
         if (res.status == 200) {
           this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
-          // this.props.navigation.navigate('SearchProduct', {
-          //   Filter: true
-          // })
         } else {
-          this.setState({ isFilterVisible: false})
+          this.setState({ isFilterVisible: false })
           this.setState({
-            filterload:false
+            filterload: false
           })
           showToast("Something went Wrong", "danger")
         }
       })
-    }
   }
-sortingapply(val){
-  this.setState({ SortinType: val })
-  this.props.filterapply(this.state.selectedid, 
-    this.state.selectedpricefrom, 
-    this.state.selectedpriceto, 
-    this.state.selectedrating, 
-    this.state.selecteddiscount,
-    this.state.categoryId,
-    this.state.selectSubCat,val).then(res => {
-    this.setState({ isModalVisible: false})
-    if (res.status == 200) {
-      this.setState({ isModalVisible: false,productData: res.data.data.itemList, });
-      // this.props.navigation.navigate('SearchProduct', {
-      //   Filter: true
-      // })
-    } else {
-      showToast("Something went Wrong", "danger")
-    }
-  })
-}
+
+  sortingapply(val) {
+    this.setState({ SortinType: val })
+    this.props.filterapply(this.state.selectedid,
+      this.state.selectedpricefrom,
+      this.state.selectedpriceto,
+      this.state.selectedrating,
+      this.state.selecteddiscount,
+      this.state.categoryId,
+      this.state.selectSubCat, val).then(res => {
+        this.setState({ isModalVisible: false })
+        if (res.status == 200) {
+          this.setState({ isModalVisible: false, productData: res.data.data.itemList, });
+          // this.props.navigation.navigate('SearchProduct', {
+          //   Filter: true
+          // })
+        } else {
+          showToast("Something went Wrong", "danger")
+        }
+      })
+  }
   //func call when click item category
   _itemChoose(item) {
     //  alert(item.title);
@@ -419,7 +449,7 @@ sortingapply(val){
   };
 
   renderItems = ({ item, index }) => (
-    <TouchableOpacity onPress={() => this.productItemList(item.categoryId, item.id, index)}>
+    <TouchableOpacity style={{ height: Layout.doubleIndent }} onPress={() => this.productItemList(item.categoryId, item.id, index)}>
       <View style={styles.cateContainer}>
         <Text
           style={
@@ -473,7 +503,7 @@ sortingapply(val){
       })
     } else if (value >= 1) {
       this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
-        console.log("Update Value",res)
+        console.log("Update Value", res)
         if (res.status == "success") {
           this.props.viewCart(this.props.user.user.id).then(res => {
             //showToast('Cart updated successfully.', "success")
@@ -539,10 +569,12 @@ sortingapply(val){
   }
 
   SortShowFunction() {
+    this.setState({ SortinType: '' })
     this.setState({ isModalVisible: !this.state.isModalVisible });
   }
   FilterShowFunction() {
-    this.setState({ isFilterVisible: !this.state.isFilterVisible });
+    this.setfilterdatanull();
+    this.setState({ isFilterVisible: !this.state.isFilterVisible, filterload: false });
   }
 
   FilterDetailShowFunction() {
@@ -581,7 +613,7 @@ sortingapply(val){
           Title={categoryName}
           headersRight={{ width: 120 }}
         />
-        <View style={{height:Layout.doubleIndent,marginTop:Layout.indent - 7}}><Row style={appStyles.footers}>
+        <View style={{ height: Layout.doubleIndent, marginTop: Layout.indent - 7 }}><Row style={appStyles.footers}>
           <Col style={{ justifyContent: 'center', alignItems: 'center', borderColor: Colors.primary, borderRightWidth: 1 }}>
             <TouchableOpacity onPress={() => this.FilterShowFunction()} >
               <Item style={{ borderBottomWidth: 0, }} onPress={() => this.FilterShowFunction()} >
@@ -598,7 +630,22 @@ sortingapply(val){
               </Item>
             </TouchableOpacity>
           </Col>
-        </Row></View>
+        </Row>
+        </View>
+        <View style={{ backgroundColor: '#f6f6f6', marginTop: 10, marginBottom: 5, }}>
+          <Carousel
+            ref={(c) => { this._carousel = c; }}
+            loop={true}
+            autoplay={true}
+            data={this.state.subCategory}
+            renderItem={this.renderItems}
+            sliderWidth={Layout.window.width}
+            itemWidth={100}
+            slideStyle={{ width: 'auto' }}
+            autoplayInterval={3000}
+            autoplayDelay={3000}
+          />
+        </View>
         <Content enableOnAndroid style={appStyles.content}>
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
@@ -614,22 +661,6 @@ sortingapply(val){
               //  keyExtractor={(item) => `${item.id}`}
               />
             </ScrollView>
-
-            
-            <View style={{ backgroundColor: '#f6f6f6', paddingTop: 3, paddingBottom: 5, marginBottom: 5, }}>
-              <Carousel
-                ref={(c) => { this._carousel = c; }}
-                loop={true}
-                autoplay={true}
-                data={this.state.subCategory}
-                renderItem={this.renderItems}
-                sliderWidth={Layout.window.width}
-                itemWidth={100}
-                slideStyle={{ width: 'auto' }}
-                autoplayInterval={3000}
-                autoplayDelay={3000}
-              />
-            </View>
             {this.state.productData.map((item, index) => {
               // productList.map((item, index) => {
               var foodType = '';
@@ -672,8 +703,8 @@ sortingapply(val){
                           <Text style={styles.proBrand}>{item.brandName}</Text>
                         </View>
                         <View style={{ flex: 0, width: 12 }}>
-                        {
-                            (item.foodType != "NA" && item.foodType != null)  && <Image style={[appStyles.vegImage, { marginTop: 2 }]} source={item.foodType == 'veg' ? imgs.smallVeg
+                          {
+                            (item.foodType != "NA" && item.foodType != null) && <Image style={[appStyles.vegImage, { marginTop: 2 }]} source={item.foodType == 'veg' ? imgs.smallVeg
                               :
                               item.foodType == 'vegan' ? imgs.smallVegan
                                 :
@@ -683,7 +714,7 @@ sortingapply(val){
                       </View>
 
                       <Text style={styles.proTitle}>{item.itemName}</Text>
-                     
+
                       <Text style={styles.proQuanitty} note>
                         {item.weight !== ""
                           ? "(" + item.weight + " " + item.uom + ")"
@@ -751,6 +782,7 @@ sortingapply(val){
                               <Text style={styles.subText}>
                                 {item.price}
                               </Text>
+
                             </TouchableOpacity>
                           </ImageBackground>
 
@@ -837,7 +869,7 @@ sortingapply(val){
                       <Col style={{ flex: 1, justifyContent: 'center', marginLeft: 25 }}>
                         <Text style={appStyles.SortingText}>{data.SortinType}</Text>
                       </Col>
-                      <Col style={[styles.btn, { flex: 0, justifyContent: 'center', width: 50 }]} onPress={() =>  this.sortingapply(data.SortinValue)} >
+                      <Col style={[styles.btn, { flex: 0, justifyContent: 'center', width: 50 }]} onPress={() => this.sortingapply(data.SortinValue)} >
                         <Icon style={appStyles.imgSorting} name='radio-button-unchecked' type='MaterialIcons' />
                       </Col>
                     </Row>
@@ -869,7 +901,7 @@ sortingapply(val){
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
 
-                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Brand</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333', width: Layout.window.width - Layout.fourIndent }}>Brand</Text>
                     <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
@@ -891,7 +923,7 @@ sortingapply(val){
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Prices</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333', width: Layout.window.width - Layout.fourIndent }}>Prices</Text>
                     <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
@@ -911,13 +943,13 @@ sortingapply(val){
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10 }}>
                       <TextInput
                         placeholder="From min"
-                        style={{ height: 40, borderColor: 'gray', marginBottom:2, borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
+                        style={{ height: 40, borderColor: 'gray', marginBottom: 2, borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
                         onChangeText={text => this.addtopricefrom(text)}
                         value={this.state.selectedpricefrom}
                       />
                       <TextInput
                         placeholder="To max"
-                        style={{ height: 40, borderColor: 'gray', marginBottom:2, borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
+                        style={{ height: 40, borderColor: 'gray', marginBottom: 2, borderWidth: 1, width: 160, borderRadius: 30, padding: 5 }}
                         onChangeText={text => this.addtopriceto(text)}
                         value={this.state.selectedpriceto}
                       />
@@ -950,7 +982,7 @@ sortingapply(val){
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd', }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Discounts in %</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333', width: Layout.window.width - Layout.fourIndent }}>Discounts in %</Text>
                     <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
@@ -971,14 +1003,14 @@ sortingapply(val){
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Ratings</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333', width: Layout.window.width - Layout.fourIndent }}>Ratings</Text>
                     <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
                     {this.state.Ratings.map((data, index) => {
                       return (
 
-                        <View style={{ marginStart: 10, flexDirection: 'row', alignItems:'center', justifyContent:'flex-start' }}>
+                        <View style={{ marginStart: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                           <CheckBox
                             onPress={() => this.addtorating(this.state.Ratings[index].value)}
                             checked={this.state.selectedrating.indexOf(this.state.Ratings[index].value) !== -1} />
@@ -999,12 +1031,23 @@ sortingapply(val){
                     <TouchableOpacity
                       onPress={() => this.Filterapply()}
                       style={appStyles.applyFilter}>
-                        {
-                          this.state.filterload ? <View style={{padding:12}}><ActivityIndicator color="#FFF"/></View> : <Text style={appStyles.applyFilterText}>Apply</Text>
-                        }
-                        
-                        
-                        </TouchableOpacity>
+                      {
+                        this.state.filterload ?
+                          <View style={{ padding: 12 }}><ActivityIndicator color="#FFF" /></View>
+                          : <Text style={appStyles.applyFilterText}>Apply </Text>
+                      }
+                    </TouchableOpacity>
+                  </Col>
+                  <Col>
+                    <TouchableOpacity
+                      onPress={() => this.resetapply()}
+                      style={appStyles.applyFilter}>
+                      {
+                        this.state.filterload ?
+                          <View style={{ padding: 12 }}><ActivityIndicator color="#FFF" /></View>
+                          : <Text style={appStyles.applyFilterText}>Reset</Text>
+                      }
+                    </TouchableOpacity>
                   </Col>
                 </Row>
               </Grid>
@@ -1069,15 +1112,17 @@ const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(userActions.logoutUser()),
     productItemList: (categoryId, subCategoryId, userId) =>
-      dispatch(userActions.showProductList({ 
-        subCategoryId: subCategoryId, 
-        categoryId: categoryId, 
-        userId: userId })),
+      dispatch(userActions.showProductList({
+        subCategoryId: subCategoryId,
+        categoryId: categoryId,
+        userId: userId
+      })),
     getproductItemList: (categoryId, subCategoryId, userId) =>
-      dispatch(userActions.getProductList({ 
-        subCategoryId: subCategoryId, 
-        categoryId: categoryId, 
-        userId: userId })),
+      dispatch(userActions.getProductList({
+        subCategoryId: subCategoryId,
+        categoryId: categoryId,
+        userId: userId
+      })),
     fetchSubCategory: (categoryId) =>
       dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
     searchItem: (searchString) =>
@@ -1089,7 +1134,7 @@ const mapDispatchToProps = (dispatch) => {
     updateCartItem: (userId, itemId, quantity) => dispatch(cartActions.updateCartItem({ userId: userId, itemId: itemId, quantity: quantity })),
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
     checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId: userId })),
-    filterapply: (brandid, pricefrom, priceto, rating, discount,catid,subcatid,sort) => dispatch(productActions.filterapply(
+    filterapply: (brandid, pricefrom, priceto, rating, discount, catid, subcatid, sort) => dispatch(productActions.filterapply(
       {
 
         brandId: brandid.toString(),
@@ -1099,15 +1144,15 @@ const mapDispatchToProps = (dispatch) => {
         discount: discount.toString(),
         categoryId: catid.toString(),
         subCategoryId: subcatid.toString(),
-        sortBy:sort,
+        sortBy: sort,
       })),
 
-      // sortingapply: (sort,catid,subcatid) => dispatch(productActions.filterapply(
-      //   {
-          
-      //     categoryId: catid.toString(),
-      //     subCategoryId: subcatid.toString(),
-      //   })),
+    // sortingapply: (sort,catid,subcatid) => dispatch(productActions.filterapply(
+    //   {
+
+    //     categoryId: catid.toString(),
+    //     subCategoryId: subcatid.toString(),
+    //   })),
     //  
   };
 };

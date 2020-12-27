@@ -66,7 +66,7 @@ import { ScreenLoader } from '../../components';
 import Modal from 'react-native-modal';
 import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
 import { CheckBox } from 'react-native-elements'
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 class SearchOffer extends React.Component {
   constructor(props) {
     super(props);
@@ -304,10 +304,12 @@ class SearchOffer extends React.Component {
     })
   }
   SortShowFunction() {
+    this.setState({ SortinType: '' })
     this.setState({ isModalVisible: !this.state.isModalVisible });
   }
   FilterShowFunction() {
-    this.setState({ isFilterVisible: !this.state.isFilterVisible });
+    this.setfilterdatanull();
+    this.setState({ isFilterVisible: !this.state.isFilterVisible,filterload:false });
   }
 
   FilterDetailShowFunction() {
@@ -415,12 +417,6 @@ class SearchOffer extends React.Component {
   }
 
   Filterapply() {
-    console.log("Brand", this.state.selectedid)
-    console.log("PriceFrom", this.state.selectedpricefrom)
-    console.log("PriceTo", this.state.selectedpriceto)
-    console.log("Discount", this.state.selecteddiscount)
-    console.log("Rating", this.state.selectedrating)
-
     const brand = this.props.navigation.getParam("brandid");
     const ethenicity = this.props.navigation.getParam("ethenicityid");
     const comefrom = this.props.navigation.getParam("comefrom");
@@ -431,7 +427,8 @@ class SearchOffer extends React.Component {
     })
     if (this.state.selectedpricefrom > this.state.selectedpriceto) {
       this.setState({
-        Filterapply: false
+        Filterapply: false,
+        filterload: false
       })
       return showToast("Please Check Price", "danger")
     } else {
@@ -452,7 +449,8 @@ class SearchOffer extends React.Component {
               })
               if (res.status == "success") {
                 if (res.data.itemList) {
-                  this.setState({ isFilterVisible: false, productData: res.data.itemList });
+                 // this.setfilterdatanull();
+                  this.setState({ isFilterVisible: false, productData: res.data.itemList,filterload: false });
                   this.courseFilterArr = res.data.itemList;
                 }
               } else {
@@ -473,10 +471,8 @@ class SearchOffer extends React.Component {
               })
               console.log("ETHENI FILTER", res.status)
               if (res.status == 200) {
+                //this.setfilterdatanull();
                 this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
-                // this.props.navigation.navigate('SearchProduct', {
-                //   Filter: true
-                // })
               } else {
                 showToast("Something went Wrong", "danger")
               }
@@ -484,6 +480,80 @@ class SearchOffer extends React.Component {
       }
     }
   }
+
+  setfilterdatanull() {
+    this.setState({
+      filterload: true,
+      selectedbrand: [],
+      selectedid: [],
+      selecteddiscount: [],
+      selectedpriceto: [],
+      selectedpricefrom: [],
+      selectedrating: [],
+    })
+  }
+
+  async resetapply() {
+    this.setfilterdatanull();
+      const brand = this.props.navigation.getParam("brandid");
+      const ethenicity = this.props.navigation.getParam("ethenicityid");
+      const comefrom = this.props.navigation.getParam("comefrom");
+      const offer_id = this.props.navigation.getParam('offer_id');
+  
+      this.setState({
+        filterload: true
+      })
+      
+        {
+          comefrom == "offer" ?
+            this.props
+              .fetchItemsByOfferfilter(
+                offer_id,
+                this.props.user.user.id,
+                this.state.selectedid,
+                this.state.selectedpricefrom,
+                this.state.selectedpriceto,
+                this.state.selectedrating,
+                this.state.selecteddiscount)
+              .then((res) => {
+                this.setState({
+                  filterload: false
+                })
+                if (res.status == "success") {
+                  if (res.data.itemList) {
+                   // this.setfilterdatanull();
+                    this.setState({ isFilterVisible: false, productData: res.data.itemList,filterload: false });
+                    this.courseFilterArr = res.data.itemList;
+                  }
+                } else {
+                  showToast("Something wrong with Server response", "danger");
+                }
+              }
+              ) :
+  
+            this.props.filtersapply(
+              ethenicity,
+              brand ? brand : this.state.selectedid,
+              this.state.selectedpricefrom,
+              this.state.selectedpriceto,
+              this.state.selectedrating,
+              this.state.selecteddiscount).then(res => {
+                this.setState({
+                  filterload: false
+                })
+                console.log("ETHENI FILTER", res.status)
+                if (res.status == 200) {
+                  //this.setfilterdatanull();
+                  this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
+                } else {
+                  showToast("Something went Wrong", "danger")
+                }
+              })
+        }
+      }
+    
+  
+
   sortingapply(val) {
 
     const brand = this.props.navigation.getParam("brandid");
@@ -571,7 +641,7 @@ class SearchOffer extends React.Component {
             </Button>
           </Right>
         </Header>
-        <View style={{height:Layout.doubleIndent,marginTop:Layout.indent - 7}}><Row style={appStyles.footers}>
+        <View style={{ height: Layout.doubleIndent, marginTop: Layout.indent - 7 }}><Row style={appStyles.footers}>
           <Col style={{ justifyContent: 'center', alignItems: 'center', borderColor: Colors.primary, borderRightWidth: 1 }}>
             <TouchableOpacity onPress={() => this.FilterShowFunction()} >
               <Item style={{ borderBottomWidth: 0, }} onPress={() => this.FilterShowFunction()} >
@@ -590,7 +660,7 @@ class SearchOffer extends React.Component {
           </Col>
         </Row></View>
         <Content enableOnAndroid style={appStyles.content}>
-          
+
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (
@@ -638,18 +708,19 @@ class SearchOffer extends React.Component {
                               <Text style={styles.proBrand}>{item.brandName}</Text>
                             </View>
                             <View style={{ flex: 0, width: 12 }}>
-                              
+
                               {
-                            (item.foodType != "NA" && item.foodType != null)  && <Image style={appStyles.vegImage} source={item.foodType == 'veg' ? imgs.smallVeg
-                              :
-                              item.foodType == 'vegan' ? imgs.smallVegan
-                                :
-                                imgs.smallNonVeg} />
-                          }
+                                (item.foodType != "NA" && item.foodType != null) && <Image style={appStyles.vegImage} source={item.foodType == 'veg' ? imgs.smallVeg
+                                  :
+                                  item.foodType == 'vegan' ? imgs.smallVegan
+                                    :
+                                    imgs.smallNonVeg} />
+                              }
                             </View>
                           </View>
 
                           <Text style={styles.proTitle}>{item.itemName}</Text>
+                          
 
                           <Text style={styles.proQuanitty} note>
                             {item.weight !== ""
@@ -738,6 +809,7 @@ class SearchOffer extends React.Component {
                                       console.log(isMax, msg)
                                     }
                                     minValue={0}
+                                    maxValue={item.maxOrderQuantity ? item.maxOrderQuantity : 5}
                                     totalWidth={100}
                                     totalHeight={35}
                                     iconSize={30}
@@ -839,7 +911,7 @@ class SearchOffer extends React.Component {
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
 
-                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Brand</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333', width: Layout.window.width - Layout.fourIndent }}>Brand</Text>
                     <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
@@ -861,9 +933,9 @@ class SearchOffer extends React.Component {
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Prices</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333', width: Layout.window.width - Layout.fourIndent }}>Prices</Text>
                     <AntDesign name="rightcircleo" size={24} color="black" />
-                     </CollapseHeader>
+                  </CollapseHeader>
                   <CollapseBody>
                     {/* {this.state.filterpricefrom.map((data, index) => {
                       return (
@@ -920,7 +992,7 @@ class SearchOffer extends React.Component {
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Discounts in %</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333', width: Layout.window.width - Layout.fourIndent }}>Discounts in %</Text>
                     <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
@@ -941,7 +1013,7 @@ class SearchOffer extends React.Component {
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Ratings</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333', width: Layout.window.width - Layout.fourIndent }}>Ratings</Text>
                     <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
@@ -971,6 +1043,17 @@ class SearchOffer extends React.Component {
                       style={appStyles.applyFilter}>{
                         this.state.filterload ? <View style={{ padding: 12 }}><ActivityIndicator color="#FFF" /></View> : <Text style={appStyles.applyFilterText}>Apply</Text>
                       }</TouchableOpacity>
+                  </Col>
+                  <Col>
+                    <TouchableOpacity
+                      onPress={() => this.resetapply()}
+                      style={appStyles.applyFilter}>
+                      {
+                        this.state.filterload ?
+                          <View style={{ padding: 12 }}><ActivityIndicator color="#FFF" /></View>
+                          : <Text style={appStyles.applyFilterText}>Reset</Text>
+                      }
+                    </TouchableOpacity>
                   </Col>
                 </Row>
               </Grid>
@@ -1042,7 +1125,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchSubCategory: (categoryId) =>
       dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
 
-    fetchItemsByOfferfilter: (offerId, userId, brandid, pricefrom, priceto, rating, discount,sort) =>
+    fetchItemsByOfferfilter: (offerId, userId, brandid, pricefrom, priceto, rating, discount, sort) =>
       dispatch(productActions.fetchItemsByOffer({
         offerId: offerId,
         userId: userId,

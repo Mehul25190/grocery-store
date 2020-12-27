@@ -99,7 +99,7 @@ export const ProductSorting =[
   
   {
     key:1,
-    SortinType:'Popurality',
+    SortinType:'Popularity',
     SortinValue:'popular',
   },
   {

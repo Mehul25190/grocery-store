@@ -242,7 +242,7 @@ checkOutBtnArea:{
  },
  checkOutTextpay:{
   fontFamily:'Font-Medium',
-  fontSize:18, fontWeight:'bold',
+  fontSize:17, fontWeight:'bold',
   lineHeight:28,
   color:Colors.primary,
   textTransform:'capitalize'

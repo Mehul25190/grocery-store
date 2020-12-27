@@ -117,7 +117,8 @@ class Checkout extends React.Component {
     });
   }
   openControlPanel = () => {
-    this.props.navigation.goBack(); // open drawer
+    //this.props.navigation.goBack(); // open drawer
+    this.props.navigation.navigate(Screens.Home.route)
   };
 
   onPressSubmit = item => {
@@ -402,7 +403,7 @@ class Checkout extends React.Component {
             <Col>
               <TouchableOpacity style={styles.checkOutBtnArea} >
                 <Button primary full style={styles.checkOutBtn} onPress={() => this.openControlPanel()}>
-                  <Text style={styles.checkOutTextpay}> View Cart</Text>
+                  <Text style={styles.checkOutTextpay}>Continue shopping</Text>
                 </Button>
               </TouchableOpacity>
             </Col>
