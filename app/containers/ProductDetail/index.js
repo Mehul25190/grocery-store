@@ -151,7 +151,7 @@ class ProductDetail extends React.Component {
           this.setState({NumericInputloader: "false"});
       }
       .bind(this),
-      2000
+      4000
     );
    // setTimeout(function(){this.setState({NumericInputloader: "false"})}, 2000);
     

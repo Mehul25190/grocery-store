@@ -86,6 +86,7 @@ class SearchOffer extends React.Component {
       filterbrand: [],
       filterpriceto: [],
       filterpricefrom: [],
+      SortinType:"",
       filterid: [],
       filterload: false,
       Ratings: [{
@@ -227,20 +228,54 @@ class SearchOffer extends React.Component {
     });
   }
 
+  fetchofferpageitem() {
+    var offer_id = this.props.navigation.getParam('offer_id');
+
+    this.props.fetchItemsByOfferWithoutLoader(offer_id, this.props.user.user.id).then((res) => {
+      if (res.status == "success" && res.data.itemList) {
+        this.setState({ productData: res.data.itemList });
+      } else {
+        this.setState({ productData: [] });
+      }
+    })
+  }
+
+  otherfetch() {
+    const brand = this.props.navigation.getParam("brandid");
+    const ethenicity = this.props.navigation.getParam("ethenicityid");
+    this.props.filtersapply(ethenicity == undefined ? "" : ethenicity,
+      brand  == undefined ? "" : brand,
+      this.state.selectedpricefrom,
+      this.state.selectedpriceto,
+      this.state.selectedrating,
+      this.state.selecteddiscount, 
+      this.state.SortinType,
+      this.props.user.user.id,).then(res => {
+        if (res.status == 200) {
+          this.setState({ isModalVisible: false, productData: res.data.data.itemList, });
+          // this.props.navigation.navigate('SearchProduct', {
+          //   Filter: true
+          // })
+        } else {
+          showToast("Something went Wrong", "danger")
+        }
+      })
+
+  }
+
   buyOncePressHnadler(productId, value, action) {
     this.setState({ selctedProduct: productId })
+    const comefrom = this.props.navigation.getParam("comefrom");
 
-    var offer_id = this.props.navigation.getParam('offer_id');
+
     if (value == 0) {
       this.props.deleteCartItem(productId, this.props.user.user.id).then(res => {
         if (res.status == "success") {
-          this.props.fetchItemsByOfferWithoutLoader(offer_id, this.props.user.user.id).then((res) => {
-            if (res.status == "success" && res.data.itemList) {
-              this.setState({ productData: res.data.itemList });
-            } else {
-              this.setState({ productData: [] });
-            }
-          })
+          {
+            comefrom == "offer" ?
+              this.fetchofferpageitem() : this.otherfetch()
+          }
+          ///here chacha
           this.props.viewCart(this.props.user.user.id).then(res => {
             //showToast('Cart updated successfully.', "success")
             this.setState({ selctedProduct: '' })
@@ -250,13 +285,12 @@ class SearchOffer extends React.Component {
     } else if (value == 1 && action == 'add') {
       this.props.addToCartItem(this.props.user.user.id, productId, value).then(res => {
         if (res.status == "success") {
-          this.props.fetchItemsByOfferWithoutLoader(offer_id, this.props.user.user.id).then((res) => {
-            if (res.status == "success" && res.data.itemList) {
-              this.setState({ productData: res.data.itemList });
-            } else {
-              this.setState({ productData: [] });
-            }
-          })
+
+          {
+            comefrom == "offer" ?
+              this.fetchofferpageitem() : this.otherfetch()
+          }
+
           this.props.viewCart(this.props.user.user.id).then(res => {
             //showToast('Cart updated successfully.', "success")
             this.setState({ selctedProduct: '' })
@@ -266,13 +300,12 @@ class SearchOffer extends React.Component {
     } else if (value >= 1) {
       this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
         if (res.status == "success") {
-          this.props.fetchItemsByOfferWithoutLoader(offer_id, this.props.user.user.id).then((res) => {
-            if (res.status == "success" && res.data.itemList) {
-              this.setState({ productData: res.data.itemList });
-            } else {
-              this.setState({ productData: [] });
-            }
-          })
+
+          {
+            comefrom == "offer" ?
+              this.fetchofferpageitem() : this.otherfetch()
+          }
+
           this.props.viewCart(this.props.user.user.id).then(res => {
             //showToast('Cart updated successfully.', "success")
             this.setState({ selctedProduct: '' })
@@ -309,7 +342,7 @@ class SearchOffer extends React.Component {
   }
   FilterShowFunction() {
     this.setfilterdatanull();
-    this.setState({ isFilterVisible: !this.state.isFilterVisible,filterload:false });
+    this.setState({ isFilterVisible: !this.state.isFilterVisible, filterload: false });
   }
 
   FilterDetailShowFunction() {
@@ -449,8 +482,8 @@ class SearchOffer extends React.Component {
               })
               if (res.status == "success") {
                 if (res.data.itemList) {
-                 // this.setfilterdatanull();
-                  this.setState({ isFilterVisible: false, productData: res.data.itemList,filterload: false });
+                  // this.setfilterdatanull();
+                  this.setState({ isFilterVisible: false, productData: res.data.itemList, filterload: false });
                   this.courseFilterArr = res.data.itemList;
                 }
               } else {
@@ -465,7 +498,8 @@ class SearchOffer extends React.Component {
             this.state.selectedpricefrom,
             this.state.selectedpriceto,
             this.state.selectedrating,
-            this.state.selecteddiscount).then(res => {
+            this.state.selecteddiscount,
+            this.props.user.user.id,).then(res => {
               this.setState({
                 filterload: false
               })
@@ -495,64 +529,65 @@ class SearchOffer extends React.Component {
 
   async resetapply() {
     this.setfilterdatanull();
-      const brand = this.props.navigation.getParam("brandid");
-      const ethenicity = this.props.navigation.getParam("ethenicityid");
-      const comefrom = this.props.navigation.getParam("comefrom");
-      const offer_id = this.props.navigation.getParam('offer_id');
-  
-      this.setState({
-        filterload: true
-      })
-      
-        {
-          comefrom == "offer" ?
-            this.props
-              .fetchItemsByOfferfilter(
-                offer_id,
-                this.props.user.user.id,
-                this.state.selectedid,
-                this.state.selectedpricefrom,
-                this.state.selectedpriceto,
-                this.state.selectedrating,
-                this.state.selecteddiscount)
-              .then((res) => {
-                this.setState({
-                  filterload: false
-                })
-                if (res.status == "success") {
-                  if (res.data.itemList) {
-                   // this.setfilterdatanull();
-                    this.setState({ isFilterVisible: false, productData: res.data.itemList,filterload: false });
-                    this.courseFilterArr = res.data.itemList;
-                  }
-                } else {
-                  showToast("Something wrong with Server response", "danger");
-                }
+    const brand = this.props.navigation.getParam("brandid");
+    const ethenicity = this.props.navigation.getParam("ethenicityid");
+    const comefrom = this.props.navigation.getParam("comefrom");
+    const offer_id = this.props.navigation.getParam('offer_id');
+
+    this.setState({
+      filterload: true
+    })
+
+    {
+      comefrom == "offer" ?
+        this.props
+          .fetchItemsByOfferfilter(
+            offer_id,
+            this.props.user.user.id,
+            this.state.selectedid,
+            this.state.selectedpricefrom,
+            this.state.selectedpriceto,
+            this.state.selectedrating,
+            this.state.selecteddiscount)
+          .then((res) => {
+            this.setState({
+              filterload: false
+            })
+            if (res.status == "success") {
+              if (res.data.itemList) {
+                // this.setfilterdatanull();
+                this.setState({ isFilterVisible: false, productData: res.data.itemList, filterload: false });
+                this.courseFilterArr = res.data.itemList;
               }
-              ) :
-  
-            this.props.filtersapply(
-              ethenicity,
-              brand ? brand : this.state.selectedid,
-              this.state.selectedpricefrom,
-              this.state.selectedpriceto,
-              this.state.selectedrating,
-              this.state.selecteddiscount).then(res => {
-                this.setState({
-                  filterload: false
-                })
-                console.log("ETHENI FILTER", res.status)
-                if (res.status == 200) {
-                  //this.setfilterdatanull();
-                  this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
-                } else {
-                  showToast("Something went Wrong", "danger")
-                }
-              })
-        }
-      }
-    
-  
+            } else {
+              showToast("Something wrong with Server response", "danger");
+            }
+          }
+          ) :
+
+        this.props.filtersapply(
+          ethenicity,
+          brand ? brand : this.state.selectedid,
+          this.state.selectedpricefrom,
+          this.state.selectedpriceto,
+          this.state.selectedrating,
+          this.state.selecteddiscount,
+          this.props.user.user.id,).then(res => {
+            this.setState({
+              filterload: false
+            })
+            console.log("ETHENI FILTER", res.status)
+            if (res.status == 200) {
+              //this.setfilterdatanull();
+              this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
+            } else {
+              showToast("Something went Wrong", "danger")
+            }
+          })
+    }
+  }
+
+
 
   sortingapply(val) {
 
@@ -590,7 +625,9 @@ class SearchOffer extends React.Component {
           this.state.selectedpricefrom,
           this.state.selectedpriceto,
           this.state.selectedrating,
-          this.state.selecteddiscount, val).then(res => {
+          this.state.selecteddiscount, 
+          val,
+          this.props.user.user.id,).then(res => {
             if (res.status == 200) {
               this.setState({ isModalVisible: false, productData: res.data.data.itemList, });
               // this.props.navigation.navigate('SearchProduct', {
@@ -720,7 +757,7 @@ class SearchOffer extends React.Component {
                           </View>
 
                           <Text style={styles.proTitle}>{item.itemName}</Text>
-                          
+                          {/* <Text style={styles.proTitle}>{item.cartQty}</Text> */}
 
                           <Text style={styles.proQuanitty} note>
                             {item.weight !== ""
@@ -1154,7 +1191,7 @@ const mapDispatchToProps = (dispatch) => {
     deleteCartItem: (itemId, userId) => dispatch(cartActions.deleteCartItem({ itemId: itemId, userId: userId })),
     checkActiveSubscription: (itemId, userId) => dispatch(userActions.checkActiveSubscription({ itemId: itemId, userId: userId })),
     searchItem: (searchString, userId) => dispatch(productActions.searchItem({ searchString: searchString, userId: userId })),
-    filtersapply: (ethenicityid, localbrandid, pricefrom, priceto, rating, discount, sort) => dispatch(productActions.filterapply(
+    filtersapply: (ethenicityid, localbrandid, pricefrom, priceto, rating, discount, sort, userId) => dispatch(productActions.filterapply(
       {
         ethnicity: ethenicityid,
         brandId: localbrandid.toString(),
@@ -1163,6 +1200,7 @@ const mapDispatchToProps = (dispatch) => {
         ratings: rating.toString(),
         discount: discount.toString(),
         sortBy: sort,
+        userId: userId
 
       })),
 
