@@ -341,7 +341,7 @@ class SearchOffer extends React.Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   }
   FilterShowFunction() {
-    this.setfilterdatanull();
+   // this.setfilterdatanull();
     this.setState({ isFilterVisible: !this.state.isFilterVisible, filterload: false });
   }
 
@@ -537,63 +537,66 @@ class SearchOffer extends React.Component {
 
   async resetapply() {
     this.setfilterdatanull();
-    const brand = this.props.navigation.getParam("brandid");
-    const ethenicity = this.props.navigation.getParam("ethenicityid");
-    const comefrom = this.props.navigation.getParam("comefrom");
-    const offer_id = this.props.navigation.getParam('offer_id');
-
     this.setState({
-      filterload: true
+      isFilterVisible: false,
     })
+    // const brand = this.props.navigation.getParam("brandid");
+    // const ethenicity = this.props.navigation.getParam("ethenicityid");
+    // const comefrom = this.props.navigation.getParam("comefrom");
+    // const offer_id = this.props.navigation.getParam('offer_id');
 
-    {
-      comefrom == "offer" ?
-        this.props
-          .fetchItemsByOfferfilter(
-            offer_id,
-            this.props.user.user.id,
-            this.state.selectedid,
-            this.state.selectedpricefrom,
-            this.state.selectedpriceto,
-            this.state.selectedrating,
-            this.state.selecteddiscount)
-          .then((res) => {
-            this.setState({
-              filterload: false
-            })
-            if (res.status == "success") {
-              if (res.data.itemList) {
-                // this.setfilterdatanull();
-                this.setState({ isFilterVisible: false, productData: res.data.itemList, filterload: false });
-                this.courseFilterArr = res.data.itemList;
-              }
-            } else {
-              showToast("Something wrong with Server response", "danger");
-            }
-          }
-          ) :
+    // this.setState({
+    //   filterload: true
+    // })
 
-        this.props.filtersapply(
-          ethenicity,
-          brand ? brand : this.state.selectedid,
-          this.state.selectedpricefrom,
-          this.state.selectedpriceto,
-          this.state.selectedrating,
-          this.state.selecteddiscount,
-          this.state.SortinType,
-          this.props.user.user.id,).then(res => {
-            this.setState({
-              filterload: false
-            })
-            console.log("ETHENI FILTER", res.status)
-            if (res.status == 200) {
-              //this.setfilterdatanull();
-              this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
-            } else {
-              showToast("Something went Wrong", "danger")
-            }
-          })
-    }
+    // {
+    //   comefrom == "offer" ?
+    //     this.props
+    //       .fetchItemsByOfferfilter(
+    //         offer_id,
+    //         this.props.user.user.id,
+    //         this.state.selectedid,
+    //         this.state.selectedpricefrom,
+    //         this.state.selectedpriceto,
+    //         this.state.selectedrating,
+    //         this.state.selecteddiscount)
+    //       .then((res) => {
+    //         this.setState({
+    //           filterload: false
+    //         })
+    //         if (res.status == "success") {
+    //           if (res.data.itemList) {
+    //             // this.setfilterdatanull();
+    //             this.setState({ isFilterVisible: false, productData: res.data.itemList, filterload: false });
+    //             this.courseFilterArr = res.data.itemList;
+    //           }
+    //         } else {
+    //           showToast("Something wrong with Server response", "danger");
+    //         }
+    //       }
+    //       ) :
+
+    //     this.props.filtersapply(
+    //       ethenicity,
+    //       brand ? brand : this.state.selectedid,
+    //       this.state.selectedpricefrom,
+    //       this.state.selectedpriceto,
+    //       this.state.selectedrating,
+    //       this.state.selecteddiscount,
+    //       this.state.SortinType,
+    //       this.props.user.user.id,).then(res => {
+    //         this.setState({
+    //           filterload: false
+    //         })
+    //         console.log("ETHENI FILTER", res.status)
+    //         if (res.status == 200) {
+    //           //this.setfilterdatanull();
+    //           this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
+    //         } else {
+    //           showToast("Something went Wrong", "danger")
+    //         }
+    //       })
+    // }
   }
 
 

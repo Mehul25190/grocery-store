@@ -393,27 +393,30 @@ class ProductList extends React.Component {
     })
   }
   async resetapply() {
-    //this.setfilterdatanull();
-    await this.props.filterapply(this.state.selectedid,
-      this.state.selectedpricefrom,
-      this.state.selectedpriceto,
-      this.state.selectedrating,
-      this.state.selecteddiscount,
-      this.state.categoryId,
-      this.state.selectSubCat).then(res => {
-        this.setState({
-          filterload: false
-        })
-        if (res.status == 200) {
-          this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
-        } else {
-          this.setState({ isFilterVisible: false })
-          this.setState({
-            filterload: false
-          })
-          showToast("Something went Wrong", "danger")
-        }
-      })
+    this.setfilterdatanull();
+    this.setState({
+      isFilterVisible: false,
+    })
+    // await this.props.filterapply(this.state.selectedid,
+    //   this.state.selectedpricefrom,
+    //   this.state.selectedpriceto,
+    //   this.state.selectedrating,
+    //   this.state.selecteddiscount,
+    //   this.state.categoryId,
+    //   this.state.selectSubCat).then(res => {
+    //     this.setState({
+    //       filterload: false
+    //     })
+    //     if (res.status == 200) {
+    //       this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
+    //     } else {
+    //       this.setState({ isFilterVisible: false })
+    //       this.setState({
+    //         filterload: false
+    //       })
+    //       showToast("Something went Wrong", "danger")
+    //     }
+    //   })
   }
 
   sortingapply(val) {
@@ -573,7 +576,7 @@ class ProductList extends React.Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   }
   FilterShowFunction() {
-    this.setfilterdatanull();
+    //this.setfilterdatanull();
     this.setState({ isFilterVisible: !this.state.isFilterVisible, filterload: false });
   }
 

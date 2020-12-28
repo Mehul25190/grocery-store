@@ -143,7 +143,7 @@ class SearchProduct extends React.Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   }
   FilterShowFunction() {
-    this.setfilterdatanull();
+    //this.setfilterdatanull();
     this.setState({ isFilterVisible: !this.state.isFilterVisible,filterload:false });
   }
 
@@ -423,28 +423,28 @@ class SearchProduct extends React.Component {
   async resetapply() {
     this.setfilterdatanull();
     this.setState({
-      filterload: true
+      isFilterVisible: false,
     })
 
-      this.props.filterapply(
-        this.state.text, 
-        this.props.user.user.id, 
-        this.state.selectedid, 
-        this.state.selectedpricefrom, 
-        this.state.selectedpriceto, 
-        this.state.selectedrating, 
-        this.state.selecteddiscount).then(res => {
-        this.setState({
-          filterload: false
-        })
-        if (res.status == "success") {
-         // this.setfilterdatanull();
-          this.setState({ isFilterVisible: false, Filter: true, productData: res.data.itemList });
-        } else {
-          this.setState({ isFilterVisible: false })
-          showToast("Something went Wrong", "danger")
-        }
-      })
+    //   this.props.filterapply(
+    //     this.state.text, 
+    //     this.props.user.user.id, 
+    //     this.state.selectedid, 
+    //     this.state.selectedpricefrom, 
+    //     this.state.selectedpriceto, 
+    //     this.state.selectedrating, 
+    //     this.state.selecteddiscount).then(res => {
+    //     this.setState({
+    //       filterload: false
+    //     })
+    //     if (res.status == "success") {
+    //      // this.setfilterdatanull();
+    //       this.setState({ isFilterVisible: false, Filter: true, productData: res.data.itemList });
+    //     } else {
+    //       this.setState({ isFilterVisible: false })
+    //       showToast("Something went Wrong", "danger")
+    //     }
+    //   })
 
     }
   
