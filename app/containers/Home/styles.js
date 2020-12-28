@@ -409,7 +409,7 @@ categoryStyles: {
   shopbybrandbg: {backgroundColor:'#ffdcdc', marginTop:10},
   shopbybrandtitle: {backgroundColor:'#e5a8a8', paddingLeft:25, paddingRight:25, paddingTop:5, paddingBottom:5, alignSelf:'center',},
   shopbybrandtitletext: {color:Colors.white, fontSize:15, fontWeight:'bold'},
-  brandimagearea: {margin:10, marginBottom:15, justifyContent:'center', textAlign:'center', alignSelf:'center'},
+  brandimagearea: {margin:10, marginBottom:15, justifyContent:'center', textAlign:'center', alignSelf:'center',},
   brandnametitle:{fontSize:14, color:'#444444', alignSelf:'center',textTransform: 'capitalize', fontWeight:'bold'},
 
 

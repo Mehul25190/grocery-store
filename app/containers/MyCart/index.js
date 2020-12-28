@@ -366,22 +366,22 @@ class MyCart extends React.Component {
           </View>)}
         </ScrollView>
         <ScreenLoader loading={this.state.loading} />
-        <Footer style={styles.BottomView}>
+        <Footer>
           <Grid>
-            <Col style={styles.footerCol}>
+            <Col style={[styles.footerCol, { borderRightWidth: 0, backgroundColor: '#D7ECDD' }]}>
               <View><Text style={styles.footerTitle}>Wallet</Text></View>
               <View style={{ textAlign: 'center' }}><Text style={styles.footerAmount}>
                 <Text style={appStyles.currencysmall}>{Colors.CUR}</Text> <Text style={appStyles.amountsmall}>{walletAmount ? walletAmount : 0}</Text></Text></View>
             </Col>
-            <Col style={styles.footerCol}>
+            <Col style={[styles.footerCol, { borderRightWidth: 0, backgroundColor: '#D7ECDD' }]}>
               <View><Text style={styles.footerTitle}>Savings</Text></View>
               <View><Text style={styles.footerAmount}>
                 <Text style={appStyles.currencysmall}>{Colors.CUR}</Text> <Text style={appStyles.amountsmall}>{(actualTotal - totalAmount).toFixed(2)}</Text></Text></View>
             </Col>
-            <Col style={[styles.footerCol, { borderRightWidth: 0, backgroundColor: '#D7ECDD' }]}>
+            <Col style={[styles.footerCol, { borderRightWidth: 0, backgroundColor: '#00545F' }]}>
               <TouchableOpacity style={styles.orderSummary}
                 onPress={() => this.checkoutnow(totalAmount, checkoutamount)}>
-                <Text style={styles.textSummary}>Checkout now</Text>
+                <Text style={[styles.textSummary, {color:'#ffffff'}]}>Checkout now</Text>
               </TouchableOpacity>
             </Col>
           </Grid>
