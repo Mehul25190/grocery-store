@@ -263,7 +263,7 @@ class Home extends React.Component {
   }
 
   brandNavigation(val) {
-    this.props.Branddetails(val).then(res => {
+    this.props.Branddetails(val,this.props.user.user.id).then(res => {
       if (res.status == 200) {
         console.log("SUCCESS FOR", val, res.status)
         this.props.navigation.navigate('SearchOffer',
@@ -279,7 +279,7 @@ class Home extends React.Component {
   }
   ethnicitiesNavigation(val) {
     console.log("SUCCESS FOR 0011", val)
-    this.props.Ethnicitiesdetails(val).then(res => {
+    this.props.Ethnicitiesdetails(val,this.props.user.user.id).then(res => {
       if (res.status == 200) {
         console.log("SUCCESS FOR Ethnicitiesdetails", val, res.status)
         this.props.navigation.navigate('SearchOffer',
@@ -616,12 +616,14 @@ const mapDispatchToProps = (dispatch) => {
     showDeliveryAddress: (userid) => dispatch(userActions.getDeviveryAddress({ userId: userid })),
     nextOrderCount: (userid) => dispatch(userActions.nextOrderCount({ userId: userid })),
     Brand: () => dispatch(productActions.fetchBrand()),
-    Branddetails: (val) => dispatch(productActions.fetchBranddetails({
-      brandId: val
+    Branddetails: (val,user_id) => dispatch(productActions.fetchBranddetails({
+      brandId: val,
+      userId: user_id
     })),
     Ethnicities: () => dispatch(productActions.fetchEthnicities()),
-    Ethnicitiesdetails: (val) => dispatch(productActions.fetchEthnicitiesdetails({
-      ethnicity: val
+    Ethnicitiesdetails: (val,user_id) => dispatch(productActions.fetchEthnicitiesdetails({
+      ethnicity: val,
+      userId: user_id
     })),
 
   };

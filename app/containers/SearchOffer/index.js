@@ -491,7 +491,14 @@ class SearchOffer extends React.Component {
               }
             }
             ) :
-
+           console.log("ETHENI FILTER", ethenicity,
+             brand ? brand : this.state.selectedid,
+             this.state.selectedpricefrom,
+             this.state.selectedpriceto,
+             this.state.selectedrating,
+             this.state.selecteddiscount,
+             this.state.SortinType,
+             this.props.user.user.id)
           this.props.filtersapply(
             ethenicity,
             brand ? brand : this.state.selectedid,
@@ -499,11 +506,12 @@ class SearchOffer extends React.Component {
             this.state.selectedpriceto,
             this.state.selectedrating,
             this.state.selecteddiscount,
+            this.state.SortinType,
             this.props.user.user.id,).then(res => {
               this.setState({
                 filterload: false
               })
-              console.log("ETHENI FILTER", res.status)
+              console.log("ETHENI FILTER res", res)
               if (res.status == 200) {
                 //this.setfilterdatanull();
                 this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
@@ -572,6 +580,7 @@ class SearchOffer extends React.Component {
           this.state.selectedpriceto,
           this.state.selectedrating,
           this.state.selecteddiscount,
+          this.state.SortinType,
           this.props.user.user.id,).then(res => {
             this.setState({
               filterload: false
