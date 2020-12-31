@@ -250,6 +250,7 @@ class SubscribeOrder extends React.Component {
                    <Text style={styles.startDate}>Start Date</Text>
               </Col>
               <Col style={styles.amulInfo}>
+                
                 <View>
                    <DatePicker
                     minDate={moment(new Date()).add(2, 'days').format('DD/MM/YYYY')}
@@ -449,7 +450,7 @@ const mapDispatchToProps = (dispatch) => {
       getItemDetail: (id) => dispatch(subscriptionAction.getItemDetail({itemId: id})),
       saveSubscribeOrderDetails: (data) => dispatch(subscriptionAction.saveSubscribeOrderDetails(data)),
       getDeviveryAddress: (useId) => dispatch(userActions.getDeviveryAddress({ userId: useId })),
-
+      mySubscriptionList : (userId) => dispatch(subscriptionAction.mySubscriptionList({userId: userId})),
    };
 };
 

@@ -111,7 +111,10 @@ class SubscribeDetail extends React.Component {
           <Col style={styles.BtnCol}>
          
             <Button primary full style={styles.modifyBtn}>
-             <TouchableOpacity onPress={()=>this.props.navigation.navigate(Screens.ModifySubscription.route, {item: item, mode: 'update'})}>
+             <TouchableOpacity 
+             onPress={()=>  this.props.navigation.navigate(Screens.ModifySubscription.route, 
+             {item: item, mode: 'update', isdisable: item.startDate <  moment(new Date()).format('YYYY-MM-DD')})
+             }>
                <Icon name='edit' type='MaterialIcons' style={styles.modifyIcon} />
               <Text style={styles.btnText}> Modify </Text>
                </TouchableOpacity>
