@@ -416,7 +416,7 @@ class editSubscribe extends React.Component {
                   <Col style={{ justifyContent: 'flex-end', width: 140 }}>
                     <Button style={styles.paynowBtn} primary full>
                       <TouchableOpacity onPress={() => this.subscribeSubmitHandler()} >
-                        <Text style={styles.payTextNow}> Subscribe</Text>
+                        <Text style={styles.payTextNow}> Modify</Text>
                       </TouchableOpacity>
                     </Button>
                   </Col>
