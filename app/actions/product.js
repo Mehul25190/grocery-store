@@ -69,7 +69,7 @@ export const fetchOffers = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.fetchOffersOnLandingPage).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    console.log(res.data);
+    //console.log(res.data);
     if (res.status == 200) {
       dispatch({ type: ActionTypes.CATEGORYOFFER, data: res.data.data.offerList });
       return res.data
@@ -83,7 +83,7 @@ export const fetchEthnicities = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.fetchEthnicities).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
-    console.log("ethnicities",res.data);
+    //console.log("ethnicities",res.data);
     if (res.status == 200) {
       dispatch({ type: ActionTypes.FETHETHNICITIES, data: res.data.data.ethnicityList });
       return res.data
