@@ -125,7 +125,7 @@ class MyOffers extends React.Component {
                           </Left>
 
                         <Body style={styles.bodyText}>
-                            <TouchableOpacity style={styles.prodInfo} onPress={() => this.props.navigation.navigate('SearchOffer', { offer_id: item.id })}>
+                            <TouchableOpacity style={styles.prodInfo} onPress={() => this.props.navigation.navigate('SearchOffer', { offer_id: item.id ,comefrom: 'offer'})}>
                      
                             <Text numberOfLines={1} style={styles.proTitle}>{item.offerName}</Text>
                             <Text style={styles.paidTime}>{item.description}</Text>
