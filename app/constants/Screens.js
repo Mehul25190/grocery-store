@@ -170,4 +170,10 @@ export default {
   Nointernet: {
     route: 'Nointernet'
   },
+  AddedCardrPayment:{
+    route: 'AddedCardrPayment'
+  },
+  WalletAddedCardPayment: {
+    route: 'WalletAddedCardPayment'
+  }
 };

@@ -173,7 +173,12 @@ class MyPayments extends React.Component {
     //this.props.navigation.navigate(Screens.OrderPayment.route, {userId:this.props.user.user.id, userAddressDtlsId:this.props.deliveryAddress.id, deliverySlot:selectedTimeSlot, deliveryDate:moment(dateslot).format('YYYY/MM/DD'), paymentMode:paymentMode, useWallet:useWallet, deliveryCharges:'', subscriptionFees:''});
     //this.state.CardCheckedId
     if(this.state.paywithcard && this.state.showMyCard){
-      this.props.placeOrderWithCard(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY-MM-DD'), paymentMode, useWallet, this.state.CardCheckedId, amount, this.state.cvv, offerId, offerValue).then(res => {
+      //alert('tame existing card thi payment karo cho');
+
+
+      this.props.navigation.navigate(Screens.AddedCardrPayment.route, {cardId: this.state.CardCheckedId, cvv: this.state.cvv, userId:this.props.user.user.id, deliverySlot:selectedTimeSlot, userAddressDtlsId:this.props.deliveryAddress.id,  deliveryDate:moment(dateslot).format('YYYY/MM/DD'), amount: amount ,paymentMode:paymentMode, useWallet:useWallet});
+
+      /*this.props.placeOrderWithCard(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY-MM-DD'), paymentMode, useWallet, this.state.CardCheckedId, amount, this.state.cvv, offerId, offerValue).then(res => {
         if(res.status == 'success'){  
           console.log('response', res);
           if(res.data.isAutoDebit == 'N'){
@@ -192,7 +197,7 @@ class MyPayments extends React.Component {
             showToast("Some technical issue found, please contact to support.", "danger");
         }
         this.setState({placeOrderLoading: false})
-      })
+      })*/
     }else{
       this.props.placeholder(this.props.user.user.id, this.props.deliveryAddress.id, selectedTimeSlot, moment(dateslot).format('YYYY/MM/DD'), paymentMode, useWallet, offerId, offerValue).then(res => {
         if(res.status == 'success'){

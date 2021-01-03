@@ -79,8 +79,8 @@ class TopupWallet extends React.Component {
     return;
   }
 
-  this.setState({topupWalletLoader : true})
-  if(this.state.autodebit == 'Y'){
+  //this.setState({topupWalletLoader : true})
+  /*if(this.state.autodebit == 'Y'){
     this.props.recharge(this.props.user.user.id, this.state.CardCheckedId, this.state.amount).then(res => {
       showToast('Wallet updated successfully', "success");
       this.props.navigation.navigate(Screens.MyWallet.route);
@@ -100,8 +100,9 @@ class TopupWallet extends React.Component {
       }
       this.setState({topupWalletLoader : false})
     })
-  }
-  
+  }*/
+  this.props.navigation.navigate(Screens.WalletAddedCardPayment.route, {cardId: this.state.CardCheckedId, cvv: this.state.cvv, userId:this.props.user.user.id, amount: this.state.amount});
+
     //this.props.navigation.navigate('MyPayments', { item });
   };
 
