@@ -128,6 +128,7 @@ class SearchProduct extends React.Component {
       selectedpricefrom: [],
       selectedrating: [],
       Filter: this.props.navigation.getParam("Filter"),
+      subscbrLoader: false,
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
@@ -269,19 +270,29 @@ class SearchProduct extends React.Component {
     //this.setState({value: value})
   }
   subscribePressHandlder(item) {
+    this.setState({
+      subscbrLoader: true
+    })
     this.props.checkActiveSubscription(item.id, this.props.user.user.id).then(res => {
       //console.log(res.data);
       if (res.status == 'success') {
         if (res.data.isActiveSubscription == 'Y') {
+          this.setState({ subscbrLoader: false })
+
           showToast('You have already subscribed this product.', "danger")
         } else {
+          setTimeout(() => {
+            this.setState({ subscbrLoader: false })
           showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
           this.props.navigation.navigate(
             Screens.SubscribeOrder.route,
             { item: item, qty: this.state.value }
-          )
+            )
+          }, 2000)
         }
       } else {
+        this.setState({ subscbrLoader: false })
+
         showToast('Please try again', "danger")
       }
     })
@@ -638,6 +649,7 @@ class SearchProduct extends React.Component {
                       <Text style={styles.outofstock}>Out of Stock</Text> :
                       (<View>
                         {item.isSubscribable ? (
+                          !this.state.subscbrLoader ?
                           <TouchableOpacity
                             onPress={() =>
                               this.subscribePressHandlder(item)
@@ -650,6 +662,10 @@ class SearchProduct extends React.Component {
                               </Text>
                             </ImageBackground>
                           </TouchableOpacity>
+                          :
+                          <View style={[styles.subscribeBtn, {}]}>
+                            <ActivityIndicator />
+                          </View>
                         ) : (
                             <View style={{ padding: 0, margin: 0 }}></View>
                           )}

@@ -195,7 +195,7 @@ class SignInEmail extends React.Component {
                         primary
                         style={appStyles.btnSecontary}
                          onPress={() =>  this.props.pressSignin()}  >
-                        <Text style={styles.SignInbtn}>Login </Text>
+                        <Text style={styles.SignInbtn}>Login</Text>
                       </Button>
                        </TouchableOpacity>
                   }
@@ -266,6 +266,7 @@ const mapDispatchToProps = (dispatch) => {
       pressSignin: () => dispatch(submit('signinFormemail')),
       pressSigninMob: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInMobile.route })),
       setLanguage: () => dispatch(userActions.setLanguage({id:1,set:1})),
+      signinExplore: () => dispatch(userActions.signinExplore()),
    };
 };
 

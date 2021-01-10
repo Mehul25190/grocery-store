@@ -428,7 +428,9 @@ class ProductDetail extends React.Component {
                     </Col>
 
                     {ProductDetail.item[0].outOfStock == 'Y' ?
-                      (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}><Text style={styles.outofstock}>Out of Stock</Text></Col>) :
+                      (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}>
+                        <Text style={styles.outofstock}>Out of Stock</Text></Col>) :
+                        
                       (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}>
                         {this.state.NumericInputloader == "true" ? 
                         

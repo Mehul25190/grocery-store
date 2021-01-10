@@ -92,6 +92,7 @@ class ProductList extends React.Component {
       filterbrand: [],
       filterpriceto: [],
       filterpricefrom: [],
+      subscbrLoader: false,
       filterid: [],
       filterload: false,
       Ratings: [{
@@ -552,20 +553,29 @@ class ProductList extends React.Component {
   }
 
   subscribePressHandlder(item) {
-
+    this.setState({
+      subscbrLoader: true
+    })
     this.props.checkActiveSubscription(item.id, this.props.user.user.id).then(res => {
       //console.log(res.data);
+
       if (res.status == 'success') {
         if (res.data.isActiveSubscription == 'Y') {
+          this.setState({ subscbrLoader: false })
           showToast('You have already subscribed this product.', "danger")
         } else {
-          showToast('Please ensure the quantity, once subscribed its not recommended to change', 'success');
-          this.props.navigation.navigate(
-            Screens.SubscribeOrder.route,
-            { item: item, qty: this.state.value }
-          )
+          setTimeout(() => {
+            this.setState({ subscbrLoader: false })
+            showToast('Please ensure the quantity, once subscribed its not recommended to change', 'success');
+            this.props.navigation.navigate(
+              Screens.SubscribeOrder.route,
+              { item: item, qty: this.state.value }
+            )
+          }, 2000)
+
         }
       } else {
+        this.setState({ subscbrLoader: false })
         showToast('Please try again', "danger")
       }
     })
@@ -776,18 +786,27 @@ class ProductList extends React.Component {
                       <Text style={styles.outofstock}>Out of Stock</Text> :
                       (<View>
                         {item.isSubscribable ? (
-                          <ImageBackground source={imgs.AEDpng} style={[styles.subscribeBtn, {}]}>
-                            <TouchableOpacity
-                              onPress={() =>
-                                this.subscribePressHandlder(item)
-                              }
-                            >
-                              <Text style={styles.subText}>
-                                {item.price}
-                              </Text>
 
-                            </TouchableOpacity>
-                          </ImageBackground>
+                          !this.state.subscbrLoader ?
+                            <ImageBackground source={imgs.AEDpng} style={[styles.subscribeBtn, {}]}>
+                              <TouchableOpacity
+                                onPress={() =>
+                                  this.subscribePressHandlder(item)
+                                }
+                              >
+
+                                <Text style={styles.subText}>
+                                  {item.price}
+                                </Text>
+
+                              </TouchableOpacity>
+                            </ImageBackground> :
+                            <View style={[styles.subscribeBtn, {}]}>
+                              <ActivityIndicator />
+                            </View>
+
+
+
 
                         ) : (
                             <View style={{ padding: 0, margin: 0 }}></View>
