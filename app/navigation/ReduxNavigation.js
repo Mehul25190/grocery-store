@@ -24,21 +24,21 @@ class ReduxNavigation extends React.Component {
     const currentRoute = getCurrentRoute(state);
     // console.log("getCurrentRoute", currentRoute);
     backHandlerClickCount = 1;
-    setTimeout(() => {
-      backHandlerClickCount = 0;
-    }, 600);
-    if (currentRoute==Screens.Home.route || currentRoute==Screens.SignIn.route) {
-      /*ToastAndroid.showWithGravity(
-        'Press again to close',
+    // setTimeout(() => {
+    //   backHandlerClickCount = 0;
+    // }, 600);
+    if (currentRoute==Screens.SignIn.route || currentRoute==Screens.SignInEmail.route || currentRoute==Screens.SignInEmail.route) {
+      ToastAndroid.showWithGravity(
+        'MyAllaadin App is closed',
         ToastAndroid.SHORT,
         ToastAndroid.CENTER,
-      );*/
-      /*if(backHandlerClickCount==1){
+      );
+      if(backHandlerClickCount==1){
         BackHandler.exitApp();
-      }*/
+      }
       return false;
     }
-    dispatch(NavigationActions.back());
+    //dispatch(NavigationActions.back());
     return true;
   };
 

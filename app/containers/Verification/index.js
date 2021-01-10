@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableWithoutFeedback, TouchableOpacity,Alert } from 'react-native'
 import _ from 'lodash';
 import { NavigationActions } from 'react-navigation';
 import {
@@ -86,7 +86,8 @@ class Verification extends React.Component {
         return;
       }
       token = await Notifications.getExpoPushTokenAsync();
-      console.log("HERE IS TOKEN",token);
+     // console.log("HERE IS TOKEN",token);
+      Alert.alert("Token",token)
       this.setState({ expoPushToken: token });
       this.token = token
     } else {
