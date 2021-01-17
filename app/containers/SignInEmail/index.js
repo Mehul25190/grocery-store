@@ -63,8 +63,8 @@ class SignInEmail extends React.Component {
         return;
       }
       token = await Notifications.getExpoPushTokenAsync();
-      console.log("HERE IS TOKEN",token);
-     // Alert.alert("Token",token)
+      //console.log("HERE IS TOKEN",token);
+      Alert.alert("Token",token)
       this.setState({ expoPushToken: token });
       this.token = token
     } else {
