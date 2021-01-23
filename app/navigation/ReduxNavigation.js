@@ -27,13 +27,14 @@ class ReduxNavigation extends React.Component {
     // setTimeout(() => {
     //   backHandlerClickCount = 0;
     // }, 600);
-    if (currentRoute==Screens.SignIn.route || currentRoute==Screens.SignInEmail.route || currentRoute==Screens.SignInEmail.route) {
+    if (currentRoute==Screens.SignIn.route || currentRoute==Screens.SignInEmail.route || currentRoute==Screens.SignInMobile.route) {
       ToastAndroid.showWithGravity(
         'MyAllaadin App is closed',
         ToastAndroid.SHORT,
         ToastAndroid.CENTER,
       );
       if(backHandlerClickCount==1){
+        console.log("USER PRESS BACK")
         BackHandler.exitApp();
       }
       return false;

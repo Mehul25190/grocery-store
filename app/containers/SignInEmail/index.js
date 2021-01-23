@@ -21,6 +21,7 @@ import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants'
 
+
 import { Layout, Colors, Screens, ActionTypes } from '../../constants';
 import { Logo, LoginBackIcon, Statusbar, ModalBox, SetLanguage, SelectLanguage, Loader, AppIntro } from '../../components';
 import imgs from '../../assets/images';
@@ -62,8 +63,8 @@ class SignInEmail extends React.Component {
         alert('Failed to get push token for push notification!');
         return;
       }
-      token = await Notifications.getExpoPushTokenAsync();
-      //console.log("HERE IS TOKEN",token);
+     var token = await Notifications.getExpoPushTokenAsync();
+      console.log("HERE IS TOKEN",token);
       //Alert.alert("Token",token)
       this.setState({ expoPushToken: token });
       this.token = token
@@ -97,12 +98,12 @@ class SignInEmail extends React.Component {
     this.props.navigation.navigate(Screens.ForgotPassword.route)
   }
 
-  signin(values, dispatch, props){
+  async signin(values, dispatch, props){
+    var token = await Notifications.getExpoPushTokenAsync() || '';
     values.isEmail = 1; //sending extra parameter
     values.deviceType = Platform.OS
-    values.deviceToken = this.token
+    values.deviceToken = token;
 
-    console.log("TOKEN WITH VAL",values)
     dispatch(userActions.signin(values)).then(res => {
       if(res.status == "success"){  
         showToast(res.message,"success");

@@ -109,15 +109,16 @@ class Verification extends React.Component {
     console.log(notification);
   };
 
- signinverification(code) {
+ async signinverification(code) {
+  var token = await Notifications.getExpoPushTokenAsync();
   var mobileno = this.props.mobileno; 
   var deviceType = Platform.OS
-  var deviceToken = this.token
+  var deviceToken = token
 
   //get value for para
   const { navigation } = this.props;
   const para_email = navigation.getParam('para_email');
-  console.log("para email>>>>");
+  console.log("para email>>>>",mobileno,code,deviceToken,deviceType);
   console.log(para_email);
 
   if(para_email=="") {
@@ -125,7 +126,7 @@ class Verification extends React.Component {
         //checking varification with login -> OTP -verification  
         this.props.loginMobileVerification(mobileno,code,deviceToken,deviceType).then (res =>{
 
-          console.log("response from loginMobileVerification")  
+          console.log("response from loginMobileVerification",)  
           console.log(res);
 
             if(res.status == "success"){
@@ -150,7 +151,7 @@ class Verification extends React.Component {
 
     //checking varification with signup -> OTP -verification  
 
-    this.props.signupMobileVerification(mobileno,code).then (res =>{
+    this.props.signupMobileVerification(mobileno,code,deviceToken,deviceType).then (res =>{
 
       console.log("response from signupMobileVerification")  
       console.log(res);
@@ -270,7 +271,11 @@ const mapDispatchToProps = (dispatch) => {
     resetState: () => dispatch({ type: ActionTypes.RESETSTATE }),
     signupMobileVerification: (mobileno,code) => dispatch(userActions.signupMobileVerification({mobileNo:mobileno, otp:code })),
 
-    loginMobileVerification: (mobileno,code) => dispatch(userActions.signInMobileVerification({mobileNo:mobileno, athenticationCode:code }))
+    loginMobileVerification: (mobileno,code,device,token) => dispatch(userActions.signInMobileVerification({
+      mobileNo:mobileno, 
+      athenticationCode:code,
+      deviceType:device,
+      deviceToken:token }))
   };
 };
 
