@@ -17,8 +17,8 @@ import {
 import { connect } from "react-redux";
 import { submit } from 'redux-form';
 import * as Animatable from 'react-native-animatable';
-import { Notifications } from 'expo';
-
+//import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
 import { Layout, Colors, Screens, ActionTypes } from '../../constants';
 import { Logo, LoginBackIcon, Statusbar, ModalBox, SetLanguage, SelectLanguage, Loader, AppIntro } from '../../components';
 import imgs from '../../assets/images';
@@ -103,7 +103,7 @@ class SignInMobile extends React.Component {
   }
 
   async signinmobile(values, dispatch, props) {
-    var token = await Notifications.getExpoPushTokenAsync() || '';
+    var token = (await Notifications.getExpoPushTokenAsync()).data;
     values.isEmail = "0";
     values.mobileNo = values.mobileNo.toString();
     values.deviceType = Platform.OS

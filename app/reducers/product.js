@@ -26,6 +26,7 @@ const subscription = (state = initialState.product, action) => {
       return {
         ...state,
         brandlisting: action.data,
+        brandlistingbrand: action.brand,
       }
     }
 
@@ -33,6 +34,7 @@ const subscription = (state = initialState.product, action) => {
       return {
         ...state,
         ethnicities: action.data,
+       
       }
     }
 
@@ -40,6 +42,7 @@ const subscription = (state = initialState.product, action) => {
       return {
         ...state,
         ethnicitieslisting: action.data,
+        ethnicitieslistingbrand: action.brand
       }
     }
 

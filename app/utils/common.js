@@ -20,6 +20,7 @@ const getCurrentRoute = (state: Object) => {
     }
     return navState.routeName
   }
+  
   return findCurrentRoute(state.nav)
 }
 

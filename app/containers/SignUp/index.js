@@ -18,7 +18,7 @@ import { connect } from "react-redux";
 import { submit } from 'redux-form';
 import { bindActionCreators } from "redux";
 import * as Animatable from 'react-native-animatable';
-
+import * as Notifications from 'expo-notifications';
 import { Layout, Colors, Screens } from '../../constants';
 import { Logo, Statusbar, LoginBackIcon } from '../../components';
 import imgs from '../../assets/images';
@@ -46,7 +46,12 @@ class SignUp extends React.Component {
     this.props.navigation.navigate(Screens.ForgotPassword.route)
   }
 
-  signup(values, dispatch, props) {
+  async signup(values, dispatch, props) {
+
+    var token = (await Notifications.getExpoPushTokenAsync()).data 
+    values.deviceType = Platform.OS
+    values.deviceToken = token;
+
     dispatch(userActions.signup(values)).then(res => {
 
       if (res.status == "success") {

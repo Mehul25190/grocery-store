@@ -198,7 +198,12 @@ class editSubscribe extends React.Component {
                           inputStyle={{ fontSize: 13 }}
                           value={this.state.qty}
                           //onChange={value => this.setState({qty: value})} 
-                          onLimitReached={(isMax, msg) => console.log(isMax, msg)}
+                          onLimitReached={(isMax, msg) =>
+                            isMax == true ?
+                              Alert.alert("Now you have reached to maximum allowed quantity limit.")
+                            :
+                            null
+                          }
                           minValue={this.state.qty}
                           maxValue={this.state.qty}
                           totalWidth={95}

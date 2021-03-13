@@ -11,6 +11,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  Alert
 } from "react-native";
 import _ from "lodash";
 import { Layout, Colors, Screens } from "../../constants";
@@ -65,7 +66,7 @@ import { ScreenLoader } from '../../components';
 import Modal from 'react-native-modal';
 import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
 import { CheckBox } from 'react-native-elements'
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 
 class SearchProduct extends React.Component {
   constructor(props) {
@@ -124,11 +125,13 @@ class SearchProduct extends React.Component {
       selectedbrand: [],
       selectedid: [],
       selecteddiscount: [],
-      selectedpriceto: [],
-      selectedpricefrom: [],
+      selectedpriceto: 0,
+      selectedpricefrom: 0,
       selectedrating: [],
       Filter: this.props.navigation.getParam("Filter"),
       subscbrLoader: false,
+      End: '10',
+      Scrollapi: false,
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
@@ -136,7 +139,7 @@ class SearchProduct extends React.Component {
   }
 
   componentDidMount() {
-    this.productItemList(this.props.navigation.getParam('text'));
+    this.productItemList(this.props.navigation.getParam('text'), this.props.user.user.id, 0, this.state.End);
   }
 
   SortShowFunction() {
@@ -145,7 +148,7 @@ class SearchProduct extends React.Component {
   }
   FilterShowFunction() {
     //this.setfilterdatanull();
-    this.setState({ isFilterVisible: !this.state.isFilterVisible,filterload:false });
+    this.setState({ isFilterVisible: !this.state.isFilterVisible, filterload: false });
   }
 
   FilterDetailShowFunction() {
@@ -160,16 +163,19 @@ class SearchProduct extends React.Component {
   }
 
 
-  productItemList(text) {
+  productItemList(text, id, start, end) {
     this.setState({ text: text })
     this.props
-      .searchItem(text, this.props.user.user.id)
+      .searchItem(text, this.props.user.user.id, start, end)
       .then((res) => {
         if (res.status == "success") {
           if (res.data.itemList) {
 
 
-            this.setState({ productData: res.data.itemList });
+            this.setState({
+              productData: [...this.state.productData, ...res.data.itemList],
+              filterbrand: [...this.state.filterbrand, ...res.data.filters.brand],
+            });
             this.filterdata(res.data.itemList)
 
 
@@ -283,10 +289,10 @@ class SearchProduct extends React.Component {
         } else {
           setTimeout(() => {
             this.setState({ subscbrLoader: false })
-          showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
-          this.props.navigation.navigate(
-            Screens.SubscribeOrder.route,
-            { item: item, qty: this.state.value }
+            showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
+            this.props.navigation.navigate(
+              Screens.SubscribeOrder.route,
+              { item: item, qty: this.state.value }
             )
           }, 2000)
         }
@@ -308,12 +314,23 @@ class SearchProduct extends React.Component {
     const filterdisplaypriceto = []
     const filterdisplaypricefrom = []
     var size = ''
+    var brandArray = this.state.filterbrand
 
-    val.forEach(element => Brandname.push(element.brandName))
-    val.forEach(element => Brandnid.push(element.brandId))
+    brandArray.forEach(element => Brandname.push(element.name))
+    brandArray.forEach(element => Brandnid.push(element.id))
 
     let uniquebrand = Brandname.filter((item, i, ar) => ar.indexOf(item) === i);
     let uniqueid = Brandnid.filter((item, i, ar) => ar.indexOf(item) === i);
+
+    var filteredbrand = uniquebrand.filter(function (x) {
+      return x !== undefined;
+    });
+
+    var filteredbrandid = uniqueid.filter(function (x) {
+      return x !== undefined;
+    });
+
+    console.log("BRAND", uniquebrand, uniqueid)
 
     val.forEach(element => Price.push(element.discountedPrice < element.price ? element.discountedPrice : element.price))
     let uniqueprice = Price.filter((item, i, ar) => ar.indexOf(item) === i);
@@ -337,12 +354,12 @@ class SearchProduct extends React.Component {
     })
 
     this.setState({
-      filterbrand: uniquebrand,
-      filterid: uniqueid,
+      filterbrand: filteredbrand,
+      filterid: filteredbrandid,
       filterpriceto: filterdisplaypriceto.filter(value => !Number.isNaN(value)),
       filterpricefrom: filterdisplaypricefrom.filter(value => !Number.isNaN(value))
     })
-    console.log("Product List Filter DATA", this.state.filterprice, this.state.filterbrand)
+    // console.log("Product List Filter DATA", this.state.filterprice, this.state.filterbrand)
   }
 
   addtobrand(clickIndex) {
@@ -393,11 +410,11 @@ class SearchProduct extends React.Component {
   }
 
   Filterapply() {
-   
+
     this.setState({
       filterload: true
     })
-    if (this.state.selectedpricefrom > this.state.selectedpriceto) {
+    if (JSON.parse(this.state.selectedpricefrom) > JSON.parse(this.state.selectedpriceto)) {
       this.setState({
         filterload: false
       })
@@ -408,7 +425,7 @@ class SearchProduct extends React.Component {
           filterload: false
         })
         if (res.status == "success") {
-         // this.setfilterdatanull();
+          // this.setfilterdatanull();
           this.setState({ isFilterVisible: false, Filter: true, productData: res.data.itemList });
         } else {
           this.setState({ isFilterVisible: false })
@@ -457,13 +474,13 @@ class SearchProduct extends React.Component {
     //     }
     //   })
 
-    }
-  
+  }
+
 
   sortingapply(val) {
     this.setState({ SortinType: val })
     this.props.filterapply(this.state.text, this.props.user.user.id, this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount, val).then(res => {
-      console.log("RESPONSE OF sorting", res.status)
+      //  console.log("RESPONSE OF sorting", res.status)
       this.setState({ isModalVisible: false })
       if (res.status == "success") {
         this.setState({ isModalVisible: false, productData: res.data.itemList });
@@ -473,16 +490,19 @@ class SearchProduct extends React.Component {
     })
   }
 
+  isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 10;
+  };
 
 
   render() {
 
-    console.log('buyOndeSelected 0', this.state.buyOndeSelected)
+    // console.log('buyOndeSelected 0', this.state.buyOndeSelected)
     const { navigation, totalItem } = this.props;
     const getTitle = navigation.getParam("item");
     const categoryName = this.props.navigation.getParam("categoryName");
 
-    console.log("PRODUCT ATA",this.state.productData)
+    //console.log("PRODUCT ATA", this.state.productData)
     return (
       <Container style={appStyles.container}>
         <Header searchBar rounded style={appStyles.headerStyle}>
@@ -512,7 +532,7 @@ class SearchProduct extends React.Component {
             </Button>
           </Right>
         </Header>
-        <View style={{height:Layout.doubleIndent,marginTop:Layout.indent - 7}}><Row style={appStyles.footers}>
+        <View style={{ height: Layout.doubleIndent, marginTop: Layout.indent - 7 }}><Row style={appStyles.footers}>
           <Col style={{ justifyContent: 'center', alignItems: 'center', borderColor: Colors.primary, borderRightWidth: 1 }}>
             <TouchableOpacity onPress={() => this.FilterShowFunction()} >
               <Item style={{ borderBottomWidth: 0, }} onPress={() => this.FilterShowFunction()} >
@@ -530,13 +550,39 @@ class SearchProduct extends React.Component {
             </TouchableOpacity>
           </Col>
         </Row></View>
-        <Content enableOnAndroid style={appStyles.content}>
+        <Content enableOnAndroid
+          scrollEventThrottle={300}
+          onMomentumScrollBegin={() => this.setState({ Scrollapi: false })}
+          onMomentumScrollEnd={() =>
+            this.setState({ Scrollapi: true })
+          }
+          onScroll={({ nativeEvent }) => {
+            if (this.isCloseToBottom(nativeEvent)) {    //<---Check if reached end of page
+              console.log('Reached end of page');
+              if (this.state.Scrollapi) {
+                let RandomNumber = Math.floor(this.state.End) + 7;
+                this.productItemList(
+                  this.state.text,
+                  this.props.user.user.id,
+                  0,
+                  RandomNumber
+                );
+                this.setState({
+                  End: RandomNumber
+                })
+              } else {
+                console.log("API SCROLL 0", this.state.Scrollapi)
+              }
+
+            }
+          }}
+          style={appStyles.content}>
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (<View>
             {this.state.productData.map((item, index) => {
               // productList.map((item, index) => {
-                console.log("NULL CHECK",item.foodType)
+              //   console.log("NULL CHECK", item.foodType)
               var foodType = '';
               if (item.foodType == 'veg')
                 foodType = '#00ff00';
@@ -573,11 +619,11 @@ class SearchProduct extends React.Component {
                       <View style={appStyles.brandAndVeg}>
                         <View style={{ flex: 0 }}>
                           <Text style={styles.proBrand}>{item.brandName}</Text>
-                         
+
                         </View>
                         <View style={{ flex: 0, width: 12 }}>
                           {
-                            (item.foodType != "NA" && item.foodType != null )&& <Image style={[appStyles.vegImage, { marginTop: 2 }]} source={item.foodType == 'veg' ? imgs.smallVeg
+                            (item.foodType != "NA" && item.foodType != null) && <Image style={[appStyles.vegImage, { marginTop: 2 }]} source={item.foodType == 'veg' ? imgs.smallVeg
                               :
                               item.foodType == 'vegan' ? imgs.smallVegan
                                 :
@@ -587,7 +633,7 @@ class SearchProduct extends React.Component {
                         </View>
                       </View>
                       <Text style={styles.proTitle}>{item.itemName}</Text>
-                    
+
                       <Text style={styles.proQuanitty} note>
                         {item.weight !== ""
                           ? "(" + item.weight + " " + item.uom + ")"
@@ -625,19 +671,19 @@ class SearchProduct extends React.Component {
                             </Text>
                           </View>
                         ) : (
-                            <View>
-                              <Text style={styles.proPrice}>
-                                <Text
-                                  style={appStyles.currencysmall}
-                                >
-                                  {Colors.CUR}
-                                </Text>{" "}
-                                <Text
-                                  style={appStyles.amountmedium}
-                                >{item.price}</Text>
-                              </Text>
-                            </View>
-                          )}
+                          <View>
+                            <Text style={styles.proPrice}>
+                              <Text
+                                style={appStyles.currencysmall}
+                              >
+                                {Colors.CUR}
+                              </Text>{" "}
+                              <Text
+                                style={appStyles.amountmedium}
+                              >{item.price}</Text>
+                            </Text>
+                          </View>
+                        )}
                       </View>
                     </TouchableOpacity>
                   </Body>
@@ -650,25 +696,25 @@ class SearchProduct extends React.Component {
                       (<View>
                         {item.isSubscribable ? (
                           !this.state.subscbrLoader ?
-                          <TouchableOpacity
-                            onPress={() =>
-                              this.subscribePressHandlder(item)
-                            }
-                          >
-                            <ImageBackground source={imgs.AEDpng} style={[styles.subscribeBtn, {}]}>
+                            <TouchableOpacity
+                              onPress={() =>
+                                this.subscribePressHandlder(item)
+                              }
+                            >
+                              <ImageBackground source={imgs.AEDpng} style={[styles.subscribeBtn, {}]}>
 
-                              <Text style={styles.subText}>
-                                {item.price}
-                              </Text>
-                            </ImageBackground>
-                          </TouchableOpacity>
-                          :
-                          <View style={[styles.subscribeBtn, {}]}>
-                            <ActivityIndicator />
-                          </View>
+                                <Text style={styles.subText}>
+                                  {item.price}
+                                </Text>
+                              </ImageBackground>
+                            </TouchableOpacity>
+                            :
+                            <View style={[styles.subscribeBtn, {}]}>
+                              <ActivityIndicator />
+                            </View>
                         ) : (
-                            <View style={{ padding: 0, margin: 0 }}></View>
-                          )}
+                          <View style={{ padding: 0, margin: 0 }}></View>
+                        )}
 
                         {this.state.selctedProduct == item.id ? <ActivityIndicator style={{ marginRight: 20 }} /> :
                           (<View>
@@ -678,7 +724,10 @@ class SearchProduct extends React.Component {
                                 //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
                                 onChange={(value) => this.buyOncePressHnadler(item.id, value, 'update')}
                                 onLimitReached={(isMax, msg) =>
-                                  console.log(isMax, msg)
+                                  isMax == true ?
+                                    Alert.alert("Now you have reached to maximum allowed quantity limit.")
+                                    :
+                                    null
                                 }
                                 minValue={0}
                                 maxValue={item.maxOrderQuantity ? item.maxOrderQuantity : 5}
@@ -712,7 +761,7 @@ class SearchProduct extends React.Component {
             })}
             {this.state.productData.length == 0 ? <View style={[appStyles.spinner, appStyles.norecordfound]}><Text>No Product Found</Text></View> : null}
           </View>
-            )}
+          )}
         </Content>
         <Modal style={appStyles.SortModal} isVisible={this.state.isModalVisible} hasBackdrop={true}
           backdropColor={'#333'} backdropOpacity={0.3}>
@@ -778,7 +827,7 @@ class SearchProduct extends React.Component {
               <ScrollView style={{ marginTop: 25, flexDirection: 'column', marginBottom: 20, height: 350 }}>
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Brand</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333', width: Layout.window.width - Layout.fourIndent }}>Brand</Text>
                     <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
@@ -800,11 +849,11 @@ class SearchProduct extends React.Component {
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Prices</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333', width: Layout.window.width - Layout.fourIndent }}>Prices</Text>
                     <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
-                  
+
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10 }}>
                       <TextInput
                         placeholder="From min"
@@ -825,7 +874,7 @@ class SearchProduct extends React.Component {
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                   <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Discounts in %</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333', width: Layout.window.width - Layout.fourIndent }}>Discounts in %</Text>
                     <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
@@ -846,7 +895,7 @@ class SearchProduct extends React.Component {
 
                 <Collapse>
                   <CollapseHeader style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#ffffff', borderBottomWidth: 1, borderColor: '#dddddd' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333',width:Layout.window.width - Layout.fourIndent }}>Ratings</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left', color: '#333333', width: Layout.window.width - Layout.fourIndent }}>Ratings</Text>
                     <AntDesign name="rightcircleo" size={24} color="black" />
                   </CollapseHeader>
                   <CollapseBody>
@@ -956,7 +1005,12 @@ const mapDispatchToProps = (dispatch) => {
     logout: () => dispatch(userActions.logoutUser()),
     productItemList: (categoryId, subCategoryId) => dispatch(userActions.showProductList({ subCategoryId: subCategoryId, categoryId: categoryId })),
     fetchSubCategory: (categoryId) => dispatch(userActions.fetchSubCategory({ categoryId: categoryId })),
-    searchItem: (searchString, userId) => dispatch(productActions.searchItem({ searchString: searchString, userId: userId })),
+    searchItem: (searchString, userId, start, end) => dispatch(productActions.searchItem({
+      searchString: searchString,
+      userId: userId,
+      startIndex: start,
+      endIndex: end,
+    })),
     searchItemWithoutLoader: (searchString, userId) => dispatch(productActions.searchItemWithoutLoader({ searchString: searchString, userId: userId })),
     productDetail: (id, userId) => dispatch(productActions.productDetail({ itemId: id, userId: userId })), viewCart: (user_id) => dispatch(cartActions.viewcart({ userId: user_id })),
     addToCartItem: (userId, itemId, quantity) => dispatch(cartActions.addToCartItem({ userId: userId, itemId: itemId, quantity: quantity })),

@@ -22,12 +22,12 @@ class ReduxNavigation extends React.Component {
   onBackPress = () => {
     const { state, dispatch } = this.props;
     const currentRoute = getCurrentRoute(state);
-    // console.log("getCurrentRoute", currentRoute);
+     //console.log("getCurrentRoute", currentRoute);
     backHandlerClickCount = 1;
     // setTimeout(() => {
     //   backHandlerClickCount = 0;
     // }, 600);
-    if (currentRoute==Screens.SignIn.route || currentRoute==Screens.SignInEmail.route || currentRoute==Screens.SignInMobile.route) {
+    if (currentRoute==Screens.SignIn.route || currentRoute==Screens.SignInEmail.route || currentRoute==Screens.SignInMobile.route || currentRoute == Screens.Home.route) {
       ToastAndroid.showWithGravity(
         'MyAllaadin App is closed',
         ToastAndroid.SHORT,

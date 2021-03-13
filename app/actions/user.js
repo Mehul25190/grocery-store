@@ -148,7 +148,7 @@ export const showAreaList = payloads => dispatch => {
 export const showProductList = payloads => dispatch => {
   //console.log("showCategoryList>>> action ")
   //console.log('payload>>'+payloads);
-  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+ // dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.productList,{queries: payloads}).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     //console.log(res.data);

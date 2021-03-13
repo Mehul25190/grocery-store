@@ -237,9 +237,8 @@ class Checkout extends React.Component {
             <Text style={[styles.Modeltext, { fontSize: 16, alignSelf: 'center' }]}>Valuable Customer..!</Text>
             <Icon type="SimpleLineIcons" name="emotsmile" style={styles.smileIcon} />
             <Text style={styles.Modeltext}>
-              Seems your free subscription period is over,
-                    Now have your morning deliveries free by paying a small subscription amount.</Text>
-            <Text style={styles.Modeltext}>You can still enjoy our evening slots with nominal delviery charge</Text>
+            To serve you better and to make our services faster, we charge a nominal delivery charge for this order value.</Text>
+            <Text style={styles.Modeltext}>However you may add few more items to get free delivery</Text>
             <TouchableOpacity style={styles.closeOk} onPress={() => this.setState({ isModalVisible: false })}>
               <Text style={{ color: '#fff', fontSize: 16, fontFamily: 'Font-Medium' }}>OK</Text>
             </TouchableOpacity>

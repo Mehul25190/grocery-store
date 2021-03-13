@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "791867142383",
+    "project_id": "myallaadin",
+    "storage_bucket": "myallaadin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791867142383:android:4a8e27b3d77860865ceb1a",
+        "android_client_info": {
+          "package_name": "com.myallaadin.store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "791867142383-n82r09ni2kngve04jrlkgm9ast1tfii4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDThOCtEyfL0PUyCVh9hAtshFe6FIYweWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "791867142383-n82r09ni2kngve04jrlkgm9ast1tfii4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

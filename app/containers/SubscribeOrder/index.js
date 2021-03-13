@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date} from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, Alert} from 'react-native'
 import _ from 'lodash'; 
 import {Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers } from '../../components';
@@ -208,7 +208,12 @@ class SubscribeOrder extends React.Component {
                       value={this.state.qty} 
                       onChange={value => this.setState({qty: value})}
                       maxValue={this.state.subscriptionDtls.maxOrderQuantity ? this.state.subscriptionDtls.maxOrderQuantity : 5}
-                      onLimitReached={(isMax,msg) => console.log(isMax,msg)}
+                      onLimitReached={(isMax, msg) =>
+                        isMax == true ?
+                          Alert.alert("Now you have reached to maximum allowed quantity limit.")
+                        :
+                        null
+                      }
                        minValue={1}
                       totalWidth={95} 
                       totalHeight={30} 

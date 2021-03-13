@@ -11,6 +11,7 @@ import {
   StatusBar,
   TouchableOpacity,
   ActivityIndicator,
+  Alert
 } from "react-native";
 import _ from "lodash";
 import { Layout, Colors, Screens } from "../../constants";
@@ -86,7 +87,7 @@ class SearchOffer extends React.Component {
       filterbrand: [],
       filterpriceto: [],
       filterpricefrom: [],
-      SortinType:"",
+      SortinType: "",
       filterid: [],
       filterload: false,
       Ratings: [{
@@ -125,8 +126,8 @@ class SearchOffer extends React.Component {
       selectedbrand: [],
       selectedid: [],
       selecteddiscount: [],
-      selectedpriceto: [],
-      selectedpricefrom: [],
+      selectedpriceto: 0,
+      selectedpricefrom: 0,
       selectedrating: [],
       subscbrLoader: false,
     };
@@ -168,14 +169,18 @@ class SearchOffer extends React.Component {
   productItemList(offer_id) {
     //this.setState({text: offer_id})
     const comefrom = this.props.navigation.getParam("comefrom");
-    const { brandlisting, ethnicitieslisting } = this.props
+    const { brandlisting, ethnicitieslisting, brandlistingbrand, ethnicitieslistingbrand } = this.props
     comefrom == 'offer' ?
       this.props
         .fetchItemsByOffer(offer_id, this.props.user.user.id)
         .then((res) => {
           if (res.status == "success") {
             if (res.data.itemList) {
-              this.setState({ productData: res.data.itemList });
+              this.setState({
+                productData: res.data.itemList,
+                filterbrand: res.data.filters.brand,
+              });
+              //  console.log("FILTER BRAND IN SEARCH OFFER", res.data.filters.brand)
               this.filterdata(res.data.itemList)
               this.courseFilterArr = res.data.itemList;
             }
@@ -188,14 +193,16 @@ class SearchOffer extends React.Component {
         }) : comefrom == "Brand" ? (
           this.filterdata(brandlisting),
           this.setState({
-            productData: brandlisting
+            productData: brandlisting,
+           // brandfilterbrand: brandlistingbrand,
           })
         )
 
         : (
           this.filterdata(ethnicitieslisting),
           this.setState({
-            productData: ethnicitieslisting
+            productData: ethnicitieslisting,
+           // ethnicitiesfilterbrand: ethnicitieslistingbrand,
           })
         )
 
@@ -245,13 +252,13 @@ class SearchOffer extends React.Component {
     const brand = this.props.navigation.getParam("brandid");
     const ethenicity = this.props.navigation.getParam("ethenicityid");
     this.props.filtersapply(ethenicity == undefined ? "" : ethenicity,
-      brand  == undefined ? "" : brand,
+      brand == undefined ? "" : brand,
       this.state.selectedpricefrom,
       this.state.selectedpriceto,
       this.state.selectedrating,
-      this.state.selecteddiscount, 
+      this.state.selecteddiscount,
       this.state.SortinType,
-      this.props.user.user.id,).then(res => {
+      this.props.user.user.id).then(res => {
         if (res.status == 200) {
           this.setState({ isModalVisible: false, productData: res.data.data.itemList, });
           // this.props.navigation.navigate('SearchProduct', {
@@ -332,12 +339,12 @@ class SearchOffer extends React.Component {
         } else {
           setTimeout(() => {
             this.setState({ subscbrLoader: false })
-          showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
-          this.props.navigation.navigate(
-            Screens.SubscribeOrder.route,
-            { item: item, qty: this.state.value }
-          )    
-        }, 2000)
+            showToast('Please ensure the quanity, once subscribed its not recommened to change', 'success');
+            this.props.navigation.navigate(
+              Screens.SubscribeOrder.route,
+              { item: item, qty: this.state.value }
+            )
+          }, 2000)
         }
       } else {
         this.setState({ subscbrLoader: false })
@@ -350,7 +357,7 @@ class SearchOffer extends React.Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   }
   FilterShowFunction() {
-   // this.setfilterdatanull();
+    // this.setfilterdatanull();
     this.setState({ isFilterVisible: !this.state.isFilterVisible, filterload: false });
   }
 
@@ -367,19 +374,44 @@ class SearchOffer extends React.Component {
 
   async filterdata(val) {
 
+    const comefrom = this.props.navigation.getParam("comefrom");
     const Brandname = []
     const Brandnid = []
     const Price = []
     const result = []
     const filterdisplaypriceto = []
     const filterdisplaypricefrom = []
+    var brandArray = this.state.filterbrand
     var size = ''
 
-    val.forEach(element => Brandname.push(element.brandName))
-    val.forEach(element => Brandnid.push(element.brandId))
+
+    if (comefrom == 'Brand') {
+      brandArray = this.props.brandlistingbrand
+    } else if (comefrom == 'Ethnicities') {
+      brandArray = this.props.ethnicitieslistingbrand
+    } else {
+      console.log("OFFER")
+    }
+console.log("Het",brandArray, this.props.brandfilterbrand)
+
+
+
+
+    brandArray.forEach(element => Brandname.push(element.name))
+    brandArray.forEach(element => Brandnid.push(element.id))
 
     let uniquebrand = Brandname.filter((item, i, ar) => ar.indexOf(item) === i);
     let uniqueid = Brandnid.filter((item, i, ar) => ar.indexOf(item) === i);
+
+    var filteredbrand = uniquebrand.filter(function (x) {
+      return x !== undefined;
+    });
+
+    var filteredbrandid = uniqueid.filter(function (x) {
+      return x !== undefined;
+    });
+
+    console.log("BRAND", uniquebrand, uniqueid)
 
     val.forEach(element => Price.push(element.discountedPrice < element.price ? element.discountedPrice : element.price))
     let uniqueprice = Price.filter((item, i, ar) => ar.indexOf(item) === i);
@@ -403,8 +435,8 @@ class SearchOffer extends React.Component {
     })
 
     this.setState({
-      filterbrand: uniquebrand,
-      filterid: uniqueid,
+      filterbrand: filteredbrand,
+      filterid: filteredbrandid,
       filterpriceto: filterdisplaypriceto.filter(value => !Number.isNaN(value)),
       filterpricefrom: filterdisplaypricefrom.filter(value => !Number.isNaN(value))
     })
@@ -467,7 +499,7 @@ class SearchOffer extends React.Component {
     this.setState({
       filterload: true
     })
-    if (this.state.selectedpricefrom > this.state.selectedpriceto) {
+    if (JSON.parse(this.state.selectedpricefrom) > JSON.parse(this.state.selectedpriceto)) {
       this.setState({
         Filterapply: false,
         filterload: false
@@ -500,34 +532,34 @@ class SearchOffer extends React.Component {
               }
             }
             ) :
-           console.log("ETHENI FILTER", ethenicity,
-             brand ? brand : this.state.selectedid,
-             this.state.selectedpricefrom,
-             this.state.selectedpriceto,
-             this.state.selectedrating,
-             this.state.selecteddiscount,
-             this.state.SortinType,
-             this.props.user.user.id)
-          this.props.filtersapply(
-            ethenicity,
+          console.log("ETHENI FILTER", ethenicity,
             brand ? brand : this.state.selectedid,
             this.state.selectedpricefrom,
             this.state.selectedpriceto,
             this.state.selectedrating,
             this.state.selecteddiscount,
             this.state.SortinType,
-            this.props.user.user.id,).then(res => {
-              this.setState({
-                filterload: false
-              })
-              console.log("ETHENI FILTER res", res)
-              if (res.status == 200) {
-                //this.setfilterdatanull();
-                this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
-              } else {
-                showToast("Something went Wrong", "danger")
-              }
+            this.props.user.user.id)
+        this.props.filtersapply(
+          ethenicity,
+          brand ? brand : this.state.selectedid,
+          this.state.selectedpricefrom,
+          this.state.selectedpriceto,
+          this.state.selectedrating,
+          this.state.selecteddiscount,
+          this.state.SortinType,
+          this.props.user.user.id).then(res => {
+            this.setState({
+              filterload: false
             })
+            console.log("ETHENI FILTER res", res)
+            if (res.status == 200) {
+              //this.setfilterdatanull();
+              this.setState({ isFilterVisible: false, productData: res.data.data.itemList, });
+            } else {
+              showToast("Something went Wrong", "danger")
+            }
+          })
       }
     }
   }
@@ -646,9 +678,9 @@ class SearchOffer extends React.Component {
           this.state.selectedpricefrom,
           this.state.selectedpriceto,
           this.state.selectedrating,
-          this.state.selecteddiscount, 
+          this.state.selecteddiscount,
           val,
-          this.props.user.user.id,).then(res => {
+          this.props.user.user.id).then(res => {
             if (res.status == 200) {
               this.setState({ isModalVisible: false, productData: res.data.data.itemList, });
               // this.props.navigation.navigate('SearchProduct', {
@@ -664,7 +696,8 @@ class SearchOffer extends React.Component {
 
   render() {
 
-    console.log('buyOndeSelected', this.state.buyOndeSelected)
+    console.log('buyOndeSelected0', this.props.ethnicitieslistingbrand)
+      console.log('buyOndeSelected1',this.props.brandlistingbrand)
     const { navigation, totalItem } = this.props;
     const getTitle = navigation.getParam("item");
 
@@ -725,123 +758,123 @@ class SearchOffer extends React.Component {
 
 
 
-              <View>
-                {this.state.productData.map((item, index) => {
-                  // productList.map((item, index) => {
-                  var foodType = '';
-                  if (item.foodType == 'veg')
-                    foodType = '#00ff00';
-                  if (item.foodType == 'Nonveg')
-                    foodType = 'red';
-                  if (item.foodType == 'vegan')
-                    foodType = 'blue';
-                  return (
-                    <ListItem style={styles.ListItems} key={index}>
+            <View>
+              {this.state.productData.map((item, index) => {
+                // productList.map((item, index) => {
+                var foodType = '';
+                if (item.foodType == 'veg')
+                  foodType = '#00ff00';
+                if (item.foodType == 'Nonveg')
+                  foodType = 'red';
+                if (item.foodType == 'vegan')
+                  foodType = 'blue';
+                return (
+                  <ListItem style={styles.ListItems} key={index}>
 
 
-                      <Left style={styles.ListLeft}>
+                    <Left style={styles.ListLeft}>
 
-                        <TouchableOpacity
-                          style={styles.prodInfo}
-                          onPress={() =>
-                            this.productDetail(item.id)
-                          }
-                        >
-                          <Image
-                            style={styles.proImage}
-                            source={{ uri: url.imageURL + item.imagePath }}
-                          />
-                        </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.prodInfo}
+                        onPress={() =>
+                          this.productDetail(item.id)
+                        }
+                      >
+                        <Image
+                          style={styles.proImage}
+                          source={{ uri: url.imageURL + item.imagePath }}
+                        />
+                      </TouchableOpacity>
 
-                      </Left>
-                      <Body>
-                        <TouchableOpacity
-                          style={styles.prodInfo}
-                          onPress={() =>
-                            this.productDetail(item.id)
-                          }
-                        >
-                          <View style={appStyles.brandAndVeg}>
-                            <View style={{ flex: 0 }}>
-                              <Text style={styles.proBrand}>{item.brandName}</Text>
-                            </View>
-                            <View style={{ flex: 0, width: 12 }}>
+                    </Left>
+                    <Body>
+                      <TouchableOpacity
+                        style={styles.prodInfo}
+                        onPress={() =>
+                          this.productDetail(item.id)
+                        }
+                      >
+                        <View style={appStyles.brandAndVeg}>
+                          <View style={{ flex: 0 }}>
+                            <Text style={styles.proBrand}>{item.brandName}</Text>
+                          </View>
+                          <View style={{ flex: 0, width: 12 }}>
 
-                              {
-                                (item.foodType != "NA" && item.foodType != null) && <Image style={appStyles.vegImage} source={item.foodType == 'veg' ? imgs.smallVeg
+                            {
+                              (item.foodType != "NA" && item.foodType != null) && <Image style={appStyles.vegImage} source={item.foodType == 'veg' ? imgs.smallVeg
+                                :
+                                item.foodType == 'vegan' ? imgs.smallVegan
                                   :
-                                  item.foodType == 'vegan' ? imgs.smallVegan
-                                    :
-                                    imgs.smallNonVeg} />
-                              }
-                            </View>
+                                  imgs.smallNonVeg} />
+                            }
                           </View>
-
-                          <Text style={styles.proTitle}>{item.itemName}</Text>
-                          {/* <Text style={styles.proTitle}>{item.cartQty}</Text> */}
-
-                          <Text style={styles.proQuanitty} note>
-                            {item.weight !== ""
-                              ? "(" + item.weight + " " + item.uom + ")"
-                              : ""}{" "}
-                          </Text>
-
-                          <View
-                            style={{
-                              flex: 1,
-                              flexDirection: "row",
-                              justifyContent: "flex-start",
-                              alignItems: "flex-start",
-                            }}
-                          >
-                            {item.discountedPrice > 0 && item.discountedPrice < item.price ? (
-                              <View style={{ flexDirection: "row" }}>
-                                <Text style={styles.proPriceStrike}>
-                                  <Text style={appStyles.currencysmall}>
-                                    {Colors.CUR}
-                                  </Text>{" "}
-                                  <Text
-                                    style={appStyles.amountmedium}
-                                  >{item.price}</Text>
-                                </Text>
-                                <Text style={styles.proPrice}>
-                                  <Text
-                                    style={appStyles.currencysmall}
-                                  >
-                                    {Colors.CUR}
-
-                                  </Text>{" "}
-                                  <Text
-                                    style={appStyles.amountmedium}
-                                  >{item.discountedPrice}</Text>
-                                </Text>
-                              </View>
-                            ) : (
-                                <View>
-                                  <Text style={styles.proPrice}>
-                                    <Text
-                                      style={appStyles.currencysmall}
-                                    >
-                                      {Colors.CUR}
-                                    </Text>{" "}
-                                    <Text
-                                      style={appStyles.amountmedium}
-                                    >{item.price}</Text>
-                                  </Text>
-                                </View>
-                              )}
-                          </View>
-                        </TouchableOpacity>
-                      </Body>
-                      <Right style={styles.ListRight}>
-                        <View>
-
                         </View>
-                        {item.outOfStock == 'Y' ?
-                          <Text style={styles.outofstock}>Out of Stock</Text> :
-                          (<View>
-                            {item.isSubscribable ? (
-                              !this.state.subscbrLoader ?
+
+                        <Text style={styles.proTitle}>{item.itemName}</Text>
+                        {/* <Text style={styles.proTitle}>{item.cartQty}</Text> */}
+
+                        <Text style={styles.proQuanitty} note>
+                          {item.weight !== ""
+                            ? "(" + item.weight + " " + item.uom + ")"
+                            : ""}{" "}
+                        </Text>
+
+                        <View
+                          style={{
+                            flex: 1,
+                            flexDirection: "row",
+                            justifyContent: "flex-start",
+                            alignItems: "flex-start",
+                          }}
+                        >
+                          {item.discountedPrice > 0 && item.discountedPrice < item.price ? (
+                            <View style={{ flexDirection: "row" }}>
+                              <Text style={styles.proPriceStrike}>
+                                <Text style={appStyles.currencysmall}>
+                                  {Colors.CUR}
+                                </Text>{" "}
+                                <Text
+                                  style={appStyles.amountmedium}
+                                >{item.price}</Text>
+                              </Text>
+                              <Text style={styles.proPrice}>
+                                <Text
+                                  style={appStyles.currencysmall}
+                                >
+                                  {Colors.CUR}
+
+                                </Text>{" "}
+                                <Text
+                                  style={appStyles.amountmedium}
+                                >{item.discountedPrice}</Text>
+                              </Text>
+                            </View>
+                          ) : (
+                            <View>
+                              <Text style={styles.proPrice}>
+                                <Text
+                                  style={appStyles.currencysmall}
+                                >
+                                  {Colors.CUR}
+                                </Text>{" "}
+                                <Text
+                                  style={appStyles.amountmedium}
+                                >{item.price}</Text>
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </TouchableOpacity>
+                    </Body>
+                    <Right style={styles.ListRight}>
+                      <View>
+
+                      </View>
+                      {item.outOfStock == 'Y' ?
+                        <Text style={styles.outofstock}>Out of Stock</Text> :
+                        (<View>
+                          {item.isSubscribable ? (
+                            !this.state.subscbrLoader ?
                               <ImageBackground source={imgs.AEDpng} style={[styles.subscribeBtn, {}]}>
                                 <TouchableOpacity
                                   onPress={() =>
@@ -857,54 +890,57 @@ class SearchOffer extends React.Component {
                               <View style={[styles.subscribeBtn, {}]}>
                                 <ActivityIndicator />
                               </View>
-                            ) : (
-                                <View style={{ padding: 0, margin: 0 }}></View>
-                              )}
+                          ) : (
+                            <View style={{ padding: 0, margin: 0 }}></View>
+                          )}
 
-                            {this.state.selctedProduct == item.id ? <ActivityIndicator style={{ marginRight: 20 }} /> :
-                              (<View>
-                                {item.cartQty > 0 ?
-                                  (<NumericInput
-                                    initValue={item.cartQty}
-                                    //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
-                                    onChange={(value) => this.buyOncePressHnadler(item.id, value, 'update')}
-                                    onLimitReached={(isMax, msg) =>
-                                      console.log(isMax, msg)
+                          {this.state.selctedProduct == item.id ? <ActivityIndicator style={{ marginRight: 20 }} /> :
+                            (<View>
+                              {item.cartQty > 0 ?
+                                (<NumericInput
+                                  initValue={item.cartQty}
+                                  //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
+                                  onChange={(value) => this.buyOncePressHnadler(item.id, value, 'update')}
+                                  onLimitReached={(isMax, msg) =>
+                                    isMax == true ?
+                                      Alert.alert("Now you have reached to maximum allowed quantity limit.")
+                                      :
+                                      null
+                                  }
+                                  minValue={0}
+                                  maxValue={item.maxOrderQuantity ? item.maxOrderQuantity : 5}
+                                  totalWidth={100}
+                                  totalHeight={35}
+                                  iconSize={30}
+                                  borderColor={Colors.primary}
+                                  inputStyle={{ fontSize: 15 }}
+                                  step={1}
+                                  valueType="real"
+                                  rounded
+                                  textColor={Colors.primary}
+                                  iconStyle={{ color: Colors.primary, fontSize: 25 }}
+                                  rightButtonBackgroundColor="#fff"
+                                  leftButtonBackgroundColor="#fff"
+                                />) :
+                                (
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      this.buyOncePressHnadler(item.id, 1, 'add')
                                     }
-                                    minValue={0}
-                                    maxValue={item.maxOrderQuantity ? item.maxOrderQuantity : 5}
-                                    totalWidth={100}
-                                    totalHeight={35}
-                                    iconSize={30}
-                                    borderColor={Colors.primary}
-                                    inputStyle={{ fontSize: 15 }}
-                                    step={1}
-                                    valueType="real"
-                                    rounded
-                                    textColor={Colors.primary}
-                                    iconStyle={{ color: Colors.primary, fontSize: 25 }}
-                                    rightButtonBackgroundColor="#fff"
-                                    leftButtonBackgroundColor="#fff"
-                                  />) :
-                                  (
-                                    <TouchableOpacity
-                                      onPress={() =>
-                                        this.buyOncePressHnadler(item.id, 1, 'add')
-                                      }
-                                    >
-                                      <Image source={imgs.addPlus} style={styles.buyButton} />
-                                    </TouchableOpacity>
-                                  )}
-                              </View>)}
-                          </View>)}
-                      </Right>
-                    </ListItem>
-                  );
-                })}
-                {this.state.productData.length == 0 ? <View style={[appStyles.spinner, appStyles.norecordfound]}><Text>No Product Found</Text></View> : null}
-              </View>
+                                  >
+                                    <Image source={imgs.addPlus} style={styles.buyButton} />
+                                  </TouchableOpacity>
+                                )}
+                            </View>)}
+                        </View>)}
+                    </Right>
+                  </ListItem>
+                );
+              })}
+              {this.state.productData.length == 0 ? <View style={[appStyles.spinner, appStyles.norecordfound]}><Text>No Product Found</Text></View> : null}
+            </View>
 
-            )
+          )
 
           }
         </Content>
@@ -1175,7 +1211,9 @@ const mapStateToProps = (state) => {
     isLoading: state.common.isLoading,
     totalItem: state.cart.totalItem,
     brandlisting: state.product.brandlisting,
-    ethnicitieslisting: state.product.ethnicitieslisting
+    ethnicitieslisting: state.product.ethnicitieslisting,
+    brandlistingbrand: state.product.brandlistingbrand,
+    ethnicitieslistingbrand: state.product.ethnicitieslistingbrand,
 
   };
 };

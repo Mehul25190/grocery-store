@@ -125,8 +125,8 @@ class MyWishlist extends React.Component {
       selectedbrand: [],
       selectedid: [],
       selecteddiscount: [],
-      selectedpriceto: '',
-      selectedpricefrom: '',
+      selectedpriceto: 0,
+      selectedpricefrom: 0,
       selectedrating: [],
       subscbrLoader: false,
     };
@@ -295,7 +295,7 @@ class MyWishlist extends React.Component {
     console.log("PriceTo", this.state.selectedpriceto)
     console.log("Discount", this.state.selecteddiscount)
     console.log("Rating", this.state.selectedrating)
-    if (this.state.selectedpricefrom > this.state.selectedpriceto) {
+    if (JSON.parse(this.state.selectedpricefrom) > JSON.parse(this.state.selectedpriceto)) {
       return showToast("Please Check Price", "danger")
     } else {
       this.props.filterapply(this.state.selectedid, this.state.selectedpricefrom, this.state.selectedpriceto, this.state.selectedrating, this.state.selecteddiscount).then(res => {
