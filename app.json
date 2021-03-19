@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "2.0.0",
+    "version": "3.4.1",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "splash": {
@@ -25,11 +25,14 @@
     ],
     "android": {
       "package": "com.myallaadin.store",
-      "versionCode": 2,
+      "versionCode": 13,
+      "useNextNotificationsApi": true,
+      "googleServicesFile": "./google-services.json"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.myallaadin"
+      "bundleIdentifier": "com.myallaadin",
+      "googleServicesFile": "./GoogleService-Info.plist"
     }
   }
 }

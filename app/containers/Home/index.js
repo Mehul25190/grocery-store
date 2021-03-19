@@ -263,7 +263,7 @@ class Home extends React.Component {
   }
 
   brandNavigation(val) {
-    this.props.Branddetails(val,this.props.user.user.id).then(res => {
+    this.props.Branddetails(val, this.props.user.user.id).then(res => {
       if (res.status == 200) {
         console.log("SUCCESS FOR", val, res.status)
         this.props.navigation.navigate('SearchOffer',
@@ -279,7 +279,7 @@ class Home extends React.Component {
   }
   ethnicitiesNavigation(val) {
     console.log("SUCCESS FOR 0011", val)
-    this.props.Ethnicitiesdetails(val,this.props.user.user.id).then(res => {
+    this.props.Ethnicitiesdetails(val, this.props.user.user.id).then(res => {
       if (res.status == 200) {
         console.log("SUCCESS FOR Ethnicitiesdetails", val, res.status)
         this.props.navigation.navigate('SearchOffer',
@@ -311,7 +311,10 @@ class Home extends React.Component {
     await this.setState({ text: text });
     console.log("Search Lenght", this.state.text.length)
     if (this.state.text.length >= 3) {
-      this.SearchFilterFunction(this.state.text)
+      setTimeout(() => {
+        this.SearchFilterFunction(this.state.text)
+      }, 1000)
+
     }
     // setTimeout(() => { this.SearchFilterFunction(this.state.text) }, 2000)
   }
@@ -457,7 +460,7 @@ class Home extends React.Component {
               : null}
 
             <View style={styles.ItemLayout}>
-              <Grid style={styles.shopSubTitle}>
+              {/* <Grid style={styles.shopSubTitle}>
 
                 <View style={{ flex: 1, paddingLeft: 10, flexDirection: 'row', backgroundColor: '#D7ECDD', paddingTop: 5, paddingBottom: 5, paddingRight: 10, justifyContent: 'flex-end' }}>
 
@@ -466,7 +469,7 @@ class Home extends React.Component {
                     <Icon type="AntDesign" name="exclamationcircle" style={styles.infoCircle} />
                   </TouchableOpacity>
                 </View>
-              </Grid>
+              </Grid> */}
 
 
 
@@ -496,8 +499,8 @@ class Home extends React.Component {
 
 
                         <TouchableOpacity onPress={() => this.brandNavigation(item.id)} style={styles.brandimagearea}>
-                          <View style={{borderRadius:200, backgroundColor:'#ffffff', marginBottom:5}}>
-                            <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1, borderRadius:200, height: 110, width: 110, resizeMode: 'contain'}} />
+                          <View style={{ borderRadius: 200, backgroundColor: '#ffffff', marginBottom: 5 }}>
+                            <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1, borderRadius: 200, height: 110, width: 110, resizeMode: 'contain' }} />
                           </View>
                           <View>
                             <Text style={styles.brandnametitle}>{item.brandName}</Text>
@@ -548,8 +551,8 @@ class Home extends React.Component {
                       keyExtractor={(item, index) => index}
                       renderItem={({ item, index }) =>
                         <TouchableOpacity onPress={() => this.ethnicitiesNavigation(item.id)} style={styles.brandimagearea}>
-                          <View style={{borderRadius:200, backgroundColor:'#ffffff', marginBottom:5}}>
-                            <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1,borderRadius:200, height: 110, width: 110, resizeMode: 'contain' }} />
+                          <View style={{ borderRadius: 200, backgroundColor: '#ffffff', marginBottom: 5 }}>
+                            <Image source={{ uri: url.imageURL + item.imagePath }} style={{ flex: 1, borderRadius: 200, height: 110, width: 110, resizeMode: 'contain' }} />
                           </View>
                           <View>
                             <Text style={styles.brandnametitle}>{item.ethnicity}</Text>
@@ -619,12 +622,12 @@ const mapDispatchToProps = (dispatch) => {
     showDeliveryAddress: (userid) => dispatch(userActions.getDeviveryAddress({ userId: userid })),
     nextOrderCount: (userid) => dispatch(userActions.nextOrderCount({ userId: userid })),
     Brand: () => dispatch(productActions.fetchBrand()),
-    Branddetails: (val,user_id) => dispatch(productActions.fetchBranddetails({
+    Branddetails: (val, user_id) => dispatch(productActions.fetchBranddetails({
       brandId: val,
       userId: user_id
     })),
     Ethnicities: () => dispatch(productActions.fetchEthnicities()),
-    Ethnicitiesdetails: (val,user_id) => dispatch(productActions.fetchEthnicitiesdetails({
+    Ethnicitiesdetails: (val, user_id) => dispatch(productActions.fetchEthnicitiesdetails({
       ethnicity: val,
       userId: user_id
     })),

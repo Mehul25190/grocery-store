@@ -26,9 +26,11 @@ export const initialState = {
 		ethnicitieslisting: [],
 		brand: [],
 		brandlisting: [],
-		fetchwishlist:[],
-		similarproduct:[],
-		applyfilter:[]
+		fetchwishlist: [],
+		similarproduct: [],
+		applyfilter: [],
+		brandlistingbrand: [],
+		ethnicitieslistingbrand: []
 	},
 	cart: {
 		viewCartDetail: {},

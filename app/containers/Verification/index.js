@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableWithoutFeedback, TouchableOpacity, Alert } from 'react-native'
 import _ from 'lodash';
 import { NavigationActions } from 'react-navigation';
 import {
@@ -26,6 +26,8 @@ import { showToast } from '../../utils/common';
 import appStyles from '../../theme/appStyles';
 import styles from '../SignIn/styles';
 // import OtpInputs from 'react-native-otp-inputs';
+import * as Notifications from 'expo-notifications';
+import { Notifications as Notifications2 } from 'expo';
 
 import OtpInputs from 'react-native-otp-textinput';
 //import SignInVerification from './form';
@@ -33,7 +35,7 @@ import axios from '../../utils/api';
 import url from '../../config/api';
 import { Platform } from 'react-native';
 
-import { Notifications } from 'expo';
+//import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants'
 
@@ -42,7 +44,7 @@ class Verification extends React.Component {
     super(props);
     this.state = {
       visibleModal: false,
-      code:'',
+      code: '',
       expoPushToken: '',
       notification: {},
     };
@@ -54,7 +56,7 @@ class Verification extends React.Component {
   componentDidMount() {
     //console.log(this.props.mobileno);
     this.registerForPushNotificationsAsync();
-    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+    this._notificationSubscription = Notifications2.addListener(this._handleNotification);
 
     if (this.props.user != null) {
       this.props.navigation.navigate(Screens.SignInStack.route);
@@ -85,8 +87,9 @@ class Verification extends React.Component {
         alert('Failed to get push token for push notification!');
         return;
       }
-      token = await Notifications.getExpoPushTokenAsync();
-      console.log("HERE IS TOKEN",token);
+      var token = (await Notifications.getExpoPushTokenAsync()).data
+      console.log("HERE IS TOKEN", token);
+      //Alert.alert("Token", token)
       this.setState({ expoPushToken: token });
       this.token = token
     } else {
@@ -108,74 +111,74 @@ class Verification extends React.Component {
     console.log(notification);
   };
 
- signinverification(code) {
-  var mobileno = this.props.mobileno; 
-  var deviceType = Platform.OS
-  var deviceToken = this.token
+  async signinverification(code) {
+    var token = (await Notifications.getExpoPushTokenAsync()).data
+    var mobileno = this.props.mobileno;
+    var deviceType = Platform.OS
+    var deviceToken = token;
 
-  //get value for para
-  const { navigation } = this.props;
-  const para_email = navigation.getParam('para_email');
-  console.log("para email>>>>");
-  console.log(para_email);
+    //get value for para
+    const { navigation } = this.props;
+    const para_email = navigation.getParam('para_email');
 
-  if(para_email=="") {
-  
-        //checking varification with login -> OTP -verification  
-        this.props.loginMobileVerification(mobileno,code,deviceToken,deviceType).then (res =>{
 
-          console.log("response from loginMobileVerification")  
-          console.log(res);
+    if (para_email == "") {
 
-            if(res.status == "success"){
+      //checking varification with login -> OTP -verification  
+      this.props.loginMobileVerification(mobileno, code, deviceType, deviceToken,).then(res => {
 
-                  //console.log("Entereed after api >>>>");
-                  showToast(res.message,"success");
-                  this.props.navigation.navigate(Screens.SignInStack.route)
-                  //Screens.SignInStack.route
-                  
-            } else {
-                  console.log("something wrong with varification call");
-                  showToast(res.message,"danger");
-                  this.props.navigation.navigate(Screens.Verification.route)
-            }
-            
-          })
-          .catch(error => {
-              console.log('Error messages returned from server', error);
-          });
+        console.log("response from loginMobileVerification",)
+        console.log(res);
 
-  }else{
+        if (res.status == "success") {
 
-    //checking varification with signup -> OTP -verification  
+          //console.log("Entereed after api >>>>");
+          showToast(res.message, "success");
+          this.props.navigation.navigate(Screens.SignInStack.route)
+          //Screens.SignInStack.route
 
-    this.props.signupMobileVerification(mobileno,code).then (res =>{
-
-      console.log("response from signupMobileVerification")  
-      console.log(res);
-  
-        if(res.status == "success"){
-  
-              //console.log("Entereed after api >>>>");
-              showToast(res.message,"success");
-              this.props.navigation.navigate(Screens.SignInStack.route)
-              //Screens.SignInStack.route
-              
         } else {
-              console.log("something wrong with varification call");
-              showToast(res.message,"danger");
-              this.props.navigation.navigate(Screens.Verification.route)
+          console.log("something wrong with varification call");
+          showToast(res.message, "danger");
+          this.props.navigation.navigate(Screens.Verification.route)
         }
-         
+
       })
-      .catch(error => {
+        .catch(error => {
           console.log('Error messages returned from server', error);
-      });
+        });
+
+    } else {
+
+      //checking varification with signup -> OTP -verification  
+
+      this.props.signupMobileVerification(mobileno, code, deviceToken, deviceType).then(res => {
+
+        console.log("response from signupMobileVerification")
+        console.log(res);
+
+        if (res.status == "success") {
+
+          //console.log("Entereed after api >>>>");
+          showToast(res.message, "success");
+          this.props.navigation.navigate(Screens.SignInStack.route)
+          //Screens.SignInStack.route
+
+        } else {
+          console.log("something wrong with varification call");
+          showToast(res.message, "danger");
+          this.props.navigation.navigate(Screens.Verification.route)
+        }
+
+      })
+        .catch(error => {
+          console.log('Error messages returned from server', error);
+        });
+
+    }
+
 
   }
-
-
- }
 
   render() {
     const { language } = this.props;
@@ -207,7 +210,7 @@ class Verification extends React.Component {
 		                  	</Text>
                     </View>
                     <OtpInputs
-                      handleTextChange={code => { this.setState({code})}}
+                      handleTextChange={code => { this.setState({ code }) }}
                       numberOfInputs={4}
                     />
                   </View>
@@ -254,7 +257,7 @@ const mapStateToProps = (state) => {
     user: state.auth.user,
     language: state.auth.language,
     languageSet: state.auth.languageSet || 0,
-    mobileno:state.auth.mobileno,
+    mobileno: state.auth.mobileno,
   };
 };
 
@@ -262,14 +265,23 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   // Action
   return {
-   //pressSignin: () => dispatch(NavigationActions.navigate({ routeName: Screens.Home.route })),
+    //pressSignin: () => dispatch(NavigationActions.navigate({ routeName: Screens.Home.route })),
     pressSigninEmail: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInEmail.route })),
     setLanguage: () => dispatch(userActions.setLanguage({ id: 1, set: 1 })),
     showModal: () => dispatch({ type: ActionTypes.SHOWMODAL, showModal: true }),
     resetState: () => dispatch({ type: ActionTypes.RESETSTATE }),
-    signupMobileVerification: (mobileno,code) => dispatch(userActions.signupMobileVerification({mobileNo:mobileno, otp:code })),
+    signupMobileVerification: (mobileno, code, token, type) => dispatch(userActions.signupMobileVerification({
+      mobileNo: mobileno, otp: code,
+      deviceType: type,
+      deviceToken: token
+    })),
 
-    loginMobileVerification: (mobileno,code) => dispatch(userActions.signInMobileVerification({mobileNo:mobileno, athenticationCode:code }))
+    loginMobileVerification: (mobileno, code, device, token) => dispatch(userActions.signInMobileVerification({
+      mobileNo: mobileno,
+      athenticationCode: code,
+      deviceType: device,
+      deviceToken: token
+    }))
   };
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, ActivityIndicator, Dimensions } from 'react-native'
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity, date, ScrollView, ActivityIndicator, Dimensions,Alert } from 'react-native'
 import _ from 'lodash';
 import { Screens, Layout, Colors } from '../../constants';
 import { Logo, Statusbar, Headers, } from '../../components';
@@ -428,7 +428,9 @@ class ProductDetail extends React.Component {
                     </Col>
 
                     {ProductDetail.item[0].outOfStock == 'Y' ?
-                      (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}><Text style={styles.outofstock}>Out of Stock</Text></Col>) :
+                      (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}>
+                        <Text style={styles.outofstock}>Out of Stock</Text></Col>) :
+                        
                       (<Col style={{ paddingTop: 10, width: '50%', alignItems: 'flex-end', }}>
                         {this.state.NumericInputloader == "true" ? 
                         
@@ -441,7 +443,10 @@ class ProductDetail extends React.Component {
                                 //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
                                 onChange={(value) => this.buyOncePressHnadler(ProductDetail.item[0].id, value, 'update')}
                                 onLimitReached={(isMax, msg) =>
-                                  console.log(isMax, msg)
+                                  isMax == true ?
+                                    Alert.alert("Now you have reached to maximum allowed quantity limit.")
+                                  :
+                                  null
                                 }
                                 minValue={0}
                                 maxValue={ProductDetail.item[0].maxOrderQuantity ? ProductDetail.item[0].maxOrderQuantity : 5}

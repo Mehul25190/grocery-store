@@ -148,7 +148,7 @@ export const showAreaList = payloads => dispatch => {
 export const showProductList = payloads => dispatch => {
   //console.log("showCategoryList>>> action ")
   //console.log('payload>>'+payloads);
-  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+ // dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.productList,{queries: payloads}).then(res => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
     //console.log(res.data);
@@ -511,9 +511,9 @@ export const rechargeWallet = payloads => dispatch => {
 }
 
 export const checkActiveSubscription = payloads => dispatch => {
-  dispatch({ type: ActionTypes.LOADING, isLoading: true });
+  //dispatch({ type: ActionTypes.LOADING, isLoading: true });
   return axios.get(url.checkActiveSubscription,{queries: payloads}).then(res => {
-    dispatch({ type: ActionTypes.LOADING, isLoading: false });
+    //dispatch({ type: ActionTypes.LOADING, isLoading: false });
     if(res.status == 200){
       return res.data;
     } else {

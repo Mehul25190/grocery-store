@@ -17,9 +17,11 @@ import {
 import { connect } from "react-redux";
 import { submit } from 'redux-form';
 import * as Animatable from 'react-native-animatable';
-import { Notifications } from 'expo';
+//import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants'
+import * as Notifications from 'expo-notifications';
+import { Notifications as Notifications2 } from 'expo';
 
 import { Layout, Colors, Screens, ActionTypes } from '../../constants';
 import { Logo, LoginBackIcon, Statusbar, ModalBox, SetLanguage, SelectLanguage, Loader, AppIntro } from '../../components';
@@ -43,7 +45,7 @@ class SignInEmail extends React.Component {
 
   componentDidMount() {
     this.registerForPushNotificationsAsync();
-    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+    this._notificationSubscription = Notifications2.addListener(this._handleNotification);
 
     if(this.props.user!=null){
       this.props.navigation.navigate(Screens.SignInStack.route);
@@ -62,8 +64,9 @@ class SignInEmail extends React.Component {
         alert('Failed to get push token for push notification!');
         return;
       }
-      token = await Notifications.getExpoPushTokenAsync();
+     var token = (await Notifications.getExpoPushTokenAsync()).data 
       console.log("HERE IS TOKEN",token);
+    //Alert.alert("Token",token)
       this.setState({ expoPushToken: token });
       this.token = token
     } else {
@@ -96,12 +99,13 @@ class SignInEmail extends React.Component {
     this.props.navigation.navigate(Screens.ForgotPassword.route)
   }
 
-  signin(values, dispatch, props){
+  async signin(values, dispatch, props){
+    var token = (await Notifications.getExpoPushTokenAsync()).data 
     values.isEmail = 1; //sending extra parameter
     values.deviceType = Platform.OS
-    values.deviceToken = this.token
+    //values.deviceToken = token;
+    values.deviceToken = token;
 
-    console.log("TOKEN WITH VAL",values)
     dispatch(userActions.signin(values)).then(res => {
       if(res.status == "success"){  
         showToast(res.message,"success");
@@ -195,7 +199,7 @@ class SignInEmail extends React.Component {
                         primary
                         style={appStyles.btnSecontary}
                          onPress={() =>  this.props.pressSignin()}  >
-                        <Text style={styles.SignInbtn}>Login </Text>
+                        <Text style={styles.SignInbtn}>Login</Text>
                       </Button>
                        </TouchableOpacity>
                   }
@@ -266,6 +270,7 @@ const mapDispatchToProps = (dispatch) => {
       pressSignin: () => dispatch(submit('signinFormemail')),
       pressSigninMob: () => dispatch(NavigationActions.navigate({ routeName: Screens.SignInMobile.route })),
       setLanguage: () => dispatch(userActions.setLanguage({id:1,set:1})),
+      signinExplore: () => dispatch(userActions.signinExplore()),
    };
 };
 

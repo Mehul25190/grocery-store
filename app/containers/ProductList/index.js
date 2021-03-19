@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   TouchableHighlight,
+  Alert,
   Image,
   FlatList,
   ScrollView,
@@ -10,6 +11,7 @@ import {
   StatusBar,
   TouchableOpacity,
   TextInput,
+  findNodeHandle,
   ActivityIndicator,
 } from "react-native";
 import _ from "lodash";
@@ -79,6 +81,7 @@ class ProductList extends React.Component {
       categoryId: this.props.navigation.getParam("para_categoryId"),
       productData: [],
       subCategory: [],
+      Scrollapi: false,
       selectSubCat: null,
       text: "",
       flalistIndex: 0,
@@ -92,6 +95,7 @@ class ProductList extends React.Component {
       filterbrand: [],
       filterpriceto: [],
       filterpricefrom: [],
+      subscbrLoader: false,
       filterid: [],
       filterload: false,
       Ratings: [{
@@ -130,12 +134,15 @@ class ProductList extends React.Component {
       selectedbrand: [],
       selectedid: [],
       selecteddiscount: [],
-      selectedpriceto: [],
-      selectedpricefrom: [],
+      selectedpriceto: 0,
+      selectedpricefrom: 0,
       selectedrating: [],
+      End: '10'
     };
     this.courseFilterArr = [];
     this.currentIndex = 0;
+    this._nodes = new Map();
+
     //console.log('here----->', this.props.navigation.getParam('para_categoryId'));
   }
 
@@ -179,10 +186,11 @@ class ProductList extends React.Component {
       .fetchSubCategory(this.props.navigation.getParam("para_categoryId"))
       .then((res) => {
         //console.log("sucess return", res.data.subCategory);
+        //GET DATA FOR PAGE
         if (res.status == "success") {
           if (res.data.subCategory.length > 0) {
             this.setState({ subCategory: res.data.subCategory, selectSubCat: res.data.subCategory[0].id });
-            this.productItemList(res.data.subCategory[0].categoryId, res.data.subCategory[0].id, 0);
+            this.productItemList(res.data.subCategory[0].categoryId, res.data.subCategory[0].id, 0, this.state.End);
           } else {
             showToast("No product found", "danger");
             this.props.navigation.navigate(Screens.Home.route)
@@ -217,20 +225,34 @@ class ProductList extends React.Component {
       });
   }
 
-  productItemList(catId, subCatId, index) {
+  productItemList(catId, subCatId, index, End) {
+
+    //MAin APi Call
     this.currentIndex = index - 1;
     //catId = this.props.navigation.getParam("para_categoryId") ? this.props.navigation.getParam("para_categoryId") : this.state.selectSubCat;
     this.setState({ flalistIndex: index })
+    this.setState({ Scrollapi: false })
     this.props
-      .productItemList(catId, subCatId, this.props.user.user.id)
+      .productItemList(catId, subCatId, this.props.user.user.id, index, End)
       .then((res) => {
-        //console.log('sucess return', res.data.itemList);
+        console.log('sucess return', res.data.filters);
         if (res.status == "success") {
           //console.log(res.data);
           if (res.data.itemList) {
-            this.setState({ productData: res.data.itemList, selectSubCat: subCatId });
-            this.filterdata(res.data.itemList)
+            console.log("ALL DATA", res.data.filters.brand)
+            // setTimeout(() => {
+            //   this.scrollToEnd()
+            // }, 200);
+            this.setState({
+              productData: [...this.state.productData, ...res.data.itemList],
+              selectSubCat: subCatId,
+              filterbrand: [...this.state.filterbrand, ...res.data.filters.brand],
+            });
+            // this.filterdata(res.data.itemList)
+            this.filterdata(this.state.productData)
             this.courseFilterArr = res.data.itemList;
+
+
 
 
           } else {
@@ -254,7 +276,7 @@ class ProductList extends React.Component {
 
   async filterdata(val) {
 
-    console.log("TOTAL VAL", val)
+    //console.log("TOTAL VAL", val)
 
     const Brandname = []
     const Brandnid = []
@@ -263,12 +285,23 @@ class ProductList extends React.Component {
     const filterdisplaypriceto = []
     const filterdisplaypricefrom = []
     var size = ''
+    var brandArray = this.state.filterbrand
 
-    val.forEach(element => Brandname.push(element.brandName))
-    val.forEach(element => Brandnid.push(element.brandId))
+    brandArray.forEach(element => Brandname.push(element.name))
+    brandArray.forEach(element => Brandnid.push(element.id))
 
     let uniquebrand = Brandname.filter((item, i, ar) => ar.indexOf(item) === i);
     let uniqueid = Brandnid.filter((item, i, ar) => ar.indexOf(item) === i);
+
+    var filteredbrand = uniquebrand.filter(function (x) {
+      return x !== undefined;
+    });
+
+    var filteredbrandid = uniqueid.filter(function (x) {
+      return x !== undefined;
+    });
+
+    console.log("BRAND", uniquebrand, uniqueid)
 
     val.forEach(element => Price.push(element.discountedPrice < element.price ? element.discountedPrice : element.price))
     let uniqueprice = Price.filter((item, i, ar) => ar.indexOf(item) === i);
@@ -292,12 +325,12 @@ class ProductList extends React.Component {
     })
 
     this.setState({
-      filterbrand: uniquebrand,
-      filterid: uniqueid,
+      filterbrand: filteredbrand,
+      filterid: filteredbrandid,
       filterpriceto: filterdisplaypriceto.filter(value => !Number.isNaN(value)),
       filterpricefrom: filterdisplaypricefrom.filter(value => !Number.isNaN(value))
     })
-    console.log("Product List Filter DATA", this.state.filterprice, this.state.filterbrand)
+    // console.log("Product List Filter DATA", this.state.filterprice, this.state.filterbrand)
   }
 
   addtobrand(clickIndex) {
@@ -311,14 +344,15 @@ class ProductList extends React.Component {
       array.push(clickIndex)
       this.setState({ selectedid: array, });
     }
+    console.log("ID", this.state.selectedid)
   }
   addtopriceto(clickIndex) {
-
+    console.log("TO", clickIndex)
     this.setState({ selectedpriceto: clickIndex, });
   }
 
   addtopricefrom(clickIndex) {
-
+    console.log("FROM", clickIndex)
     this.setState({ selectedpricefrom: clickIndex, });
 
   }
@@ -348,13 +382,23 @@ class ProductList extends React.Component {
   }
 
   Filterapply() {
+
+    console.log("VAlue", this.state.selectedid,
+      this.state.selectedpricefrom,
+      this.state.selectedpriceto,
+      this.state.selectedrating,
+      this.state.selecteddiscount,
+      this.state.categoryId,
+      this.state.selectSubCat)
     this.setState({
       filterload: true
     })
-    if (this.state.selectedpricefrom > this.state.selectedpriceto) {
+
+    if (JSON.parse(this.state.selectedpricefrom) > JSON.parse(this.state.selectedpriceto)) {
       this.setState({
         filterload: false
       })
+      // console.log("CONDITION ",JSON.parse(this.state.selectedpricefrom) ,">", JSON.parse(this.state.selectedpriceto), this.state.selectedpricefrom > this.state.selectedpriceto)
       return showToast("Please Check Price", "danger")
     } else {
       this.props.filterapply(this.state.selectedid,
@@ -452,7 +496,10 @@ class ProductList extends React.Component {
   };
 
   renderItems = ({ item, index }) => (
-    <TouchableOpacity style={{ height: Layout.doubleIndent }} onPress={() => this.productItemList(item.categoryId, item.id, index)}>
+    <TouchableOpacity style={{ height: Layout.doubleIndent }}
+      onPress={() => [this.setState({
+        productData: []
+      }), this.productItemList(item.categoryId, item.id, 0, this.state.End)]}>
       <View style={styles.cateContainer}>
         <Text
           style={
@@ -506,7 +553,7 @@ class ProductList extends React.Component {
       })
     } else if (value >= 1) {
       this.props.updateCartItem(this.props.user.user.id, productId, value).then(res => {
-        console.log("Update Value", res)
+        // console.log("Update Value", res)
         if (res.status == "success") {
           this.props.viewCart(this.props.user.user.id).then(res => {
             //showToast('Cart updated successfully.', "success")
@@ -552,20 +599,29 @@ class ProductList extends React.Component {
   }
 
   subscribePressHandlder(item) {
-
+    this.setState({
+      subscbrLoader: true
+    })
     this.props.checkActiveSubscription(item.id, this.props.user.user.id).then(res => {
       //console.log(res.data);
+
       if (res.status == 'success') {
         if (res.data.isActiveSubscription == 'Y') {
+          this.setState({ subscbrLoader: false })
           showToast('You have already subscribed this product.', "danger")
         } else {
-          showToast('Please ensure the quantity, once subscribed its not recommended to change', 'success');
-          this.props.navigation.navigate(
-            Screens.SubscribeOrder.route,
-            { item: item, qty: this.state.value }
-          )
+          setTimeout(() => {
+            this.setState({ subscbrLoader: false })
+            showToast('Please ensure the quantity, once subscribed its not recommended to change', 'success');
+            this.props.navigation.navigate(
+              Screens.SubscribeOrder.route,
+              { item: item, qty: this.state.value }
+            )
+          }, 2000)
+
         }
       } else {
+        this.setState({ subscbrLoader: false })
         showToast('Please try again', "danger")
       }
     })
@@ -593,6 +649,11 @@ class ProductList extends React.Component {
   onBackdropPress() {
 
   }
+  isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+    // this.setState({ Scrollapi: layoutMeasurement.height + contentOffset.y >= contentSize.height - 30 })
+    //console.log(layoutMeasurement.height + contentOffset.y,  contentSize.height - 5)
+    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 70;
+  };
   render() {
 
     //console.log('product', this.state.productData)
@@ -649,7 +710,42 @@ class ProductList extends React.Component {
             autoplayDelay={3000}
           />
         </View>
-        <Content enableOnAndroid style={appStyles.content}>
+        <Content
+          ref={c => (this.contentComponent = c)}
+          enableOnAndroid
+          style={appStyles.content}
+
+          pagingEnabled={true}
+          //scrollEventThrottle={16}
+          onMomentumScrollBegin={() => this.setState({ Scrollapi: false })}
+          onMomentumScrollEnd={() =>
+            this.setState({ Scrollapi: true })
+          }
+          onScroll={({ nativeEvent }) => {
+            if (this.isCloseToBottom(nativeEvent)) {    //<---Check if reached end of page
+              console.log('Reached end of page');
+              if (this.state.Scrollapi) {
+                let EndNumber = Math.floor(this.state.End) + 7;
+                let StartNumber = Math.floor(this.state.End) + 1;
+                this.productItemList(
+                  this.state.subCategory[0].categoryId,
+                  this.state.selectSubCat,
+                  StartNumber,
+                  EndNumber
+                );
+
+
+                this.setState({
+                  End: EndNumber
+                })
+
+              } else {
+                console.log("API SCROLL 0", this.state.Scrollapi)
+              }
+
+            }
+          }}
+        >
           {this.props.isLoading ? (
             <Spinner color={Colors.secondary} style={appStyles.spinner} />
           ) : (<View>
@@ -665,7 +761,6 @@ class ProductList extends React.Component {
               />
             </ScrollView>
             {this.state.productData.map((item, index) => {
-              // productList.map((item, index) => {
               var foodType = '';
               // if(item.foodType == 'veg')
               //   foodType = '#00ff00';
@@ -675,7 +770,9 @@ class ProductList extends React.Component {
               //   foodType = 'blue';
 
               return (
-                <ListItem style={styles.ListItems} key={index}>
+                <ListItem
+                  ref={ref => this._nodes.set(index, ref)}
+                  style={styles.ListItems} key={index}>
 
 
                   <Left style={styles.ListLeft}>
@@ -752,19 +849,19 @@ class ProductList extends React.Component {
                             </Text>
                           </View>
                         ) : (
-                            <View>
-                              <Text style={[styles.proPrice, { color: '#000' }]}>
-                                <Text
-                                  style={appStyles.currencysmall}
-                                >
-                                  {Colors.CUR}
-                                </Text>{" "}
-                                <Text
-                                  style={appStyles.amountmedium}
-                                >{item.price}</Text>
-                              </Text>
-                            </View>
-                          )}
+                          <View>
+                            <Text style={[styles.proPrice, { color: '#000' }]}>
+                              <Text
+                                style={appStyles.currencysmall}
+                              >
+                                {Colors.CUR}
+                              </Text>{" "}
+                              <Text
+                                style={appStyles.amountmedium}
+                              >{item.price}</Text>
+                            </Text>
+                          </View>
+                        )}
                       </View>
                     </TouchableOpacity>
                   </Body>
@@ -776,22 +873,31 @@ class ProductList extends React.Component {
                       <Text style={styles.outofstock}>Out of Stock</Text> :
                       (<View>
                         {item.isSubscribable ? (
-                          <ImageBackground source={imgs.AEDpng} style={[styles.subscribeBtn, {}]}>
-                            <TouchableOpacity
-                              onPress={() =>
-                                this.subscribePressHandlder(item)
-                              }
-                            >
-                              <Text style={styles.subText}>
-                                {item.price}
-                              </Text>
 
-                            </TouchableOpacity>
-                          </ImageBackground>
+                          !this.state.subscbrLoader ?
+                            <ImageBackground source={imgs.AEDpng} style={[styles.subscribeBtn, {}]}>
+                              <TouchableOpacity
+                                onPress={() =>
+                                  this.subscribePressHandlder(item)
+                                }
+                              >
+
+                                <Text style={styles.subText}>
+                                  {item.price}
+                                </Text>
+
+                              </TouchableOpacity>
+                            </ImageBackground> :
+                            <View style={[styles.subscribeBtn, {}]}>
+                              <ActivityIndicator />
+                            </View>
+
+
+
 
                         ) : (
-                            <View style={{ padding: 0, margin: 0 }}></View>
-                          )}
+                          <View style={{ padding: 0, margin: 0 }}></View>
+                        )}
                         {/*<Text>{this.state.buyOndeSelected.indexOf(item.id)} {item.cartQty}</Text>*/}
                         {this.state.selctedProduct == item.id ? <ActivityIndicator style={{ marginRight: 20 }} /> :
                           (<View>
@@ -802,7 +908,10 @@ class ProductList extends React.Component {
                                 //value={this.state.buyOndeSelected.indexOf(item.id) != -1 ? 1 : null }
                                 onChange={(value) => this.buyOncePressHnadler(item.id, value, 'update')}
                                 onLimitReached={(isMax, msg) =>
-                                  console.log(isMax, msg)
+                                  isMax == true ?
+                                    Alert.alert("Now you have reached to maximum allowed quantity limit.")
+                                    :
+                                    null
                                 }
                                 minValue={0}
                                 maxValue={item.maxOrderQuantity ? item.maxOrderQuantity : 5}
@@ -834,9 +943,10 @@ class ProductList extends React.Component {
                 </ListItem>
               );
             })}
+            {this.state.onLoadMore ? <Spinner color={Colors.secondary} /> : null}
             {this.state.productData.length == 0 ? <View style={[appStyles.spinner, appStyles.norecordfound]}><Text>No Product Found</Text></View> : null}
           </View>
-            )}
+          )}
 
 
         </Content>
@@ -1114,11 +1224,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(userActions.logoutUser()),
-    productItemList: (categoryId, subCategoryId, userId) =>
+    productItemList: (categoryId, subCategoryId, userId, start, end) =>
       dispatch(userActions.showProductList({
         subCategoryId: subCategoryId,
         categoryId: categoryId,
-        userId: userId
+        userId: userId,
+        startIndex: start,
+        endIndex: end,
       })),
     getproductItemList: (categoryId, subCategoryId, userId) =>
       dispatch(userActions.getProductList({
